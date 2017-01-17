@@ -1,7 +1,8 @@
 package com.example.kbb12.dms.Template;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.text.Editable;
-import android.text.TextWatcher;
 
 /**
  * Created by kbb12 on 17/01/2017.
@@ -13,9 +14,12 @@ import android.text.TextWatcher;
 public class TemplateController implements ITemplateController {
 
     private ITemplateModel model;
+    //Need this to launch next activity.
+    private Activity currentActivity;
 
-    public TemplateController(ITemplateModel model){
+    public TemplateController(ITemplateModel model,Activity currentActivity){
         this.model=model;
+        this.currentActivity=currentActivity;
     }
 
     @Override
@@ -31,5 +35,17 @@ public class TemplateController implements ITemplateController {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    }
+
+    /*
+    Not actually used in the template but an example of how to
+    launch the next activity from the controller.
+     */
+    public void nextActivity(){
+        Intent templateIntent = new Intent(currentActivity, TemplateActivity.class);
+        //Passes the model to the intent.
+        templateIntent.putExtra("UserModel", model);
+        //Launches the next activity.
+        currentActivity.startActivity(templateIntent);
     }
 }

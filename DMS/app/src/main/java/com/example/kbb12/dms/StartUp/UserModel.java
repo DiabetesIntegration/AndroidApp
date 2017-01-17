@@ -13,7 +13,7 @@ import java.util.Observer;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements Parcelable,ITemplateModel {
+public class UserModel implements ITemplateModel {
 
     //An example item of data to show how it's bundled up when moving between
     //activities.

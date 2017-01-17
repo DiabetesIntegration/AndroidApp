@@ -36,7 +36,7 @@ public class TemplateActivity extends AppCompatActivity {
         Creates the controller and adds it as a listener to the
         necessary view elements.
          */
-        TemplateController controller = new TemplateController(model);
+        TemplateController controller = new TemplateController(model,this);
         textBoxOne.addTextChangedListener(controller);
 
         /*Creates the view and adds it as an observer to the model */
