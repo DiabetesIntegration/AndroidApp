@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Creates user model.
-        UserModel newModel = new UserModel("60");
+        ModelHolder.model = new UserModel("60");
         Intent templateIntent = new Intent(this,TemplateActivity.class);
         //Passes the model to the intent.
-        templateIntent.putExtra("UserModel", newModel);
+        //templateIntent.putExtra("UserModel", newModel);
         //Launches the next activity.
         startActivity(templateIntent);
     }

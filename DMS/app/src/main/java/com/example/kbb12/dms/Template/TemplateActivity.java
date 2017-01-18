@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.StartUp.ModelHolder;
 import com.example.kbb12.dms.StartUp.UserModel;
 
 /**
@@ -22,10 +23,8 @@ public class TemplateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template);
-        /* How to get the model from the intent */
-        Intent intent = getIntent();
-        UserModel model = intent.getParcelableExtra("UserModel");
-
+        /* How to get the model */
+        UserModel model = ModelHolder.model;
         /* Grabs the view elements you need to listen to in the controller
         or update in the view
          */
