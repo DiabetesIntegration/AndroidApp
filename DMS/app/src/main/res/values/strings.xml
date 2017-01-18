@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DMS</string>
+    <string name="title_activity_template">TemplateActivity</string>
+</resources>
