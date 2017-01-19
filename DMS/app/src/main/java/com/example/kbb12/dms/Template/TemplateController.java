@@ -43,8 +43,6 @@ public class TemplateController implements ITemplateController {
      */
     public void nextActivity(){
         Intent templateIntent = new Intent(currentActivity, TemplateActivity.class);
-        //Passes the model to the intent.
-        templateIntent.putExtra("UserModel", model);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);
     }
