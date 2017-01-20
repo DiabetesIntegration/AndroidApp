@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">DMS</string>
     <string name="title_activity_template">TemplateActivity</string>
+    <string name="title_activity_insulin_model_builder">DMS</string>
+    <string-array name="insulin_array">
+        <item>Insulin Type</item>
+        <item>Short-Acting</item>
+        <item>Long-Acting</item>
+    </string-array>
 </resources>

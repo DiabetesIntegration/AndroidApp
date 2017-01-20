@@ -3,25 +3,31 @@ package com.example.kbb12.dms.StartUp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
+import com.example.kbb12.dms.MainMenu.MainMenuActivity;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.Template.TemplateActivity;
 
 /*
 This will be the activity that creates the user model at the start and passes it on.
  */
 public class MainActivity extends AppCompatActivity {
 
+    private UserModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Creates user model.
-        ModelHolder.model = new UserModel("60");
-        Intent templateIntent = new Intent(this,TemplateActivity.class);
-        //Passes the model to the intent.
-        //templateIntent.putExtra("UserModel", newModel);
-        //Launches the next activity.
-        startActivity(templateIntent);
+        ModelHolder.model = new UserModel();
+        model = ModelHolder.model;
+        if(model.loadData()){
+            Intent nextIntent = new Intent(this, MainMenuActivity.class);
+            startActivity(nextIntent);
+        }
+        Button nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new StartUpController(this));
     }
+
 }

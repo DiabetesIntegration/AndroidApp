@@ -1,27 +1,32 @@
 package com.example.kbb12.dms.StartUp;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import com.example.kbb12.dms.InsulinModelBuilder.InsulinModel;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 /**
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel {
+public class UserModel implements ITemplateModel,InsulinModel {
 
     private String exampleData;
 
     private List<ModelObserver> observers;
 
-    public UserModel(String exampleData){
-        this.exampleData=exampleData;
+    public UserModel(){
         observers= new ArrayList<>();
+    }
+
+    //TODO file handling methods
+    public boolean loadData(){
+        return false;
+    }
+
+    public void saveData(){
+
     }
 
     public String getExampleData(){
