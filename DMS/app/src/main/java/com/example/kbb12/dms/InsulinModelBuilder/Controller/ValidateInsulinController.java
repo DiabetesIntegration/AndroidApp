@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.InsulinModelBuilder;
+package com.example.kbb12.dms.InsulinModelBuilder.Controller;
 
 import android.view.View;
 

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;
-import com.example.kbb12.dms.StartUp.UserModel;
+import com.example.kbb12.dms.Model.UserModel;
 
 /**
  * Created by kbb12 on 17/01/2017.
