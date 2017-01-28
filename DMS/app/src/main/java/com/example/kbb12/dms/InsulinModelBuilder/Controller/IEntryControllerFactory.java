@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.InsulinModelBuilder.Controller;
 
+import android.text.TextWatcher;
 import android.widget.AdapterView;
 
 /**
@@ -8,4 +9,6 @@ import android.widget.AdapterView;
 public interface IEntryControllerFactory {
 
     public AdapterView.OnItemClickListener createTypeListener(int entryNumber);
+
+    public TextWatcher createBrandListener(int entryNumber);
 }

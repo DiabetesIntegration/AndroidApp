@@ -2,9 +2,8 @@ package com.example.kbb12.dms.Model;
 
 import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
 import com.example.kbb12.dms.InsulinModelBuilder.Model.InsulinReadWriteModel;
-import com.example.kbb12.dms.Model.Insulin.LongActingDose;
+import com.example.kbb12.dms.Model.Insulin.InsulinDose;
 import com.example.kbb12.dms.StartUp.ModelObserver;
-import com.example.kbb12.dms.Model.Insulin.ShortActingDose;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
 import java.util.ArrayList;
@@ -20,13 +19,11 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
 
     private List<ModelObserver> observers;
 
-    private List<LongActingDose> longActingDoses;
-    private List<ShortActingDose> shortActingDoses;
+    private List<InsulinDose> basicDoses;
 
     public UserModel(){
         observers= new ArrayList<>();
-        longActingDoses=new ArrayList<>();
-        shortActingDoses=new ArrayList<>();
+        basicDoses=new ArrayList<>();
     }
 
     //TODO file handling methods
@@ -41,8 +38,9 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
     @Override
     public List<InsulinEntry> getInsulinEntries() {
         List<InsulinEntry> entries = new ArrayList<>();
-        entries.addAll(longActingDoses);
-        entries.addAll(shortActingDoses);
+        for(InsulinDose dose:basicDoses){
+            entries.add(dose.clone());
+        }
         return entries;
     }
 
@@ -54,6 +52,16 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
         exampleData=newData;
         notifyObservers();
     }
+
+    @Override
+    public void setType(int position, InsulinEntry.InsulinType type) {
+        if(position<basicDoses.size()){
+            basicDoses.get(position).setType(type);
+        }else{
+            basicDoses.add(new InsulinDose(type));
+        }
+    }
+
 
     public void registerObserver(ModelObserver observer)
     {

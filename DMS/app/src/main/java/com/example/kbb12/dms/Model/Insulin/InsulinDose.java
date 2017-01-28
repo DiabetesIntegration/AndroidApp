@@ -5,11 +5,22 @@ import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
 /**
  * Created by kbb12 on 27/01/2017.
  */
-public abstract class InsulinDose implements InsulinEntry {
+public class InsulinDose implements InsulinEntry {
     private String brandName;
+    private InsulinType type;
 
-    public InsulinDose(String name){
-        this.brandName=name;
+    public InsulinDose(InsulinType type){
+        this.type=type;
+        this.brandName=null;
+    }
+
+    public InsulinDose(InsulinType type,String brandName){
+        this.brandName=brandName;
+        this.type=type;
+    }
+
+    public InsulinDose clone(){
+        return new InsulinDose(type,brandName);
     }
 
     public String getBrandName() {
@@ -18,5 +29,14 @@ public abstract class InsulinDose implements InsulinEntry {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    @Override
+    public InsulinType getType() {
+        return type;
+    }
+
+    public void setType(InsulinType type) {
+        this.type = type;
     }
 }

@@ -41,7 +41,7 @@ public class InsulinModelBuilderView implements ModelObserver {
         for(int i=0;i<entries.size();i++){
             insulinList.addView(newEntry(entries.get(i).getType(),entries.get(i).getBrandName(),i));
         }
-        insulinList.addView(newEntry(InsulinEntry.InsulinType.NOT_SET, "Brand Name", entries.size()));
+        insulinList.addView(newEntry(InsulinEntry.InsulinType.NOT_SET, null, entries.size()));
     }
 
     private LinearLayout newEntry(InsulinEntry.InsulinType type,String brandName,int entryNumber){
@@ -50,11 +50,9 @@ public class InsulinModelBuilderView implements ModelObserver {
             case NOT_SET:
                 newRow=createNotSetRow(type,entryNumber);
                 break;
-            case LONG_ACTING:
-                //TODO new row with spinner, brand name, time and amount
+            default:
+                newRow=createSetRow(type,brandName,entryNumber);
                 break;
-            case SHORT_ACTING:
-               newRow=createShortActingRow(type,brandName,entryNumber);
         }
         return newRow;
     }
@@ -69,16 +67,17 @@ public class InsulinModelBuilderView implements ModelObserver {
         return newRow;
     }
 
-    private LinearLayout createShortActingRow(InsulinEntry.InsulinType type,String brandName,int entryNumber){
+    private LinearLayout createSetRow(InsulinEntry.InsulinType type,String brandName,int entryNumber){
         LinearLayout.LayoutParams entryLayout = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0,1);
         LinearLayout newRow = new LinearLayout(context);
         newRow.setLayoutParams(entryLayout);
         newRow.setOrientation(LinearLayout.HORIZONTAL);
         newRow.setWeightSum(3);
         newRow.addView(createSpinner(type, entryNumber));
-        newRow.addView(createBrandTextBox(brandName));
+        newRow.addView(createBrandTextBox(brandName,entryNumber));
         return newRow;
     }
+
 
     private Spinner createSpinner(InsulinEntry.InsulinType type,int entryNumber){
         LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2);
@@ -100,11 +99,15 @@ public class InsulinModelBuilderView implements ModelObserver {
         return newDropDown;
     }
 
-    private EditText createBrandTextBox(String brandName){
+    private EditText createBrandTextBox(String brandName,int entryNumber){
+        if (brandName.equals(null)){
+            brandName="Brand Name";
+        }
         LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
         EditText brandTextBox = new EditText(context);
         brandTextBox.setText(brandName);
         brandTextBox.setLayoutParams(sectionLayout);
+        brandTextBox.addTextChangedListener(controllerFactory.createBrandListener(entryNumber));
         return brandTextBox;
     }
 }
