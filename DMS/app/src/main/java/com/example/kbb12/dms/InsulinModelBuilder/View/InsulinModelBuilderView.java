@@ -95,12 +95,12 @@ public class InsulinModelBuilderView implements ModelObserver {
                 newDropDown.setSelection(2);
                 break;
         }
-        newDropDown.setOnItemClickListener(controllerFactory.createTypeListener(entryNumber));
+        newDropDown.setOnItemSelectedListener(controllerFactory.createTypeListener(entryNumber));
         return newDropDown;
     }
 
     private EditText createBrandTextBox(String brandName,int entryNumber){
-        if (brandName.equals(null)){
+        if (brandName==null){
             brandName="Brand Name";
         }
         LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);

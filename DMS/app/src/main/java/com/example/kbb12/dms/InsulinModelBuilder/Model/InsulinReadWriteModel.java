@@ -7,4 +7,5 @@ import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
  */
 public interface InsulinReadWriteModel extends InsulinReadModel {
     public void setType(int position,InsulinEntry.InsulinType type);
+    public void setBrand(int position,String name);
 }

@@ -35,14 +35,7 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
 
     }
 
-    @Override
-    public List<InsulinEntry> getInsulinEntries() {
-        List<InsulinEntry> entries = new ArrayList<>();
-        for(InsulinDose dose:basicDoses){
-            entries.add(dose.clone());
-        }
-        return entries;
-    }
+
 
     public String getExampleData(){
         return exampleData;
@@ -54,12 +47,36 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
     }
 
     @Override
+    public List<InsulinEntry> getInsulinEntries() {
+        List<InsulinEntry> entries = new ArrayList<>();
+        for(InsulinDose dose:basicDoses){
+            entries.add(dose.clone());
+        }
+        return entries;
+    }
+
+    @Override
     public void setType(int position, InsulinEntry.InsulinType type) {
         if(position<basicDoses.size()){
-            basicDoses.get(position).setType(type);
+            if(InsulinEntry.InsulinType.NOT_SET.equals(type)){
+                basicDoses.remove(position);
+            }else {
+                basicDoses.get(position).setType(type);
+            }
         }else{
+            if(InsulinEntry.InsulinType.NOT_SET.equals(type)){
+                return;
+            }
             basicDoses.add(new InsulinDose(type));
         }
+        notifyObservers();
+    }
+
+    @Override
+    public void setBrand(int entryNumber,String name){
+        assert entryNumber<basicDoses.size();
+        basicDoses.get(entryNumber).setBrandName(name);
+        notifyObservers();
     }
 
 

@@ -9,7 +9,7 @@ import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
 /**
  * Created by kbb12 on 27/01/2017.
  */
-public class TypeListener implements AdapterView.OnItemClickListener {
+public class TypeListener implements AdapterView.OnItemSelectedListener {
 
     private int entryNumber;
     private InsulinReadWriteModel model;
@@ -20,7 +20,7 @@ public class TypeListener implements AdapterView.OnItemClickListener {
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
             case 0:
                 model.setType(entryNumber, InsulinEntry.InsulinType.NOT_SET);
@@ -32,5 +32,10 @@ public class TypeListener implements AdapterView.OnItemClickListener {
                 model.setType(entryNumber, InsulinEntry.InsulinType.SHORT_ACTING);
                 break;
         }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

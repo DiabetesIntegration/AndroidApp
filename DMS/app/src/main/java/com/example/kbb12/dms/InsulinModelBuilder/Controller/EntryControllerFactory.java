@@ -17,7 +17,7 @@ public class EntryControllerFactory implements IEntryControllerFactory {
     }
 
     @Override
-    public AdapterView.OnItemClickListener createTypeListener(int entryNumber) {
+    public AdapterView.OnItemSelectedListener createTypeListener(int entryNumber) {
         return new TypeListener(entryNumber,model);
     }
 

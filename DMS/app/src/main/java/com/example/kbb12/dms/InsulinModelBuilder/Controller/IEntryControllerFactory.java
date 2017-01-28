@@ -8,7 +8,7 @@ import android.widget.AdapterView;
  */
 public interface IEntryControllerFactory {
 
-    public AdapterView.OnItemClickListener createTypeListener(int entryNumber);
+    public AdapterView.OnItemSelectedListener createTypeListener(int entryNumber);
 
     public TextWatcher createBrandListener(int entryNumber);
 }

@@ -28,6 +28,7 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new ValidateInsulinController());
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(ModelHolder.model);
         ModelObserver view = new InsulinModelBuilderView(insulinList,adapter,controllerFactory,ModelHolder.model,this);
+        ModelHolder.model.registerObserver(view);
         //ModelHolder.model.registerObserver(view);
         //Ok so the plan is here you add new horizontal linear layouts every time was is filled in
         //this lets the user put in as many as they want. The insulin list is a linear layout inside
