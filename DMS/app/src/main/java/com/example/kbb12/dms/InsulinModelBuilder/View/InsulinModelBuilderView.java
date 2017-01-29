@@ -12,6 +12,7 @@ import com.example.kbb12.dms.InsulinModelBuilder.Model.InsulinReadModel;
 import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,28 +25,64 @@ public class InsulinModelBuilderView implements ModelObserver {
     IEntryControllerFactory controllerFactory;
     InsulinReadModel model;
     Context context;
+    List<InsulinEntry> entries;
+    int id;
 
     public InsulinModelBuilderView(LinearLayout insulinList,SpinnerAdapter adapter,IEntryControllerFactory controllerFactory,InsulinReadModel model,Context context){
         this.insulinList=insulinList;
         this.adapter=adapter;
         this.controllerFactory=controllerFactory;
         this.model=model;
+        this.id=0;
         this.context=context;
-        update();
+        this.entries=new ArrayList<>();
+        refreshView();
     }
 
     @Override
     public void update() {
-        List<InsulinEntry> entries = model.getInsulinEntries();
+        //Only refreshing the view if it doesn't already match the model
+        //This stops continuous loops.
+        List<InsulinEntry> newEntries = model.getInsulinEntries();
+        if(entries.size()==(newEntries.size())){
+            for(int i=0;i<entries.size();i++){
+                if(!entries.get(i).getType().equals(newEntries.get(i).getType())){
+                    entries=newEntries;
+                    refreshView();
+                }
+            }
+        }else {
+            entries = newEntries;
+            refreshView();
+        }
+    }
+
+
+    private void refreshView(){
         insulinList.removeAllViews();
-        for(int i=0;i<entries.size();i++){
-            insulinList.addView(newEntry(entries.get(i).getType(),entries.get(i).getBrandName(),i));
+        for (int i = 0; i < entries.size(); i++) {
+            insulinList.addView(newEntry(entries.get(i).getType(), entries.get(i).getBrandName(), i));
         }
         insulinList.addView(newEntry(InsulinEntry.InsulinType.NOT_SET, null, entries.size()));
     }
 
+    private boolean modelChanged(List<InsulinEntry> newEntries){
+        if(entries.size()==(newEntries.size())){
+            for(int i=0;i<entries.size();i++){
+                if(!entries.get(i).equals(newEntries.get(i))){
+                    entries=newEntries;
+                    return true;
+                }
+            }
+        }else{
+            entries=newEntries;
+            return true;
+        }
+        return false;
+    }
+
     private LinearLayout newEntry(InsulinEntry.InsulinType type,String brandName,int entryNumber){
-        LinearLayout newRow=new LinearLayout(context);
+        LinearLayout newRow;
         switch(type){
             case NOT_SET:
                 newRow=createNotSetRow(type,entryNumber);
@@ -62,7 +99,7 @@ public class InsulinModelBuilderView implements ModelObserver {
         LinearLayout newRow = new LinearLayout(context);
         newRow.setLayoutParams(entryLayout);
         newRow.setOrientation(LinearLayout.HORIZONTAL);
-        newRow.setWeightSum(2);
+        newRow.setWeightSum(1);
         newRow.addView(createSpinner(type, entryNumber));
         return newRow;
     }
@@ -72,7 +109,7 @@ public class InsulinModelBuilderView implements ModelObserver {
         LinearLayout newRow = new LinearLayout(context);
         newRow.setLayoutParams(entryLayout);
         newRow.setOrientation(LinearLayout.HORIZONTAL);
-        newRow.setWeightSum(3);
+        newRow.setWeightSum(2);
         newRow.addView(createSpinner(type, entryNumber));
         newRow.addView(createBrandTextBox(brandName,entryNumber));
         return newRow;
@@ -80,8 +117,10 @@ public class InsulinModelBuilderView implements ModelObserver {
 
 
     private Spinner createSpinner(InsulinEntry.InsulinType type,int entryNumber){
-        LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2);
+        LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
         Spinner newDropDown=new Spinner(context);
+        id++;
+        newDropDown.setId(this.id);
         newDropDown.setAdapter(adapter);
         newDropDown.setLayoutParams(sectionLayout);
         switch (type){
@@ -89,10 +128,10 @@ public class InsulinModelBuilderView implements ModelObserver {
                 newDropDown.setSelection(0);
                 break;
             case LONG_ACTING:
-                newDropDown.setSelection(1);
+                newDropDown.setSelection(2);
                 break;
             case SHORT_ACTING:
-                newDropDown.setSelection(2);
+                newDropDown.setSelection(1);
                 break;
         }
         newDropDown.setOnItemSelectedListener(controllerFactory.createTypeListener(entryNumber));

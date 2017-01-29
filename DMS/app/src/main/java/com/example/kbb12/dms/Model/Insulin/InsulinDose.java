@@ -39,4 +39,36 @@ public class InsulinDose implements InsulinEntry {
     public void setType(InsulinType type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o==null){
+            return false;
+        }
+        if(o.getClass().equals(this.getClass())){
+            InsulinEntry entry = (InsulinEntry) o;
+            return (checkBrandName(entry)&&checkType(entry));
+        }
+        return false;
+    }
+
+    private boolean checkBrandName(InsulinEntry entry){
+        if(entry.getBrandName()==null){
+            if(this.getBrandName()==null){
+                return true;
+            }
+            return false;
+        }
+        return entry.getBrandName().equals(this.getBrandName());
+    }
+
+    private boolean checkType(InsulinEntry entry){
+        if(entry.getType()==null){
+            if(this.getType()==null){
+                return true;
+            }
+            return false;
+        }
+        return entry.getType().equals(this.getType());
+    }
 }

@@ -16,6 +16,16 @@ import com.example.kbb12.dms.StartUp.ModelObserver;
 
 public class InsulinModelBuilderActivity extends AppCompatActivity {
 
+    /*
+    TODO
+    1. Add error passing mechansim to the view
+    2. Generalise it so all views can just extend one class
+        and all the error fragment stuff will just work.
+    3. Check insulin entries are valid.
+    4. Either put error message up or launch next activity
+        based on 3.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,17 +35,9 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
                 R.array.insulin_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Button nextButton = (Button) findViewById(R.id.nextButton2);
-        nextButton.setOnClickListener(new ValidateInsulinController());
+        nextButton.setOnClickListener(new ValidateInsulinController(ModelHolder.model));
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(ModelHolder.model);
         ModelObserver view = new InsulinModelBuilderView(insulinList,adapter,controllerFactory,ModelHolder.model,this);
         ModelHolder.model.registerObserver(view);
-        //ModelHolder.model.registerObserver(view);
-        //Ok so the plan is here you add new horizontal linear layouts every time was is filled in
-        //this lets the user put in as many as they want. The insulin list is a linear layout inside
-        //a scroll view so you can add as many as you need. When the model updates you want the
-        //amount of insulin entries displayed plus one. But this means you'll need to dynamically
-        //add listeners to the view as you go hence the factory to reduce coupling.
-        //The button listener should make the model check everything necessary has been filled in
-        //then move to the next activity.
     }
 }
