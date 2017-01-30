@@ -17,9 +17,6 @@ import com.example.kbb12.dms.StartUp.ModelObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kbb12 on 20/01/2017.
- */
 public class InsulinModelBuilderView extends MasterView implements ModelObserver {
 
     LinearLayout insulinList;

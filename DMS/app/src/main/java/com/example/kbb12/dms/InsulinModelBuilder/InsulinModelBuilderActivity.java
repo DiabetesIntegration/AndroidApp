@@ -17,15 +17,6 @@ import com.example.kbb12.dms.StartUp.ModelObserver;
 
 public class InsulinModelBuilderActivity extends AppCompatActivity {
 
-    /*
-    TODO
-    1. Add error passing mechansim to the view
-    2. Generalise it so all views can just extend one class
-        and all the error fragment stuff will just work.
-    3. Check insulin entries are valid.
-    4. Either put error message up or launch next activity
-        based on 3.
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
