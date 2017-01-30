@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.InsulinModelBuilder.View;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -7,9 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.example.kbb12.dms.ErrorHandling.IErrorController;
+import com.example.kbb12.dms.ErrorHandling.MasterView;
 import com.example.kbb12.dms.InsulinModelBuilder.Controller.IEntryControllerFactory;
 import com.example.kbb12.dms.InsulinModelBuilder.Model.InsulinReadModel;
-import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * Created by kbb12 on 20/01/2017.
  */
-public class InsulinModelBuilderView implements ModelObserver {
+public class InsulinModelBuilderView extends MasterView implements ModelObserver {
 
     LinearLayout insulinList;
     SpinnerAdapter adapter;
@@ -28,7 +30,8 @@ public class InsulinModelBuilderView implements ModelObserver {
     List<InsulinEntry> entries;
     int id;
 
-    public InsulinModelBuilderView(LinearLayout insulinList,SpinnerAdapter adapter,IEntryControllerFactory controllerFactory,InsulinReadModel model,Context context){
+    public InsulinModelBuilderView(LinearLayout insulinList,SpinnerAdapter adapter,IEntryControllerFactory controllerFactory,InsulinReadModel model,Context context,FragmentManager fragMan,IErrorController errorController){
+        super(fragMan,errorController);
         this.insulinList=insulinList;
         this.adapter=adapter;
         this.controllerFactory=controllerFactory;
@@ -43,6 +46,7 @@ public class InsulinModelBuilderView implements ModelObserver {
     public void update() {
         //Only refreshing the view if it doesn't already match the model
         //This stops continuous loops.
+        handleError(model.getError());
         List<InsulinEntry> newEntries = model.getInsulinEntries();
         if(entries.size()==(newEntries.size())){
             for(int i=0;i<entries.size();i++){
@@ -66,20 +70,6 @@ public class InsulinModelBuilderView implements ModelObserver {
         insulinList.addView(newEntry(InsulinEntry.InsulinType.NOT_SET, null, entries.size()));
     }
 
-    private boolean modelChanged(List<InsulinEntry> newEntries){
-        if(entries.size()==(newEntries.size())){
-            for(int i=0;i<entries.size();i++){
-                if(!entries.get(i).equals(newEntries.get(i))){
-                    entries=newEntries;
-                    return true;
-                }
-            }
-        }else{
-            entries=newEntries;
-            return true;
-        }
-        return false;
-    }
 
     private LinearLayout newEntry(InsulinEntry.InsulinType type,String brandName,int entryNumber){
         LinearLayout newRow;

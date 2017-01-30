@@ -7,4 +7,5 @@
         <item>Short-Acting</item>
         <item>Long-Acting</item>
     </string-array>
+    <string name="accept">Ok</string>
 </resources>

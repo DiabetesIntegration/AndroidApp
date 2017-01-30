@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.kbb12.dms.ErrorHandling.DefaultErrorController;
 import com.example.kbb12.dms.InsulinModelBuilder.Controller.EntryControllerFactory;
 import com.example.kbb12.dms.InsulinModelBuilder.Controller.IEntryControllerFactory;
 import com.example.kbb12.dms.InsulinModelBuilder.Controller.ValidateInsulinController;
@@ -37,7 +38,7 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
         Button nextButton = (Button) findViewById(R.id.nextButton2);
         nextButton.setOnClickListener(new ValidateInsulinController(ModelHolder.model));
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(ModelHolder.model);
-        ModelObserver view = new InsulinModelBuilderView(insulinList,adapter,controllerFactory,ModelHolder.model,this);
+        ModelObserver view = new InsulinModelBuilderView(insulinList,adapter,controllerFactory,ModelHolder.model,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
         ModelHolder.model.registerObserver(view);
     }
 }

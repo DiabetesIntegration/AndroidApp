@@ -21,6 +21,8 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
 
     private List<InsulinDose> basicDoses;
 
+    private String errorMessage;
+
     public UserModel(){
         observers= new ArrayList<>();
         basicDoses=new ArrayList<>();
@@ -36,6 +38,14 @@ public class UserModel implements ITemplateModel,InsulinReadWriteModel {
     }
 
 
+    public void setError(String errorMessage){
+        this.errorMessage=errorMessage;
+        notifyObservers();
+    }
+
+    public String getError(){
+        return errorMessage;
+    }
 
     public String getExampleData(){
         return exampleData;
