@@ -1,20 +1,18 @@
-package com.example.kbb12.dms.InsulinModelBuilder.Controller;
+package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.example.kbb12.dms.InsulinModelBuilder.Model.InsulinReadWriteModel;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
 
 /**
  * Created by kbb12 on 28/01/2017.
  */
 public class BrandListener implements TextWatcher {
 
-    private int entryNumber;
-    private InsulinReadWriteModel model;
+    private LongActingInsulinReadWriteModel model;
 
-    public BrandListener(int entryNumber,InsulinReadWriteModel model){
-        this.entryNumber=entryNumber;
+    public BrandListener(LongActingInsulinReadWriteModel model){
         this.model=model;
     }
 
@@ -25,7 +23,7 @@ public class BrandListener implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        model.setBrand(entryNumber,s.toString());
+        model.setBrand(s.toString());
     }
 
     @Override

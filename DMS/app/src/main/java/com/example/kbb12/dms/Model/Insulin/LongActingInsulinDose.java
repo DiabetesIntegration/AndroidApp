@@ -1,26 +1,26 @@
 package com.example.kbb12.dms.Model.Insulin;
 
-import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
 
 /**
  * Created by kbb12 on 27/01/2017.
  */
-public class InsulinDose implements InsulinEntry {
+public class LongActingInsulinDose implements LongActingInsulinEntry {
     private String brandName;
     private InsulinType type;
 
-    public InsulinDose(InsulinType type){
+    public LongActingInsulinDose(InsulinType type){
         this.type=type;
         this.brandName=null;
     }
 
-    public InsulinDose(InsulinType type,String brandName){
+    public LongActingInsulinDose(InsulinType type, String brandName){
         this.brandName=brandName;
         this.type=type;
     }
 
-    public InsulinDose clone(){
-        return new InsulinDose(type,brandName);
+    public LongActingInsulinDose clone(){
+        return new LongActingInsulinDose(type,brandName);
     }
 
     public String getBrandName() {
@@ -46,13 +46,13 @@ public class InsulinDose implements InsulinEntry {
             return false;
         }
         if(o.getClass().equals(this.getClass())){
-            InsulinEntry entry = (InsulinEntry) o;
+            LongActingInsulinEntry entry = (LongActingInsulinEntry) o;
             return (checkBrandName(entry)&&checkType(entry));
         }
         return false;
     }
 
-    private boolean checkBrandName(InsulinEntry entry){
+    private boolean checkBrandName(LongActingInsulinEntry entry){
         if(entry.getBrandName()==null){
             if(this.getBrandName()==null){
                 return true;
@@ -62,7 +62,7 @@ public class InsulinDose implements InsulinEntry {
         return entry.getBrandName().equals(this.getBrandName());
     }
 
-    private boolean checkType(InsulinEntry entry){
+    private boolean checkType(LongActingInsulinEntry entry){
         if(entry.getType()==null){
             if(this.getType()==null){
                 return true;

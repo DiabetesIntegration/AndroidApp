@@ -1,9 +1,9 @@
-package com.example.kbb12.dms.InsulinModelBuilder.Controller;
+package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
 import android.view.View;
 
-import com.example.kbb12.dms.InsulinModelBuilder.Model.InsulinReadWriteModel;
-import com.example.kbb12.dms.InsulinModelBuilder.View.InsulinEntry;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import java.util.List;
  */
 public class ValidateInsulinController implements View.OnClickListener {
 
-    InsulinReadWriteModel model;
+    LongActingInsulinReadWriteModel model;
 
-    public ValidateInsulinController(InsulinReadWriteModel model){
+    public ValidateInsulinController(LongActingInsulinReadWriteModel model){
         this.model=model;
     }
     @Override
     public void onClick(View v) {
-        List<InsulinEntry> doses=model.getInsulinEntries();
+        List<LongActingInsulinEntry> doses=model.getInsulinEntries();
         String invalidEntries="";
         if(doses.size()<1){
             model.setError("You must enter at least one type of insulin which you use");

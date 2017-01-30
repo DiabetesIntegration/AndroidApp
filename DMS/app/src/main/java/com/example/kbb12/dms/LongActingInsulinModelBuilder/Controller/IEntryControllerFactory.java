@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.InsulinModelBuilder.Controller;
+package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
 import android.text.TextWatcher;
 import android.widget.AdapterView;

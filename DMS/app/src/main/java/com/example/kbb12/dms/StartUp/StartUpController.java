@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.kbb12.dms.InsulinModelBuilder.InsulinModelBuilderActivity;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.InsulinModelBuilderActivity;
 
 /**
  * Created by kbb12 on 20/01/2017.
