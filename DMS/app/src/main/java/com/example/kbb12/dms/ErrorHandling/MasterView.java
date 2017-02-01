@@ -7,7 +7,7 @@ import android.app.FragmentManager;
  */
 public class MasterView {
 
-    private FragmentManager fragMan;
+    protected FragmentManager fragMan;
     private ErrorMessageDialogFragment frag;
 
     public MasterView(FragmentManager fragMan,IErrorController controller){

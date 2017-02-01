@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
+import android.app.TimePickerDialog;
 import android.text.TextWatcher;
 import android.widget.AdapterView;
 
@@ -18,12 +19,17 @@ public class EntryControllerFactory implements IEntryControllerFactory {
     }
 
     @Override
-    public AdapterView.OnItemSelectedListener createTimeEntryListener(int entryNumber) {
+    public AdapterView.OnClickListener createTimeEntryListener(int entryNumber) {
         return new TimeEntryListener(entryNumber,model);
     }
 
     @Override
-    public TextWatcher createAmountListener(int entryNumber){
-        return new AmountListener(entryNumber,model);
+    public TextWatcher createDoseListener(int entryNumber){
+        return new DoseListener(entryNumber,model);
+    }
+
+    @Override
+    public TimePickerDialog.OnTimeSetListener createTimeChangeListener() {
+        return new TimeChangeListener(model);
     }
 }

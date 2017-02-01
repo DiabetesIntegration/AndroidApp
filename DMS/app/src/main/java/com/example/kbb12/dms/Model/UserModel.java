@@ -23,9 +23,15 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
 
     private String errorMessage;
 
+    private LongActingInsulinDose selectedDose;
+
+    private String longActingInsulinBrandName;
+
     public UserModel(){
         observers= new ArrayList<>();
         basicDoses=new ArrayList<>();
+        selectedDose=null;
+        longActingInsulinBrandName=null;
     }
 
     //TODO file handling methods
@@ -56,40 +62,6 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
         notifyObservers();
     }
 
-    @Override
-    public List<LongActingInsulinEntry> getInsulinEntries() {
-        List<LongActingInsulinEntry> entries = new ArrayList<>();
-        for(LongActingInsulinDose dose:basicDoses){
-            entries.add(dose.clone());
-        }
-        return entries;
-    }
-
-    @Override
-    public void setType(int position, LongActingInsulinEntry.InsulinType type) {
-        if(position<basicDoses.size()){
-            if(LongActingInsulinEntry.InsulinType.NOT_SET.equals(type)){
-                basicDoses.remove(position);
-            }else {
-                basicDoses.get(position).setType(type);
-            }
-        }else{
-            if(LongActingInsulinEntry.InsulinType.NOT_SET.equals(type)){
-                return;
-            }
-            basicDoses.add(new LongActingInsulinDose(type));
-        }
-        notifyObservers();
-    }
-
-    @Override
-    public void setBrand(int entryNumber,String name){
-        assert entryNumber<basicDoses.size();
-        basicDoses.get(entryNumber).setBrandName(name);
-        notifyObservers();
-    }
-
-
     public void registerObserver(ModelObserver observer)
     {
         observers.add(observer);
@@ -101,4 +73,62 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
             observer.update();
         }
     }
+
+    @Override
+    public void setHour(int hour) {
+        selectedDose.setHour(hour);
+    }
+
+    @Override
+    public void setMinute(int minute) {
+        selectedDose.setMinute(minute);
+    }
+
+    @Override
+    public void setSelectedTime(int entryNumber) {
+        if(entryNumber>=basicDoses.size()){
+            selectedDose=new LongActingInsulinDose();
+            basicDoses.add(selectedDose);
+        }else{
+            selectedDose=basicDoses.get(entryNumber);
+        }
+        notifyObservers();
+    }
+
+    @Override
+    public void deselectTime(){
+        selectedDose=null;
+        notifyObservers();
+    }
+
+    @Override
+    public boolean isTimeSelected(){
+        return (null!=selectedDose);
+    }
+
+    @Override
+    public String getLongActingBrandName() {
+        return longActingInsulinBrandName;
+    }
+
+    @Override
+    public void setDose(double dose, int entryNumber) {
+        basicDoses.get(entryNumber).setDose(dose);
+    }
+
+    @Override
+    public void setLongActingBrandName(String brandName) {
+        longActingInsulinBrandName=brandName;
+    }
+
+    @Override
+    public List<LongActingInsulinEntry> getDoses() {
+        List<LongActingInsulinEntry> entries = new ArrayList<>();
+        for(LongActingInsulinDose dose:basicDoses){
+            entries.add(dose.clone());
+        }
+        return entries;
+    }
+
+
 }

@@ -19,23 +19,17 @@ public class ValidateInsulinController implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        List<LongActingInsulinEntry> doses=model.getInsulinEntries();
-        String invalidEntries="";
-        if(doses.size()<1){
-            model.setError("You must enter at least one type of insulin which you use");
+        if(model.getLongActingBrandName()==null){
+            model.setError("You need to enter the brand name of your long acting insulin before moving on");
             return;
         }
-        for(int i=0;i<doses.size();i++){
-            if(doses.get(i).getBrandName()==null){
-                invalidEntries=invalidEntries+i+",";
+        List<LongActingInsulinEntry> doses=model.getDoses();
+        for(LongActingInsulinEntry dose:doses){
+            if(dose.getDose()<=0){
+                model.setError("You must enter a dosage greater than zero for each entry");
+                return;
             }
         }
-        if(invalidEntries.equals("")){
-            //Launch next Activity
-            return;
-        }
-        invalidEntries=invalidEntries.substring(0,invalidEntries.length()-1);
-        model.setError("The following entries have invalid names: "+invalidEntries);
-        return;
+        //Launch Next Activity
     }
 }

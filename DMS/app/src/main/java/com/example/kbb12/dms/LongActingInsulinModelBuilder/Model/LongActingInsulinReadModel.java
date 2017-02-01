@@ -9,5 +9,7 @@ import java.util.List;
  * Created by kbb12 on 20/01/2017.
  */
 public interface LongActingInsulinReadModel extends ErrorReadModel {
-    public List<LongActingInsulinEntry> getDoses();
+    List<LongActingInsulinEntry> getDoses();
+    boolean isTimeSelected();
+    String getLongActingBrandName();
 }

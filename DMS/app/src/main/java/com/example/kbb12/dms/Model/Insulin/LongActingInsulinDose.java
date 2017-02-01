@@ -6,38 +6,51 @@ import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsuli
  * Created by kbb12 on 27/01/2017.
  */
 public class LongActingInsulinDose implements LongActingInsulinEntry {
-    private String brandName;
-    private InsulinType type;
+    private int hour;
+    private int minute;
+    private double dose;
 
-    public LongActingInsulinDose(InsulinType type){
-        this.type=type;
-        this.brandName=null;
+    public LongActingInsulinDose(){
+        this.hour=0;
+        this.minute=0;
+        this.dose=0.0;
     }
 
-    public LongActingInsulinDose(InsulinType type, String brandName){
-        this.brandName=brandName;
-        this.type=type;
+    public LongActingInsulinDose(int hour,int minute,double dose){
+        this.hour=hour;
+        this.minute=minute;
+        this.dose=dose;
     }
 
     public LongActingInsulinDose clone(){
-        return new LongActingInsulinDose(type,brandName);
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+        return new LongActingInsulinDose(hour,minute,dose);
     }
 
     @Override
-    public InsulinType getType() {
-        return type;
+    public int getHour() {
+        return hour;
     }
 
-    public void setType(InsulinType type) {
-        this.type = type;
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    @Override
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    @Override
+    public double getDose() {
+        return dose;
+    }
+
+    public void setDose(double dose) {
+        this.dose = dose;
     }
 
     @Override
@@ -47,28 +60,9 @@ public class LongActingInsulinDose implements LongActingInsulinEntry {
         }
         if(o.getClass().equals(this.getClass())){
             LongActingInsulinEntry entry = (LongActingInsulinEntry) o;
-            return (checkBrandName(entry)&&checkType(entry));
+            return (this.hour==entry.getHour()&&this.minute==entry.getMinute()&&this.dose==entry.getDose());
         }
         return false;
     }
 
-    private boolean checkBrandName(LongActingInsulinEntry entry){
-        if(entry.getBrandName()==null){
-            if(this.getBrandName()==null){
-                return true;
-            }
-            return false;
-        }
-        return entry.getBrandName().equals(this.getBrandName());
-    }
-
-    private boolean checkType(LongActingInsulinEntry entry){
-        if(entry.getType()==null){
-            if(this.getType()==null){
-                return true;
-            }
-            return false;
-        }
-        return entry.getType().equals(this.getType());
-    }
 }

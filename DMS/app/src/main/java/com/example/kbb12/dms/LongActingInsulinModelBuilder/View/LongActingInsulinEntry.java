@@ -5,11 +5,10 @@ package com.example.kbb12.dms.LongActingInsulinModelBuilder.View;
  */
 public interface LongActingInsulinEntry {
 
-    public enum InsulinType{
-        NOT_SET,LONG_ACTING,SHORT_ACTING
-    }
+    public int getHour();
 
-    public InsulinType getType();
+    public int getMinute();
 
-    public String getBrandName();
+    public double getDose();
+
 }

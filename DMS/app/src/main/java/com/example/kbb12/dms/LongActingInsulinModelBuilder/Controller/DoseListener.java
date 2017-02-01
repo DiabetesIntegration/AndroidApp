@@ -8,11 +8,13 @@ import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsul
 /**
  * Created by kbb12 on 01/02/2017.
  */
-public class BrandListener implements TextWatcher {
+public class DoseListener implements TextWatcher {
 
+    private int entryNumber;
     private LongActingInsulinReadWriteModel model;
 
-    public BrandListener(LongActingInsulinReadWriteModel model){
+    public DoseListener(int entryNumber,LongActingInsulinReadWriteModel model){
+        this.entryNumber=entryNumber;
         this.model=model;
     }
 
@@ -23,7 +25,11 @@ public class BrandListener implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        model.setLongActingBrandName(s.toString());
+        try{
+            model.setDose(Double.parseDouble(s.toString()),entryNumber);
+        }catch (NumberFormatException e){
+            model.setError("I'm afraid the dose you tried to enter is not a number.");
+        }
     }
 
     @Override

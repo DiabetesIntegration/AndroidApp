@@ -24,7 +24,7 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insulin_model_builder);
-        LinearLayout insulinList = (LinearLayout) findViewById(R.id.insulinList);
+        LinearLayout doseList = (LinearLayout) findViewById(R.id.doses);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.insulin_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -33,7 +33,7 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
         Button nextButton = (Button) findViewById(R.id.nextButton2);
         nextButton.setOnClickListener(new ValidateInsulinController(ModelHolder.model));
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(ModelHolder.model);
-        ModelObserver view = new LongActingInsulinModelBuilderView(insulinList,adapter,controllerFactory,ModelHolder.model,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
+        ModelObserver view = new LongActingInsulinModelBuilderView(doseList,controllerFactory,ModelHolder.model,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
         ModelHolder.model.registerObserver(view);
     }
 }
