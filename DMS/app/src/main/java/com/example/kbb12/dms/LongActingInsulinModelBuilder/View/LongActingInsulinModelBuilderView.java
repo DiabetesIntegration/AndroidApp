@@ -2,6 +2,7 @@ package com.example.kbb12.dms.LongActingInsulinModelBuilder.View;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.text.InputType;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -98,7 +99,16 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
         TextView newTime=new TextView(context);
         newTime.setLayoutParams(sectionLayout);
         if(set){
-           newTime.setText(hour+":"+minute);
+            String timeString="";
+            if(hour<10){
+                timeString+="0";
+            }
+            timeString+=(hour+":");
+            if(minute<10){
+                timeString+="0";
+            }
+            timeString+=minute;
+           newTime.setText(timeString);
         }else{
             newTime.setText("Tap to add a new time");
         }
@@ -112,6 +122,7 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
         EditText doseTextBox = new EditText(context);
         doseTextBox.setText(dose.toString());
         doseTextBox.setLayoutParams(sectionLayout);
+        doseTextBox.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         doseTextBox.addTextChangedListener(controllerFactory.createDoseListener(entryNumber));
         return doseTextBox;
     }

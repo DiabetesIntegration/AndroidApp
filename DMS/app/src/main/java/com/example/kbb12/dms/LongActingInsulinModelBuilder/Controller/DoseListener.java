@@ -28,7 +28,9 @@ public class DoseListener implements TextWatcher {
         try{
             model.setDose(Double.parseDouble(s.toString()),entryNumber);
         }catch (NumberFormatException e){
-            model.setError("I'm afraid the dose you tried to enter is not a number.");
+            //Could potentially alert the user here but that gets annoying so
+            //instead just don't pass invalid data to model and alert user
+            //when they try to move to the next screen.
         }
     }
 
