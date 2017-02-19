@@ -1,9 +1,13 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.InsulinModelBuilderActivity;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
+import com.example.kbb12.dms.MainMenu.MainMenuActivity;
 
 import java.util.List;
 
@@ -12,9 +16,11 @@ import java.util.List;
  */
 public class ValidateInsulinController implements View.OnClickListener {
 
+    Activity currentActivity;
     LongActingInsulinReadWriteModel model;
 
-    public ValidateInsulinController(LongActingInsulinReadWriteModel model){
+    public ValidateInsulinController(Activity currentActivity,LongActingInsulinReadWriteModel model){
+        this.currentActivity=currentActivity;
         this.model=model;
     }
     @Override
@@ -30,6 +36,6 @@ public class ValidateInsulinController implements View.OnClickListener {
                 return;
             }
         }
-        //Launch Next Activity
+        currentActivity.startActivity(new Intent(currentActivity, MainMenuActivity.class));
     }
 }

@@ -31,7 +31,7 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
         EditText brandName = (EditText) findViewById(R.id.editText4);
         brandName.addTextChangedListener(new BrandListener(ModelHolder.model));
         Button nextButton = (Button) findViewById(R.id.nextButton2);
-        nextButton.setOnClickListener(new ValidateInsulinController(ModelHolder.model));
+        nextButton.setOnClickListener(new ValidateInsulinController(this,ModelHolder.model));
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(ModelHolder.model);
         ModelObserver view = new LongActingInsulinModelBuilderView(doseList,controllerFactory,ModelHolder.model,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
         ModelHolder.model.registerObserver(view);
