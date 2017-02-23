@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         if(model.getDoses().size()>0){
             Intent nextIntent = new Intent(this, MainMenuActivity.class);
             startActivity(nextIntent);
+            finish();
         }
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new StartUpController(this));

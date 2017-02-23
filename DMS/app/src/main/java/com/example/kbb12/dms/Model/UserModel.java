@@ -36,7 +36,7 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
 
     private ILongActingInsulinDatabase database;
 
-    public static final int versionNumber=28;
+    public static final int versionNumber=30;
 
     public UserModel(Context context){
         database=new LongActingInsulinDatabase(context,versionNumber);

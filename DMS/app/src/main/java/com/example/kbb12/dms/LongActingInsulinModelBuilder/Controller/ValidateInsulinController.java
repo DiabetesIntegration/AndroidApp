@@ -42,6 +42,7 @@ public class ValidateInsulinController implements View.OnClickListener {
             Intent setUpAlerts = new Intent("com.DMS.timedAlertCreator");
             currentActivity.sendBroadcast(setUpAlerts);
             currentActivity.startActivity(new Intent(currentActivity, MainMenuActivity.class));
+            currentActivity.finish();
         }catch (DuplicateDoseException e){
             model.setError("There can not be two doses taken at the same time.");
         }

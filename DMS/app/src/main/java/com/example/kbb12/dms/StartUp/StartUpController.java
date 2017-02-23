@@ -20,5 +20,6 @@ public class StartUpController implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         currentActivity.startActivity(new Intent(currentActivity, InsulinModelBuilderActivity.class));
+        currentActivity.finish();
     }
 }
