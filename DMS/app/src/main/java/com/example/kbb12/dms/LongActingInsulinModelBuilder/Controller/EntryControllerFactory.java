@@ -1,7 +1,9 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
@@ -26,6 +28,21 @@ public class EntryControllerFactory implements IEntryControllerFactory {
     @Override
     public TextWatcher createDoseListener(int entryNumber){
         return new DoseListener(entryNumber,model);
+    }
+
+    @Override
+    public View.OnClickListener createDeleteListener(int entryNumber) {
+        return new DeleteEntryListener(model,entryNumber);
+    }
+
+    @Override
+    public DialogInterface.OnClickListener createConfirmDeleteListener() {
+        return new ConfirmDeleteListener(model);
+    }
+
+    @Override
+    public DialogInterface.OnClickListener createCancelDeleteListener() {
+        return new CancelDeleteListener(model);
     }
 
     @Override

@@ -1,7 +1,12 @@
 package com.example.kbb12.dms.Model;
 
+import android.content.Context;
+
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
+import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
+import com.example.kbb12.dms.Model.Insulin.ILongActingInsulinDatabase;
+import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDatabase;
 import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDose;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 import com.example.kbb12.dms.Template.ITemplateModel;
@@ -25,12 +30,20 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
 
     private LongActingInsulinDose selectedDose;
 
+    private LongActingInsulinDose doseToBeDeleted;
+
     private String longActingInsulinBrandName;
 
-    public UserModel(){
+    private ILongActingInsulinDatabase database;
+
+    public static final int versionNumber=27;
+
+    public UserModel(Context context){
+        database=new LongActingInsulinDatabase(context,versionNumber);
         observers= new ArrayList<>();
         basicDoses=new ArrayList<>();
         selectedDose=null;
+        doseToBeDeleted=null;
         longActingInsulinBrandName=null;
     }
 
@@ -107,6 +120,30 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
     }
 
     @Override
+    public void setDoseToBeDeleted(int entryNumber){
+        doseToBeDeleted=basicDoses.get(entryNumber);
+        notifyObservers();
+    }
+
+    @Override
+    public void cancelDelete(){
+        doseToBeDeleted=null;
+        notifyObservers();
+    }
+
+    @Override
+    public void deleteDose(){
+        basicDoses.remove(doseToBeDeleted);
+        doseToBeDeleted=null;
+        notifyObservers();
+    }
+
+    @Override
+    public boolean isReadyToDelete(){
+        return (null!=doseToBeDeleted);
+    }
+
+    @Override
     public String getLongActingBrandName() {
         return longActingInsulinBrandName;
     }
@@ -122,12 +159,28 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
     }
 
     @Override
-    public List<LongActingInsulinEntry> getDoses() {
+    public List<LongActingInsulinEntry> getTempDoses() {
         List<LongActingInsulinEntry> entries = new ArrayList<>();
         for(LongActingInsulinDose dose:basicDoses){
             entries.add(dose.clone());
         }
         return entries;
+    }
+
+    @Override
+    public void saveDoses() throws DuplicateDoseException {
+        try {
+            for (LongActingInsulinEntry dose : basicDoses) {
+                database.addEntry(dose,longActingInsulinBrandName);
+            }
+        } catch (DuplicateDoseException e){
+            database.clearValues();
+            throw new DuplicateDoseException();
+        }
+    }
+
+    public List<LongActingInsulinEntry> getDoses(){
+        return database.getEntries();
     }
 
 

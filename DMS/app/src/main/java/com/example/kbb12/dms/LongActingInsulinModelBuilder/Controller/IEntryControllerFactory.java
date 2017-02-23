@@ -1,7 +1,9 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
 
 /**
@@ -12,6 +14,12 @@ public interface IEntryControllerFactory {
     public AdapterView.OnClickListener createTimeEntryListener(int entryNumber);
 
     public TextWatcher createDoseListener(int entryNumber);
+
+    public View.OnClickListener createDeleteListener(int entryNumber);
+
+    public DialogInterface.OnClickListener createConfirmDeleteListener();
+
+    public DialogInterface.OnClickListener createCancelDeleteListener();
 
     public TimePickerDialog.OnTimeSetListener createTimeChangeListener();
 }

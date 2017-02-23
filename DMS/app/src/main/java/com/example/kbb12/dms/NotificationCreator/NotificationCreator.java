@@ -21,7 +21,6 @@ public class NotificationCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"It's alive",Toast.LENGTH_LONG);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.take_insulin_button)
@@ -33,5 +32,8 @@ public class NotificationCreator extends BroadcastReceiver {
                 (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         // Builds the notification and issues it.
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        //Sends the broadcast message to make sure the next notification is set
+        Intent setUpAlerts = new Intent("com.DMS.timedAlertCreator");
+        context.sendBroadcast(setUpAlerts);
     }
 }

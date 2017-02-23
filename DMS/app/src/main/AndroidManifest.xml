@@ -14,6 +14,14 @@
                 </action>
             </intent-filter>
         </receiver>
+        <receiver android:name=".NotificationCreator.TimedAlertCreator" >
+            <intent-filter>
+                <action android:name="com.DMS.timedAlertCreator" >
+                </action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
         <activity android:name=".StartUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,11 +42,6 @@
         <activity
             android:name=".LongActingInsulinModelBuilder.InsulinModelBuilderActivity"
             android:label="@string/title_activity_insulin_model_builder" />
-
-        <service
-            android:name=".NotificationCreator.NotificationCreatorService"
-            android:enabled="true"
-            android:exported="true"></service>
     </application>
 
 </manifest>

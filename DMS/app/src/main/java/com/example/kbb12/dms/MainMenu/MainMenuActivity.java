@@ -23,19 +23,6 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         UserModel model=ModelHolder.model;
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        for(LongActingInsulinEntry dose:model.getDoses()){
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, dose.getHour());
-            calendar.set(Calendar.MINUTE, dose.getMinute());
-            calendar.set(Calendar.SECOND, 0);
-            Intent pendInt = new Intent();
-            pendInt.setAction("com.DMS.longActingInsulinNotification");
-            pendInt.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-            PendingIntent pi = PendingIntent.getBroadcast(this, 0,
-                    pendInt, PendingIntent.FLAG_UPDATE_CURRENT);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, pi);
-        }
+        model.getError();
     }
 }

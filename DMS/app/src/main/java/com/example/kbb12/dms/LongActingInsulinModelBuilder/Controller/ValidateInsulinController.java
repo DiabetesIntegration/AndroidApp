@@ -8,6 +8,7 @@ import com.example.kbb12.dms.LongActingInsulinModelBuilder.InsulinModelBuilderAc
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
 import com.example.kbb12.dms.MainMenu.MainMenuActivity;
+import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
 
 import java.util.List;
 
@@ -29,13 +30,20 @@ public class ValidateInsulinController implements View.OnClickListener {
             model.setError("You need to enter the brand name of your long acting insulin before moving on");
             return;
         }
-        List<LongActingInsulinEntry> doses=model.getDoses();
+        List<LongActingInsulinEntry> doses=model.getTempDoses();
         for(LongActingInsulinEntry dose:doses){
             if(dose.getDose()<=0){
                 model.setError("You must enter a dosage greater than zero for each entry");
                 return;
             }
         }
-        currentActivity.startActivity(new Intent(currentActivity, MainMenuActivity.class));
+        try {
+            model.saveDoses();
+            Intent setUpAlerts = new Intent("com.DMS.timedAlertCreator");
+            currentActivity.sendBroadcast(setUpAlerts);
+            currentActivity.startActivity(new Intent(currentActivity, MainMenuActivity.class));
+        }catch (DuplicateDoseException e){
+            model.setError("There can not be two doses taken at the same time.");
+        }
     }
 }

@@ -27,7 +27,7 @@ public class LongActingInsulinDose implements LongActingInsulinEntry {
     }
 
     @Override
-    public int getHour() {
+    public Integer getHour() {
         return hour;
     }
 
@@ -36,7 +36,7 @@ public class LongActingInsulinDose implements LongActingInsulinEntry {
     }
 
     @Override
-    public int getMinute() {
+    public Integer getMinute() {
         return minute;
     }
 
@@ -48,6 +48,7 @@ public class LongActingInsulinDose implements LongActingInsulinEntry {
     public double getDose() {
         return dose;
     }
+
 
     public void setDose(double dose) {
         this.dose = dose;

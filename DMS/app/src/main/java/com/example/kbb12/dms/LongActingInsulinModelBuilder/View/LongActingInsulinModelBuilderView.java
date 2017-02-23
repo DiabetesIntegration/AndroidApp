@@ -1,10 +1,12 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.View;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.text.InputType;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,19 +47,29 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
         handleError(model.getError());
         if(model.isTimeSelected()){
             timeFragment.show(fragMan,"Enter time");
-        }else {
-            List<LongActingInsulinEntry> newEntries = model.getDoses();
-            if (entries.size() == (newEntries.size())) {
-                for (int i = 0; i < entries.size(); i++) {
-                    if (!entries.get(i).equals(newEntries.get(i))) {
-                        entries = newEntries;
-                        refreshView();
-                    }
+            return;
+        }
+        if(model.isReadyToDelete()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Are you sure you wish to delete this entry?");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Yes", controllerFactory.createConfirmDeleteListener());
+            builder.setNegativeButton("No", controllerFactory.createCancelDeleteListener());
+            AlertDialog alert = builder.create();
+            alert.show();
+            return;
+        }
+        List<LongActingInsulinEntry> newEntries = model.getTempDoses();
+        if (entries.size() == (newEntries.size())) {
+            for (int i = 0; i < entries.size(); i++) {
+                if (!entries.get(i).equals(newEntries.get(i))) {
+                    entries = newEntries;
+                    refreshView();
                 }
-            } else {
-                entries = newEntries;
-                refreshView();
             }
+        } else {
+            entries = newEntries;
+            refreshView();
         }
     }
 
@@ -86,10 +98,11 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
         LinearLayout newRow = new LinearLayout(context);
         newRow.setLayoutParams(entryLayout);
         newRow.setOrientation(LinearLayout.HORIZONTAL);
-        newRow.setWeightSum(4);
+        newRow.setWeightSum(5);
         newRow.addView(createTimeEntryBox(true, hour, minute, entryNumber));
         newRow.addView(createDoseTextBox(dose, entryNumber));
         newRow.addView(createUnitTextBox());
+        newRow.addView(createDeleteButton(entryNumber));
         return newRow;
     }
 
@@ -122,7 +135,7 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
         EditText doseTextBox = new EditText(context);
         doseTextBox.setText(dose.toString());
         doseTextBox.setLayoutParams(sectionLayout);
-        doseTextBox.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        doseTextBox.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         doseTextBox.addTextChangedListener(controllerFactory.createDoseListener(entryNumber));
         return doseTextBox;
     }
@@ -132,5 +145,13 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
         unitTextBox.setText("Units");
         unitTextBox.setLayoutParams(sectionLayout);
         return unitTextBox;
+    }
+    private ImageView createDeleteButton(int entryNumber){
+        LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
+        ImageView deleteButton = new ImageView(context);
+        deleteButton.setImageResource(android.R.drawable.ic_delete);;
+        deleteButton.setLayoutParams(sectionLayout);
+        deleteButton.setOnClickListener(controllerFactory.createDeleteListener(entryNumber));
+        return deleteButton;
     }
 }

@@ -5,9 +5,9 @@ package com.example.kbb12.dms.LongActingInsulinModelBuilder.View;
  */
 public interface LongActingInsulinEntry {
 
-    public int getHour();
+    public Integer getHour();
 
-    public int getMinute();
+    public Integer getMinute();
 
     public double getDose();
 

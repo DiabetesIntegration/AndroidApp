@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Creates user model.
-        ModelHolder.model = new UserModel();
+        ModelHolder.model = new UserModel(this);
         model = ModelHolder.model;
-        if(model.loadData()){
+        if(model.getDoses().size()>0){
             Intent nextIntent = new Intent(this, MainMenuActivity.class);
             startActivity(nextIntent);
         }
