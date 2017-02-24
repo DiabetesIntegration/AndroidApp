@@ -12,6 +12,8 @@ import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.BrandListe
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.EntryControllerFactory;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.IEntryControllerFactory;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.ValidateInsulinController;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinModel;
+import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinModelBuilderView;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;
@@ -28,12 +30,13 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.insulin_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        LongActingInsulinModel currentModel = new LongActingInsulinModel(ModelHolder.model);
         EditText brandName = (EditText) findViewById(R.id.editText4);
-        brandName.addTextChangedListener(new BrandListener(ModelHolder.model));
+        brandName.addTextChangedListener(new BrandListener(currentModel));
         Button nextButton = (Button) findViewById(R.id.nextButton2);
-        nextButton.setOnClickListener(new ValidateInsulinController(this,ModelHolder.model));
-        IEntryControllerFactory controllerFactory = new EntryControllerFactory(ModelHolder.model);
-        ModelObserver view = new LongActingInsulinModelBuilderView(doseList,controllerFactory,ModelHolder.model,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
-        ModelHolder.model.registerObserver(view);
+        nextButton.setOnClickListener(new ValidateInsulinController(this,currentModel));
+        IEntryControllerFactory controllerFactory = new EntryControllerFactory(currentModel);
+        ModelObserver view = new LongActingInsulinModelBuilderView(doseList,controllerFactory,currentModel,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
+        currentModel.registerObserver(view);
     }
 }

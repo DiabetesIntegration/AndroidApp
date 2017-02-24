@@ -18,33 +18,21 @@ import java.util.List;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel {
+public class UserModel implements ITemplateModel,InsulinModel {
 
     private String exampleData;
 
     private List<ModelObserver> observers;
 
-    private List<LongActingInsulinDose> basicDoses;
-
     private String errorMessage;
-
-    private LongActingInsulinDose selectedDose;
-
-    private LongActingInsulinDose doseToBeDeleted;
-
-    private String longActingInsulinBrandName;
 
     private ILongActingInsulinDatabase database;
 
-    public static final int versionNumber=36;
+    public static final int versionNumber=37;
 
     public UserModel(Context context){
         database=new LongActingInsulinDatabase(context,versionNumber);
         observers= new ArrayList<>();
-        basicDoses=new ArrayList<>();
-        selectedDose=null;
-        doseToBeDeleted=null;
-        longActingInsulinBrandName=null;
     }
 
     //TODO file handling methods
@@ -88,87 +76,7 @@ public class UserModel implements ITemplateModel,LongActingInsulinReadWriteModel
     }
 
     @Override
-    public void setHour(int hour) {
-        selectedDose.setHour(hour);
-    }
-
-    @Override
-    public void setMinute(int minute) {
-        selectedDose.setMinute(minute);
-    }
-
-    @Override
-    public void setSelectedTime(int entryNumber) {
-        if(entryNumber>=basicDoses.size()){
-            selectedDose=new LongActingInsulinDose();
-            basicDoses.add(selectedDose);
-        }else{
-            selectedDose=basicDoses.get(entryNumber);
-        }
-        notifyObservers();
-    }
-
-    @Override
-    public void deselectTime(){
-        selectedDose=null;
-        notifyObservers();
-    }
-
-    @Override
-    public boolean isTimeSelected(){
-        return (null!=selectedDose);
-    }
-
-    @Override
-    public void setDoseToBeDeleted(int entryNumber){
-        doseToBeDeleted=basicDoses.get(entryNumber);
-        notifyObservers();
-    }
-
-    @Override
-    public void cancelDelete(){
-        doseToBeDeleted=null;
-        notifyObservers();
-    }
-
-    @Override
-    public void deleteDose(){
-        basicDoses.remove(doseToBeDeleted);
-        doseToBeDeleted=null;
-        notifyObservers();
-    }
-
-    @Override
-    public boolean isReadyToDelete(){
-        return (null!=doseToBeDeleted);
-    }
-
-    @Override
-    public String getLongActingBrandName() {
-        return longActingInsulinBrandName;
-    }
-
-    @Override
-    public void setDose(double dose, int entryNumber) {
-        basicDoses.get(entryNumber).setDose(dose);
-    }
-
-    @Override
-    public void setLongActingBrandName(String brandName) {
-        longActingInsulinBrandName=brandName;
-    }
-
-    @Override
-    public List<LongActingInsulinEntry> getTempDoses() {
-        List<LongActingInsulinEntry> entries = new ArrayList<>();
-        for(LongActingInsulinDose dose:basicDoses){
-            entries.add(dose.clone());
-        }
-        return entries;
-    }
-
-    @Override
-    public void saveDoses() throws DuplicateDoseException {
+    public void saveDoses(List<LongActingInsulinDose> basicDoses,String longActingInsulinBrandName) throws DuplicateDoseException {
         try {
             for (LongActingInsulinEntry dose : basicDoses) {
                 database.addEntry(dose,longActingInsulinBrandName);
