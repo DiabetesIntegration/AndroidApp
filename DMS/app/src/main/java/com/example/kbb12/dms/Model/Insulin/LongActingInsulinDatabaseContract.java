@@ -16,5 +16,6 @@ public final class LongActingInsulinDatabaseContract {
         public static final String COLUMN_ONE_TITLE = "Name";
         public static final String COLUMN_TWO_TITLE = "Time";
         public static final String COLUMN_THREE_TITLE = "Amount";
+        public static final String COLUMN_FOUR_TITLE = "LastTaken";
     }
 }

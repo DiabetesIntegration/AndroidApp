@@ -13,7 +13,6 @@ import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.EntryContr
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.IEntryControllerFactory;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Controller.ValidateInsulinController;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinModel;
-import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinModelBuilderView;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;

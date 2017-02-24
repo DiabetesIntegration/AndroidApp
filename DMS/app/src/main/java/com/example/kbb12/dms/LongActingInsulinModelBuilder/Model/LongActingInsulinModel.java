@@ -26,6 +26,8 @@ public class LongActingInsulinModel implements LongActingInsulinReadWriteModel {
 
     private ModelObserver observer;
 
+    private String errorMessage;
+
     public LongActingInsulinModel(InsulinModel model){
         basicDoses=new ArrayList<>();
         selectedDose=null;
@@ -101,7 +103,7 @@ public class LongActingInsulinModel implements LongActingInsulinReadWriteModel {
 
     @Override
     public void setError(String errorMessage) {
-        model.setError(errorMessage);
+        this.errorMessage=errorMessage;
         notifyObserver();
     }
 
@@ -131,7 +133,7 @@ public class LongActingInsulinModel implements LongActingInsulinReadWriteModel {
 
     @Override
     public String getError() {
-        return model.getError();
+        return errorMessage;
     }
 
     private void notifyObserver(){
