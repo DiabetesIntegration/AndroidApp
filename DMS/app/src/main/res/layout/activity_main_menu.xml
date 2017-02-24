@@ -34,7 +34,7 @@
             android:src="@drawable/take_insulin_button"
             android:text="New Button"
             android:backgroundTint="#fbfcfc"
-            android:id="@+id/button2"
+            android:id="@+id/takeInsulinButton"
 
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"

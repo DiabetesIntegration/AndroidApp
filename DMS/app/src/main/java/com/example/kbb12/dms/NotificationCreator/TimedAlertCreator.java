@@ -25,6 +25,17 @@ public class TimedAlertCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.take_insulin_button)
+                        .setContentTitle("Setting up alerts")
+                        .setContentText("DMS");
+        int mNotificationId = 002;
+        // Gets an instance of the NotificationManager service
+        NotificationManager mNotifyMgr =
+                (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        // Builds the notification and issues it.
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
         ILongActingInsulinDatabase database = new LongActingInsulinDatabase(context, UserModel.versionNumber);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         List<LongActingInsulinEntry> entries = database.getEntries();
@@ -51,7 +62,9 @@ public class TimedAlertCreator extends BroadcastReceiver {
             }
         }
         if(null==nextTime){
+            //Next notification is tomorrow
             nextTime=minEntryTime;
+            nextTime.add(Calendar.DATE,1);
         }
         Intent pendInt = new Intent();
         pendInt.setAction("com.DMS.longActingInsulinNotification");
