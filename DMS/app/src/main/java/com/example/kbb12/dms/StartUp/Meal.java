@@ -9,11 +9,13 @@ import java.util.List;
 public class Meal {
     private String name;
     private double carbVal;
+    private double amountEaten;
     private List<Ingredient> meal;
 
     public Meal(String name) {
         this.name = name;
         carbVal = 0.0;
+        amountEaten = 0.0;
         meal = new ArrayList<Ingredient>();
     }
 
@@ -39,5 +41,13 @@ public class Meal {
 
     public double getCarbValue() {
         return carbVal;
+    }
+
+    public void setAmountEaten(double percentage) {
+        amountEaten = percentage;
+    }
+
+    public void calculateAmountAsCarb() {
+        carbVal = carbVal*amountEaten;
     }
 }

@@ -15,23 +15,24 @@ import java.util.Observer;
  */
 public class UserModel implements ITemplateModel {
 
-    private String exampleData;
-
+    //private String exampleData;
+    private List<Meal> meals;
     private List<ModelObserver> observers;
 
-    public UserModel(String exampleData){
-        this.exampleData=exampleData;
+    public UserModel(/*String exampleData*/){
+        //this.exampleData=exampleData;
         observers= new ArrayList<>();
+        meals = new ArrayList<Meal>();
     }
 
-    public String getExampleData(){
+    /*public String getExampleData(){
         return exampleData;
     }
 
     public void setExampleData(String newData){
         exampleData=newData;
         notifyObservers();
-    }
+    }*/
 
     public void registerObserver(ModelObserver observer)
     {
