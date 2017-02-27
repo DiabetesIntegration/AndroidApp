@@ -10,6 +10,8 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
+import android.nfc.tech.NfcV;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,11 +20,14 @@ import android.widget.Toast;
 import com.example.kbb12.dms.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 public class NFCActivity extends AppCompatActivity {
 
     private NfcAdapter nfcAdapter;
+    private String readings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +49,30 @@ public class NFCActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+
+        //activity in the foreground/resume
         start4groundDispatch(this, nfcAdapter);
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
+        //needs to be halted before onpause is called
         stop4groundDispatch(this, nfcAdapter);
+
+        super.onPause();
     }
 
     private void start4groundDispatch(Activity activity, NfcAdapter nAdapt) {
         Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
-        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
-        IntentFilter[] intentFilter = new IntentFilter[]{};
+        IntentFilter[] intentFilter = new IntentFilter[1];
         String[][] techLists = new String[][]{};
+
+        intentFilter[0] = new IntentFilter();
+        intentFilter[0].addAction(nAdapt.ACTION_NDEF_DISCOVERED);
+        intentFilter[0].addCategory(Intent.CATEGORY_DEFAULT);
 
         nAdapt.enableForegroundDispatch(activity, pendingIntent, intentFilter, techLists);
     }
@@ -70,99 +83,66 @@ public class NFCActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+        //super.onNewIntent(intent);
 
-        //do stuff
+        //where the stuff gets done:
+
+        String intAct = intent.getAction();
 
         if (intent.hasExtra(nfcAdapter.EXTRA_TAG)){
             // nfc intent
 
             Tag tag = intent.getParcelableExtra(nfcAdapter.EXTRA_TAG);
-            NdefMessage ndefMessage = createNdefMessage(MESSAGE_CONTENT_FOR_TAG);
 
-            writeNdefMessage(tag, ndefMessage);
+            new NfcReadTask().execute(tag);
         }
 
     }
 
-    private NdefRecord createRecord(String text) {
-        String format = "UTF-8";
-        try{
-            String language = "en";
-            byte[] textBytes = text.getBytes();
-            byte[] languageBytes = language.getBytes(format);
-            int textLength = textBytes.length;
-            int languageLength = languageBytes.length;
-
-            byte[] payload = new byte[1+textLength+languageLength];
-            payload[0] = (byte) languageLength;
-
-            System.arraycopy(textBytes, 0, payload, 1+languageLength, textLength);
-            System.arraycopy(languageBytes, 0, payload, 1, languageLength);
-
-            return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload);
-
-        } catch(UnsupportedEncodingException e){
-            Log.e("createRecord", e.getMessage());
-        }
-        return null;
-    }
+    private class NfcReadTask extends AsyncTask<Tag, void, String>{
 
 
+        @Override
+        protected String doInBackground(Tag... tags) {
 
-    private NdefMessage createNdefMessage(String message){
-        NdefRecord ndefRecord = createRecord(message);
-        NdefMessage ndefmessage = new NdefMessage(new NdefRecord[] {ndefRecord});
-        return ndefmessage;
-    }
+            Tag tag = tags[0];
+            NfcV nfcvTag = NfcV.get(tag);
 
-    private void writeNdefMessage(Tag tag, NdefMessage message){
-        try{
-            if(tag == null){
-                Toast.makeText(this, "Tag is null", Toast.LENGTH_LONG).show();
-                return;
+            try{
+                nfcvTag.connect();
+            } catch (IOException e) {
+                //make toast to inform user connection couldnt be made?
+                return null;
             }
 
-            Ndef ndef = Ndef.get(tag);
+            readings = "";
 
-            if (ndef == null){
-                createTag(tag, message);
-            } else{
-                ndef.connect();
+            //assuming the size of the block is 8 bytes
+            byte[][] blocks = new byte[13][8];
 
-                if(!ndef.isWritable()){
-                    Toast.makeText(this, "Tag cannot be written", Toast.LENGTH_LONG).show();
-                    ndef.close();
-                    return;
+            try {
+                for (int i = 3; i < 16; i++) {
+
+                    byte[] request = new byte[]{
+                            (byte) 0x02,
+                            (byte) 0x20,
+                            (byte) i
+                    };
+
+                    byte[] readBlock = nfcvTag.transceive(request);
+                    int length = readBlock[1];
+
+                    for (int j=0; j<length; j++){
+                        blocks[i-2][j] = readBlock[j+2];
+                    }
+
                 }
-
-                ndef.writeNdefMessage(message);
-                ndef.close();
-
-                Toast.makeText(this, "Tag written successfully", Toast.LENGTH_LONG).show();
+            } catch (IOException e){
+                //do a thing
             }
 
-        }catch (Exception e){
-            Log.e("writeNdef", e.getMessage());
+            return null;
         }
     }
 
-    private void createTag(Tag tag, NdefMessage message){
-        try{
-            NdefFormatable formatable = NdefFormatable.get(tag);
-
-            if (formatable == null){
-                //toast for bad tag?
-            }
-
-            formatable.connect();
-            formatable.format(message);
-            formatable.close();
-
-            Toast.makeText(this, "Tag written successfully", Toast.LENGTH_LONG).show();
-
-        }catch (Exception e){
-            Log.e("createTag", e.getMessage());
-        }
-    }
 }
