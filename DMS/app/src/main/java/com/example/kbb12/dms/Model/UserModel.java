@@ -26,7 +26,7 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
 
     private ILongActingInsulinDatabase database;
 
-    public static final int versionNumber=37;
+    public static final int versionNumber=51;
 
     public UserModel(Context context){
         database=new LongActingInsulinDatabase(context,versionNumber);
@@ -74,7 +74,7 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
                 if(dose.getHour()>currentTime.get(Calendar.HOUR_OF_DAY)||(dose.getHour().equals(currentTime.get(Calendar.HOUR_OF_DAY))&&dose.getMinute()>currentTime.get(Calendar.MINUTE))){
                     //If the set time hasn't been today yet then assume the last time it was taken
                     //was yesterday. Otherwise assume it has been taken today.
-                    lastTaken.add(Calendar.DAY_OF_MONTH,-1);
+                    lastTaken.add(Calendar.DAY_OF_YEAR,-1);
                 }
                 database.addEntry(dose,longActingInsulinBrandName,lastTaken.get(Calendar.DAY_OF_MONTH),lastTaken.get(Calendar.MONTH),lastTaken.get(Calendar.YEAR));
             }
@@ -93,9 +93,10 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
     public LongActingInsulinEntry getLatestLongActingRecommendation(Calendar now) {
         //Get the first time before now
         LongActingInsulinEntry mostRecent=database.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
+        //Get what day that dose was last taken on and the recommended time for taking it
         Calendar lastTaken = database.getLastTakenAprox(mostRecent);
-        //If (taken today) or (taken yesterday and timeRecommended>now)
-        if(sameDay(lastTaken, now)||(takenYesterday(lastTaken,now)&&timeLater(lastTaken,now))){
+        //If (taken today) or (timeRecommended>now)
+        if(sameDay(lastTaken, now)||timeLater(lastTaken,now)){
             return null;
         }
         //Set all before it to taken
@@ -108,11 +109,6 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
         return (one.get(Calendar.YEAR)==two.get(Calendar.YEAR))&&(one.get(Calendar.MONTH)==two.get(Calendar.MONTH))&&(one.get(Calendar.DAY_OF_MONTH)==two.get(Calendar.DAY_OF_MONTH));
     }
 
-    private boolean takenYesterday(Calendar lastTaken,Calendar now){
-        Calendar yesterday = (Calendar) now.clone();
-        yesterday.add(Calendar.DAY_OF_MONTH,-1);
-        return sameDay(lastTaken,yesterday);
-    }
 
     private boolean timeLater(Calendar one,Calendar two){
         return (one.get(Calendar.HOUR)>two.get(Calendar.HOUR))||((one.get(Calendar.HOUR)==two.get(Calendar.HOUR))&&(one.get(Calendar.MINUTE)>two.get(Calendar.MINUTE)));

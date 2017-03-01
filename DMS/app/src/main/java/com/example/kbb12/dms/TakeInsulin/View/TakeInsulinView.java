@@ -34,9 +34,9 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
     @Override
     public void update() {
         handleError(model.getError());
-        recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString());
+        recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString()+" Units");
         amountTaken.setText(model.getAmountTaken().toString());
-        String dateTime = String.format("%02d",model.getDayTaken())+"/" + String.format("%02d",model.getMonthTaken())+"/" + String.format("%04d",model.getYearTaken())+"   "+String.format("%02d",model.getHourTaken())+":"+String.format("%02d",model.getMinuteTaken());
+        String dateTime = String.format("%02d",model.getDayTaken())+"/" + String.format("%02d",model.getMonthTaken()+1)+"/" + String.format("%04d",model.getYearTaken())+"   "+String.format("%02d",model.getHourTaken())+":"+String.format("%02d",model.getMinuteTaken());
         timeTakenDisplay.setText(dateTime);
         switch (model.getTypeTaken()){
             case NOT_SET:

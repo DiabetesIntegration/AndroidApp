@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.ErrorHandling.DefaultErrorController;
+import com.example.kbb12.dms.Model.UserModel;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;
 import com.example.kbb12.dms.TakeInsulin.Controller.AmountTakenListener;
@@ -23,7 +24,9 @@ public class TakeInsulin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_insulin);
-
+        if(ModelHolder.model==null){
+            ModelHolder.model = new UserModel(this);
+        }
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.insulin_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -36,5 +39,6 @@ public class TakeInsulin extends AppCompatActivity {
         changeTime.setOnClickListener(new ChangeTimeTakenListener());
         TakeInsulinModel model = new TakeInsulinModel(ModelHolder.model);
         TakeInsulinView view = new TakeInsulinView((TextView) findViewById(R.id.recommendedUnitsDisplay),insulinChoice,amountTaken,(TextView) findViewById(R.id.timeTakenDisplay),model,getFragmentManager(),new DefaultErrorController(model));
+        view.update();
     }
 }

@@ -35,7 +35,7 @@ public class InsulinModelBuilderActivity extends AppCompatActivity {
         Button nextButton = (Button) findViewById(R.id.nextButton2);
         nextButton.setOnClickListener(new ValidateInsulinController(this,currentModel));
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(currentModel);
-        ModelObserver view = new LongActingInsulinModelBuilderView(doseList,controllerFactory,currentModel,this,getFragmentManager(),new DefaultErrorController(ModelHolder.model));
+        ModelObserver view = new LongActingInsulinModelBuilderView(doseList,controllerFactory,currentModel,this,getFragmentManager(),new DefaultErrorController(currentModel));
         currentModel.registerObserver(view);
     }
 }

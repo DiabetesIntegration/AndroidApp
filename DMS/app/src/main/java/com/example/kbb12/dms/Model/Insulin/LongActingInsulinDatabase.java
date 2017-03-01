@@ -54,7 +54,7 @@ public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILong
             throw new DuplicateDoseException();
         }
         cursor.close();
-        write.execSQL("INSERT INTO " + LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME + " (" + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_ONE_TITLE + ", " + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE + ", " + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_THREE_TITLE + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_FOUR_TITLE + ")VALUES(\"" + brandName + "\", \"" + formatTime(entry.getHour(),entry.getMinute()) + "\", " + entry.getDose() + ", " + formatDate(day, month, year) + ")");
+        write.execSQL("INSERT INTO " + LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME + " (" + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_ONE_TITLE + ", " + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE + ", " + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_THREE_TITLE + ", "+LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_FOUR_TITLE + ")VALUES(\"" + brandName + "\", \"" + formatTime(entry.getHour(),entry.getMinute()) + "\", " + entry.getDose() + ", \"" + formatDate(day, month, year) + "\")");
     }
 
     @Override
@@ -77,15 +77,16 @@ public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILong
 
     @Override
     public LongActingInsulinEntry getLatestBefore(int hour, int minute) {
+        //Get all the entries less than the given time
         Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+"<?",new String[]{formatTime(hour, minute)});
         LongActingInsulinDose max=null;
-        String maxTime=" ";//Space will be less than any other string
+        String maxTime="      ";//will be less than any other string
         String time;
         Integer tempHour;
         Integer tempMinute;
         while(cursor.moveToNext()){
             time=cursor.getString(1);
-            if(time.compareTo(maxTime)==1){
+            if(time.compareTo(maxTime)>=0){
                 maxTime=time;
                 tempHour = Integer.parseInt(time.substring(0, 2));
                 tempMinute =Integer.parseInt(time.substring(3,5));

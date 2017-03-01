@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         model = ModelHolder.model;
         if(model.getDoses().size()>0){
             Intent nextIntent = new Intent(this, MainMenuActivity.class);
+            if(getIntent().getBooleanExtra("NotificationLaunch",false)){
+
+                nextIntent.putExtra("NotificationLaunch",true);
+            }
             startActivity(nextIntent);
             finish();
         }

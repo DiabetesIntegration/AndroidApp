@@ -15,6 +15,7 @@ import com.example.kbb12.dms.Model.UserModel;
 import com.example.kbb12.dms.NotificationCreator.NotificationCreator;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;
+import com.example.kbb12.dms.TakeInsulin.TakeInsulin;
 
 import java.util.Calendar;
 
@@ -24,9 +25,11 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        UserModel model=ModelHolder.model;
-        model.getError();
         ImageButton takeInsulinButton =(ImageButton)findViewById(R.id.takeInsulinButton);
         takeInsulinButton.setOnClickListener(new TakeInsulinLauncher(this));
+        if(getIntent().getBooleanExtra("NotificationLaunch",false)){
+            Intent nextIntent = new Intent(this, TakeInsulin.class);
+            startActivity(nextIntent);
+        }
     }
 }
