@@ -6,6 +6,6 @@ package com.example.kbb12.dms.Template;
  */
 public interface ITemplateModel {
 
-    //public String getExampleData();
-    //public void setExampleData(String newData);
+    public String getExampleData();
+    public void setExampleData(String newData);
 }

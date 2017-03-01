@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.kbb12.dms.CustomIngredient.AddCustomIngredientActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Custom Item/Ingredient"
+        android:id="@+id/customIngredientTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/itemNameText"
+        android:text="Item Name:"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/customIngredientTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customItemName"
+        android:hint="Enter Name of Item Here"
+        android:layout_below="@+id/itemNameText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Carbohydrates:"
+        android:id="@+id/carbTitle"
+        android:layout_below="@+id/customItemName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="43dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Of which sugars:"
+        android:id="@+id/carbSugarTitle"
+        android:layout_marginTop="78dp"
+        android:layout_below="@+id/carbTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/carbValNum"
+        android:layout_below="@+id/carbTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/customIngredientTitle"
+        android:layout_toStartOf="@+id/customIngredientTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="g per"
+        android:id="@+id/textView11"
+        android:layout_alignBottom="@+id/carbValNum"
+        android:layout_alignLeft="@+id/customIngredientTitle"
+        android:layout_alignStart="@+id/customIngredientTitle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/packetValNum"
+        android:layout_alignBottom="@+id/carbValNum"
+        android:layout_toRightOf="@+id/textView11"
+        android:layout_alignRight="@+id/customItemName"
+        android:layout_alignEnd="@+id/customItemName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="g product"
+        android:id="@+id/textView12"
+        android:layout_alignBottom="@+id/packetValNum"
+        android:layout_toRightOf="@+id/packetValNum"
+        android:layout_toEndOf="@+id/packetValNum" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/sugarValNum"
+        android:layout_below="@+id/carbSugarTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView11"
+        android:layout_alignEnd="@+id/textView11" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="g"
+        android:id="@+id/textView13"
+        android:layout_alignBottom="@+id/sugarValNum"
+        android:layout_toRightOf="@+id/textView11"
+        android:layout_toEndOf="@+id/textView11" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addCustomButton"
+        android:src="@android:drawable/ic_input_add"
+        android:background="@null"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelCustomButton"
+        android:src="@android:drawable/ic_delete"
+        android:background="@null"
+        android:layout_alignTop="@+id/addCustomButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
