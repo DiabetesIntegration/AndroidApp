@@ -15,6 +15,7 @@ import java.util.Observer;
  */
 public class UserModel implements ITemplateModel {
 
+    public DataParser dataParser;
     private String exampleData;
 
     private List<ModelObserver> observers;
