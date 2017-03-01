@@ -133,7 +133,11 @@ public class LongActingInsulinModelBuilderView extends MasterView implements Mod
     private EditText createDoseTextBox(Double dose,int entryNumber){
         LinearLayout.LayoutParams sectionLayout = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
         EditText doseTextBox = new EditText(context);
-        doseTextBox.setText(dose.toString());
+        if(dose.equals(0.0)){
+            doseTextBox.setHint("0.0");
+        }else {
+            doseTextBox.setText(dose.toString());
+        }
         doseTextBox.setLayoutParams(sectionLayout);
         doseTextBox.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         doseTextBox.addTextChangedListener(controllerFactory.createDoseListener(entryNumber));
