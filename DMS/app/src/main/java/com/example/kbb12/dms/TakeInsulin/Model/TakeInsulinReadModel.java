@@ -14,6 +14,8 @@ public interface TakeInsulinReadModel extends ErrorReadModel {
 
     Double getRecommendedUnits();
 
+    InsulinType getRecommendedType();
+
     Double getAmountTaken();
 
     int getDayTaken();
@@ -25,6 +27,10 @@ public interface TakeInsulinReadModel extends ErrorReadModel {
     int getHourTaken();
 
     int getMinuteTaken();
+
+    boolean getTimeToChange();
+
+    boolean getDateToChange();
 
     InsulinType getTypeTaken();
 }

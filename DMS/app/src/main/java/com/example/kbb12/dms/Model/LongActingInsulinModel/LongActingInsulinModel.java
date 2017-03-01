@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.Model.Insulin;
+package com.example.kbb12.dms.Model.LongActingInsulinModel;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,24 +15,24 @@ import java.util.List;
 /**
  * Created by kbb12 on 07/02/2017.
  */
-public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILongActingInsulinDatabase {
+public class LongActingInsulinModel extends SQLiteOpenHelper implements ILongActingInsulinModel {
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME + " (" +
-                    LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(1000)," +
-                    LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE + " VARCHAR(5)," +
-                    LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
-                    LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_FOUR_TITLE + " DATE," +
-                    "PRIMARY KEY( "+ LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+" ));";
+            "CREATE TABLE " + LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME + " (" +
+                    LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(1000)," +
+                    LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE + " VARCHAR(5)," +
+                    LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
+                    LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_FOUR_TITLE + " DATE," +
+                    "PRIMARY KEY( "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE+" ));";
 
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME;
 
     private SQLiteDatabase write;
 
-    public LongActingInsulinDatabase(Context context,int versionNumber) {
-        super(context, LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME, null, versionNumber);
+    public LongActingInsulinModel(Context context, int versionNumber) {
+        super(context, LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME, null, versionNumber);
         write=getWritableDatabase();
     }
 
@@ -49,18 +49,18 @@ public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILong
 
     @Override
     public void addEntry(LongActingInsulinEntry entry,String brandName,int day,int month,int year) throws DuplicateDoseException {
-        Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?",new String[]{formatTime(entry.getHour(),entry.getMinute())});
+        Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?",new String[]{formatTime(entry.getHour(),entry.getMinute())});
         if(cursor.moveToNext()){
             throw new DuplicateDoseException();
         }
         cursor.close();
-        write.execSQL("INSERT INTO " + LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME + " (" + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_ONE_TITLE + ", " + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE + ", " + LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_THREE_TITLE + ", "+LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_FOUR_TITLE + ")VALUES(\"" + brandName + "\", \"" + formatTime(entry.getHour(),entry.getMinute()) + "\", " + entry.getDose() + ", \"" + formatDate(day, month, year) + "\")");
+        write.execSQL("INSERT INTO " + LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME + " (" + LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_ONE_TITLE + ", " + LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE + ", " + LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_THREE_TITLE + ", "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_FOUR_TITLE + ")VALUES(\"" + brandName + "\", \"" + formatTime(entry.getHour(),entry.getMinute()) + "\", " + entry.getDose() + ", \"" + formatDate(day, month, year) + "\")");
     }
 
     @Override
     public List<LongActingInsulinEntry> getEntries(){
         List<LongActingInsulinEntry> entries = new ArrayList<>();
-        Cursor cursor = write.rawQuery("Select * from "+LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME,new String[]{});
+        Cursor cursor = write.rawQuery("Select * from "+ LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME,new String[]{});
         while(cursor.moveToNext()){
             String time=cursor.getString(1);
             int hour = Integer.parseInt(time.substring(0, 2));
@@ -72,13 +72,13 @@ public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILong
 
     @Override
     public void clearValues(){
-        write.delete(LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME,LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_ONE_TITLE+"=\"%\"",new String[]{});
+        write.delete(LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME, LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_ONE_TITLE+"=\"%\"",new String[]{});
     }
 
     @Override
     public LongActingInsulinEntry getLatestBefore(int hour, int minute) {
         //Get all the entries less than the given time
-        Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+"<?",new String[]{formatTime(hour, minute)});
+        Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE+"<?",new String[]{formatTime(hour, minute)});
         LongActingInsulinDose max=null;
         String maxTime="      ";//will be less than any other string
         String time;
@@ -103,7 +103,7 @@ public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILong
 
     @Override
     public Calendar getLastTakenAprox(LongActingInsulinEntry mostRecent) {
-        Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?",new String[]{formatTime(mostRecent.getHour(),mostRecent.getMinute())});
+        Cursor cursor =write.rawQuery("Select * from "+ LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME+" where "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?",new String[]{formatTime(mostRecent.getHour(),mostRecent.getMinute())});
         if(cursor.moveToNext()){
             Calendar lastTakenAprox=Calendar.getInstance();
             String dateTaken = cursor.getString(3);
@@ -126,13 +126,13 @@ public class LongActingInsulinDatabase extends SQLiteOpenHelper implements ILong
     @Override
     public void allTakenBefore(Integer hour, Integer minute, int day, int month, int year) {
         ContentValues args = new ContentValues();
-        args.put(LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_FOUR_TITLE, formatDate(day, month, year));
-        String strFilter = LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?";
-        write.update(LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME,args,strFilter,new String[] {formatTime(hour,minute)});
+        args.put(LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_FOUR_TITLE, formatDate(day, month, year));
+        String strFilter = LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?";
+        write.update(LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME,args,strFilter,new String[] {formatTime(hour,minute)});
     }
 
     private LongActingInsulinDose getLatest(){
-        Cursor cursor=write.rawQuery("Select "+LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_ONE_TITLE+", max("+ LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_TWO_TITLE+"), "+LongActingInsulinDatabaseContract.ContentsDefinition.COLUMN_THREE_TITLE+" from "+ LongActingInsulinDatabaseContract.ContentsDefinition.TABLE_NAME,new String[]{});
+        Cursor cursor=write.rawQuery("Select "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_ONE_TITLE+", max("+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_TWO_TITLE+"), "+ LongActingInsulinModelInitialContract.ContentsDefinition.COLUMN_THREE_TITLE+" from "+ LongActingInsulinModelInitialContract.ContentsDefinition.TABLE_NAME,new String[]{});
         LongActingInsulinDose max=null;
         if(cursor.moveToNext()){
             String time=cursor.getString(1);

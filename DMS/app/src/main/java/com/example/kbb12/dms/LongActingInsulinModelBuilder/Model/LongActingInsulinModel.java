@@ -1,8 +1,8 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.Model;
 
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
-import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
-import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDose;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.LongActingInsulinDose;
 import com.example.kbb12.dms.Model.InsulinModel;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 

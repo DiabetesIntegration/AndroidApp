@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.kbb12.dms.LongActingInsulinModelBuilder.InsulinModelBuilderActivity;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.Model.LongActingInsulinReadWriteModel;
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
 import com.example.kbb12.dms.MainMenu.MainMenuActivity;
-import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.DuplicateDoseException;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package com.example.kbb12.dms.Model;
 
-import com.example.kbb12.dms.ErrorHandling.ErrorReadWriteModel;
-import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
-import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDose;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.LongActingInsulinDose;
 
 import java.util.List;
 

@@ -39,11 +39,7 @@
         <activity
             android:name=".LongActingInsulinModelBuilder.InsulinModelBuilderActivity"
             android:label="@string/title_activity_insulin_model_builder" />
-        <activity android:name=".TakeInsulin.TakeInsulin"
-            android:parentActivityName=".MainMenu.MainMenuActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainMenu.MainMenuActivity"/>
+        <activity android:name=".TakeInsulin.TakeInsulin">
         </activity>
     </application>
 

@@ -1,14 +1,14 @@
-package com.example.kbb12.dms.Model.Insulin;
+package com.example.kbb12.dms.Model.LongActingInsulinModel;
 
 import android.provider.BaseColumns;
 
 /**
  * Created by kbb12 on 07/02/2017.
  */
-public final class LongActingInsulinDatabaseContract {
+public final class LongActingInsulinModelInitialContract {
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    private LongActingInsulinDatabaseContract() {}
+    private LongActingInsulinModelInitialContract() {}
 
     /* Inner class that defines the table contents */
     public static class ContentsDefinition implements BaseColumns {

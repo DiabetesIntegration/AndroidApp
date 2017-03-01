@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.Model.Insulin;
+package com.example.kbb12.dms.Model.LongActingInsulinModel;
 
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
 

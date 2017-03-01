@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.LongActingInsulinModelBuilder.Model;
 
 import com.example.kbb12.dms.ErrorHandling.ErrorReadWriteModel;
-import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.DuplicateDoseException;
 
 /**
  * Created by kbb12 on 27/01/2017.

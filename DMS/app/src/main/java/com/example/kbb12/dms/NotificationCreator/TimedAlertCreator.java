@@ -1,19 +1,15 @@
 package com.example.kbb12.dms.NotificationCreator;
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
-import com.example.kbb12.dms.Model.Insulin.ILongActingInsulinDatabase;
-import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDatabase;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.ILongActingInsulinModel;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.LongActingInsulinModel;
 import com.example.kbb12.dms.Model.UserModel;
-import com.example.kbb12.dms.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -25,7 +21,7 @@ public class TimedAlertCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ILongActingInsulinDatabase database = new LongActingInsulinDatabase(context, UserModel.versionNumber);
+        ILongActingInsulinModel database = new LongActingInsulinModel(context, UserModel.versionNumber);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         List<LongActingInsulinEntry> entries = database.getEntries();
         Calendar currentTime = Calendar.getInstance();

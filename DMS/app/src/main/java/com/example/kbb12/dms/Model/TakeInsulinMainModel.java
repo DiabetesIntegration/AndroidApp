@@ -10,4 +10,5 @@ import java.util.Calendar;
  */
 public interface TakeInsulinMainModel {
     LongActingInsulinEntry getLatestLongActingRecommendation(Calendar now);
+    void takeInsulin(int year,int month,int day,int hour,int minute,double amount,boolean longActing);
 }

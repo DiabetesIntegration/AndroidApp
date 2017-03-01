@@ -3,10 +3,12 @@ package com.example.kbb12.dms.Model;
 import android.content.Context;
 
 import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
-import com.example.kbb12.dms.Model.Insulin.DuplicateDoseException;
-import com.example.kbb12.dms.Model.Insulin.ILongActingInsulinDatabase;
-import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDatabase;
-import com.example.kbb12.dms.Model.Insulin.LongActingInsulinDose;
+import com.example.kbb12.dms.Model.InsulinTakenRecord.InsulinTakenDatabase;
+import com.example.kbb12.dms.Model.InsulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.ILongActingInsulinModel;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.LongActingInsulinModel;
+import com.example.kbb12.dms.Model.LongActingInsulinModel.LongActingInsulinDose;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
@@ -24,12 +26,15 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
 
     private List<ModelObserver> observers;
 
-    private ILongActingInsulinDatabase database;
+    private ILongActingInsulinModel longActingInsulinModel;
+
+    private InsulinTakenRecord insulinTakenRecord;
 
     public static final int versionNumber=52;
 
     public UserModel(Context context){
-        database=new LongActingInsulinDatabase(context,versionNumber);
+        longActingInsulinModel =new LongActingInsulinModel(context,versionNumber);
+        insulinTakenRecord= new InsulinTakenDatabase(context,versionNumber);
         observers= new ArrayList<>();
     }
 
@@ -76,33 +81,38 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
                     //was yesterday. Otherwise assume it has been taken today.
                     lastTaken.add(Calendar.DAY_OF_YEAR,-1);
                 }
-                database.addEntry(dose,longActingInsulinBrandName,lastTaken.get(Calendar.DAY_OF_MONTH),lastTaken.get(Calendar.MONTH),lastTaken.get(Calendar.YEAR));
+                longActingInsulinModel.addEntry(dose, longActingInsulinBrandName, lastTaken.get(Calendar.DAY_OF_MONTH), lastTaken.get(Calendar.MONTH), lastTaken.get(Calendar.YEAR));
             }
         } catch (DuplicateDoseException e){
-            database.clearValues();
+            longActingInsulinModel.clearValues();
             throw new DuplicateDoseException();
         }
     }
 
     public List<LongActingInsulinEntry> getDoses(){
-        return database.getEntries();
+        return longActingInsulinModel.getEntries();
     }
 
 
     @Override
     public LongActingInsulinEntry getLatestLongActingRecommendation(Calendar now) {
         //Get the first time before now
-        LongActingInsulinEntry mostRecent=database.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
+        LongActingInsulinEntry mostRecent= longActingInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
         //Get what day that dose was last taken on and the recommended time for taking it
-        Calendar lastTaken = database.getLastTakenAprox(mostRecent);
+        Calendar lastTaken = longActingInsulinModel.getLastTakenAprox(mostRecent);
         //If (taken today) or (timeRecommended>now)
         if(sameDay(lastTaken, now)||timeLater(lastTaken,now)){
             return null;
         }
         //Set all before it to taken
-        database.allTakenBefore(mostRecent.getHour(),mostRecent.getMinute(),now.get(Calendar.DAY_OF_MONTH),now.get(Calendar.MONTH),now.get(Calendar.YEAR));
+        longActingInsulinModel.allTakenBefore(mostRecent.getHour(), mostRecent.getMinute(), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH), now.get(Calendar.YEAR));
         //Return it
         return mostRecent;
+    }
+
+    @Override
+    public void takeInsulin(int year, int month, int day, int hour, int minute, double amount, boolean longActing) {
+        insulinTakenRecord.addEntry(day,month,year,hour,minute,amount,longActing);
     }
 
     private boolean sameDay(Calendar one,Calendar two){

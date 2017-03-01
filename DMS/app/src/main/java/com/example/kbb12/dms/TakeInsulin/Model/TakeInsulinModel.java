@@ -14,10 +14,13 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     TakeInsulinMainModel model;
     Double recommended;
     Double actual;
-    InsulinType type;
+    InsulinType typeTaken;
+    InsulinType typeRecommended;
     Integer day;
     Integer month;
     Integer year;
+    boolean dateToChange;
+    boolean timeToChange;
     Integer hour;
     Integer minute;
     String errorMessage;
@@ -31,6 +34,8 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
         year=now.get(Calendar.YEAR);
         hour=now.get(Calendar.HOUR_OF_DAY);
         minute=now.get(Calendar.MINUTE);
+        dateToChange=false;
+        timeToChange=false;
         //Gets most recent untaken expected dose before now and sets
         //all the entries before that dose to taken because it must
         //now be too late to take them.
@@ -38,16 +43,21 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
         if(null==entry){
             recommended=0.0;
             actual=0.0;
-            type=InsulinType.NOT_SET;
+            typeTaken=InsulinType.NOT_SET;
+            typeRecommended=InsulinType.NOT_SET;
         }else{
             recommended=entry.getDose();
             actual=entry.getDose();
-            type=InsulinType.LONG_ACTING;
+            typeTaken=InsulinType.LONG_ACTING;
+            typeRecommended=InsulinType.LONG_ACTING;
         }
     }
 
     @Override
     public void setError(String errorMessage) {
+        if((!(this.errorMessage==null))&&this.errorMessage.equals(errorMessage)){
+            return;
+        }
         this.errorMessage=errorMessage;
         notifyObserver();
     }
@@ -57,12 +67,19 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     }
 
     private void notifyObserver() {
-        observer.update();
+        if(observer!=null) {
+            observer.update();
+        }
     }
 
     @Override
     public Double getRecommendedUnits() {
         return recommended;
+    }
+
+    @Override
+    public InsulinType getRecommendedType() {
+        return typeRecommended;
     }
 
     @Override
@@ -96,12 +113,97 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     }
 
     @Override
+    public boolean getTimeToChange() {
+        return timeToChange;
+    }
+
+    @Override
+    public boolean getDateToChange() {
+        return dateToChange;
+    }
+
+    @Override
     public InsulinType getTypeTaken() {
-        return type;
+        return typeTaken;
     }
 
     @Override
     public String getError() {
         return errorMessage;
+    }
+
+    @Override
+    public void setAmountTaken(Double amountTaken) {
+        if(this.actual.equals(amountTaken)){
+            return;
+        }
+        this.actual=amountTaken;
+        notifyObserver();
+    }
+
+    @Override
+    public void setTimeToChange() {
+        if(timeToChange){
+            return;
+        }
+        timeToChange=true;
+        notifyObserver();
+    }
+
+    @Override
+    public void setDateToChange() {
+        if(dateToChange){
+            return;
+        }
+        dateToChange=true;
+        notifyObserver();
+    }
+
+    @Override
+    public void setTypeTaken(InsulinType typeTaken) {
+        if(this.typeTaken.equals(typeTaken)){
+            return;
+        }
+        this.typeTaken=typeTaken;
+        notifyObserver();
+    }
+
+    @Override
+    public void setDateTaken(int day, int month, int year) {
+        if(!dateToChange){
+            return;
+        }
+        this.day=day;
+        this.month=month;
+        this.year=year;
+        dateToChange=false;
+        notifyObserver();
+    }
+
+    @Override
+    public void setTimeTaken(int hour, int minute) {
+        if(!timeToChange){
+            return;
+        }
+        this.hour=hour;
+        this.minute=minute;
+        timeToChange=false;
+        notifyObserver();
+    }
+
+    @Override
+    public void takeInsulin(){
+        switch (typeTaken){
+            case LONG_ACTING:
+                model.takeInsulin(year,month,day,hour,minute,actual,true);
+                break;
+            case SHORT_ACTING:
+                model.takeInsulin(year,month,day,hour,minute,actual,false);
+                break;
+            case NOT_SET:
+                //This should be unreachable but is here to be extra safe
+                setError("You must set which type of insulin you are taking");
+                break;
+        }
     }
 }
