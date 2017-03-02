@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.CustomIngredient;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -9,9 +8,6 @@ import android.widget.ImageButton;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;
 import com.example.kbb12.dms.StartUp.UserModel;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class AddCustomIngredientActivity extends AppCompatActivity {
     private EditText ingredientName, carbVal, packVal, sugarVal;
@@ -30,18 +26,24 @@ public class AddCustomIngredientActivity extends AppCompatActivity {
         packVal = (EditText) findViewById(R.id.packetValNum);
         sugarVal = (EditText) findViewById(R.id.sugarValNum);
 
-        createCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
+        createCustom = (ImageButton) findViewById(R.id.addCustomButton);
         cancelCustom = (ImageButton) findViewById(R.id.cancelCustomButton);
 
-        AddCustomIngredientController controller = new AddCustomIngredientController(model,this);
-
-        ingredientName.addTextChangedListener(controller);
-        carbVal.addTextChangedListener(controller);
-        packVal.addTextChangedListener(controller);
-        sugarVal.addTextChangedListener(controller);
-
+        AddCustomIngredientButtonController controller = new AddCustomIngredientButtonController(model,this);
         createCustom.setOnClickListener(controller);
         cancelCustom.setOnClickListener(controller);
+
+
+
+        ingredientName.addTextChangedListener(new AddCustomIngredientNameController(model,this));
+        carbVal.addTextChangedListener(new AddCustomIngredientCarbController(model,this));
+        packVal.addTextChangedListener(new AddCustomIngredientPacketController(model,this));
+        sugarVal.addTextChangedListener(new AddCustomIngredientSugarController(model,this));
+
+        //createCustom.setOnClickListener(new AddCustomIngredientButtonController(model,this));
+        //cancelCustom.setOnClickListener(new AddCustomIngredientButtonController(model,this));
+
+
 
         AddCustomIngredientView view = new AddCustomIngredientView(ingredientName,carbVal,packVal,sugarVal,model);
         model.registerObserver(view);

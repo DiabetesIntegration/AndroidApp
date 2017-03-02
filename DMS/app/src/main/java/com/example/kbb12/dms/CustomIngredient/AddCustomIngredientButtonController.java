@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.CustomIngredient;
 
 import android.app.Activity;
+import android.app.IntentService;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,11 +13,11 @@ import com.example.kbb12.dms.R;
 /**
  * Created by Ciaran on 3/1/2017.
  */
-public class AddCustomIngredientController implements View.OnClickListener, TextWatcher {
+public class AddCustomIngredientButtonController implements View.OnClickListener {
     private IAddCustomIngredient model;
     private Activity currentActivity;
 
-    public AddCustomIngredientController(IAddCustomIngredient model, Activity currentActivity) {
+    public AddCustomIngredientButtonController(IAddCustomIngredient model, Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
     }
@@ -38,38 +39,21 @@ public class AddCustomIngredientController implements View.OnClickListener, Text
                 Toast.makeText(currentActivity, "Error! No sugar value was entered for the ingredient!", Toast.LENGTH_SHORT).show();
             }
             else {
-                Log.i("tester", "IT WORKSSSSSS!!!!");
+                if(Integer.parseInt(model.getCarbVal()) > Integer.parseInt(model.getPacketVal())) {
+                    Toast.makeText(currentActivity, "Error! The carb value cannot be greater than the packet value!", Toast.LENGTH_SHORT).show();
+                }
+                if(Integer.parseInt(model.getSugarVal()) > Integer.parseInt(model.getCarbVal())) {
+                    Toast.makeText(currentActivity, "Error! The sugar value cannot be greater than the carb value!", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         else if(v.getId() == R.id.cancelCustomButton) {
+            model.setItemName("");
+            model.setCarbVal("");
+            model.setPacketVal("");
+            model.setSugarVal("");
             currentActivity.finish();
         }
 
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        if() {
-           model.setItemName(s.toString());
-        }
-        else if() {
-            model.setCarbVal(s.toString());
-        }
-        else if() {
-            model.setPacketVal(s.toString());
-        }
-        else {
-            model.setSugarVal(s.toString());
-        }
     }
 }
