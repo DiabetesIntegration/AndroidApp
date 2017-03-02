@@ -5,14 +5,14 @@ import android.provider.BaseColumns;
 /**
  * Created by kbb12 on 07/02/2017.
  */
-public final class LongActingInsulinModelInitialContract {
+public final class LongActingInsulinModelContractHolder {
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    private LongActingInsulinModelInitialContract() {}
+    private LongActingInsulinModelContractHolder() {}
 
     /* Inner class that defines the table contents */
     public static class ContentsDefinition implements BaseColumns {
-        public static final String TABLE_NAME = "LongActingInsulin";
+        public static String TABLE_NAME;
         public static final String COLUMN_ONE_TITLE = "Name";
         public static final String COLUMN_TWO_TITLE = "Time";
         public static final String COLUMN_THREE_TITLE = "Amount";

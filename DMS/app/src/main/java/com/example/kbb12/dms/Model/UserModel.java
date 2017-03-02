@@ -30,10 +30,10 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
 
     private InsulinTakenRecord insulinTakenRecord;
 
-    public static final int versionNumber=52;
+    public static final int versionNumber=1;
 
     public UserModel(Context context){
-        longActingInsulinModel =new LongActingInsulinModel(context,versionNumber);
+        longActingInsulinModel =new LongActingInsulinModel(context,versionNumber,"InitialLongActingInsulinModel");
         insulinTakenRecord= new InsulinTakenDatabase(context,versionNumber);
         observers= new ArrayList<>();
     }
@@ -97,7 +97,7 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
     @Override
     public LongActingInsulinEntry getLatestLongActingRecommendation(Calendar now) {
         //Get the first time before now
-        LongActingInsulinEntry mostRecent= longActingInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
+        LongActingInsulinEntry mostRecent= longActingInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)+1);
         //Get what day that dose was last taken on and the recommended time for taking it
         Calendar lastTaken = longActingInsulinModel.getLastTakenAprox(mostRecent);
         //If (taken today) or (timeRecommended>now)

@@ -12,7 +12,7 @@ public final class InsulinTakenContract {
 
     /* Inner class that defines the table contents */
     public static class ContentsDefinition implements BaseColumns {
-        public static final String TABLE_NAME = "InsulinTaken";
+        public static final String TABLE_NAME = "InsulinTakenRecord";
         public static final String COLUMN_ONE_TITLE = "Date";
         public static final String COLUMN_TWO_TITLE = "Time";
         public static final String COLUMN_THREE_TITLE = "LongActing";

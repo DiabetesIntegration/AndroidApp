@@ -21,7 +21,7 @@ public class TimedAlertCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ILongActingInsulinModel database = new LongActingInsulinModel(context, UserModel.versionNumber);
+        ILongActingInsulinModel database = new LongActingInsulinModel(context, UserModel.versionNumber,"InitialLongActingInsulinModel");
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         List<LongActingInsulinEntry> entries = database.getEntries();
         Calendar currentTime = Calendar.getInstance();
