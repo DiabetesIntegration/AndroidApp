@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.kbb12.dms.IngredientList.IngredientListActivity">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mealNameEntry"
+        android:hint="Meal Name..."
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Add new Ingredient..."
+        android:id="@+id/addAnotherIngredientText"
+        android:layout_marginBottom="91dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/addAnotherIngredientButton"
+        android:layout_toStartOf="@+id/addAnotherIngredientButton" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addAnotherIngredientButton"
+        android:src="@android:drawable/ic_menu_add"
+        android:background="#ffffff"
+        android:layout_alignBottom="@+id/addAnotherIngredientText"
+        android:layout_toRightOf="@+id/mealNameEntry"
+        android:layout_toEndOf="@+id/mealNameEntry" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eat..."
+        android:id="@+id/eatMealButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredientsList"
+        android:divider="#7e7d7b"
+        android:dividerHeight="2dp"
+        android:layout_below="@+id/mealNameEntry"
+        android:layout_above="@+id/addAnotherIngredientButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:choiceMode="none" />
+</RelativeLayout>

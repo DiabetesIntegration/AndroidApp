@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.example.kbb12.dms.AddIngredient.IAddIngredient;
 import com.example.kbb12.dms.CustomIngredient.IAddCustomIngredient;
+import com.example.kbb12.dms.IngredientAmount.IIngredientsAmount;
+import com.example.kbb12.dms.IngredientList.IIngredientList;
 import com.example.kbb12.dms.MealList.IMealList;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
@@ -16,7 +18,7 @@ import java.util.Observer;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAddCustomIngredient {
+public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAddCustomIngredient, IIngredientsAmount, IIngredientList {
 
     private String exampleData;
 
@@ -25,6 +27,12 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
     //-------------------------------------------
     //CustomIngredient variables
     private String iName, iCarb, iPacket, iSugar;
+    //-------------------------------------------
+
+    //-------------------------------------------
+    //IngredientAmount variables
+    private String unit, ingAmount;
+    private boolean byWeight;
     //-------------------------------------------
 
     private List<ModelObserver> observers;
@@ -40,6 +48,14 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
         iCarb = "";
         iPacket = "";
         iSugar = "";
+        //-------------------------------------------
+
+
+        //-------------------------------------------
+        //IngredientAmount variables
+        unit = "g";
+        ingAmount="";
+        byWeight = true;
         //-------------------------------------------
     }
 
@@ -138,6 +154,47 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
     public String getSugarVal() {
         return iSugar;
     }
+
+    //------------------------------------------------------------------
+
+
+
+    //------------------------------------------------------------------
+    //IIngredientAmount methods
+
+    @Override
+    public boolean isWeight() {
+        return byWeight;
+    }
+
+    @Override
+    public void changeUnit(boolean wop) {
+        byWeight = wop;
+    }
+
+    @Override
+    public void setIngredientAmount(String amount) {
+        ingAmount = amount;
+    }
+
+    @Override
+    public String getIngredientAmount() {
+        return ingAmount;
+    }
+
+    @Override
+    public void setUnits(String unit) {
+        this.unit = unit;
+        notifyObservers();
+    }
+
+    @Override
+    public String getUnits() {
+        return unit;
+    }
+
+
+
 
     //------------------------------------------------------------------
 }

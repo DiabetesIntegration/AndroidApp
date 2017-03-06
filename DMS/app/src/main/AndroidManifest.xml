@@ -26,11 +26,18 @@
         </activity>
         <activity android:name=".MealList.MealListActivity" />
         <activity android:name=".AddIngredient.AddIngredientActivity" />
-        <activity android:name=".CustomIngredient.AddCustomIngredientActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity android:name=".CustomIngredient.AddCustomIngredientActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".IngredientList.IngredientListActivity" />
+        <activity android:name=".IngredientAmount.IngredientsAmountActivity" />
+        <activity android:name=".MealAmount.MealAmountActivity"></activity>
     </application>
 
 </manifest>
