@@ -8,4 +8,5 @@
         <item>Basal</item>
     </string-array>
     <string name="accept">Ok</string>
+    <string name="title_activity_bolus_insulin_model_builder">BolusInsulinModelBuilder</string>
 </resources>

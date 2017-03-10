@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Breakfast:\n(06:00 - 10:00)"
+            android:id="@+id/textView11"
+            android:nextFocusUp="@id/textView11"
+            android:nextFocusLeft="@id/textView11"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp" />
+        <EditText
+            android:layout_width="74dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="Insulin\nUnits"
+            android:ems="10"
+            android:id="@+id/breakfastInsulin"
+            android:paddingTop="0dp"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=":"
+            android:id="@+id/textView12"
+            android:layout_gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="Carbs"
+            android:ems="10"
+            android:id="@+id/breakfastCarbs"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:paddingLeft="10dp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Lunch:\n(11:00 - 14:00)"
+            android:id="@+id/textView13"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp" />
+
+        <EditText
+            android:layout_width="74dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="Insulin\nUnits"
+            android:ems="10"
+            android:id="@+id/lunchinsulin"
+            android:paddingTop="0dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:foregroundGravity="center_vertical|right" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=":"
+            android:id="@+id/textView14"
+            android:layout_gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="Carbs"
+            android:ems="10"
+            android:id="@+id/lunchCarbs"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:paddingLeft="10dp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Dinner:\n(16:00 - 20:00)"
+            android:id="@+id/textView15"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp" />
+
+        <EditText
+            android:layout_width="74dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="Insulin\nUnits"
+            android:ems="10"
+            android:id="@+id/dinnerInsulin"
+            android:paddingTop="0dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:foregroundGravity="center_vertical|right" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=":"
+            android:id="@+id/textView16" />
+
+        <EditText
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="Carbs"
+            android:ems="10"
+            android:id="@+id/dinnerCarbs"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+</LinearLayout>
