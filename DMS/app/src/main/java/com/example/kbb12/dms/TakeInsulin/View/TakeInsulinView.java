@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.TakeInsulin.View;
+package com.example.kbb12.dms.takeInsulin.view;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
@@ -7,10 +7,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.ErrorHandling.IErrorController;
-import com.example.kbb12.dms.ErrorHandling.MasterView;
-import com.example.kbb12.dms.StartUp.ModelObserver;
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinReadModel;
+import com.example.kbb12.dms.errorHandling.IErrorController;
+import com.example.kbb12.dms.errorHandling.MasterView;
+import com.example.kbb12.dms.startUp.ModelObserver;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadModel;
 
 /**
  * Created by kbb12 on 24/02/2017.
@@ -58,8 +58,8 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
             return;
         }
         switch (model.getRecommendedType()){
-            case LONG_ACTING:
-                recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString()+" Units of long acting insulin");
+            case BASAL:
+                recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString()+" Units of basal insulin");
                 break;
             case SHORT_ACTING:
                 recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString() + " Units of short acting insulin");
@@ -77,7 +77,7 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
             case SHORT_ACTING:
                 insulinChoice.setSelection(1);
                 break;
-            case LONG_ACTING:
+            case BASAL:
                 insulinChoice.setSelection(2);
                 break;
         }

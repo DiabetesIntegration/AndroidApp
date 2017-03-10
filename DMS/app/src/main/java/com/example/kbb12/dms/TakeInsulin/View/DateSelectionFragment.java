@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.TakeInsulin.View;
+package com.example.kbb12.dms.takeInsulin.view;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

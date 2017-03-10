@@ -1,7 +1,6 @@
-package com.example.kbb12.dms.TakeInsulin.Model;
+package com.example.kbb12.dms.takeInsulin.model;
 
-import com.example.kbb12.dms.ErrorHandling.ErrorReadModel;
-import com.example.kbb12.dms.TakeInsulin.Controller.InsulinTypeChoiceListener;
+import com.example.kbb12.dms.errorHandling.ErrorReadModel;
 
 /**
  * Created by kbb12 on 24/02/2017.
@@ -9,7 +8,7 @@ import com.example.kbb12.dms.TakeInsulin.Controller.InsulinTypeChoiceListener;
 public interface TakeInsulinReadModel extends ErrorReadModel {
 
     public enum InsulinType{
-        NOT_SET,LONG_ACTING,SHORT_ACTING
+        NOT_SET, BASAL,SHORT_ACTING
     }
 
     Double getRecommendedUnits();

@@ -1,6 +1,6 @@
-package com.example.kbb12.dms.TakeInsulin.Model;
+package com.example.kbb12.dms.takeInsulin.model;
 
-import com.example.kbb12.dms.ErrorHandling.ErrorReadWriteModel;
+import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
 
 /**
  * Created by kbb12 on 24/02/2017.

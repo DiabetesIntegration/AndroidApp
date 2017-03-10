@@ -1,9 +1,9 @@
-package com.example.kbb12.dms.Template;
+package com.example.kbb12.dms.template;
 
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.StartUp.ModelObserver;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
  * Created by kbb12 on 17/01/2017.

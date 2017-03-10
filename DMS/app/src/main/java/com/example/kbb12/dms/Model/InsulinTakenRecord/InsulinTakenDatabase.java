@@ -1,7 +1,6 @@
-package com.example.kbb12.dms.Model.InsulinTakenRecord;
+package com.example.kbb12.dms.model.insulinTakenRecord;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -42,9 +41,9 @@ public class InsulinTakenDatabase extends SQLiteOpenHelper implements InsulinTak
     }
 
     @Override
-    public void addEntry(int day,int month,int year,int hour,int minute,Double dose,boolean longActing){
+    public void addEntry(int day,int month,int year,int hour,int minute,Double dose,boolean basalInsulin){
         String trueOrFalse;
-        if(longActing){
+        if(basalInsulin){
             trueOrFalse="TRUE";
         }else{
             trueOrFalse="FALSE";

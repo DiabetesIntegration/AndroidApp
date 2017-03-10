@@ -1,8 +1,8 @@
-package com.example.kbb12.dms.TakeInsulin.Controller;
+package com.example.kbb12.dms.takeInsulin.controller;
 
 import android.view.View;
 
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinReadWriteModel;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadWriteModel;
 
 /**
  * Created by kbb12 on 24/02/2017.

@@ -1,8 +1,8 @@
-package com.example.kbb12.dms.TakeInsulin.Model;
+package com.example.kbb12.dms.takeInsulin.model;
 
-import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
-import com.example.kbb12.dms.Model.TakeInsulinMainModel;
-import com.example.kbb12.dms.StartUp.ModelObserver;
+import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.TakeInsulinMainModel;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.util.Calendar;
 
@@ -39,7 +39,7 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
         //Gets most recent untaken expected dose before now and sets
         //all the entries before that dose to taken because it must
         //now be too late to take them.
-        LongActingInsulinEntry entry = model.getLatestLongActingRecommendation(now);
+        BasalInsulinEntry entry = model.getLatestBasalRecommendation(now);
         if(null==entry){
             recommended=0.0;
             actual=0.0;
@@ -48,8 +48,8 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
         }else{
             recommended=entry.getDose();
             actual=entry.getDose();
-            typeTaken=InsulinType.LONG_ACTING;
-            typeRecommended=InsulinType.LONG_ACTING;
+            typeTaken=InsulinType.BASAL;
+            typeRecommended=InsulinType.BASAL;
         }
     }
 
@@ -194,7 +194,7 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     @Override
     public void takeInsulin(){
         switch (typeTaken){
-            case LONG_ACTING:
+            case BASAL:
                 model.takeInsulin(year,month,day,hour,minute,actual,true);
                 break;
             case SHORT_ACTING:

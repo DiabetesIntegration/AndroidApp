@@ -1,10 +1,10 @@
-package com.example.kbb12.dms.TakeInsulin.Controller;
+package com.example.kbb12.dms.takeInsulin.controller;
 
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinReadModel;
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinReadWriteModel;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadModel;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadWriteModel;
 
 /**
  * Created by kbb12 on 24/02/2017.
@@ -27,7 +27,7 @@ public class InsulinTypeChoiceListener implements AdapterView.OnItemSelectedList
                 model.setTypeTaken(TakeInsulinReadModel.InsulinType.SHORT_ACTING);
                 break;
             case 2:
-                model.setTypeTaken(TakeInsulinReadModel.InsulinType.LONG_ACTING);
+                model.setTypeTaken(TakeInsulinReadModel.InsulinType.BASAL);
                 break;
         }
     }

@@ -8,38 +8,38 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".NotificationCreator.NotificationCreator">
+        <receiver android:name=".notificationCreator.NotificationCreator">
             <intent-filter>
-                <action android:name="com.DMS.longActingInsulinNotification"></action>
+                <action android:name="com.DMS.basalInsulinNotification"></action>
             </intent-filter>
         </receiver>
-        <receiver android:name=".NotificationCreator.TimedAlertCreator">
+        <receiver android:name=".notificationCreator.TimedAlertCreator">
             <intent-filter>
                 <action android:name="com.DMS.timedAlertCreator"></action>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
 
-        <activity android:name=".StartUp.MainActivity">
+        <activity android:name=".startUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Template.TemplateActivity"
+            android:name=".template.TemplateActivity"
             android:label="@string/title_activity_template"
-            android:parentActivityName=".StartUp.MainActivity"
+            android:parentActivityName=".startUp.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.kbb12.dms.StartUp.MainActivity" />
+                android:value="com.example.kbb12.dms.startUp.MainActivity" />
         </activity>
-        <activity android:name=".MainMenu.MainMenuActivity" />
+        <activity android:name=".mainMenu.MainMenuActivity" />
         <activity
-            android:name=".LongActingInsulinModelBuilder.InsulinModelBuilderActivity"
+            android:name=".basalInsulinModelBuilder.BasalInsulinModelBuilderActivity"
             android:label="@string/title_activity_insulin_model_builder" />
-        <activity android:name=".TakeInsulin.TakeInsulin">
+        <activity android:name=".takeInsulin.TakeInsulin">
         </activity>
     </application>
 

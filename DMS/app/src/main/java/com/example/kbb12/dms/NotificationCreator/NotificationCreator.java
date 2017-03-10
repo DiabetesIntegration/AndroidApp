@@ -1,19 +1,14 @@
-package com.example.kbb12.dms.NotificationCreator;
+package com.example.kbb12.dms.notificationCreator;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
-import com.example.kbb12.dms.MainMenu.MainMenuActivity;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.StartUp.MainActivity;
-import com.example.kbb12.dms.TakeInsulin.TakeInsulin;
+import com.example.kbb12.dms.startUp.MainActivity;
 
 /**
  * Created by kbb12 on 19/02/2017.

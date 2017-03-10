@@ -1,9 +1,9 @@
-package com.example.kbb12.dms.TakeInsulin.Controller;
+package com.example.kbb12.dms.takeInsulin.controller;
 
 import android.app.TimePickerDialog;
 import android.widget.TimePicker;
 
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinReadWriteModel;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadWriteModel;
 
 
 /**

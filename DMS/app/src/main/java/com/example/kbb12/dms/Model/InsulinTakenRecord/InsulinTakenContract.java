@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.Model.InsulinTakenRecord;
+package com.example.kbb12.dms.model.insulinTakenRecord;
 
 import android.provider.BaseColumns;
 
@@ -15,7 +15,7 @@ public final class InsulinTakenContract {
         public static final String TABLE_NAME = "InsulinTakenRecord";
         public static final String COLUMN_ONE_TITLE = "Date";
         public static final String COLUMN_TWO_TITLE = "Time";
-        public static final String COLUMN_THREE_TITLE = "LongActing";
+        public static final String COLUMN_THREE_TITLE = "Basal";
         public static final String COLUMN_FOUR_TITLE = "Amount";
     }
 }

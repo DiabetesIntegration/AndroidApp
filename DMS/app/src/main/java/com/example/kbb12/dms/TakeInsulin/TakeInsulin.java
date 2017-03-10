@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.TakeInsulin;
+package com.example.kbb12.dms.takeInsulin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,18 +9,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.ErrorHandling.DefaultErrorController;
-import com.example.kbb12.dms.Model.UserModel;
+import com.example.kbb12.dms.errorHandling.DefaultErrorController;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.StartUp.ModelHolder;
-import com.example.kbb12.dms.TakeInsulin.Controller.AmountTakenListener;
-import com.example.kbb12.dms.TakeInsulin.Controller.ChangeTimeTakenListener;
-import com.example.kbb12.dms.TakeInsulin.Controller.DateSetListener;
-import com.example.kbb12.dms.TakeInsulin.Controller.InsulinTypeChoiceListener;
-import com.example.kbb12.dms.TakeInsulin.Controller.TimeSetListener;
-import com.example.kbb12.dms.TakeInsulin.Controller.ValidateTakeInsulinController;
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinModel;
-import com.example.kbb12.dms.TakeInsulin.View.TakeInsulinView;
+import com.example.kbb12.dms.startUp.ModelHolder;
+import com.example.kbb12.dms.takeInsulin.controller.AmountTakenListener;
+import com.example.kbb12.dms.takeInsulin.controller.ChangeTimeTakenListener;
+import com.example.kbb12.dms.takeInsulin.controller.DateSetListener;
+import com.example.kbb12.dms.takeInsulin.controller.InsulinTypeChoiceListener;
+import com.example.kbb12.dms.takeInsulin.controller.TimeSetListener;
+import com.example.kbb12.dms.takeInsulin.controller.ValidateTakeInsulinController;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinModel;
+import com.example.kbb12.dms.takeInsulin.view.TakeInsulinView;
 
 public class TakeInsulin extends AppCompatActivity {
 

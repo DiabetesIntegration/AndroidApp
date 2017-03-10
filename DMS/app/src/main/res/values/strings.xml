@@ -5,7 +5,7 @@
     <string-array name="insulin_array">
         <item>Insulin Type</item>
         <item>Short-Acting</item>
-        <item>Long-Acting</item>
+        <item>Basal</item>
     </string-array>
     <string name="accept">Ok</string>
 </resources>

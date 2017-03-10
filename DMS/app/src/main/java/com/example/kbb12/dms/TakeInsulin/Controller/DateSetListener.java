@@ -1,9 +1,9 @@
-package com.example.kbb12.dms.TakeInsulin.Controller;
+package com.example.kbb12.dms.takeInsulin.controller;
 
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 
-import com.example.kbb12.dms.TakeInsulin.Model.TakeInsulinReadWriteModel;
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadWriteModel;
 
 /**
  * Created by kbb12 on 08/02/2017.

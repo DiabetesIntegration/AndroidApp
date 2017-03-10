@@ -1,12 +1,12 @@
-package com.example.kbb12.dms.StartUp;
+package com.example.kbb12.dms.startUp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.kbb12.dms.MainMenu.MainMenuActivity;
-import com.example.kbb12.dms.Model.UserModel;
+import com.example.kbb12.dms.mainMenu.MainMenuActivity;
+import com.example.kbb12.dms.model.UserModel;
 import com.example.kbb12.dms.R;
 
 /*

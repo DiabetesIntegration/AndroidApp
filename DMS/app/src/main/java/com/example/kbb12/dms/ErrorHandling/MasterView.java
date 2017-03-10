@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.ErrorHandling;
+package com.example.kbb12.dms.errorHandling;
 
 import android.app.FragmentManager;
 

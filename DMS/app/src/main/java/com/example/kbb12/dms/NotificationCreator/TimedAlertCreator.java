@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.NotificationCreator;
+package com.example.kbb12.dms.notificationCreator;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,10 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.kbb12.dms.LongActingInsulinModelBuilder.View.LongActingInsulinEntry;
-import com.example.kbb12.dms.Model.LongActingInsulinModel.ILongActingInsulinModel;
-import com.example.kbb12.dms.Model.LongActingInsulinModel.LongActingInsulinModel;
-import com.example.kbb12.dms.Model.UserModel;
+import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModel;
+import com.example.kbb12.dms.model.UserModel;
 
 import java.util.Calendar;
 import java.util.List;
@@ -21,9 +21,9 @@ public class TimedAlertCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ILongActingInsulinModel database = new LongActingInsulinModel(context, UserModel.versionNumber,"InitialLongActingInsulinModel");
+        IBasalInsulinModel database = new BasalInsulinModel(context, UserModel.versionNumber,"InitialBasalInsulinModel");
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        List<LongActingInsulinEntry> entries = database.getEntries();
+        List<BasalInsulinEntry> entries = database.getEntries();
         Calendar currentTime = Calendar.getInstance();
         Calendar nextTime =null;
         Calendar entryTime;
@@ -32,7 +32,7 @@ public class TimedAlertCreator extends BroadcastReceiver {
         minEntryTime.set(Calendar.MINUTE, entries.get(0).getMinute());
         minEntryTime.set(Calendar.SECOND, 0);
         for(int i=0;i<entries.size();i++) {
-            LongActingInsulinEntry entry=entries.get(i);
+            BasalInsulinEntry entry=entries.get(i);
             entryTime = Calendar.getInstance();
             entryTime.set(Calendar.HOUR_OF_DAY, entry.getHour());
             entryTime.set(Calendar.MINUTE, entry.getMinute());
@@ -52,7 +52,7 @@ public class TimedAlertCreator extends BroadcastReceiver {
             nextTime.add(Calendar.DATE,1);
         }
         Intent pendInt = new Intent();
-        pendInt.setAction("com.DMS.longActingInsulinNotification");
+        pendInt.setAction("com.DMS.basalInsulinNotification");
         pendInt.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0,
                 pendInt, PendingIntent.FLAG_UPDATE_CURRENT);

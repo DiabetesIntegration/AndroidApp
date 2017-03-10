@@ -1,10 +1,10 @@
-package com.example.kbb12.dms.MainMenu;
+package com.example.kbb12.dms.mainMenu;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.kbb12.dms.TakeInsulin.TakeInsulin;
+import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 /**
  * Created by kbb12 on 24/02/2017.
