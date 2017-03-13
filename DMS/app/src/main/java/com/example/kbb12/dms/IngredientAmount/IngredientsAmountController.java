@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -28,27 +29,27 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.ingredientAmountBackButton) {
-            model.setIngredientAmount("");
-            currentActivity.finish();
-        }
-        else if(v.getId() == R.id.ingredientAmountConfirmButton) {
-            if(model.getIngredientAmount().equals("")) {
-                Toast.makeText(currentActivity, "Error! Nothing was entered for the amount of ingredient!", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                if(!model.isWeight()) {
-                    if(Integer.parseInt(model.getIngredientAmount()) > 100) {
-                        Toast.makeText(currentActivity, "Error! The percentage of ingredient used cannot exceed 100%!", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        nextActivity();
-                    }
+        switch(v.getId()) {
+            case R.id.ingredientAmountBackButton:
+                //model.setIngredientAmount("");
+                model.setUnits("g");
+                currentActivity.finish();
+                break;
+            case R.id.ingredientAmountConfirmButton:
+                if(model.getIngredientAmount().equals("")) {
+                    Toast.makeText(currentActivity, "Error! Nothing was entered for the amount of ingredient!", Toast.LENGTH_SHORT).show();
                 }
+                //else if(!model.isWeight() && Integer.parseInt(model.getIngredientAmount()) > 100) {
+                //    Toast.makeText(currentActivity, "Error! The percentage of ingredient used cannot exceed 100%!", Toast.LENGTH_SHORT).show();
+                //}
                 else {
+                    model.calculateCarbValOfIngredient(model.getIngredientAmount());
+                    model.setIngredientListView();
                     nextActivity();
+                    //model.setIngredientAmount("");
+                    model.setUnits("g");
                 }
-            }
+                break;
         }
 
     }
@@ -72,15 +73,16 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
             model.setUnits("g");
-            model.changeUnit(true);
+            //model.changeUnit(false);
         }
         else {
             model.setUnits("%");
-            model.changeUnit(false);
+            //model.changeUnit(true);
         }
     }
 
     public void nextActivity(){
+        //currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientListActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

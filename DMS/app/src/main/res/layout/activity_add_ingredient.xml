@@ -36,4 +36,43 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/addIngredientTitle"
         android:layout_toEndOf="@+id/addIngredientTitle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchDatabaseEntry"
+        android:hint="Search for Ingredient..."
+        android:layout_below="@+id/addIngredientTitle"
+        android:layout_toLeftOf="@+id/scanBarcodeButton"
+        android:layout_toStartOf="@+id/scanBarcodeButton" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/searchDatabaseEntry"
+        android:layout_above="@+id/addCustomIngredientButton" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scanBarcodeButton"
+        android:src="@drawable/barcode"
+        android:layout_above="@+id/listView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/searchDatabaseEntry"
+        android:layout_alignLeft="@+id/addCustomIngredientButton"
+        android:layout_alignStart="@+id/addCustomIngredientButton" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:src="@android:drawable/ic_menu_search"
+        android:layout_alignBottom="@+id/searchDatabaseEntry"
+        android:layout_toLeftOf="@+id/searchDatabaseEntry"
+        android:layout_toStartOf="@+id/searchDatabaseEntry" />
 </RelativeLayout>

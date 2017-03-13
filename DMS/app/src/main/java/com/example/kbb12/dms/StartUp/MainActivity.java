@@ -3,6 +3,7 @@ package com.example.kbb12.dms.StartUp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.kbb12.dms.MealList.MealListActivity;
 import com.example.kbb12.dms.R;
@@ -23,12 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //checking for saved meals should be done here
-        List<Meal> meals = new ArrayList<Meal>();
+        List<IMeal> meals = new ArrayList<IMeal>();
 
 
 
         //Creates user model.
         ModelHolder.model = new UserModel("60", meals);
+        UserModel m = ModelHolder.model;
         Intent mealListIntent = new Intent(this,MealListActivity.class);
         //Passes the model to the intent.
         //templateIntent.putExtra("UserModel", newModel);

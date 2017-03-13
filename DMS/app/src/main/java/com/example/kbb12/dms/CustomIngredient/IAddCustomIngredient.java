@@ -1,17 +1,25 @@
 package com.example.kbb12.dms.CustomIngredient;
 
+import com.example.kbb12.dms.StartUp.IIngredient;
+
 /**
  * Created by Ciaran on 3/1/2017.
  */
 public interface IAddCustomIngredient {
     public boolean checkEntry(String entry);
-    public void setItemName(String name);
+
+    public IIngredient getCustomIngredient();
+
+    public void setCustomName(String name);
     public String getItemName();
-    public void setCarbVal(String name);
+    public void setCustomCarbVal(String val);
     public String getCarbVal();
-    public void setPacketVal(String name);
+    public void setCustomPacketVal(String val);
     public String getPacketVal();
-    public void setSugarVal(String name);
+    public void setCustomSugarVal(String val);
     public String getSugarVal();
+    public void setCustomPacketWeightVal(String val);
+    public String getWeightVal();
+
     //public void addCustomIngredient(double sugarVal);
 }

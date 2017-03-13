@@ -28,6 +28,6 @@ public class AddCustomIngredientNameController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setItemName(s.toString());
+        model.setCustomName(s.toString());
     }
 }

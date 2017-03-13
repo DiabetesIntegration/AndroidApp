@@ -3,6 +3,7 @@ package com.example.kbb12.dms.CustomIngredient;
 import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 
 /**
  * Created by Ciaran on 3/1/2017.
@@ -28,6 +29,7 @@ public class AddCustomIngredientPacketController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setPacketVal(s.toString());
+        //Log.i("tester", "YASSS 2");
+        model.setCustomPacketVal(s.toString());
     }
 }

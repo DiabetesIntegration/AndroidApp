@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.kbb12.dms.AddIngredient.AddIngredientActivity;
+import com.example.kbb12.dms.IngredientList.IngredientListActivity;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
 /**
@@ -42,15 +43,23 @@ public class MealListController implements View.OnClickListener, AdapterView.OnI
 
     @Override
     public void onClick(View v) {
+        //currentActivity.finish();
+        model.setIngListView();
+        model.setNewMeal();
         Intent ingredientIntent = new Intent(currentActivity, AddIngredientActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(ingredientIntent);
-
-        Log.i("tester", "YASSS");
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Log.i("tester", position + ".POSITIONMEALLISTCONTROLLER");
+        model.setIngListView();
+        model.setMealItem(position);
+        model.getIngredientsForMeal();
+        //model.setNewMeal(false);
+        Intent ingredientIntent = new Intent(currentActivity, IngredientListActivity.class);
+        //Launches the next activity.
+        currentActivity.startActivity(ingredientIntent);
     }
 }

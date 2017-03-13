@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/addAnotherIngredientButton"
         android:src="@android:drawable/ic_menu_add"
-        android:background="#ffffff"
+        android:background="@null"
         android:layout_alignBottom="@+id/addAnotherIngredientText"
         android:layout_toRightOf="@+id/mealNameEntry"
         android:layout_toEndOf="@+id/mealNameEntry" />
@@ -57,5 +57,5 @@
         android:layout_above="@+id/addAnotherIngredientButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:choiceMode="none" />
+        android:choiceMode="singleChoice" />
 </RelativeLayout>

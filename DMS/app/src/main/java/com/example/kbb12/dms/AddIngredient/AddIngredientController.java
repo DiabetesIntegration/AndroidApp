@@ -21,11 +21,13 @@ public class AddIngredientController implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Log.i("tester", "YASSSSSSSSSSSS");
+        model.newCustomIngredient();
+        Log.i("tester", "22222222222222222");
+        //currentActivity.finish();
         Intent ingredientIntent = new Intent(currentActivity, AddCustomIngredientActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(ingredientIntent);
-
-        Log.i("tester", "YASSS 2222222");
 
     }
 }

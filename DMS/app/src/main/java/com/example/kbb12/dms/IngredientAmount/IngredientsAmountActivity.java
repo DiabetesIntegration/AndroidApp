@@ -17,13 +17,15 @@ public class IngredientsAmountActivity extends AppCompatActivity {
     private ImageButton exitIngredientAmount, confirmIngredientAmount;
     private EditText amountEntry;
     private TextView amountUnit;
+    private UserModel model;
+    private IngredientsAmountView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients_amount);
 
-        UserModel model = ModelHolder.model;
+        model = ModelHolder.model;
 
         wOrp = (ToggleButton) findViewById(R.id.toggleButton);
         exitIngredientAmount = (ImageButton) findViewById(R.id.ingredientAmountBackButton);
@@ -38,9 +40,14 @@ public class IngredientsAmountActivity extends AppCompatActivity {
         amountEntry.addTextChangedListener(controller);
 
 
-        IngredientsAmountView view = new IngredientsAmountView(wOrp,amountEntry,amountUnit,model);
+        view = new IngredientsAmountView(wOrp,amountEntry,amountUnit,model);
         model.registerObserver(view);
 
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.removeObserver(view);
     }
 }

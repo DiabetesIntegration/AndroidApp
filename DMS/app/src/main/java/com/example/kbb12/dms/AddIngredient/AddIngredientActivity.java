@@ -2,6 +2,7 @@ package com.example.kbb12.dms.AddIngredient;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 
 import com.example.kbb12.dms.R;
@@ -10,13 +11,15 @@ import com.example.kbb12.dms.StartUp.UserModel;
 
 public class AddIngredientActivity extends AppCompatActivity {
     private ImageButton addCustom;
+    private UserModel model;
+    private AddIngredientView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
 
-        UserModel model = ModelHolder.model;
+        model = ModelHolder.model;
 
         addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
 
@@ -24,7 +27,15 @@ public class AddIngredientActivity extends AppCompatActivity {
         addCustom.setOnClickListener(controller);
 
 
-        AddIngredientView view = new AddIngredientView(addCustom,model);
+        view = new AddIngredientView(addCustom,model);
         model.registerObserver(view);
+        //model.registerObserver(view);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.removeObserver(view);
     }
 }

@@ -5,14 +5,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 
+import com.example.kbb12.dms.StartUp.UserModel;
+
 /**
- * Created by Ciaran on 3/1/2017.
+ * Created by Ciaran on 3/8/2017.
  */
-public class AddCustomIngredientSugarController implements TextWatcher {
+public class AddCustomIngredientPacketWeightController implements TextWatcher {
     private IAddCustomIngredient model;
     private Activity currentActivity;
 
-    public AddCustomIngredientSugarController(IAddCustomIngredient model, Activity currentActivity) {
+    public AddCustomIngredientPacketWeightController(IAddCustomIngredient model, Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
     }
@@ -29,7 +31,7 @@ public class AddCustomIngredientSugarController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        //Log.i("tester", "YASSS 3");
-        model.setCustomSugarVal(s.toString());
+        //Log.i("tester", "YASSS 4");
+        model.setCustomPacketWeightVal(s.toString());
     }
 }

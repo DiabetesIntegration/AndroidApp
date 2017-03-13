@@ -12,42 +12,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.xbb12169.mealplanner.MainActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mealSearch"
-        android:layout_marginTop="29dp"
-        android:text="Search For A Meal..."
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add..."
-        android:id="@+id/newMealButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/mealSearch"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:layout_above="@+id/newMealButton"
-
-        android:divider="#7e7d7b"
-        android:dividerHeight="2dp" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:src="@android:drawable/ic_menu_search"
-        android:layout_alignBottom="@+id/mealSearch"
-        android:layout_toLeftOf="@+id/mealSearch"
-        android:layout_toStartOf="@+id/mealSearch" />
-
 </RelativeLayout>

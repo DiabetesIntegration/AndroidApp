@@ -5,6 +5,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.kbb12.dms.CustomListView.CustomAdapter;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 
 /**
@@ -15,14 +16,17 @@ public class IngredientListView implements ModelObserver {
     private ListView iList;
     private ImageButton addIng;
     private Button finishList;
+    //private ArrayAdapter<String> adapter;
+    private CustomAdapter adapter;
     private IIngredientList model;
 
 
-    public IngredientListView(EditText mn, ListView entries, ImageButton aIng, Button eat, IIngredientList model) {
-        mName = mn;
-        iList = entries;
-        addIng = aIng;
-        finishList = eat;
+    public IngredientListView(EditText mealName, ListView currentIngredients, ImageButton anotherIngredient, Button completeMeal, CustomAdapter adapter, IIngredientList model) {
+        mName = mealName;
+        iList = currentIngredients;
+        addIng = anotherIngredient;
+        finishList = completeMeal;
+        this.adapter = adapter;
         this.model = model;
     }
 
@@ -31,5 +35,11 @@ public class IngredientListView implements ModelObserver {
     @Override
     public void update() {
         //upate listView here
+        if(!adapter.isEmpty()) {
+            adapter.clear();
+        }
+        adapter.addAll(model.getIngredientsInMeal());
+
+        mName.setText(model.getMealName());
     }
 }
