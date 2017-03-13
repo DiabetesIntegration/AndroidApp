@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
+import com.example.kbb12.dms.AddFitness.AddFitnessActivity;
+
 /**
  * Created by Garry on 07/03/2017.
  */
@@ -21,7 +23,7 @@ public class FitnessInfoController implements View.OnClickListener  {
 
     @Override
     public void onClick(View view) {
-        Intent addActivityIntent = new Intent(currentActivity, addActivityIntent.class);
-        currentActivity.startActivity(addActivityIntent);
+        Intent addFitnessIntent = new Intent(currentActivity, AddFitnessActivity.class);
+        currentActivity.startActivity(addFitnessIntent);
     }
 }

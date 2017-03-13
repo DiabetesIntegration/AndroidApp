@@ -69,7 +69,7 @@ public class dbHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
-    public boolean updateEntry(int id, String date, float calories){
+    public boolean updateEntry(int id, String date, double calories){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentvalues = new ContentValues();
         contentvalues.put(DATE, date);

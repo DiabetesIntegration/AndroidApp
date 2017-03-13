@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.kbb12.dms.AddFitness.IAddFitness;
 import com.example.kbb12.dms.FitnessInfo.IFitnessInfo;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
@@ -20,13 +21,13 @@ import java.util.Observer;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel, IFitnessInfo {
+public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
 
     private String exampleData;
 
     private List<ModelObserver> observers;
 
-    private float calories;
+    //private float calories;
     private dbHelper db;
 
     public UserModel(String exampleData){
@@ -64,15 +65,16 @@ public class UserModel implements ITemplateModel, IFitnessInfo {
 
     public void addToCalCount(Context context, float cal){
         db = new dbHelper(context);
-        float calories;
+        double calories;
         int id;
         String date = getDate();
         if(db.EntryExists(date)){
             Cursor cur = db.getEntry(db.findEntry(date));
             cur.moveToFirst();
             id = cur.getInt(cur.getColumnIndex("id"));
-            calories = cur.getFloat(cur.getColumnIndex("calories"));
+            calories = cur.getDouble(cur.getColumnIndex("calories"));
             calories += cal;
+            cur.close();
 
             db.updateEntry(id, date, calories);
         } else {
@@ -81,7 +83,15 @@ public class UserModel implements ITemplateModel, IFitnessInfo {
     }
 
     @Override
-    public float getCalCount() {
+    public double getCalCount(Context context) {
+        double calories = 0;
+        db = new dbHelper(context);
+        String date = getDate();
+        if (db.EntryExists(date)){
+            Cursor cur = db.getEntry(db.findEntry(date));
+            cur.moveToFirst();
+            calories = cur.getDouble(cur.getColumnIndex("calories"));
+        }
         return calories;
     }
 }

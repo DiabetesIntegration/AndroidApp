@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.FitnessInfo;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 
@@ -14,15 +15,17 @@ public class FitnessInfoView implements ModelObserver {
     private TextView mTVCal;
     private FloatingActionButton mFABAddActivity;
     private IFitnessInfo lmodel;
+    private Context context;
 
-    public FitnessInfoView(TextView tv, FloatingActionButton fab, IFitnessInfo model){
+    public FitnessInfoView(TextView tv, FloatingActionButton fab, Context context, IFitnessInfo model){
         mTVCal = tv;
         mFABAddActivity = fab;
+        this.context = context;
         lmodel = model;
     }
 
     @Override
     public void update() {
-        mTVCal.setText(Float.toString(lmodel.getCalCount()));
+        mTVCal.setText(Double.toString(lmodel.getCalCount(context)));
     }
 }

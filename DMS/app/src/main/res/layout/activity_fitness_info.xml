@@ -10,12 +10,12 @@
         android:id="@+id/FitTracTitletextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="113dp"
-        android:text="FitnessTracker"
-        android:textSize="28sp"
-        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="113dp"
+        android:text="Fitness Tracker"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView2"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kbb12.dms.AddFitness.AddFitnessActivity">
+
+    <TextView
+        android:id="@+id/typeOfActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type of Activity"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <Spinner
+        android:id="@+id/activitySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <EditText
+        android:id="@+id/hourEText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="199dp" />
+
+    <TextView
+        android:id="@+id/hoursTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hours"
+        tools:layout_editor_absoluteX="197dp"
+        tools:layout_editor_absoluteY="212dp" />
+
+    <EditText
+        android:id="@+id/minuteEText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="283dp" />
+
+    <TextView
+        android:id="@+id/minutesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Minutes"
+        tools:layout_editor_absoluteX="197dp"
+        tools:layout_editor_absoluteY="297dp" />
+
+    <ImageButton
+        android:id="@+id/saveActivityIB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_save"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="372dp" />
+
+</android.support.constraint.ConstraintLayout>

@@ -24,7 +24,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kbb12.dms.StartUp.MainActivity" />
         </activity>
-        <activity android:name=".FitnessInfo.FitnessInfoActivity"></activity>
+        <activity android:name=".FitnessInfo.FitnessInfoActivity" />
+        <activity android:name=".AddFitness.AddFitnessActivity"></activity>
     </application>
 
 </manifest>
