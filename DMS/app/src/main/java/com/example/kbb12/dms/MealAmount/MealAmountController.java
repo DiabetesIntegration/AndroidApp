@@ -51,7 +51,6 @@ public class MealAmountController implements View.OnClickListener, TextWatcher {
     }
 
     public void nextActivity(){
-        //currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, MealListActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

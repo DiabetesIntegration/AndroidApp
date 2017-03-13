@@ -46,7 +46,6 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
                     model.calculateCarbValOfIngredient(model.getIngredientAmount());
                     model.setIngredientListView();
                     nextActivity();
-                    //model.setIngredientAmount("");
                     model.setUnits("g");
                 }
                 break;
@@ -73,16 +72,13 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
             model.setUnits("g");
-            //model.changeUnit(false);
         }
         else {
             model.setUnits("%");
-            //model.changeUnit(true);
         }
     }
 
     public void nextActivity(){
-        //currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientListActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

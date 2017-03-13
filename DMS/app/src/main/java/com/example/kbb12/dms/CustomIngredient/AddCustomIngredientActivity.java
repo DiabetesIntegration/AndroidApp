@@ -45,9 +45,6 @@ public class AddCustomIngredientActivity extends AppCompatActivity {
         sugarVal.addTextChangedListener(new AddCustomIngredientSugarController(model,this));
         packetWeight.addTextChangedListener(new AddCustomIngredientPacketWeightController(model,this));
 
-        //createCustom.setOnClickListener(new AddCustomIngredientButtonController(model,this));
-        //cancelCustom.setOnClickListener(new AddCustomIngredientButtonController(model,this));
-
 
 
         view = new AddCustomIngredientView(ingredientName,carbVal,packVal,sugarVal,packetWeight,model);

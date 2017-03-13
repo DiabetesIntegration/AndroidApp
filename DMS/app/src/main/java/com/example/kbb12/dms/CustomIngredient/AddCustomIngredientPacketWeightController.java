@@ -31,7 +31,6 @@ public class AddCustomIngredientPacketWeightController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        //Log.i("tester", "YASSS 4");
         model.setCustomPacketWeightVal(s.toString());
     }
 }

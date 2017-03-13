@@ -7,9 +7,6 @@ import com.example.kbb12.dms.StartUp.IIngredient;
  */
 public interface IIngredientsAmount {
 
-    //public boolean isWeight();
-    //public void changeUnit(boolean wop);
-
     public void setIngredientListView();
 
     public void setIngredientAmount(String amount);

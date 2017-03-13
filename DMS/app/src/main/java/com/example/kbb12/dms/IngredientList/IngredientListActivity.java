@@ -18,7 +18,6 @@ public class IngredientListActivity extends AppCompatActivity {
     private ListView currentIngredients;
     private ImageButton anotherIngredient;
     private Button completeMeal;
-    //private ArrayAdapter<String> adapter;
     private UserModel model;
     private IngredientListView view;
 
@@ -35,9 +34,6 @@ public class IngredientListActivity extends AppCompatActivity {
         currentIngredients = (ListView) findViewById(R.id.ingredientsList);
         anotherIngredient = (ImageButton) findViewById(R.id.addAnotherIngredientButton);
         completeMeal = (Button) findViewById(R.id.eatMealButton);
-
-        //adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        //currentIngredients.setAdapter(adapter);
 
         IngredientListController controller = new IngredientListController(model,this);
         mealName.addTextChangedListener(controller);
@@ -57,17 +53,11 @@ public class IngredientListActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i("tester", "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //currentIngredients.invalidateViews();
-        //adapter.clear();
-        //adapter.notifyDataSetChanged();
-        //currentIngredients.setAdapter(null);
-        //currentIngredients.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
         model.removeObserver(view);
     }
 }

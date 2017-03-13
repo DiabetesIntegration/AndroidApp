@@ -26,8 +26,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     private IDeleteCustomItem model;
     private CustomListViewController controller;
 
-    public CustomAdapter(/*List<String> items,*/ Context context, IDeleteCustomItem model) {
-        //this.items = items;
+    public CustomAdapter(Context context, IDeleteCustomItem model) {
         items = new ArrayList<String>();
         this.context = context;
         this.model = model;
@@ -84,14 +83,6 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
         CustomListViewController controller = new CustomListViewController(position, model);
         delete.setOnClickListener(controller);
-
-        //delete.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        items.remove(pos);
-        //        notifyDataSetChanged();
-        //    }
-        //});
 
         return view;
     }

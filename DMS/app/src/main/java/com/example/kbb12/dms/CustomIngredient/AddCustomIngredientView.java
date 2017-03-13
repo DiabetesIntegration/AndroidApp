@@ -24,10 +24,5 @@ public class AddCustomIngredientView implements ModelObserver {
 
     @Override
     public void update() {
-        //ingredientName.setText(model.getItemName());
-        //carbVal.setText(model.getCarbVal());
-        //packVal.setText(model.getPacketVal());
-        //sugarVal.setText(model.getSugarVal());
-        //weightVal.setText(model.getWeightVal());
     }
 }

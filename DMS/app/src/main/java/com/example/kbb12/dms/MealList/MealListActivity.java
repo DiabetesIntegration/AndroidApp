@@ -16,7 +16,6 @@ public class MealListActivity extends AppCompatActivity {
     private ListView mealList;
     private ImageButton addMeal;
     private TextView emptyMealList;
-    //private ArrayAdapter<String> adapter;
 
     private CustomAdapter cAdapter;
 
@@ -33,9 +32,6 @@ public class MealListActivity extends AppCompatActivity {
         mealList = (ListView) findViewById(R.id.mealsList);
         addMeal = (ImageButton) findViewById(R.id.addMealButton);
         emptyMealList = (TextView) findViewById(R.id.emptyMealList);
-
-        //adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        //mealList.setAdapter(adapter);
 
         cAdapter = new CustomAdapter(this, model);
         mealList.setAdapter(cAdapter);

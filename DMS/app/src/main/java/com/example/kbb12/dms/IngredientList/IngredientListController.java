@@ -39,11 +39,11 @@ public class IngredientListController implements View.OnClickListener, TextWatch
                     Toast.makeText(currentActivity, "Error! There are no ingredients in the meal!", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    model.addNewIngredients();
                     model.createMeal();
                     nextActivity();
                     model.setIngListView(false);
                 }
-                //model.setMealName("");
 
             }
             else {
@@ -75,7 +75,6 @@ public class IngredientListController implements View.OnClickListener, TextWatch
     }
 
     public void anotherIngredientActivity(){
-        //currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, AddIngredientActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

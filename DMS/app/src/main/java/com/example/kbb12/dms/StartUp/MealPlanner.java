@@ -11,14 +11,16 @@ public class MealPlanner implements IMealPlanner {
     private List<IIngredient> activeIngredients;
     private String units;
     private String activeMealName;
-    //private boolean grams;
+    private List<IIngredient> savedIngredients;
+    private String itemSearch;
 
-    public MealPlanner(List<IMeal> meals) {
+    public MealPlanner(List<IMeal> meals, List<IIngredient> savedIng) {
         savedMeals = meals;
         activeIngredients = new ArrayList<IIngredient>();
         units = "g";
         activeMealName = "";
-        //grams = true;
+        savedIngredients = savedIng;
+        itemSearch = "";
     }
 
     @Override
@@ -30,44 +32,16 @@ public class MealPlanner implements IMealPlanner {
     }
 
     @Override
-    public void setMealName(String name, int i) {
-        savedMeals.get(i).setMealName(name);
-    }
-
-    @Override
     public boolean addCustomIngredient() {
         activeIngredients.add(new Ingredient());
-        return true;
-    }
-
-    //@Override
-    //public IIngredient getCustomIngredient()
-    //{
-    //    return activeIngredients.get(activeIngredients.size()-1);
-    //}
-
-    @Override
-    public boolean addIngredient(String name, List<String> nutrients) {
-        activeIngredients.add(new Ingredient(name, nutrients));
         return true;
     }
 
     @Override
     public boolean removeMeal(int i) {
         savedMeals.remove(i);
-        //activeIngredients.clear();
         return true;
     }
-
-    //@Override
-    //public boolean removeIngredient(IMeal meal, int i) {
-    //    for(int index = 0; index < savedMeals.size(); index++) {
-    //        if(savedMeals.get(index).equals(meal)) {
-    //            savedMeals.get(index).getIngredients().remove(i);
-    //        }
-    //    }
-    //    return true;
-    //}
 
     @Override
     public boolean removeIngredient(int i) {
@@ -96,11 +70,6 @@ public class MealPlanner implements IMealPlanner {
     }
 
     @Override
-    public List<IIngredient> getAllIngredients(IMeal meal) {
-        return meal.getIngredients();
-    }
-
-    @Override
     public void setActiveMealName(String meal) {
         activeMealName = meal;
     }
@@ -120,37 +89,43 @@ public class MealPlanner implements IMealPlanner {
         units = unit;
     }
 
-    //@Override
-    //public void setMeasurementsByGrams(boolean amount) {
-    //    grams = amount;
-    //}
-
-    //@Override
-    //public boolean measurementByGrams() {
-    //    return grams;
-    //}
-
     @Override
-    public String getCarbsConsumed(int i) {
-        savedMeals.get(i).setCarbsEaten();
-        return savedMeals.get(i).getCarbsEaten();
+    public List<IIngredient> getSavedIngredients() {
+        return savedIngredients;
     }
 
-    //@Override
-    //public boolean editMeal(String name, String amount, int i) {
-    //    savedMeals.get(i).setMealName(name);
-    //    savedMeals.get(i).calculateCarbVal(amount);
-    //    return true;
-    //}
+    @Override
+    public void addToSavedIngredients(List<IIngredient> ingredients) {
+        boolean ingExists = false;
+        for(int i = 0; i < ingredients.size(); i++) {
+            for(int j = 0; j < savedIngredients.size(); j++) {
+                if(savedIngredients.get(j).getIngredientName().equals(ingredients.get(i).getIngredientName())) {
+                    ingExists = true;
+                }
+            }
+            if(!ingExists) {
+                savedIngredients.add(ingredients.get(i));
+                ingExists = false;
+            }
+        }
+    }
 
-    //@Override
-    //public boolean editIngredient(IMeal meal, String ingName, List<String> nutrients, int i) {
-    //    for(int index = 0; index < savedMeals.size(); index++) {
-    //        if(savedMeals.get(index).equals(meal)) {
-    //            savedMeals.get(index).getIngredients().get(i).setName(ingName);
-    //            savedMeals.get(index).getIngredients().get(i).setNutritionalValues(nutrients);
-    //        }
-    //    }
-    //    return true;
-    //}
+    @Override
+    public void setItemSearch(String search) {
+        itemSearch = search;
+    }
+
+    @Override
+    public String getItemSearch() {
+        return itemSearch;
+    }
+
+    @Override
+    public void addSearchedIngredient(String itemName) {
+        for(int i = 0; i < savedIngredients.size(); i++) {
+            if(savedIngredients.get(i).getIngredientName().equals(itemName)) {
+                activeIngredients.add(new Ingredient(savedIngredients.get(i).getIngredientName(),savedIngredients.get(i).getNutritionalValues()));
+            }
+        }
+    }
 }

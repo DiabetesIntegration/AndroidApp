@@ -16,7 +16,6 @@ public class IngredientListView implements ModelObserver {
     private ListView iList;
     private ImageButton addIng;
     private Button finishList;
-    //private ArrayAdapter<String> adapter;
     private CustomAdapter adapter;
     private IIngredientList model;
 

@@ -6,7 +6,6 @@ import java.util.List;
  * Created by Ciaran on 3/2/2017.
  */
 public interface IIngredientList {
-    //public void setIngredientListView();
     public void setIngListView(boolean meal);
     public List<String> getIngredientsInMeal();
     public void setIngredientItem(int i);
@@ -14,4 +13,5 @@ public interface IIngredientList {
     public void setMealName(String name);
     public String getMealName();
     public void createMeal();
+    public void addNewIngredients();
 }

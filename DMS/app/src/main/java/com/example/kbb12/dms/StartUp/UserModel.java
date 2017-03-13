@@ -30,43 +30,13 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
     private boolean ingList;
 
 
-
-
-
-
-    private List<IMeal> meals;
-    private int numMeals, currentMealSelected;
-    private IMeal meal;
-    private String mName;
-    private String mAmount;
-    private boolean newMeal;
-
-
-    private List<IIngredient> ingredients;
-    private IIngredient ingredient;
-
-
-    //-------------------------------------------
-    //IngredientAmount variables
-    private String unit, ingAmount;
-    private boolean byWeight;
-    //-------------------------------------------
-
     private List<ModelObserver> observers;
 
-    public UserModel(String exampleData, List<IMeal> meals){
+    public UserModel(String exampleData, List<IMeal> meals, List<IIngredient> ing){
         this.exampleData=exampleData;
         observers= new ArrayList<>();
-        this.meals = meals;
-        numMeals = this.meals.size();
-        currentMealSelected = 0;
-        mAmount = "";
-        mName = "";
-        ingredients = new ArrayList<IIngredient>();
 
-
-
-        mealPlanner = new MealPlanner(meals);
+        mealPlanner = new MealPlanner(meals, ing);
         itemNoIng = 0;
         if(!meals.isEmpty()) {
             itemNoMeal = meals.size()-1;
@@ -76,13 +46,6 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
         }
         ingList = false;
 
-
-        //-------------------------------------------
-        //IngredientAmount variables
-        unit = "g";
-        ingAmount="";
-        byWeight = true;
-        //-------------------------------------------
     }
 
     public String getExampleData(){
@@ -145,12 +108,6 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
 
     @Override
     public List<String> getSavedMeals() {
-        //List<String> m = new ArrayList<String>();
-        //for(int i = 0; i < meals.size(); i++) {
-        //    m.add(meals.get(i).getName());
-        //    //Log.i("tester", "HI: " + meals.get(i).getName());
-        //}
-        //return m;
         List<String> m = new ArrayList<String>();
         for(int i = 0; i < mealPlanner.getAllMeals().size(); i++) {
             m.add(mealPlanner.getMeal(i).getMealName() + " - " + mealPlanner.getMeal(i).getCarbsEaten() + " total sugar intake");
@@ -160,14 +117,7 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
 
     @Override
     public void getIngredientsForMeal() {
-        //meal = meals.get(index);
-        //ingredients = meals.get(index).getIngredients();
-        //mName = meals.get(index).getName();
         mealPlanner.setActiveIngredients(mealPlanner.getMeal(itemNoMeal).getAllIngredients());
-        Log.i("tester", mealPlanner.getActiveIngredients().size() + ".ACTIVEINGREDIENTSSIZE." + itemNoMeal + ".");
-        for(int i = 0; i < mealPlanner.getActiveIngredients().size(); i++) {
-            Log.i("tester", mealPlanner.getActiveIngredients().get(i).getIngredientName());
-        }
         notifyObservers();
     }
 
@@ -188,8 +138,49 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
 
     @Override
     public void newCustomIngredient() {
-        //ingredient = new Ingredient();
         mealPlanner.addCustomIngredient();
+        itemNoIng = mealPlanner.getActiveIngredients().size() - 1;
+    }
+
+    @Override
+    public void itemSearch(String search) {
+        mealPlanner.setItemSearch(search);
+        notifyObservers();
+    }
+
+    @Override
+    public List<String> getSavedIngredients() {
+        List<String> itemNames = new ArrayList<String>();
+        boolean match = true;
+        if(mealPlanner.getItemSearch().equals("")) {
+            for(int i = 0; i < mealPlanner.getSavedIngredients().size(); i++) {
+                itemNames.add(mealPlanner.getSavedIngredients().get(i).getIngredientName());
+            }
+        }
+        else {
+            char enteredSearch[] = mealPlanner.getItemSearch().toCharArray();
+            for(int i = 0; i < mealPlanner.getSavedIngredients().size(); i++) {
+                if(enteredSearch.length > mealPlanner.getSavedIngredients().get(i).getIngredientName().length()) {
+                    continue;
+                }
+                char ing[] = mealPlanner.getSavedIngredients().get(i).getIngredientName().substring(0, enteredSearch.length).toCharArray();
+                for(int j = 0; j < enteredSearch.length; j++) {
+                    if(ing[j]!=enteredSearch[j]) {
+                        match = false;
+                    }
+                }
+                if(match) {
+                    itemNames.add(mealPlanner.getSavedIngredients().get(i).getIngredientName());
+                }
+                match = true;
+            }
+        }
+        return itemNames;
+    }
+
+    @Override
+    public void getSavedIngredient(String item) {
+        mealPlanner.addSearchedIngredient(item);
         itemNoIng = mealPlanner.getActiveIngredients().size() - 1;
     }
 
@@ -217,67 +208,28 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
 
     @Override
     public void setCustomName(String name) {
-        //iName = name;
-        //i.setName(name);
-        //nutrientInfo.add(0,name);
         getCustomIngredient().setIngredientName(name);
     }
 
-    @Override
-    public String getItemName() {
-    //    return nutrientInfo.get(0);
-        return getCustomIngredient().getIngredientName();
-    }
 
     @Override
     public void setCustomCarbVal(String val) {
-        //iCarb = name;
-        //i.setCarbVal(val);
-       // nutrientInfo.add(1,val);
         getCustomIngredient().addCustomNutrition(val,0);
     }
 
     @Override
-    public String getCarbVal() {
-    //    return iCarb;
-        return getCustomIngredient().getNutritionalValues().get(0);
-    }
-
-    @Override
     public void setCustomPacketVal(String val) {
-        //iPacket = name;
-        //i.setPacketCarb(val);
         getCustomIngredient().addCustomNutrition(val,1);
     }
 
     @Override
-    public String getPacketVal() {
-    //    return iPacket;
-        return getCustomIngredient().getNutritionalValues().get(1);
-    }
-
-    @Override
     public void setCustomSugarVal(String val) {
-        //iSugar = name;
-        //i.setSugarValue(val);
         getCustomIngredient().addCustomNutrition(val,2);
     }
 
     @Override
-    public String getSugarVal() {
-        //    return iSugar;
-        return getCustomIngredient().getNutritionalValues().get(2);
-    }
-
-    @Override
     public void setCustomPacketWeightVal(String val) {
-        //i.setPacketWeightValue(val);
         getCustomIngredient().addCustomNutrition(val,3);
-    }
-
-    @Override
-    public String getWeightVal() {
-        return getCustomIngredient().getNutritionalValues().get(3);
     }
 
 
@@ -288,17 +240,6 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
     //------------------------------------------------------------------
     //IIngredientAmount methods
 
-    //@Override
-    //public boolean isWeight() {
-    //    return byWeight;
-    //}
-
-
-    //@Override
-    //public void changeUnit(boolean wop) {
-    //    byWeight = wop;
-    //}
-
     @Override
     public void setIngredientListView() {
         ingList = true;
@@ -307,23 +248,16 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
     @Override
     public void setIngredientAmount(String amount) {
         mealPlanner.getActiveIngredients().get(itemNoIng).setCarbAmount(amount);
-        //mealPlanner.getNewIngredients().get(mealPlanner.getNewIngredients().size()-1).setCarbAmount(amount);
-        //mealPlanner.getNewIngredients().get(mealPlanner.getNewIngredients().size() - 1).setCarbAmount(amount);
-        //ingAmount = amount;
     }
 
     @Override
     public String getIngredientAmount() {
         return mealPlanner.getActiveIngredients().get(itemNoIng).getCarbAmount();
-        //return mealPlanner.getNewIngredients().get(mealPlanner.getNewIngredients().size() - 1).getCarbAmount();
-        //return ingAmount;
     }
 
     @Override
     public void setUnits(String unit) {
         mealPlanner.setUnits(unit);
-        //mealPlanner.getActiveIngredients().get(itemNo).setAmountUnits(unit);
-        //this.unit = unit;
         notifyObservers();
     }
 
@@ -341,14 +275,6 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
             mealPlanner.getActiveIngredients().get(itemNoIng).setCarbAmountByPercent(amount);
         }
 
-        /*if(isWeight()) {
-            ingredient.calculateCarbByWeight(getIngredientAmount());
-        }
-        else {
-            ingredient.calculateCarbByPercentage(getIngredientAmount());
-        }
-        ingredients.add(ingredient);
-        notifyObservers();*/
     }
 
     //------------------------------------------------------------------
@@ -369,9 +295,6 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
         for(int i = 0; i < mealPlanner.getActiveIngredients().size(); i++) {
             ingNames.add(mealPlanner.getActiveIngredients().get(i).getIngredientName() + " - " + mealPlanner.getActiveIngredients().get(i).getCarbAmount() + "g of sugar" );
         }
-        //for(int i = 0; i < ingredients.size(); i++) {
-        //    ingNames.add(ingredients.get(i).getName());
-        //}
         return ingNames;
     }
 
@@ -383,26 +306,22 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
     @Override
     public void setMealName(String name) {
         mealPlanner.setActiveMealName(name);
-        //mealPlanner.getMeal(itemNoMeal).setMealName(name);
     }
 
     @Override
     public String getMealName() {
         return mealPlanner.getActiveMealName();
-        //return mealPlanner.getMeal(itemNoMeal).getMealName();
     }
 
     @Override
     public void createMeal() {
         mealPlanner.getMeal(itemNoMeal).setMealName(getMealName());
         mealPlanner.getMeal(itemNoMeal).setIngredients(mealPlanner.getActiveIngredients());
-        //if(newMeal) {
-        //    meal = new Meal(getMealName(), ingredients);
-        //    meals.add(meal);
-        //    numMeals++;
-        //    ingredients = new ArrayList<IIngredient>();
-        //    notifyObservers();
-        //}
+    }
+
+    @Override
+    public void addNewIngredients() {
+        mealPlanner.addToSavedIngredients(mealPlanner.getActiveIngredients());
     }
 
     //------------------------------------------------------------------
@@ -427,10 +346,6 @@ public class UserModel implements ITemplateModel, IMealList, IAddIngredient, IAd
         mealPlanner.getMeal(itemNoMeal).getTotalCarbs();
         mealPlanner.getMeal(itemNoMeal).setCarbsEaten();
         notifyObservers();
-        //meal.calculateCarbVal(getMealAmount());
-        //ingredients = new ArrayList<IIngredient>();
-        //notifyObservers();
-        //meals.get(currentMealSelected).calculateCarbVal(getMealAmount());
     }
 
     //------------------------------------------------------------------
