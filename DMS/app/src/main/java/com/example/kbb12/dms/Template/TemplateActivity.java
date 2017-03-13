@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.Template;
+package com.example.kbb12.dms.template;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.StartUp.ModelHolder;
-import com.example.kbb12.dms.StartUp.UserModel;
+import com.example.kbb12.dms.startUp.ModelHolder;
+import com.example.kbb12.dms.model.UserModel;
 
 /**
  * Created by kbb12 on 17/01/2017.
