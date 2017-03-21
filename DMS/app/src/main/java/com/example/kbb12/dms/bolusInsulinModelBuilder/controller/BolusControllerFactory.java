@@ -62,7 +62,7 @@ public class BolusControllerFactory implements IBolusControllerFactory {
     }
 
     @Override
-    public CompoundButton.OnCheckedChangeListener getRapidActing() {
+    public CompoundButton.OnCheckedChangeListener getRapidActingListener() {
         return new RapidActingListener(model);
     }
 

@@ -27,6 +27,10 @@ public class DinCarbsListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setDinCarbs(Integer.parseInt(s.toString()));
+        if(s.toString().length()>0){
+            model.setDinCarbs(Integer.parseInt(s.toString()));
+        }else{
+            model.setDinCarbs(null);
+        }
     }
 }

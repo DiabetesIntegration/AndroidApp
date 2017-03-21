@@ -27,6 +27,10 @@ public class DinInsulinListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setDinInsulin(Integer.parseInt(s.toString()));
+        if(s.toString().length()>0) {
+            model.setDinInsulin(Integer.parseInt(s.toString()));
+        }else{
+            model.setDinInsulin(null);
+        }
     }
 }

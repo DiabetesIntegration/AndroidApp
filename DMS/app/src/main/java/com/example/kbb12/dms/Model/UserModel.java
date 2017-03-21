@@ -20,7 +20,7 @@ import java.util.List;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainModel {
+public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,TakeInsulinMainModel {
 
     private String exampleData;
 
@@ -30,7 +30,7 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
 
     private InsulinTakenRecord insulinTakenRecord;
 
-    public static final int versionNumber=2;
+    public static final int versionNumber=4;
 
     public UserModel(Context context){
         basalInsulinModel =new BasalInsulinModel(context,versionNumber,"InitialBasalInsulinModel");

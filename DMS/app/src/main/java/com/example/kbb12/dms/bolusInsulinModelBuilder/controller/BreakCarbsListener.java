@@ -27,6 +27,10 @@ public class BreakCarbsListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setBreakCarbs(Integer.parseInt(s.toString()));
+        if(s.toString().length()>0) {
+            model.setBreakCarbs(Integer.parseInt(s.toString()));
+        }else{
+            model.setBreakCarbs(null);
+        }
     }
 }

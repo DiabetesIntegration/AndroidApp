@@ -8,6 +8,6 @@ import java.util.List;
 /**
  * Created by kbb12 on 24/02/2017.
  */
-public interface InsulinModel {
+public interface BasalInsulinModelBuilderMainModel {
     public void saveDoses(List<BasalInsulinDose> basicDoses,String basalInsulinBrandName) throws DuplicateDoseException;
 }

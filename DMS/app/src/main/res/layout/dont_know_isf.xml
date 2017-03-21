@@ -8,14 +8,14 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText5"
+        android:id="@+id/numBasBolUnits"
         android:hint="Please enter the total number \n of basal and bolus insulin units \nyou take in a normal day."
         android:layout_gravity="center_horizontal"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="5dp"
-        android:nextFocusUp="@id/editText5"
-        android:nextFocusLeft="@id/editText5"
+        android:nextFocusUp="@id/numBasBolUnits"
+        android:nextFocusLeft="@id/numBasBolUnits"
         android:gravity="center_vertical|center_horizontal" />
 
     <LinearLayout
@@ -34,7 +34,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
+            android:id="@+id/rapidActing"
             android:checked="false" />
     </LinearLayout>
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="This gives an approximate insulin sensitivity factor of: 5"
-        android:id="@+id/textView18"
+        android:id="@+id/isfResult"
         android:layout_gravity="center_horizontal"
         android:paddingTop="10dp"
         android:paddingLeft="20dp"

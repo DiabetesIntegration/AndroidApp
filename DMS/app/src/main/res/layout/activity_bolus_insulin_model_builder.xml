@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="40"
-            android:id="@+id/insulinSensitivityFactorDetails"
+            android:id="@+id/insulinSensitivityFactorDetailsHolder"
             android:layout_gravity="center_horizontal">
         </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="done"
-            android:id="@+id/button2"
+            android:id="@+id/finishBolusInsulinSetUp"
             android:layout_gravity="right" />
 
     </LinearLayout>

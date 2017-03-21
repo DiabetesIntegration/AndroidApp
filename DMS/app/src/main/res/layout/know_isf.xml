@@ -33,7 +33,7 @@
             android:inputType="numberDecimal"
             android:hint="Insulin Sensitivity Factor"
             android:ems="10"
-            android:id="@+id/editText7"
+            android:id="@+id/mornISF"
             android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 
@@ -67,7 +67,7 @@
             android:inputType="numberDecimal"
             android:hint="Insulin Sensitivity Factor"
             android:ems="10"
-            android:id="@+id/editText9"
+            android:id="@+id/afteISF"
             android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 
@@ -100,7 +100,7 @@
             android:inputType="numberDecimal"
             android:hint="Insulin Sensitivity Factor"
             android:ems="10"
-            android:id="@+id/editText11"
+            android:id="@+id/nighISF"
             android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 

@@ -11,7 +11,7 @@ import com.example.kbb12.dms.errorHandling.DefaultErrorController;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.BrandListener;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.EntryControllerFactory;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.IEntryControllerFactory;
-import com.example.kbb12.dms.basalInsulinModelBuilder.controller.ValidateInsulinController;
+import com.example.kbb12.dms.basalInsulinModelBuilder.controller.ValidateBasalInsulinController;
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinModel;
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinModelBuilderView;
 import com.example.kbb12.dms.R;
@@ -33,7 +33,7 @@ public class BasalInsulinModelBuilderActivity extends AppCompatActivity {
         EditText brandName = (EditText) findViewById(R.id.editText4);
         brandName.addTextChangedListener(new BrandListener(currentModel));
         Button nextButton = (Button) findViewById(R.id.nextButton2);
-        nextButton.setOnClickListener(new ValidateInsulinController(this,currentModel));
+        nextButton.setOnClickListener(new ValidateBasalInsulinController(this,currentModel));
         IEntryControllerFactory controllerFactory = new EntryControllerFactory(currentModel);
         ModelObserver view = new BasalInsulinModelBuilderView(doseList,controllerFactory,currentModel,this,getFragmentManager(),new DefaultErrorController(currentModel));
         currentModel.registerObserver(view);

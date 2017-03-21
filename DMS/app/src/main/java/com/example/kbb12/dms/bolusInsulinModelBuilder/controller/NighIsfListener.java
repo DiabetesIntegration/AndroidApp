@@ -27,6 +27,10 @@ public class NighIsfListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setNighISF(Double.parseDouble(s.toString()));
+        if(s.toString().length()>0) {
+            model.setNighISF(Double.parseDouble(s.toString()));
+        }else{
+            model.setNighISF(null);
+        }
     }
 }

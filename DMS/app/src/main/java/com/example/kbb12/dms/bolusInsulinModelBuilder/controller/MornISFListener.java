@@ -27,6 +27,10 @@ public class MornISFListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setMornISF(Double.parseDouble(s.toString()));
+        if(s.toString().length()>0) {
+            model.setMornISF(Double.parseDouble(s.toString()));
+        }else{
+            model.setMornISF(null);
+        }
     }
 }

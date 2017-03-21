@@ -27,6 +27,10 @@ public class LunInsulinListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setLunInsulin(Integer.parseInt(s.toString()));
+        if(s.toString().length()>0) {
+            model.setLunInsulin(Integer.parseInt(s.toString()));
+        }else{
+            model.setLunInsulin(null);
+        }
     }
 }

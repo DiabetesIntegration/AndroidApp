@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.bolusInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.model.InsulinModel;
+import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
+import com.example.kbb12.dms.model.BolusInsulinModelBuilderMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
@@ -9,7 +10,7 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel {
     private boolean knowsICR;
     private boolean knowsISF;
-    private InsulinModel model;
+    private BolusInsulinModelBuilderMainModel model;
     private String errorMessage;
     private ModelObserver observer;
 
@@ -28,7 +29,7 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     private Double afteIsf;
     private Double nighISF;
 
-    public BolusInsulinModelBuilderModel(InsulinModel model){
+    public BolusInsulinModelBuilderModel(BolusInsulinModelBuilderMainModel model){
         this.model=model;
         this.knowsICR=false;
         this.knowsISF=false;
@@ -60,13 +61,28 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
-    public Double getICR() {
-        return null;
+    public Double getICR()
+    {
+        if(numBolUnitsPerDay==null){
+            return null;
+        }
+        if(humalogNovolog){
+            return ((double)numBolUnitsPerDay)/500;
+        }else{
+            return ((double)numBolUnitsPerDay)/450;
+        }
     }
 
     @Override
     public Double getISF() {
-        return null;
+        if(numBasBolUnitsPerDay==null){
+            return null;
+        }
+        if(rapidActing){
+            return (1800/((double)numBasBolUnitsPerDay))/18;
+        }else{
+            return (1500/((double)numBasBolUnitsPerDay))/18;
+        }
     }
 
     @Override
@@ -168,7 +184,7 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
-    public void setNumBolUnitsPerDay(int numBolUnitsPerDay) {
+    public void setNumBolUnitsPerDay(Integer numBolUnitsPerDay) {
         this.numBolUnitsPerDay=numBolUnitsPerDay;
         notifyObserver();
     }
@@ -180,43 +196,43 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
-    public void setBreakInsulin(int breakInsulin) {
+    public void setBreakInsulin(Integer breakInsulin) {
         this.breakInsulin=breakInsulin;
         notifyObserver();
     }
 
     @Override
-    public void setBreakCarbs(int breakCarbs) {
+    public void setBreakCarbs(Integer breakCarbs) {
         this.breakCarbs=breakCarbs;
         notifyObserver();
     }
 
     @Override
-    public void setLunInsulin(int lunInsulin) {
+    public void setLunInsulin(Integer lunInsulin) {
         this.lunInsulin=lunInsulin;
         notifyObserver();
     }
 
     @Override
-    public void setLunCarbs(int lunCarbs) {
+    public void setLunCarbs(Integer lunCarbs) {
         this.lunCarbs=lunCarbs;
         notifyObserver();
     }
 
     @Override
-    public void setDinInsulin(int dinInsulin) {
+    public void setDinInsulin(Integer dinInsulin) {
         this.dinInsulin=dinInsulin;
         notifyObserver();
     }
 
     @Override
-    public void setDinCarbs(int dinCarbs) {
+    public void setDinCarbs(Integer dinCarbs) {
         this.dinCarbs=dinCarbs;
         notifyObserver();
     }
 
     @Override
-    public void setNumBasBolUnitsPerDay(int numBasBolUnitsPerDay) {
+    public void setNumBasBolUnitsPerDay(Integer numBasBolUnitsPerDay) {
         this.numBasBolUnitsPerDay=numBasBolUnitsPerDay;
         notifyObserver();
     }
@@ -228,20 +244,61 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
-    public void setMornISF(double mornISF) {
+    public void setMornISF(Double mornISF) {
         this.mornIsf=mornISF;
         notifyObserver();
     }
 
     @Override
-    public void setAfteISF(double aftISF) {
+    public void setAfteISF(Double aftISF) {
         this.afteIsf=aftISF;
         notifyObserver();
     }
 
     @Override
-    public void setNighISF(double nighISF) {
+    public void setNighISF(Double nighISF) {
         this.nighISF=nighISF;
         notifyObserver();
+    }
+
+    @Override
+    public void saveValues() {
+        if(knowsICR){
+            if(breakInsulin==null||breakCarbs==null||lunInsulin==null||lunCarbs==null||
+                    dinInsulin==null||dinCarbs==null){
+                setError("You must enter your full insulin to carb ratio for each time scale.\n If " +
+                        "you do not know it at different times please enter the same value for each");
+                return;
+            }
+        }else{
+            if(numBolUnitsPerDay==null){
+                setError("You must enter your average number of bolus units per day to work out" +
+                        " an approximate Insulin to carbohydrate ratio.");
+                return;
+            }
+        }
+        if(knowsISF){
+            if(mornIsf==null||afteIsf==null||nighISF==null){
+                setError("You must enter your insulin sensitivity factor for each time scale.\n If " +
+                        "you do not know it at different times please enter the same value for each");
+                return;
+            }
+        }else{
+            if(numBasBolUnitsPerDay==null){
+                setError("You must enter your total number of basal and bolus units per day to work out" +
+                        " an approximate Insulin Sensitivity Factor.");
+                return;
+            }
+        }
+        if(knowsICR){
+           model.createInsulinToCarbModel(breakInsulin,breakCarbs,lunInsulin,lunCarbs,dinInsulin,dinCarbs);
+        }else{
+            model.createInsulinToCarbModel(getICR());
+        }
+        if(knowsISF){
+            model.createInsulinSensitivityModel(mornIsf,afteIsf,nighISF);
+        }else{
+            model.createInsulinSensitivityModel(getISF());
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.example.kbb12.dms.bolusInsulinModelBuilder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
@@ -10,6 +11,7 @@ import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.BolusControllerFactory;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.KnowsICRListener;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.KnowsISFListener;
+import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.SaveBolusInsulinListener;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.model.BolusInsulinModelBuilderModel;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.view.BolusInsulinBuilderView;
 import com.example.kbb12.dms.errorHandling.DefaultErrorController;
@@ -28,13 +30,15 @@ public class BolusInsulinModelBuilder extends AppCompatActivity {
         BolusInsulinBuilderView view = new BolusInsulinBuilderView(getFragmentManager(),
                 new DefaultErrorController(model),
                 (LinearLayout) findViewById(R.id.insulinToCarbDetailHolder),
-                (LinearLayout) findViewById(R.id.insulinSensitivityFactorDetails),
+                (LinearLayout) findViewById(R.id.insulinSensitivityFactorDetailsHolder),
                 model,this,new BolusControllerFactory(model));
         model.registerObserver(view);
         Switch knowISF = (Switch) findViewById(R.id.knowsInsulinSensitivityFactor);
         knowISF.setOnCheckedChangeListener(new KnowsISFListener(model));
         Switch knowICR = (Switch) findViewById(R.id.knowsInsulinToCarbRatio);
         knowICR.setOnCheckedChangeListener(new KnowsICRListener(model));
+        Button done = (Button) findViewById(R.id.finishBolusInsulinSetUp);
+        done.setOnClickListener(new SaveBolusInsulinListener(model));
         view.update();
     }
 

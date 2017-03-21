@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Created by kbb12 on 20/01/2017.
  */
-public class ValidateInsulinController implements View.OnClickListener {
+public class ValidateBasalInsulinController implements View.OnClickListener {
 
     Activity currentActivity;
     BasalInsulinReadWriteModel model;
 
-    public ValidateInsulinController(Activity currentActivity,BasalInsulinReadWriteModel model){
+    public ValidateBasalInsulinController(Activity currentActivity, BasalInsulinReadWriteModel model){
         this.currentActivity=currentActivity;
         this.model=model;
     }

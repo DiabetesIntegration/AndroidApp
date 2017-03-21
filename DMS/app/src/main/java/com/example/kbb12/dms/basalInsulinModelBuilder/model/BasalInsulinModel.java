@@ -3,7 +3,7 @@ package com.example.kbb12.dms.basalInsulinModelBuilder.model;
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.model.InsulinModel;
+import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.util.ArrayList;
@@ -22,13 +22,13 @@ public class BasalInsulinModel implements BasalInsulinReadWriteModel {
 
     private List<BasalInsulinDose> basicDoses;
 
-    private InsulinModel model;
+    private BasalInsulinModelBuilderMainModel model;
 
     private ModelObserver observer;
 
     private String errorMessage;
 
-    public BasalInsulinModel(InsulinModel model){
+    public BasalInsulinModel(BasalInsulinModelBuilderMainModel model){
         basicDoses=new ArrayList<>();
         selectedDose=null;
         doseToBeDeleted=null;

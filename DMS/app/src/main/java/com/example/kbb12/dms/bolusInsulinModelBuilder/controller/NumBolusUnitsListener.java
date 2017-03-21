@@ -28,6 +28,10 @@ public class NumBolusUnitsListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setNumBolUnitsPerDay(Integer.parseInt(s.toString()));
+        if(s.toString().length()>0) {
+            model.setNumBolUnitsPerDay(Integer.parseInt(s.toString()));
+        }else{
+            model.setNumBolUnitsPerDay(null);
+        }
     }
 }

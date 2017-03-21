@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.kbb12.dms.bolusInsulinModelBuilder.BolusInsulinModelBuilder;
 import com.example.kbb12.dms.mainMenu.MainMenuActivity;
 import com.example.kbb12.dms.model.UserModel;
 import com.example.kbb12.dms.R;
@@ -24,18 +23,14 @@ public class MainActivity extends AppCompatActivity {
         //Creates user model.
         ModelHolder.model = new UserModel(this);
         model = ModelHolder.model;
-        Intent nextIntent = new Intent(this, BolusInsulinModelBuilder.class);
-        startActivity(nextIntent);
-        /*
         if(model.getDoses().size()>0){
-            nextIntent = new Intent(this, MainMenuActivity.class);
+            Intent nextIntent = new Intent(this, MainMenuActivity.class);
             if(getIntent().getBooleanExtra("NotificationLaunch",false)){
                 nextIntent.putExtra("NotificationLaunch",true);
             }
             startActivity(nextIntent);
             finish();
         }
-        */
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new StartUpController(this));
     }

@@ -17,7 +17,7 @@ public interface IBolusControllerFactory {
     TextWatcher getDinnerCarbListener();
 
     TextWatcher getNumBolusBasalUnitsListener();
-    CompoundButton.OnCheckedChangeListener getRapidActing();
+    CompoundButton.OnCheckedChangeListener getRapidActingListener();
     TextWatcher getMornISFListener();
     TextWatcher getAfteISFListener();
     TextWatcher getNighISFListener();
