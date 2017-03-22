@@ -152,4 +152,9 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
     public void createInsulinSensitivityModel(double ISF) {
         bolusInsulinModel.createInsulinSensitivityModel(ISF);
     }
+
+    public void logModels(){
+        basalInsulinModel.log();
+        bolusInsulinModel.log();
+    }
 }

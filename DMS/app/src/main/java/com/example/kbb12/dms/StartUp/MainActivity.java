@@ -24,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         //Creates user model.
         ModelHolder.model = new UserModel(this);
         model = ModelHolder.model;
-        Intent nextIntent = new Intent(this, BolusInsulinModelBuilder.class);
-        startActivity(nextIntent);
-        /*
         if(model.getDoses().size()>0){
             Intent nextIntent = new Intent(this, MainMenuActivity.class);
             if(getIntent().getBooleanExtra("NotificationLaunch",false)){
@@ -35,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(nextIntent);
             finish();
         }
-        */
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new StartUpController(this));
     }

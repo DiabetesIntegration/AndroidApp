@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 
@@ -128,6 +129,15 @@ public class BasalInsulinModel implements IBasalInsulinModel {
 
     private String formatTime(int hour,int minute){
         return String.format("%02d",hour).toString()+":"+String.format("%02d", minute);
+    }
+
+    public void log(){
+        Cursor cursor =write.rawQuery("Select * from "+
+                BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
+        while (cursor.moveToNext()){
+            Log.d("DMS MODEL BASAL",cursor.getString(0)+","+cursor.getString(1)+","+
+                    cursor.getDouble(2)+","+cursor.getString(3));
+        }
     }
 
 

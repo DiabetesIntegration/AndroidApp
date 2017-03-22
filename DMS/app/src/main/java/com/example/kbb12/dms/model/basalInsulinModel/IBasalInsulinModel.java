@@ -18,4 +18,6 @@ public interface IBasalInsulinModel {
     Calendar getLastTakenAprox(BasalInsulinEntry mostRecent);
 
     void allTakenBefore(Integer hour, Integer minute, int day, int month, int year);
+
+    void log();
 }

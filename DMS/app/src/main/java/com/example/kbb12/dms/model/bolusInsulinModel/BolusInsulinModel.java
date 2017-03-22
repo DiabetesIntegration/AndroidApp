@@ -2,8 +2,10 @@ package com.example.kbb12.dms.model.bolusInsulinModel;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 /**
@@ -56,7 +58,7 @@ public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulin
                                          double nighInsulin, double nighCarbs) {
         fillICRValues(6, 10, breakInsulin / breakCarbs);
         fillICRValues(11,16,lunInsulin/lunCarbs);
-        fillICRValues(17,22,dinInsulin/dinCarbs);
+        fillICRValues(17, 22, dinInsulin / dinCarbs);
         fillICRValues(23, 5, nighInsulin / nighCarbs);
     }
 
@@ -95,8 +97,8 @@ public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulin
     
     private void fillICRValues(int startHour,int endHour,double ICRvalue){
         if(startHour>endHour){
-            fillICRValues(startHour,23,ICRvalue);
-            fillICRValues(0,endHour,ICRvalue);
+            fillICRValues(startHour, 23, ICRvalue);
+            fillICRValues(0, endHour, ICRvalue);
             return;
         }
         String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?";
@@ -106,6 +108,15 @@ public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulin
         for(int i=startHour;i<(endHour+1);i++) {
             write.update(BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME, args,
                     strFilter, new String[]{String.format("%2d:00", i)});
+        }
+    }
+
+    public void log(){
+        Cursor cursor =write.rawQuery("Select * from "+
+                BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
+        while (cursor.moveToNext()){
+            Log.d("DMS MODEL BOLUS", cursor.getString(0) + "," + cursor.getFloat(1) + "," +
+                    cursor.getFloat(2) + "," + cursor.getFloat(3)+","+cursor.getFloat(4));
         }
     }
 

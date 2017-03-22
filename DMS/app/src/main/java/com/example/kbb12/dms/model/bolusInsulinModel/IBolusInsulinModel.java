@@ -10,4 +10,5 @@ public interface IBolusInsulinModel {
     void createInsulinToCarbModel(double ICR);
     void createInsulinSensitivityModel(double ISF);
     void createInsulinSensitivityModel(double mornISF,double afteISF,double eveISF,double nighISF);
+    void log();
 }
