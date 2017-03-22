@@ -28,7 +28,7 @@ public class LunCarbsListener implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         if(s.toString().length()>0) {
-            model.setLunCarbs(Integer.parseInt(s.toString()));
+            model.setLunCarbs(Double.parseDouble(s.toString()));
         }else {
             model.setLunCarbs(null);
         }

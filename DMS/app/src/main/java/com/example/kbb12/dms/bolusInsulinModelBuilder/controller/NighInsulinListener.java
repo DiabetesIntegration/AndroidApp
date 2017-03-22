@@ -8,11 +8,11 @@ import com.example.kbb12.dms.bolusInsulinModelBuilder.model.BolusInsulinReadWrit
 /**
  * Created by kbb12 on 10/03/2017.
  */
-public class LunInsulinListener implements TextWatcher {
+public class NighInsulinListener implements TextWatcher {
 
     private BolusInsulinReadWriteModel model;
 
-    public LunInsulinListener(BolusInsulinReadWriteModel model){
+    public NighInsulinListener(BolusInsulinReadWriteModel model){
         this.model=model;
     }
     @Override
@@ -28,7 +28,7 @@ public class LunInsulinListener implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         if(s.toString().length()>0) {
-            model.setLunInsulin(Double.parseDouble(s.toString()));
+            model.setNighInsulin(Double.parseDouble(s.toString()));
         }else{
             model.setLunInsulin(null);
         }

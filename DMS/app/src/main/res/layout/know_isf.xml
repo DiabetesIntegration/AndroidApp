@@ -3,105 +3,150 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="0dp"
-        android:paddingLeft="10dp" >
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Morning:\n(06:00 - 11:30)"
-            android:id="@+id/textView19"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=":"
-            android:id="@+id/textView20"
-            android:layout_gravity="center_vertical" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                android:paddingLeft="10dp" >
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:hint="Insulin Sensitivity Factor"
-            android:ems="10"
-            android:id="@+id/mornISF"
-            android:gravity="center_vertical|center_horizontal" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Morning:\n(06:00 - 11:00)"
+                    android:id="@+id/textView19"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="0dp"
-        android:paddingLeft="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=":"
+                    android:id="@+id/textView20"
+                    android:layout_gravity="center_vertical" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Afternoon:\n(12:00 - 17:00)"
-            android:id="@+id/textView21"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:hint="Insulin Sensitivity Factor"
+                    android:ems="10"
+                    android:id="@+id/mornISF"
+                    android:gravity="center_vertical|center_horizontal" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=":"
-            android:id="@+id/textView22"
-            android:layout_gravity="center_vertical" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                android:paddingLeft="10dp">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:hint="Insulin Sensitivity Factor"
-            android:ems="10"
-            android:id="@+id/afteISF"
-            android:gravity="center_vertical|center_horizontal" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Afternoon:\n(12:00 - 17:00)"
+                    android:id="@+id/textView21"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="0dp"
-        android:paddingLeft="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=":"
+                    android:id="@+id/textView22"
+                    android:layout_gravity="center_vertical" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Night:\n(18:00 - 22:00)"
-            android:id="@+id/textView23"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:hint="Insulin Sensitivity Factor"
+                    android:ems="10"
+                    android:id="@+id/afteISF"
+                    android:gravity="center_vertical|center_horizontal" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=":"
-            android:id="@+id/textView24" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                android:paddingLeft="10dp">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:hint="Insulin Sensitivity Factor"
-            android:ems="10"
-            android:id="@+id/nighISF"
-            android:gravity="center_vertical|center_horizontal" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Evening:\n(18:00 - 22:00)"
+                    android:id="@+id/textView23"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=":"
+                    android:id="@+id/textView24" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:hint="Insulin Sensitivity Factor"
+                    android:ems="10"
+                    android:id="@+id/eveISF"
+                    android:gravity="center_vertical|center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                android:paddingLeft="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Night:\n(23:00 - 05:00)"
+                    android:id="@+id/textView32"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=":"
+                    android:id="@+id/textView33" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:hint="Insulin Sensitivity Factor"
+                    android:ems="10"
+                    android:id="@+id/nighISF"
+                    android:gravity="center_vertical|center_horizontal" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

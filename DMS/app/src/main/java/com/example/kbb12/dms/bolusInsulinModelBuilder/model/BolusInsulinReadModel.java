@@ -16,16 +16,19 @@ public interface BolusInsulinReadModel extends ErrorReadModel {
 
     Integer getNumBolUnitsPerDay();
     boolean isHumalogNovolog();
-    Integer getBreakInsulin();
-    Integer getBreakCarbs();
-    Integer getLunInsulin();
-    Integer getLunCarbs();
-    Integer getDinInsulin();
-    Integer getDinCarbs();
+    Double getBreakInsulin();
+    Double getBreakCarbs();
+    Double getLunInsulin();
+    Double getLunCarbs();
+    Double getDinInsulin();
+    Double getDinCarbs();
+    Double getNighInsulin();
+    Double getNighCarbs();
 
     Integer getNumBasBolUnitsPerDay();
     boolean isRapidActing();
     Double getMornISF();
     Double getAfteISF();
+    Double getEveISF();
     Double getNighISF();
 }

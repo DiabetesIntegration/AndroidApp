@@ -38,7 +38,7 @@ public class BolusInsulinModelBuilder extends AppCompatActivity {
         Switch knowICR = (Switch) findViewById(R.id.knowsInsulinToCarbRatio);
         knowICR.setOnCheckedChangeListener(new KnowsICRListener(model));
         Button done = (Button) findViewById(R.id.finishBolusInsulinSetUp);
-        done.setOnClickListener(new SaveBolusInsulinListener(model));
+        done.setOnClickListener(new SaveBolusInsulinListener(model,this));
         view.update();
     }
 

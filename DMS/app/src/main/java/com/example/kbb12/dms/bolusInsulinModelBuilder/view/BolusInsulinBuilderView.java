@@ -63,6 +63,8 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
             setLunCarbs();
             setDinInsulin();
             setDinCarbs();
+            setNighInsulin();
+            setNighCarbs();
             insulinToCarbDetailHolder.addView(icrDetails);
         }else{
             knewICR=false;
@@ -83,7 +85,7 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
         if(model.getICR()==null){
             icrResult.setText("Enter your details to calculate your approximate insulin:carb ratio.");
         }else {
-            icrResult.setText("This gives an approximate insulin to carb ratio of    1:" + model.getICR());
+            icrResult.setText("This gives an approximate insulin to carb ratio of    1:" + 1/model.getICR());
         }
     }
 
@@ -149,6 +151,22 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
         dinCarbs.addTextChangedListener(factory.getDinnerCarbListener());
     }
 
+    private void setNighInsulin(){
+        EditText nighInsulin =(EditText) icrDetails.findViewById(R.id.nightInsulin);
+        if(model.getNighInsulin()!=null){
+            nighInsulin.setText(model.getNighInsulin().toString());
+        }
+        nighInsulin.addTextChangedListener(factory.getNightInsulinListener());
+    }
+
+    private void setNighCarbs(){
+        EditText nighCarbs =(EditText) icrDetails.findViewById(R.id.nightCarbs);
+        if(model.getNighCarbs()!=null){
+            nighCarbs.setText(model.getNighCarbs().toString());
+        }
+        nighCarbs.addTextChangedListener(factory.getNightCarbListener());
+    }
+
     private void setISFDetails(){
         insulinSensitivityFactorDetailsHolder.removeAllViews();
         if(model.knowsISF()){
@@ -160,6 +178,7 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
             isfDetails = inflater.inflate(R.layout.know_isf,holder,false);
             setMornISF();
             setAfteISF();
+            setEveISF();
             setNighISF();
             insulinSensitivityFactorDetailsHolder.addView(isfDetails);
         }else{
@@ -191,6 +210,14 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
             afteISF.setText(model.getAfteISF().toString());
         }
         afteISF.addTextChangedListener(factory.getAfteISFListener());
+    }
+
+    private void setEveISF(){
+        EditText eveISF =(EditText) isfDetails.findViewById(R.id.eveISF);
+        if(model.getEveISF()!=null){
+            eveISF.setText(model.getEveISF().toString());
+        }
+        eveISF.addTextChangedListener(factory.getEveISFListener());
     }
 
     private void setNighISF(){

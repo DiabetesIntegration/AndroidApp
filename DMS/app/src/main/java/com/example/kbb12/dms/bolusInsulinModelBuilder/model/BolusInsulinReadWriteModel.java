@@ -11,16 +11,19 @@ public interface BolusInsulinReadWriteModel extends BolusInsulinReadModel,ErrorR
     void setKnowsICR(boolean knowsICR);
     void setNumBolUnitsPerDay(Integer numBolUnitsPerDay);
     void setHumalogNovolog(boolean humalogNovolog);
-    void setBreakInsulin(Integer breakInsulin);
-    void setBreakCarbs(Integer breakCarbs);
-    void setLunInsulin(Integer lunInsulin);
-    void setLunCarbs(Integer lunCarbs);
-    void setDinInsulin(Integer dinInsulin);
-    void setDinCarbs(Integer dinCarbs);
+    void setBreakInsulin(Double breakInsulin);
+    void setBreakCarbs(Double breakCarbs);
+    void setLunInsulin(Double lunInsulin);
+    void setLunCarbs(Double lunCarbs);
+    void setDinInsulin(Double dinInsulin);
+    void setDinCarbs(Double dinCarbs);
+    void setNighInsulin(Double dinInsulin);
+    void setNighCarbs(Double dinInsulin);
     void setNumBasBolUnitsPerDay(Integer numBasBolUnitsPerDay);
     void setRapidActing(boolean rapidActing);
     void setMornISF(Double mornISF);
     void setAfteISF(Double aftISF);
+    void setEveISF(Double eveISF);
     void setNighISF(Double nighISF);
-    void saveValues();
+    boolean saveValues();
 }

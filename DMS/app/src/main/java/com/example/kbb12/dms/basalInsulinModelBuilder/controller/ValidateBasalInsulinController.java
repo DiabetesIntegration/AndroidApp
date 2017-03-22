@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinReadWriteModel;
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.bolusInsulinModelBuilder.BolusInsulinModelBuilder;
 import com.example.kbb12.dms.mainMenu.MainMenuActivity;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 
@@ -40,7 +41,7 @@ public class ValidateBasalInsulinController implements View.OnClickListener {
             model.saveDoses();
             Intent setUpAlerts = new Intent("com.DMS.timedAlertCreator");
             currentActivity.sendBroadcast(setUpAlerts);
-            currentActivity.startActivity(new Intent(currentActivity, MainMenuActivity.class));
+            currentActivity.startActivity(new Intent(currentActivity, BolusInsulinModelBuilder.class));
             currentActivity.finish();
         }catch (DuplicateDoseException e){
             model.setError("There can not be two doses taken at the same time.");

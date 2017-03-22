@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.bolusInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
 import com.example.kbb12.dms.model.BolusInsulinModelBuilderMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
@@ -16,17 +15,20 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
 
     private Integer numBolUnitsPerDay;
     private boolean humalogNovolog;
-    private Integer breakInsulin;
-    private Integer breakCarbs;
-    private Integer lunInsulin;
-    private Integer lunCarbs;
-    private Integer dinInsulin;
-    private Integer dinCarbs;
+    private Double breakInsulin;
+    private Double breakCarbs;
+    private Double lunInsulin;
+    private Double lunCarbs;
+    private Double dinInsulin;
+    private Double dinCarbs;
+    private Double nighInsulin;
+    private Double nighCarbs;
 
     private Integer numBasBolUnitsPerDay;
     private boolean rapidActing;
     private Double mornIsf;
     private Double afteIsf;
+    private Double eveISF;
     private Double nighISF;
 
     public BolusInsulinModelBuilderModel(BolusInsulinModelBuilderMainModel model){
@@ -96,33 +98,43 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
-    public Integer getBreakInsulin() {
+    public Double getBreakInsulin() {
         return breakInsulin;
     }
 
     @Override
-    public Integer getBreakCarbs() {
+    public Double getBreakCarbs() {
         return breakCarbs;
     }
 
     @Override
-    public Integer getLunInsulin() {
+    public Double getLunInsulin() {
         return lunInsulin;
     }
 
     @Override
-    public Integer getLunCarbs(){
+    public Double getLunCarbs(){
         return lunCarbs;
     }
 
     @Override
-    public Integer getDinInsulin() {
+    public Double getDinInsulin() {
         return dinInsulin;
     }
 
     @Override
-    public Integer getDinCarbs() {
+    public Double getDinCarbs() {
         return dinCarbs;
+    }
+
+    @Override
+    public Double getNighInsulin() {
+        return nighInsulin;
+    }
+
+    @Override
+    public Double getNighCarbs() {
+        return nighCarbs;
     }
 
     @Override
@@ -143,6 +155,11 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     @Override
     public Double getAfteISF() {
         return afteIsf;
+    }
+
+    @Override
+    public Double getEveISF() {
+        return eveISF;
     }
 
     @Override
@@ -196,38 +213,50 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
-    public void setBreakInsulin(Integer breakInsulin) {
+    public void setBreakInsulin(Double breakInsulin) {
         this.breakInsulin=breakInsulin;
         notifyObserver();
     }
 
     @Override
-    public void setBreakCarbs(Integer breakCarbs) {
+    public void setBreakCarbs(Double breakCarbs) {
         this.breakCarbs=breakCarbs;
         notifyObserver();
     }
 
     @Override
-    public void setLunInsulin(Integer lunInsulin) {
+    public void setLunInsulin(Double lunInsulin) {
         this.lunInsulin=lunInsulin;
         notifyObserver();
     }
 
     @Override
-    public void setLunCarbs(Integer lunCarbs) {
+    public void setLunCarbs(Double lunCarbs) {
         this.lunCarbs=lunCarbs;
         notifyObserver();
     }
 
     @Override
-    public void setDinInsulin(Integer dinInsulin) {
+    public void setDinInsulin(Double dinInsulin) {
         this.dinInsulin=dinInsulin;
         notifyObserver();
     }
 
     @Override
-    public void setDinCarbs(Integer dinCarbs) {
+    public void setDinCarbs(Double dinCarbs) {
         this.dinCarbs=dinCarbs;
+        notifyObserver();
+    }
+
+    @Override
+    public void setNighInsulin(Double nighInsulin) {
+        this.nighInsulin=nighInsulin;
+        notifyObserver();
+    }
+
+    @Override
+    public void setNighCarbs(Double nighCarbs) {
+        this.nighCarbs=nighCarbs;
         notifyObserver();
     }
 
@@ -256,49 +285,56 @@ public class BolusInsulinModelBuilderModel implements BolusInsulinReadWriteModel
     }
 
     @Override
+    public void setEveISF(Double eveISF) {
+        this.eveISF=eveISF;
+    }
+
+    @Override
     public void setNighISF(Double nighISF) {
         this.nighISF=nighISF;
         notifyObserver();
     }
 
     @Override
-    public void saveValues() {
+    public boolean saveValues() {
         if(knowsICR){
             if(breakInsulin==null||breakCarbs==null||lunInsulin==null||lunCarbs==null||
-                    dinInsulin==null||dinCarbs==null){
+                    dinInsulin==null||dinCarbs==null||nighInsulin==null||nighCarbs==null){
                 setError("You must enter your full insulin to carb ratio for each time scale.\n If " +
                         "you do not know it at different times please enter the same value for each");
-                return;
+                return false;
             }
         }else{
             if(numBolUnitsPerDay==null){
                 setError("You must enter your average number of bolus units per day to work out" +
                         " an approximate Insulin to carbohydrate ratio.");
-                return;
+                return false;
             }
         }
         if(knowsISF){
-            if(mornIsf==null||afteIsf==null||nighISF==null){
+            if(mornIsf==null||afteIsf==null||eveISF==null||nighISF==null){
                 setError("You must enter your insulin sensitivity factor for each time scale.\n If " +
                         "you do not know it at different times please enter the same value for each");
-                return;
+                return false;
             }
         }else{
             if(numBasBolUnitsPerDay==null){
                 setError("You must enter your total number of basal and bolus units per day to work out" +
                         " an approximate Insulin Sensitivity Factor.");
-                return;
+                return false;
             }
         }
         if(knowsICR){
-           model.createInsulinToCarbModel(breakInsulin,breakCarbs,lunInsulin,lunCarbs,dinInsulin,dinCarbs);
+           model.createInsulinToCarbModel(breakInsulin,breakCarbs,lunInsulin,lunCarbs,dinInsulin,
+                   dinCarbs,nighInsulin,nighCarbs);
         }else{
             model.createInsulinToCarbModel(getICR());
         }
         if(knowsISF){
-            model.createInsulinSensitivityModel(mornIsf,afteIsf,nighISF);
+            model.createInsulinSensitivityModel(mornIsf,afteIsf,eveISF,nighISF);
         }else{
             model.createInsulinSensitivityModel(getISF());
         }
+        return true;
     }
 }

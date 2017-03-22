@@ -57,6 +57,16 @@ public class BolusControllerFactory implements IBolusControllerFactory {
     }
 
     @Override
+    public TextWatcher getNightInsulinListener() {
+        return new NighInsulinListener(model);
+    }
+
+    @Override
+    public TextWatcher getNightCarbListener() {
+        return new NighCarbsListener(model);
+    }
+
+    @Override
     public TextWatcher getNumBolusBasalUnitsListener() {
         return new NumBolusBasalUnitsListener(model);
     }
@@ -74,6 +84,11 @@ public class BolusControllerFactory implements IBolusControllerFactory {
     @Override
     public TextWatcher getAfteISFListener() {
         return new AfteISFListener(model);
+    }
+
+    @Override
+    public TextWatcher getEveISFListener() {
+        return new EveIsfListener(model);
     }
 
     @Override

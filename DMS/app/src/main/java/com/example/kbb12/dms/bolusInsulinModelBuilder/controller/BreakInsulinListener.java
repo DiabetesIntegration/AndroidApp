@@ -28,7 +28,7 @@ public class BreakInsulinListener implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         if(s.length()>0) {
-            model.setBreakInsulin(Integer.parseInt(s.toString()));
+            model.setBreakInsulin(Double.parseDouble(s.toString()));
         }else{
             model.setBreakInsulin(null);
         }

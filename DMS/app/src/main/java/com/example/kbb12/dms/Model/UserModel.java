@@ -3,6 +3,8 @@ package com.example.kbb12.dms.model;
 import android.content.Context;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
+import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
@@ -20,7 +22,8 @@ import java.util.List;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,TakeInsulinMainModel {
+public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,
+        TakeInsulinMainModel,BolusInsulinModelBuilderMainModel {
 
     private String exampleData;
 
@@ -28,12 +31,15 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private IBasalInsulinModel basalInsulinModel;
 
+    private IBolusInsulinModel bolusInsulinModel;
+
     private InsulinTakenRecord insulinTakenRecord;
 
     public static final int versionNumber=4;
 
     public UserModel(Context context){
         basalInsulinModel =new BasalInsulinModel(context,versionNumber,"InitialBasalInsulinModel");
+        bolusInsulinModel= new BolusInsulinModel(context,versionNumber);
         insulinTakenRecord= new InsulinTakenDatabase(context,versionNumber);
         observers= new ArrayList<>();
     }
@@ -122,5 +128,28 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private boolean timeLater(Calendar one,Calendar two){
         return (one.get(Calendar.HOUR)>two.get(Calendar.HOUR))||((one.get(Calendar.HOUR)==two.get(Calendar.HOUR))&&(one.get(Calendar.MINUTE)>two.get(Calendar.MINUTE)));
+    }
+
+    @Override
+    public void createInsulinToCarbModel(double breakInsulin, double breakCarbs, double lunInsulin,
+                                         double lunCarbs, double dinInsulin, double dinCarbs,
+                                         double nighInsulin,double nighCarbs ) {
+        bolusInsulinModel.createInsulinToCarbModel(breakInsulin,breakCarbs,lunInsulin,lunCarbs,
+                dinInsulin,dinCarbs,nighInsulin,nighCarbs);
+    }
+
+    @Override
+    public void createInsulinToCarbModel(double icr) {
+        bolusInsulinModel.createInsulinToCarbModel(icr);
+    }
+
+    @Override
+    public void createInsulinSensitivityModel(double mornIsf, double afteIsf, double eveISF, double nighISF) {
+        bolusInsulinModel.createInsulinSensitivityModel(mornIsf, afteIsf, eveISF, nighISF);
+    }
+
+    @Override
+    public void createInsulinSensitivityModel(double ISF) {
+        bolusInsulinModel.createInsulinSensitivityModel(ISF);
     }
 }

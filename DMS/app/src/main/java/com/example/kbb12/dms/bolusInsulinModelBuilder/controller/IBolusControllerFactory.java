@@ -15,10 +15,13 @@ public interface IBolusControllerFactory {
     TextWatcher getLunchCarbListener();
     TextWatcher getDinnerInsulinListener();
     TextWatcher getDinnerCarbListener();
+    TextWatcher getNightInsulinListener();
+    TextWatcher getNightCarbListener();
 
     TextWatcher getNumBolusBasalUnitsListener();
     CompoundButton.OnCheckedChangeListener getRapidActingListener();
     TextWatcher getMornISFListener();
     TextWatcher getAfteISFListener();
+    TextWatcher getEveISFListener();
     TextWatcher getNighISFListener();
 }
