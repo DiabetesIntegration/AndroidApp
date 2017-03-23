@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.Calendar;
+
 
 /**
  * Created by kbb12 on 07/02/2017.
@@ -117,6 +119,34 @@ public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulin
         while (cursor.moveToNext()){
             Log.d("DMS MODEL BOLUS", cursor.getString(0) + "," + cursor.getFloat(1) + "," +
                     cursor.getFloat(2) + "," + cursor.getFloat(3)+","+cursor.getFloat(4));
+        }
+    }
+
+    @Override
+    public Float getICRValue(Calendar time,boolean usingImprovements) {
+        int hour =time.get(Calendar.HOUR);
+        Cursor cursor = write.rawQuery("Select * from "+
+                BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+
+                " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?",
+                new String[]{String.format("%2d:00",hour)});
+        if(usingImprovements) {
+            return cursor.getFloat(1);
+        }else{
+            return cursor.getFloat(2);
+        }
+    }
+
+    @Override
+    public Float getISFValue(Calendar time,boolean usingImprovements) {
+        int hour =time.get(Calendar.HOUR);
+        Cursor cursor = write.rawQuery("Select * from "+
+                        BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+
+                        " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?",
+                new String[]{String.format("%2d:00",hour)});
+        if(usingImprovements) {
+            return cursor.getFloat(3);
+        }else{
+            return cursor.getFloat(4);
         }
     }
 

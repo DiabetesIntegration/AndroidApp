@@ -35,6 +35,8 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private InsulinTakenRecord insulinTakenRecord;
 
+    private boolean usingImprovements=true;
+
     public static final int versionNumber=4;
 
     public UserModel(Context context){
@@ -101,7 +103,8 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
 
     @Override
-    public BasalInsulinEntry getLatestBasalRecommendation(Calendar now) {
+    public BasalInsulinEntry getLatestBasalRecommendation() {
+        Calendar now = Calendar.getInstance();
         //Get the first time before now
         BasalInsulinEntry mostRecent= basalInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)+1);
         //Get what day that dose was last taken on and the recommended time for taking it
@@ -116,9 +119,36 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         return mostRecent;
     }
 
+
     @Override
     public void takeInsulin(int year, int month, int day, int hour, int minute, double amount, boolean basal) {
         insulinTakenRecord.addEntry(day,month,year,hour,minute,amount, basal);
+    }
+
+    @Override
+    public int getRecentCarbs() {
+        /*
+        TODO This should add up all of the carbs in the last half hour and return the result
+         */
+        return 30;
+    }
+
+    @Override
+    public double getCurrentICR() {
+        return bolusInsulinModel.getICRValue(Calendar.getInstance(),usingImprovements);
+    }
+
+    @Override
+    public double getCurrentISF() {
+        return bolusInsulinModel.getISFValue(Calendar.getInstance(),usingImprovements);
+    }
+
+    @Override
+    public Double getCurrentBG() {
+        /*
+        TODO this should give the current blood glucose
+         */
+        return 0.0;
     }
 
     private boolean sameDay(Calendar one,Calendar two){

@@ -1,5 +1,7 @@
 package com.example.kbb12.dms.model.bolusInsulinModel;
 
+import java.util.Calendar;
+
 /**
  * Created by kbb12 on 22/03/2017.
  */
@@ -11,4 +13,6 @@ public interface IBolusInsulinModel {
     void createInsulinSensitivityModel(double ISF);
     void createInsulinSensitivityModel(double mornISF,double afteISF,double eveISF,double nighISF);
     void log();
+    Float getICRValue(Calendar time,boolean usingImprovement);
+    Float getISFValue(Calendar time,boolean usingImprovement);
 }
