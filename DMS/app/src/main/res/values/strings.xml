@@ -8,4 +8,7 @@
         <item>Basal</item>
     </string-array>
     <string name="accept">Ok</string>
+
+    <string name="sensor_current_time">Sensor current time</string>
+    <string name="sensor_start_time">Sensor start time</string>
 </resources>
