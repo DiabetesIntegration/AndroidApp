@@ -5,11 +5,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.TagLostException;
 import android.nfc.tech.NfcV;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -56,6 +58,8 @@ public class NfcActivity extends AppCompatActivity {
 
         mAdapter = NfcAdapter.getDefaultAdapter(this);
         dataParser = new DataParser(getApplicationContext());
+
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +118,7 @@ public class NfcActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
         revokeFileReadPermission(getApplicationContext());
     }
 
@@ -154,11 +159,89 @@ public class NfcActivity extends AppCompatActivity {
     private void handleIntent(Intent intent){
         String action = intent.getAction();
         Log.d(TAG, "Tech Discovered");
+        if(intent.getAction().equals(NfcAdapter.ACTION_TECH_DISCOVERED)){
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            NfcV nfcvTag = NfcV.get(tag);
 
-        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        NFCReadingTask nfc = new NFCReadingTask();
-        Log.d(TAG, "Tech Discovered");
-        nfc.execute(tag);
+            Log.d(TAG, "NfcV Tag ID: "+tag.getId());
+
+            try {
+                nfcvTag.connect();
+            } catch (IOException e) {
+                NfcActivity.this.runOnUiThread(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Could not connect to sensor", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            String readData = "";
+            byte[][] allBytes = new byte[40][8];
+
+            /**
+             * For each block:
+             *      request that block
+             *      set the size to 8 bytes
+             *      convert to hex
+             *      add to string
+             * Then get Current Reading
+             * Get 15 readings
+             * Get historical readings
+             */
+            byte[] cmd;
+
+            try {
+                // Get system information (0x2B)
+                cmd = new byte[] {
+                        (byte)0x02, // Flags
+                        (byte)0x2B // Command: Get system information
+                };
+                byte[] systeminfo = nfcvTag.transceive(cmd);
+
+                //systeminfo = Arrays.copyOfRange(systeminfo, 2, systeminfo.length - 1);
+
+                //byte[] memorySize = { systeminfo[6], systeminfo[5]};
+                //Log.d(TAG, "Memory Size: " + Integer.parseInt(bytesToHex(memorySize).trim(), 16 ));
+
+                //byte[] blocks = { systeminfo[8]};
+                //Log.d(TAG, "Total number of blocks: " + Integer.parseInt(bytesToHex(blocks).trim(), 16 ));
+
+                for (int i = 3; i < 40; i++) {
+                    Log.d(TAG, i+"");
+                    cmd = new byte[]{
+                            (byte) 0x02, // Flags
+                            (byte) 0x20, // Command: Read single block
+                            (byte) i // block (offset)
+                    };
+                    boolean worked=false;
+                    byte[] block = null;
+                            block = nfcvTag.transceive(cmd);
+                            worked = true;
+                    Log.d(TAG,"Block: " + i + ", data: " + block.toString());
+                    block = Arrays.copyOfRange(block, 1, block.length);
+                    block =Arrays.copyOf(block, 8);
+                    //Convert to a hex string for parsing later
+                    readData = readData + bytesToHex(block);
+
+                }
+                setNfcResult(readData);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                NfcActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Error sending/receiving data", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            //NFCReadingTask nfc = new NFCReadingTask();
+            Log.d(TAG, "Tech Discovered");
+            //nfc.execute(tag);
+        }
+
     }
 
 
@@ -169,7 +252,7 @@ public class NfcActivity extends AppCompatActivity {
 
     private double glucose2(int val){
         int bitmask = 0x0FFF;
-        return Double.valueOf( Double.valueOf((val & bitmask) / 6)- 37);
+        return Double.valueOf( Double.valueOf((val & bitmask) / 6.0)- 37.0);
     }
 
     private void setNfcResult(String result){
@@ -199,52 +282,52 @@ public class NfcActivity extends AppCompatActivity {
 
             int i = 0;
             tv = (TextView) findViewById(R.id.textView);
-            tv.setText("1Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("1Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView2);
-            tv.setText("2Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("2Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView3);
-            tv.setText("3Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("3Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView4);
-            tv.setText("4Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("4Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView5);
-            tv.setText("5Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("5Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView6);
-            tv.setText("6Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("6Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView7);
-            tv.setText("7Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("7Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView8);
-            tv.setText("8Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("8Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView9);
-            tv.setText("9Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("9Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView10);
-            tv.setText("10Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("10Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView11);
-            tv.setText("11Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("11Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView12);
-            tv.setText("12Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("12Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView13);
-            tv.setText("13Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("13Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView14);
-            tv.setText("14Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("14Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView15);
-            tv.setText("15Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("15Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             i++;
             tv = (TextView) findViewById(R.id.textView16);
-            tv.setText("0Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + glucose2(readings[i]));
+            tv.setText("0Int: " + readings[i] + " glucose1: " + threeSigFigs(glucose_Reading(readings[i])) + " glucose2: " + threeSigFigs(glucose2(readings[i])));
             dataParser.addRawData(result);
         } else {
             //ToDo: Show Dialog if cancelled

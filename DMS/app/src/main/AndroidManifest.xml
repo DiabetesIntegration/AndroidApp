@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kbb12.dms">
 
-    <uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="15" />
 
     <uses-permission android:name="android.permission.NFC" />
 
@@ -48,7 +48,6 @@
         <activity android:name=".nfc.NfcActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
