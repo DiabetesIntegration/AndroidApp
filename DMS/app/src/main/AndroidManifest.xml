@@ -47,11 +47,6 @@
             android:name=".bolusInsulinModelBuilder.BolusInsulinModelBuilder"
             android:label="@string/title_activity_bolus_insulin_model_builder"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".fitness.fitness"
-            android:label="@string/title_activity_fitness"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".fitness.FitnessTwo"></activity>
     </application>
 
 </manifest>
