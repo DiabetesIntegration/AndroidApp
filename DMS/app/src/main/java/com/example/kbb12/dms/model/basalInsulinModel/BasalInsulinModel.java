@@ -16,39 +16,14 @@ import java.util.List;
 /**
  * Created by kbb12 on 07/02/2017.
  */
-public class BasalInsulinModel extends SQLiteOpenHelper implements IBasalInsulinModel {
-
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(1000)," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + " VARCHAR(5)," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + " FLOAT," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE + " DATE," +
-                    "PRIMARY KEY( "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+" ));";
-
-
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME;
-
+public class BasalInsulinModel implements IBasalInsulinModel {
 
     private SQLiteDatabase write;
 
-    public BasalInsulinModel(Context context, int versionNumber) {
-        super(context, BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME, null, versionNumber);
-        write=getWritableDatabase();
+    public BasalInsulinModel(SQLiteDatabase write) {
+        this.write=write;
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
-    }
 
     @Override
     public void addEntry(BasalInsulinEntry entry,String brandName,int day,int month,int year) throws DuplicateDoseException {

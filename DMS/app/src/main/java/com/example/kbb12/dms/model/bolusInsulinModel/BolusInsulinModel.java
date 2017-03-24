@@ -13,46 +13,13 @@ import java.util.Calendar;
 /**
  * Created by kbb12 on 07/02/2017.
  */
-public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulinModel {
-
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(5)," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + " FLOAT," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + " FLOAT," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE + " FLOAT," +
-                    "PRIMARY KEY( "+ BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+" ));";
-
-
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME;
-
+public class BolusInsulinModel implements IBolusInsulinModel {
 
     private SQLiteDatabase write;
 
-    public BolusInsulinModel(Context context, int versionNumber) {
-        super(context, BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME, null, versionNumber);
-        write=getWritableDatabase();
+    public BolusInsulinModel(SQLiteDatabase write) {
+        this.write=write;
     }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
-        for(int i=0;i<24;i++){
-            db.execSQL("INSERT INTO "
-                    + BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME +
-                    " (" + BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE +
-                    ")VALUES(\"" + String.format("%2d:00",i) + "\")");
-        }
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
-    }
-
 
     @Override
     public void createInsulinToCarbModel(double breakInsulin, double breakCarbs, double lunInsulin,

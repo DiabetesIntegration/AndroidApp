@@ -19,4 +19,17 @@ public final class BasalInsulinModelContractHolder {
         public static final String COLUMN_FOUR_TITLE="OrigAmount";
         public static final String COLUMN_FIVE_TITLE = "LastTaken";
     }
+
+    public static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(1000)," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + " VARCHAR(5)," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + " FLOAT," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE + " DATE," +
+                    "PRIMARY KEY( "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+" ));";
+
+
+    public static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME;
 }

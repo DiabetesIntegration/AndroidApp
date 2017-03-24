@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
 import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.database.DatabaseBuilder;
 import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
@@ -39,12 +40,11 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private boolean usingImprovements=true;
 
-    public static final int versionNumber=4;
-
     public UserModel(Context context){
-        basalInsulinModel =new BasalInsulinModel(context,versionNumber);
-        bolusInsulinModel= new BolusInsulinModel(context,versionNumber);
-        insulinTakenRecord= new InsulinTakenDatabase(context,versionNumber);
+        DatabaseBuilder db = new DatabaseBuilder(context);
+        basalInsulinModel =db.getBasalInsulinModel();
+        bolusInsulinModel= db.getBolusInsulinModel();
+        insulinTakenRecord= db.getInsulinTakenRecord();
         observers= new ArrayList<>();
     }
 

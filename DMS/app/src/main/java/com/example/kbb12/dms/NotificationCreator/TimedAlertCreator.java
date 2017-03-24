@@ -10,6 +10,7 @@ import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModel;
 import com.example.kbb12.dms.model.UserModel;
+import com.example.kbb12.dms.model.database.DatabaseBuilder;
 
 import java.util.Calendar;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TimedAlertCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        IBasalInsulinModel database = new BasalInsulinModel(context, UserModel.versionNumber);
+        DatabaseBuilder db = new DatabaseBuilder(context);
+        IBasalInsulinModel database = db.getBasalInsulinModel();
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         List<BasalInsulinEntry> entries = database.getEntries(true);
         Calendar currentTime = Calendar.getInstance();
