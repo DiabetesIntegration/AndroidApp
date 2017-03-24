@@ -14,4 +14,5 @@ public interface TakeInsulinMainModel {
     double getCurrentICR();
     double getCurrentISF();
     Double getCurrentBG();
+    boolean hasTakenBolusInsulinRecently();
 }

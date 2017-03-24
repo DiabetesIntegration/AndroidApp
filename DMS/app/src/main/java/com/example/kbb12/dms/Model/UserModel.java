@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
 import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
@@ -130,7 +131,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         /*
         TODO This should add up all of the carbs in the last half hour and return the result
          */
-        return 30;
+        return 10;
     }
 
     @Override
@@ -148,7 +149,19 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         /*
         TODO this should give the current blood glucose
          */
-        return 0.0;
+        return 5.5;
+    }
+
+    @Override
+    public boolean hasTakenBolusInsulinRecently() {
+        IInsulinTakenEntry lastTaken =insulinTakenRecord.getMostRecentBolus();
+        if(lastTaken==null){
+            //never been taken
+            return false;
+        }
+        Calendar now =Calendar.getInstance();
+        now.add(Calendar.HOUR,-2);
+        return (now.getTimeInMillis()<lastTaken.getTime().getTimeInMillis());
     }
 
     private boolean sameDay(Calendar one,Calendar two){

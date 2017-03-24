@@ -14,8 +14,7 @@ public final class InsulinTakenContract {
     public static class ContentsDefinition implements BaseColumns {
         public static final String TABLE_NAME = "InsulinTakenRecord";
         public static final String COLUMN_ONE_TITLE = "Date";
-        public static final String COLUMN_TWO_TITLE = "Time";
-        public static final String COLUMN_THREE_TITLE = "Basal";
-        public static final String COLUMN_FOUR_TITLE = "Amount";
+        public static final String COLUMN_TWO_TITLE = "Basal";
+        public static final String COLUMN_THREE_TITLE = "Amount";
     }
 }

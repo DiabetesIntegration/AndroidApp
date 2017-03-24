@@ -8,7 +8,7 @@ import com.example.kbb12.dms.errorHandling.ErrorReadModel;
 public interface TakeInsulinReadModel extends ErrorReadModel {
 
     public enum InsulinType{
-        NOT_SET, BASAL,SHORT_ACTING
+        NOT_SET, BASAL,BOLUS
     }
 
     Double getRecommendedUnits();
@@ -32,4 +32,6 @@ public interface TakeInsulinReadModel extends ErrorReadModel {
     boolean getDateToChange();
 
     InsulinType getTypeTaken();
+
+    String getCalculationDescription();
 }

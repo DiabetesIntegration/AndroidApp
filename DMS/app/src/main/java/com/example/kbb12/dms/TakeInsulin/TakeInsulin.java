@@ -40,7 +40,11 @@ public class TakeInsulin extends AppCompatActivity {
         changeTime.setOnClickListener(new ChangeTimeTakenListener(model));
         Button done = (Button) findViewById(R.id.finaliseTakeInsulinButton);
         done.setOnClickListener(new ValidateTakeInsulinController(model,this));
-        TakeInsulinView view = new TakeInsulinView((TextView) findViewById(R.id.recommendedUnitsDisplay),insulinChoice,amountTaken,(TextView) findViewById(R.id.timeTakenDisplay),model,getFragmentManager(),new DefaultErrorController(model),new DateSetListener(model),new TimeSetListener(model));
+        TakeInsulinView view = new TakeInsulinView(
+                (TextView) findViewById(R.id.recommendedUnitsDisplay),insulinChoice,amountTaken,
+                (TextView) findViewById(R.id.timeTakenDisplay),model,getFragmentManager(),
+                new DefaultErrorController(model),new DateSetListener(model),
+                new TimeSetListener(model),(TextView) findViewById(R.id.calcDescription));
         view.update();
         model.registerObserver(view);
     }

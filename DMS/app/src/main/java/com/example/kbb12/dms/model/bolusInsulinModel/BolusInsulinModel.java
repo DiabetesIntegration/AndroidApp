@@ -129,6 +129,7 @@ public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulin
                 BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+
                 " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?",
                 new String[]{String.format("%2d:00",hour)});
+        cursor.moveToNext();
         if(usingImprovements) {
             return cursor.getFloat(1);
         }else{
@@ -143,6 +144,7 @@ public class BolusInsulinModel extends SQLiteOpenHelper implements IBolusInsulin
                         BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+
                         " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?",
                 new String[]{String.format("%2d:00",hour)});
+        cursor.moveToNext();
         if(usingImprovements) {
             return cursor.getFloat(3);
         }else{
