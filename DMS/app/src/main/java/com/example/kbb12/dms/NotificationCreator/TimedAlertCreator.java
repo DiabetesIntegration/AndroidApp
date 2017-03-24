@@ -21,9 +21,9 @@ public class TimedAlertCreator extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        IBasalInsulinModel database = new BasalInsulinModel(context, UserModel.versionNumber,"InitialBasalInsulinModel");
+        IBasalInsulinModel database = new BasalInsulinModel(context, UserModel.versionNumber);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        List<BasalInsulinEntry> entries = database.getEntries();
+        List<BasalInsulinEntry> entries = database.getEntries(true);
         Calendar currentTime = Calendar.getInstance();
         Calendar nextTime =null;
         Calendar entryTime;

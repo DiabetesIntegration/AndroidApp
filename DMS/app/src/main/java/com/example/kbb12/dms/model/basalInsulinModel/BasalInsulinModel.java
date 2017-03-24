@@ -16,15 +16,38 @@ import java.util.List;
 /**
  * Created by kbb12 on 07/02/2017.
  */
-public class BasalInsulinModel implements IBasalInsulinModel {
+public class BasalInsulinModel extends SQLiteOpenHelper implements IBasalInsulinModel {
+
+    private static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(1000)," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + " VARCHAR(5)," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + " FLOAT," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE + " DATE," +
+                    "PRIMARY KEY( "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+" ));";
+
+
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME;
 
 
     private SQLiteDatabase write;
 
-    public BasalInsulinModel(Context context, int versionNumber, String name) {
-        BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME=name;
-        SQLiteOpenHelper builder = new DatabaseBuilder(context,versionNumber);
-        write=builder.getWritableDatabase();
+    public BasalInsulinModel(Context context, int versionNumber) {
+        super(context, BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME, null, versionNumber);
+        write=getWritableDatabase();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_ENTRIES);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
     }
 
     @Override
@@ -34,18 +57,32 @@ public class BasalInsulinModel implements IBasalInsulinModel {
             throw new DuplicateDoseException();
         }
         cursor.close();
-        write.execSQL("INSERT INTO " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" + BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + ", " + BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + ", " + BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + ", "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + ")VALUES(\"" + brandName + "\", \"" + formatTime(entry.getHour(),entry.getMinute()) + "\", " + entry.getDose() + ", \"" + formatDate(day, month, year) + "\")");
+        write.execSQL("INSERT INTO " +
+                BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
+                BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + ", " +
+                BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + ", " +
+                BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + ", "+
+                BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + ", "+
+                BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE +
+                ")VALUES(\"" + brandName + "\", \"" +
+                formatTime(entry.getHour(),entry.getMinute()) + "\", " + entry.getDose() + ", "+
+                entry.getDose()+", \"" + formatDate(day, month, year) + "\")");
     }
 
     @Override
-    public List<BasalInsulinEntry> getEntries(){
+    public List<BasalInsulinEntry> getEntries(boolean usingImprovement){
         List<BasalInsulinEntry> entries = new ArrayList<>();
-        Cursor cursor = write.rawQuery("Select * from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
+        Cursor cursor = write.rawQuery("Select * from "+
+                BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         while(cursor.moveToNext()){
             String time=cursor.getString(1);
             int hour = Integer.parseInt(time.substring(0, 2));
             int minute =Integer.parseInt(time.substring(3,5));
-            entries.add(new BasalInsulinDose(hour,minute,cursor.getFloat(2)));
+            if(usingImprovement) {
+                entries.add(new BasalInsulinDose(hour, minute, cursor.getFloat(2)));
+            }else {
+                entries.add(new BasalInsulinDose(hour, minute, cursor.getFloat(3)));
+            }
         }
         return entries;
     }
@@ -56,9 +93,9 @@ public class BasalInsulinModel implements IBasalInsulinModel {
     }
 
     @Override
-    public BasalInsulinEntry getLatestBefore(int hour, int minute) {
+    public BasalInsulinEntry getLatestBefore(int hour, int minute,boolean usingImprovement) {
         //Get all the entries less than the given time
-        Cursor cursor =write.rawQuery("Select * from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+" where "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+"<?",new String[]{formatTime(hour, minute)});
+        Cursor cursor =write.rawQuery("Select * from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+" where "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+"<=?",new String[]{formatTime(hour, minute)});
         BasalInsulinDose max=null;
         String maxTime="      ";//will be less than any other string
         String time;
@@ -70,13 +107,17 @@ public class BasalInsulinModel implements IBasalInsulinModel {
                 maxTime=time;
                 tempHour = Integer.parseInt(time.substring(0, 2));
                 tempMinute =Integer.parseInt(time.substring(3,5));
-                max=new BasalInsulinDose(tempHour,tempMinute,cursor.getFloat(2));
+                if(usingImprovement) {
+                    max = new BasalInsulinDose(tempHour, tempMinute, cursor.getFloat(2));
+                }else{
+                    max = new BasalInsulinDose(tempHour, tempMinute, cursor.getFloat(3));
+                }
             }
         }
         cursor.close();
         if(null==max){
             //No times before that given
-            max=getLatest();
+            max=getLatest(usingImprovement);
         }
         return max;
     }
@@ -86,7 +127,7 @@ public class BasalInsulinModel implements IBasalInsulinModel {
         Cursor cursor =write.rawQuery("Select * from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+" where "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+"=?",new String[]{formatTime(mostRecent.getHour(),mostRecent.getMinute())});
         if(cursor.moveToNext()){
             Calendar lastTakenAprox=Calendar.getInstance();
-            String dateTaken = cursor.getString(3);
+            String dateTaken = cursor.getString(4);
             int year = Integer.parseInt(dateTaken.substring(0, 4));
             int month = Integer.parseInt(dateTaken.substring(5,7));
             int day = Integer.parseInt(dateTaken.substring(8,10));
@@ -106,19 +147,23 @@ public class BasalInsulinModel implements IBasalInsulinModel {
     @Override
     public void allTakenBefore(Integer hour, Integer minute, int day, int month, int year) {
         ContentValues args = new ContentValues();
-        args.put(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE, formatDate(day, month, year));
-        String strFilter = BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+"=?";
+        args.put(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE, formatDate(day, month, year));
+        String strFilter = BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+"<=?";
         write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,new String[] {formatTime(hour,minute)});
     }
 
-    private BasalInsulinDose getLatest(){
+    private BasalInsulinDose getLatest(boolean usingImprovement){
         Cursor cursor=write.rawQuery("Select "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+", max("+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+"), "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE+" from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         BasalInsulinDose max=null;
         if(cursor.moveToNext()){
             String time=cursor.getString(1);
             int tempHour = Integer.parseInt(time.substring(0, 2));
             int tempMinute =Integer.parseInt(time.substring(3,5));
-            max=new BasalInsulinDose(tempHour,tempMinute,cursor.getFloat(2));
+            if(usingImprovement) {
+                max = new BasalInsulinDose(tempHour, tempMinute, cursor.getFloat(2));
+            }else{
+                max = new BasalInsulinDose(tempHour, tempMinute, cursor.getFloat(3));
+            }
         }
         return max;
     }
@@ -136,7 +181,7 @@ public class BasalInsulinModel implements IBasalInsulinModel {
                 BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         while (cursor.moveToNext()){
             Log.d("DMS MODEL BASAL",cursor.getString(0)+","+cursor.getString(1)+","+
-                    cursor.getDouble(2)+","+cursor.getString(3));
+                    cursor.getDouble(2)+","+cursor.getDouble(3)+", "+cursor.getString(4));
         }
     }
 

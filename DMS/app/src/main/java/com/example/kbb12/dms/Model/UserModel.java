@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.model;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
@@ -41,7 +42,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
     public static final int versionNumber=4;
 
     public UserModel(Context context){
-        basalInsulinModel =new BasalInsulinModel(context,versionNumber,"InitialBasalInsulinModel");
+        basalInsulinModel =new BasalInsulinModel(context,versionNumber);
         bolusInsulinModel= new BolusInsulinModel(context,versionNumber);
         insulinTakenRecord= new InsulinTakenDatabase(context,versionNumber);
         observers= new ArrayList<>();
@@ -99,7 +100,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
     }
 
     public List<BasalInsulinEntry> getDoses(){
-        return basalInsulinModel.getEntries();
+        return basalInsulinModel.getEntries(usingImprovements);
     }
 
 
@@ -107,7 +108,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
     public BasalInsulinEntry getLatestBasalRecommendation() {
         Calendar now = Calendar.getInstance();
         //Get the first time before now
-        BasalInsulinEntry mostRecent= basalInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)+1);
+        BasalInsulinEntry mostRecent= basalInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)+1,usingImprovements);
         //Get what day that dose was last taken on and the recommended time for taking it
         Calendar lastTaken = basalInsulinModel.getLastTakenAprox(mostRecent);
         //If (taken today) or (timeRecommended>now)
@@ -123,7 +124,15 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     @Override
     public void takeInsulin(int year, int month, int day, int hour, int minute, double amount, boolean basal) {
-        insulinTakenRecord.addEntry(day,month,year,hour,minute,amount, basal);
+        if(basal){
+            //If they're taking basal insulin mark all the times before and including now as taken.
+            basalInsulinModel.allTakenBefore(hour,minute+5,day,month,year);
+        }
+        try {
+            insulinTakenRecord.addEntry(day, month, year, hour, minute, amount, basal);
+        }catch (SQLiteConstraintException e){
+            //Do nothing the entry has already been added.
+        }
     }
 
     @Override
