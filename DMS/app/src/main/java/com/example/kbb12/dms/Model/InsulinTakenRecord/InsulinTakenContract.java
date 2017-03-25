@@ -13,9 +13,19 @@ public final class InsulinTakenContract {
     /* Inner class that defines the table contents */
     public static class ContentsDefinition implements BaseColumns {
         public static final String TABLE_NAME = "InsulinTakenRecord";
-        public static final String COLUMN_ONE_TITLE = "Date";
-        public static final String COLUMN_TWO_TITLE = "Time";
-        public static final String COLUMN_THREE_TITLE = "Basal";
-        public static final String COLUMN_FOUR_TITLE = "Amount";
+        public static final String COLUMN_DATE_TIME = "Date";
+        public static final String COLUMN_BASAL = "Basal";
+        public static final String COLUMN_AMOUNT = "Amount";
     }
+
+    public static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + InsulinTakenContract.ContentsDefinition.TABLE_NAME + " (" +
+                    InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME + " DATE," +
+                    InsulinTakenContract.ContentsDefinition.COLUMN_BASAL + " BOOLEAN," +
+                    InsulinTakenContract.ContentsDefinition.COLUMN_AMOUNT + " FLOAT," +
+                    "PRIMARY KEY( "+ InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME +", "+InsulinTakenContract.ContentsDefinition.COLUMN_BASAL +" ));";
+
+
+    public static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + InsulinTakenContract.ContentsDefinition.TABLE_NAME;
 }

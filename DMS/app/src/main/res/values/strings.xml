@@ -4,8 +4,15 @@
     <string name="title_activity_insulin_model_builder">DMS</string>
     <string-array name="insulin_array">
         <item>Insulin Type</item>
-        <item>Short-Acting</item>
+        <item>Bolus</item>
         <item>Basal</item>
     </string-array>
     <string name="accept">Ok</string>
+    <string name="title_activity_bolus_insulin_model_builder">BolusInsulinModelBuilder</string>
+    <string name="title_activity_fitness">fitness</string>
+    <string-array name="fitness">
+        <item>Running</item>
+        <item>Jogging</item>
+        <item>Cycling</item>
+    </string-array>
 </resources>

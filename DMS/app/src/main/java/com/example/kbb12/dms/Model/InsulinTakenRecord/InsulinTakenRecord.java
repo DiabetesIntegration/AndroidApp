@@ -5,4 +5,5 @@ package com.example.kbb12.dms.model.insulinTakenRecord;
  */
 public interface InsulinTakenRecord {
     void addEntry(int day,int month,int year,int hour,int minute,Double dose,boolean basalInsulin);
+    IInsulinTakenEntry getMostRecentBolus();
 }

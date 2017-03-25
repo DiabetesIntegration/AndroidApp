@@ -11,20 +11,22 @@ import java.util.Calendar;
  */
 public class TakeInsulinModel implements TakeInsulinReadWriteModel {
 
-    TakeInsulinMainModel model;
-    Double recommended;
-    Double actual;
-    InsulinType typeTaken;
-    InsulinType typeRecommended;
-    Integer day;
-    Integer month;
-    Integer year;
-    boolean dateToChange;
-    boolean timeToChange;
-    Integer hour;
-    Integer minute;
-    String errorMessage;
-    ModelObserver observer;
+    private TakeInsulinMainModel model;
+    private Double recommended;
+    private Double actual;
+    private InsulinType typeTaken;
+    private InsulinType typeRecommended;
+    private Integer day;
+    private Integer month;
+    private Integer year;
+    private boolean dateToChange;
+    private boolean timeToChange;
+    private Integer hour;
+    private Integer minute;
+    private String errorMessage;
+    private ModelObserver observer;
+    private double targetBG=5.5;
+    private String calculationDescription;
 
     public TakeInsulinModel(TakeInsulinMainModel model){
         this.model=model;
@@ -36,21 +38,84 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
         minute=now.get(Calendar.MINUTE);
         dateToChange=false;
         timeToChange=false;
+        calculationDescription="";
+        if(!bolusRecommendation()) {
+            basalRecommendation();
+        }
+    }
+
+    private void basalRecommendation(){
         //Gets most recent untaken expected dose before now and sets
         //all the entries before that dose to taken because it must
         //now be too late to take them.
-        BasalInsulinEntry entry = model.getLatestBasalRecommendation(now);
+        BasalInsulinEntry entry = model.getLatestBasalRecommendation();
         if(null==entry){
+            calculationDescription+="\nYou are not over-due for a basal insulin dose";
             recommended=0.0;
             actual=0.0;
             typeTaken=InsulinType.NOT_SET;
             typeRecommended=InsulinType.NOT_SET;
         }else{
+            calculationDescription+="\nYou are over-due for your "+entry.getHour()+
+                    ":"+entry.getMinute()+" dose of basal insulin.";
             recommended=entry.getDose();
             actual=entry.getDose();
             typeTaken=InsulinType.BASAL;
             typeRecommended=InsulinType.BASAL;
         }
+    }
+
+    /*
+    Sets up the bolus recommendation and returns true if a bolus recommendation is given. Returns
+    false if there isn't a bolus recommendation to be given.
+     */
+    private boolean bolusRecommendation(){
+        double correctionDose=0.0;
+        double carbInsulin=((double)model.getRecentCarbs())*model.getCurrentICR();
+        Double bloodGlucose=model.getCurrentBG();
+        if(model.hasTakenBolusInsulinRecently()){
+            calculationDescription+="You have injected bolus insulin recently. We do not recommend" +
+                    "doing so again until this has fully taken effect.";
+            recommended=0.0;
+            actual=0.0;
+            return false;
+        }
+        if(bloodGlucose==null){
+            recommended=0.0;
+            actual=0.0;
+            calculationDescription+="There is not a recent enough blood glucose value to" +
+                    " give accurate bolus recommendations. Please scan your Libre sensor and return.";
+            return false;
+        }
+        if(!inRange(bloodGlucose)) {
+            calculationDescription+=String.format("Your current blood glucose %.2fmmol/l is outwith the " +
+                    "recommended range of 4-7mmol/l",model.getCurrentBG());
+            calculationDescription+=String.format("\nYour current Insulin Sensitivity Factor is %.2f",model.getCurrentISF());
+            correctionDose=(bloodGlucose-targetBG)/model.getCurrentISF();
+            calculationDescription+=String.format("\nGiving a correction dose of:%.2f\n",correctionDose);
+        }
+        recommended=carbInsulin+correctionDose;
+        if(recommended<0){
+            recommended=0.0;
+            actual=0.0;
+            calculationDescription="We do not calculate that "+model.getRecentCarbs()+
+                    " carbohydrates is enough to balance your low blood glucose reading of "+
+                    bloodGlucose+"mmol/l";
+            return false;
+        }
+        recommended=Double.parseDouble(String.format("%.2f",recommended));
+        actual=recommended;
+        typeTaken=InsulinType.BOLUS;
+        typeRecommended=InsulinType.BOLUS;
+        calculationDescription+=String.format("Current Insulin to Carb ratio= 1:%.2f",(1/model.getCurrentICR()));
+        calculationDescription+="\nCarbs eaten recently: "+model.getRecentCarbs();
+        calculationDescription+=String.format("\nCarbohydrate Correction=%.2f",carbInsulin);
+        return recommended!=0.0;
+    }
+
+
+    private boolean inRange(double bG){
+        return bG>=5.0&&bG<=7.0;
     }
 
     @Override
@@ -128,6 +193,11 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     }
 
     @Override
+    public String getCalculationDescription() {
+        return calculationDescription;
+    }
+
+    @Override
     public String getError() {
         return errorMessage;
     }
@@ -197,7 +267,7 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
             case BASAL:
                 model.takeInsulin(year,month,day,hour,minute,actual,true);
                 break;
-            case SHORT_ACTING:
+            case BOLUS:
                 model.takeInsulin(year,month,day,hour,minute,actual,false);
                 break;
             case NOT_SET:
@@ -206,4 +276,6 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
                 break;
         }
     }
+
+
 }
