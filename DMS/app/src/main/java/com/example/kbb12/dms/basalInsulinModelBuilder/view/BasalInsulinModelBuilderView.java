@@ -14,6 +14,7 @@ import com.example.kbb12.dms.errorHandling.IErrorController;
 import com.example.kbb12.dms.errorHandling.MasterView;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.IEntryControllerFactory;
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinReadModel;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.util.ArrayList;

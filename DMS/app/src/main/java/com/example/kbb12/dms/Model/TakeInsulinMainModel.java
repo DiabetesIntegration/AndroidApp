@@ -1,8 +1,6 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-
-import java.util.Calendar;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 
 /**
  * Created by kbb12 on 24/02/2017.

@@ -1,7 +1,5 @@
 package com.example.kbb12.dms.model.basalInsulinModel;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-
 import java.util.Calendar;
 import java.util.List;
 

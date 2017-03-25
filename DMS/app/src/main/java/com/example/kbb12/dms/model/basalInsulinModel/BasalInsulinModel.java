@@ -1,13 +1,9 @@
 package com.example.kbb12.dms.model.basalInsulinModel;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;

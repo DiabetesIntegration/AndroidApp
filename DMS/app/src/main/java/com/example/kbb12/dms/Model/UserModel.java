@@ -3,16 +3,13 @@ package com.example.kbb12.dms.model;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
 import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
-import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.startUp.ModelObserver;
 import com.example.kbb12.dms.template.ITemplateModel;

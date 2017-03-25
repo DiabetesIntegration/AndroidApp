@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.basalInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;

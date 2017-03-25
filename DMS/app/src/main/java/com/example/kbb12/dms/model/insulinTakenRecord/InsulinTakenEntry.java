@@ -23,4 +23,11 @@ public class InsulinTakenEntry implements IInsulinTakenEntry {
     public Calendar getTime(){
         return time;
     }
+
+    public TakeInsulinReadModel.InsulinType getType(){
+        return type;
+    }
+    public Float getAmount(){
+        return amount;
+    }
 }
