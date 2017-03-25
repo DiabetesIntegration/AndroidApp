@@ -45,7 +45,7 @@ public class InsulinTakenDatabase implements InsulinTakenRecord {
                 " from "+InsulinTakenContract.ContentsDefinition.TABLE_NAME+
                 " where "+InsulinTakenContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?",
                 new String[]{"FALSE"});
-        if(!cursor.moveToNext()||cursor.getString(0)==null) {
+        if(!cursor.moveToNext()||cursor.getString(cursor.getColumnIndex())==null) {
             return null;
         }
         return new InsulinTakenEntry(parseTime(cursor.getString(0)),

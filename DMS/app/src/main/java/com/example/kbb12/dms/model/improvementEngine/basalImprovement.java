@@ -30,26 +30,22 @@ public class basalImprovement extends BroadcastReceiver {
         Calendar thirtyTwoHoursAgo =Calendar.getInstance();
         thirtyTwoHoursAgo.add(Calendar.HOUR,-32);
         List<IInsulinTakenEntry> insulinTaken=insulinTakenRecord.getAllEntries(thirtyTwoHoursAgo,eightHoursAgo);
+        boolean failed;
+        BasalInsulinEntry matchedDose;
         for(IInsulinTakenEntry entry:insulinTaken){
+            failed=false;
             if(entry.getType().equals(TakeInsulinReadModel.InsulinType.BOLUS)){
-                return;
+                failed=true;
             }
-            Calendar hourBeforeTaken = (Calendar) entry.getTime().clone();
-            hourBeforeTaken.add(Calendar.HOUR,-1);
-            Calendar hourAfterTaken = (Calendar) entry.getTime().clone();
-            hourAfterTaken.add(Calendar.HOUR,1);
-            List<BasalInsulinEntry> basalModelEntries=basalInsulinModel.getEntries(true);
-            BasalInsulinEntry matchedDose=null;
-            for(BasalInsulinEntry basalInsulinEntry:basalModelEntries){
-                if(basalEntryAfter(hourBeforeTaken,basalInsulinEntry)&&
-                        basalEntryBefore(hourAfterTaken,basalInsulinEntry)&&
-                        basalInsulinEntry.getDose()==(double) entry.getAmount()){
-                    matchedDose=basalInsulinEntry;
-                    break;
-                }
+            if(!failed){
+                matchedDose=findMatchingRecommendation(entry,basalInsulinModel);
             }
-            if(matchedDose==null){
-                return;
+            Calendar eightHourAfter=(Calendar) entry.getTime().clone();
+            eightHourAfter.add(Calendar.HOUR,8);
+            List<IInsulinTakenEntry> insulinTakenDuringTest =
+                    insulinTakenRecord.getAllEntries(hourBeforeTaken,eightHourAfter);
+            if(insulinTakenDuringTest.size()>1){
+
             }
             /*
             Match to dose from model. Complete
@@ -62,6 +58,25 @@ public class basalImprovement extends BroadcastReceiver {
                 if(min<=orig-x) then lower recommendation by ten%
              */
         }
+    }
+
+    private BasalInsulinEntry findMatchingRecommendation(IInsulinTakenEntry entry,
+                                                         IBasalInsulinModel basalInsulinModel){
+        Calendar hourBeforeTaken = (Calendar) entry.getTime().clone();
+        hourBeforeTaken.add(Calendar.HOUR,-1);
+        Calendar hourAfterTaken = (Calendar) entry.getTime().clone();
+        hourAfterTaken.add(Calendar.HOUR,1);
+        List<BasalInsulinEntry> basalModelEntries=basalInsulinModel.getEntries(true);
+        BasalInsulinEntry matchedDose=null;
+        for(BasalInsulinEntry basalInsulinEntry:basalModelEntries){
+            if(basalEntryAfter(hourBeforeTaken,basalInsulinEntry)&&
+                    basalEntryBefore(hourAfterTaken,basalInsulinEntry)&&
+                    basalInsulinEntry.getDose()==(double) entry.getAmount()){
+                matchedDose=basalInsulinEntry;
+                break;
+            }
+        }
+        return matchedDose;
     }
 
     private boolean basalEntryAfter(Calendar time,BasalInsulinEntry entry){
