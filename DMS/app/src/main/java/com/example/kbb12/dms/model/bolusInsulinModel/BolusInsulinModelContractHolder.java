@@ -13,21 +13,21 @@ public final class BolusInsulinModelContractHolder {
     /* Inner class that defines the table contents */
     public static class ContentsDefinition implements BaseColumns {
         public static final String TABLE_NAME="BolusModel";
-        public static final String COLUMN_ONE_TITLE = "Time";
-        public static final String COLUMN_TWO_TITLE = "ImprovingICR";
-        public static final String COLUMN_THREE_TITLE = "UserEnteredICR";
-        public static final String COLUMN_FOUR_TITLE = "ImprovingISF";
-        public static final String COLUMN_FIVE_TITLE = "UserEnteredISF";
+        public static final String COLUMN_TIME = "Time";
+        public static final String COLUMN_IMPROVING_ICR = "ImprovingICR";
+        public static final String COLUMN_ORIG_ICR = "UserEnteredICR";
+        public static final String COLUMN_IMPROVING_ISF = "ImprovingISF";
+        public static final String COLUMN_ORIG_ISF = "UserEnteredISF";
     }
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(5)," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + " FLOAT," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + " FLOAT," +
-                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE + " FLOAT," +
-                    "PRIMARY KEY( "+ BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+" ));";
+                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME + " VARCHAR(5)," +
+                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ICR + " FLOAT," +
+                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ICR + " FLOAT," +
+                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ISF + " FLOAT," +
+                    BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ISF + " FLOAT," +
+                    "PRIMARY KEY( "+ BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +" ));";
 
 
     public static final String SQL_DELETE_ENTRIES =

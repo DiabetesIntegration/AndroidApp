@@ -169,7 +169,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
             return false;
         }
         Calendar now =Calendar.getInstance();
-        now.add(Calendar.HOUR,-2);
+        now.add(Calendar.HOUR,-4);
         return (now.getTimeInMillis()<lastTaken.getTime().getTimeInMillis());
     }
 

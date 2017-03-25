@@ -1,10 +1,7 @@
 package com.example.kbb12.dms.model.insulinTakenRecord;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadModel;
 
@@ -30,7 +27,7 @@ public class InsulinTakenDatabase implements InsulinTakenRecord {
         }else{
             trueOrFalse="FALSE";
         }
-        write.execSQL("INSERT INTO " + InsulinTakenContract.ContentsDefinition.TABLE_NAME + " (" + InsulinTakenContract.ContentsDefinition.COLUMN_ONE_TITLE + ", " + InsulinTakenContract.ContentsDefinition.COLUMN_TWO_TITLE + ", " + InsulinTakenContract.ContentsDefinition.COLUMN_THREE_TITLE + ")VALUES(\"" + formatDateTime(year,month,day,hour,minute) + "\", '" + trueOrFalse + "', " + dose + ")");
+        write.execSQL("INSERT INTO " + InsulinTakenContract.ContentsDefinition.TABLE_NAME + " (" + InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME + ", " + InsulinTakenContract.ContentsDefinition.COLUMN_BASAL + ", " + InsulinTakenContract.ContentsDefinition.COLUMN_AMOUNT + ")VALUES(\"" + formatDateTime(year,month,day,hour,minute) + "\", '" + trueOrFalse + "', " + dose + ")");
     }
 
     @Override
@@ -39,17 +36,17 @@ public class InsulinTakenDatabase implements InsulinTakenRecord {
         Get the entry with the maximum time which isn't Basal insulin.
          */
         Cursor cursor = write.rawQuery("Select MAX("
-                +InsulinTakenContract.ContentsDefinition.COLUMN_ONE_TITLE+"),"+
-                InsulinTakenContract.ContentsDefinition.COLUMN_TWO_TITLE+", "+
-                InsulinTakenContract.ContentsDefinition.COLUMN_THREE_TITLE+
+                +InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME +"),"+
+                InsulinTakenContract.ContentsDefinition.COLUMN_BASAL +", "+
+                InsulinTakenContract.ContentsDefinition.COLUMN_AMOUNT +
                 " from "+InsulinTakenContract.ContentsDefinition.TABLE_NAME+
-                " where "+InsulinTakenContract.ContentsDefinition.COLUMN_TWO_TITLE+"=?",
+                " where "+InsulinTakenContract.ContentsDefinition.COLUMN_BASAL +"=?",
                 new String[]{"FALSE"});
-        if(!cursor.moveToNext()||cursor.getString(0)==null) {
+        if(!cursor.moveToNext()||cursor.getString(cursor.getColumnIndex(InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME))==null) {
             return null;
         }
-        return new InsulinTakenEntry(parseTime(cursor.getString(0)),
-                TakeInsulinReadModel.InsulinType.BOLUS,cursor.getFloat(2));
+        return new InsulinTakenEntry(parseTime(cursor.getString(cursor.getColumnIndex(InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME))),
+                TakeInsulinReadModel.InsulinType.BOLUS,cursor.getFloat(cursor.getColumnIndex(InsulinTakenContract.ContentsDefinition.COLUMN_AMOUNT)));
     }
 
     private Calendar parseTime(String dateTime){
