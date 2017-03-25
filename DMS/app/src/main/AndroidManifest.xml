@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kbb12.dms">
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,19 +15,20 @@
         android:theme="@style/AppTheme">
         <receiver android:name=".notificationCreator.NotificationCreator">
             <intent-filter>
-                <action android:name="com.DMS.basalInsulinNotification"></action>
+                <action android:name="com.DMS.basalInsulinNotification" />
             </intent-filter>
         </receiver>
         <receiver android:name=".notificationCreator.TimedAlertCreator">
             <intent-filter>
-                <action android:name="com.DMS.timedAlertCreator"></action>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="com.DMS.timedAlertCreator" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <activity android:name=".startUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,8 +50,11 @@
         <activity
             android:name=".basalInsulinModelBuilder.BasalInsulinModelBuilderActivity"
             android:label="@string/title_activity_insulin_model_builder" />
-        <activity android:name=".takeInsulin.TakeInsulin">
-        </activity>
+        <activity android:name=".takeInsulin.TakeInsulin" />
+        <activity
+            android:name=".bolusInsulinModelBuilder.BolusInsulinModelBuilder"
+            android:label="@string/title_activity_bolus_insulin_model_builder"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

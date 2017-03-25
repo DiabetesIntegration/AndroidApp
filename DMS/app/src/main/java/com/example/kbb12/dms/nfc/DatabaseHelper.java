@@ -60,37 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addRawData(String rawData, Calendar timestamp) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(BasicdbEntry.COLUMN_NAME_DATA, rawData);
-        values.put(BasicdbEntry.COLUMN_NAME_TIME, getDateTime(timestamp));
-
-        // insert row
-        long id = db.insert(BasicdbEntry.TABLE_NAME, null, values);
-
-        return id;
-    }
-
-    public Map<Calendar, String> getAllBasicData(){
-        Map<Calendar, String> basicData = new HashMap<Calendar, String>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selectQuery = "SELECT  * FROM " + BasicdbEntry.TABLE_NAME;
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to map
-        if (c.moveToFirst()) {
-            do {
-                basicData.put(parseCalendar(c.getString(c.getColumnIndex(BasicdbEntry.COLUMN_NAME_TIME))), c.getString(c.getColumnIndex(BasicdbEntry.COLUMN_NAME_DATA)));
-            } while (c.moveToNext());
-        }
-
-        return basicData;
-
-    }
 
     private String getDateTime(Calendar timestamp) {
         return dateFormat.format(timestamp.getTime());
@@ -107,15 +77,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private class BasicdbEntry implements BaseColumns {
-        public static final String TABLE_NAME = "BasicTable";
-        public static final String COLUMN_NAME_TIME = "Time";
-        public static final String COLUMN_NAME_DATA = "DataString";
+
     }
 
-    private class HistoryDbEntry implements BaseColumns {
-        public static final String TABLE_NAME = "HistoryTable";
-        public static final String COLUMN_NAME_TIME = "Time";
-        public static final String COLUMN_NAME_READING = "Reading";
-    }
 
 }

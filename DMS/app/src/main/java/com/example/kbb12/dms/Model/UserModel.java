@@ -1,8 +1,13 @@
 package com.example.kbb12.dms.model;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
+import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.database.DatabaseBuilder;
+import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
@@ -20,7 +25,8 @@ import java.util.List;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainModel {
+public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,
+        TakeInsulinMainModel,BolusInsulinModelBuilderMainModel {
 
     private String exampleData;
 
@@ -28,13 +34,17 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
 
     private IBasalInsulinModel basalInsulinModel;
 
+    private IBolusInsulinModel bolusInsulinModel;
+
     private InsulinTakenRecord insulinTakenRecord;
 
-    public static final int versionNumber=2;
+    private boolean usingImprovements=true;
 
     public UserModel(Context context){
-        basalInsulinModel =new BasalInsulinModel(context,versionNumber,"InitialBasalInsulinModel");
-        insulinTakenRecord= new InsulinTakenDatabase(context,versionNumber);
+        DatabaseBuilder db = new DatabaseBuilder(context);
+        basalInsulinModel =db.getBasalInsulinModel();
+        bolusInsulinModel= db.getBolusInsulinModel();
+        insulinTakenRecord= db.getInsulinTakenRecord();
         observers= new ArrayList<>();
     }
 
@@ -90,14 +100,15 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
     }
 
     public List<BasalInsulinEntry> getDoses(){
-        return basalInsulinModel.getEntries();
+        return basalInsulinModel.getEntries(usingImprovements);
     }
 
 
     @Override
-    public BasalInsulinEntry getLatestBasalRecommendation(Calendar now) {
+    public BasalInsulinEntry getLatestBasalRecommendation() {
+        Calendar now = Calendar.getInstance();
         //Get the first time before now
-        BasalInsulinEntry mostRecent= basalInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)+1);
+        BasalInsulinEntry mostRecent= basalInsulinModel.getLatestBefore(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)+1,usingImprovements);
         //Get what day that dose was last taken on and the recommended time for taking it
         Calendar lastTaken = basalInsulinModel.getLastTakenAprox(mostRecent);
         //If (taken today) or (timeRecommended>now)
@@ -110,9 +121,56 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
         return mostRecent;
     }
 
+
     @Override
     public void takeInsulin(int year, int month, int day, int hour, int minute, double amount, boolean basal) {
-        insulinTakenRecord.addEntry(day,month,year,hour,minute,amount, basal);
+        if(basal){
+            //If they're taking basal insulin mark all the times before and including now as taken.
+            basalInsulinModel.allTakenBefore(hour,minute+5,day,month,year);
+        }
+        try {
+            insulinTakenRecord.addEntry(day, month, year, hour, minute, amount, basal);
+        }catch (SQLiteConstraintException e){
+            //Do nothing the entry has already been added.
+        }
+    }
+
+    @Override
+    public int getRecentCarbs() {
+        /*
+        TODO This should add up all of the carbs in the last half hour and return the result
+         */
+        return 10;
+    }
+
+    @Override
+    public double getCurrentICR() {
+        return bolusInsulinModel.getICRValue(Calendar.getInstance(),usingImprovements);
+    }
+
+    @Override
+    public double getCurrentISF() {
+        return bolusInsulinModel.getISFValue(Calendar.getInstance(),usingImprovements);
+    }
+
+    @Override
+    public Double getCurrentBG() {
+        /*
+        TODO this should give the current blood glucose
+         */
+        return 5.5;
+    }
+
+    @Override
+    public boolean hasTakenBolusInsulinRecently() {
+        IInsulinTakenEntry lastTaken =insulinTakenRecord.getMostRecentBolus();
+        if(lastTaken==null){
+            //never been taken
+            return false;
+        }
+        Calendar now =Calendar.getInstance();
+        now.add(Calendar.HOUR,-4);
+        return (now.getTimeInMillis()<lastTaken.getTime().getTimeInMillis());
     }
 
     private boolean sameDay(Calendar one,Calendar two){
@@ -122,5 +180,33 @@ public class UserModel implements ITemplateModel,InsulinModel,TakeInsulinMainMod
 
     private boolean timeLater(Calendar one,Calendar two){
         return (one.get(Calendar.HOUR)>two.get(Calendar.HOUR))||((one.get(Calendar.HOUR)==two.get(Calendar.HOUR))&&(one.get(Calendar.MINUTE)>two.get(Calendar.MINUTE)));
+    }
+
+    @Override
+    public void createInsulinToCarbModel(double breakInsulin, double breakCarbs, double lunInsulin,
+                                         double lunCarbs, double dinInsulin, double dinCarbs,
+                                         double nighInsulin,double nighCarbs ) {
+        bolusInsulinModel.createInsulinToCarbModel(breakInsulin,breakCarbs,lunInsulin,lunCarbs,
+                dinInsulin,dinCarbs,nighInsulin,nighCarbs);
+    }
+
+    @Override
+    public void createInsulinToCarbModel(double icr) {
+        bolusInsulinModel.createInsulinToCarbModel(icr);
+    }
+
+    @Override
+    public void createInsulinSensitivityModel(double mornIsf, double afteIsf, double eveISF, double nighISF) {
+        bolusInsulinModel.createInsulinSensitivityModel(mornIsf, afteIsf, eveISF, nighISF);
+    }
+
+    @Override
+    public void createInsulinSensitivityModel(double ISF) {
+        bolusInsulinModel.createInsulinSensitivityModel(ISF);
+    }
+
+    public void logModels(){
+        basalInsulinModel.log();
+        bolusInsulinModel.log();
     }
 }

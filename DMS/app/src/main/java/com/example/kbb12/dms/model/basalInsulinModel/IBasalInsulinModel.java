@@ -10,12 +10,14 @@ import java.util.List;
  */
 public interface IBasalInsulinModel {
     void addEntry(BasalInsulinEntry entry,String brandName,int day,int month,int year) throws DuplicateDoseException;
-    List<BasalInsulinEntry> getEntries();
+    List<BasalInsulinEntry> getEntries(boolean usingImprovements);
     void clearValues();
 
-    BasalInsulinEntry getLatestBefore(int hour, int minute);
+    BasalInsulinEntry getLatestBefore(int hour, int minute,boolean usingImprovement);
 
     Calendar getLastTakenAprox(BasalInsulinEntry mostRecent);
 
     void allTakenBefore(Integer hour, Integer minute, int day, int month, int year);
+
+    void log();
 }

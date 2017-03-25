@@ -13,7 +13,11 @@ import android.util.Log;
 import android.widget.ImageButton;
 
 import com.example.kbb12.dms.R;
+<<<<<<< HEAD
 import com.example.kbb12.dms.nfc.ReadNfcTask;
+=======
+import com.example.kbb12.dms.startUp.ModelHolder;
+>>>>>>> 0d42698e9300c5a03027659b898d2da9fe3484c1
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -28,7 +32,8 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         ImageButton takeInsulinButton = (ImageButton) findViewById(R.id.takeInsulinButton);
         takeInsulinButton.setOnClickListener(new TakeInsulinLauncher(this));
-        if (getIntent().getBooleanExtra("NotificationLaunch", false)) {
+        ModelHolder.model.logModels();
+        if(getIntent().getBooleanExtra("NotificationLaunch",false)){
             Intent nextIntent = new Intent(this, TakeInsulin.class);
             startActivity(nextIntent);
         }

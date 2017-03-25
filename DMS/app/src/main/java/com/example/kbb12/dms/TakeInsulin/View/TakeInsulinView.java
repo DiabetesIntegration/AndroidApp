@@ -19,17 +19,21 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
 
     private TextView recommendedUnitsDisplay;
     private Spinner insulinChoice;
-    private EditText amountTaken;
     private TextView timeTakenDisplay;
     private TakeInsulinReadModel model;
     private DateSelectionFragment dateFrag;
     private TimeSelectionFragment timeFrag;
 
-    public TakeInsulinView(TextView recommendedUnitsDisplay,Spinner insulinChoice,EditText amountTaken,TextView timeTakenDisplay,TakeInsulinReadModel model,FragmentManager fragMan,IErrorController errorController,DatePickerDialog.OnDateSetListener dateController,TimePickerDialog.OnTimeSetListener timeController){
+    public TakeInsulinView(TextView recommendedUnitsDisplay,Spinner insulinChoice,
+                           EditText amountTaken,TextView timeTakenDisplay,
+                           TakeInsulinReadModel model,FragmentManager fragMan,
+                           IErrorController errorController,
+                           DatePickerDialog.OnDateSetListener dateController,
+                           TimePickerDialog.OnTimeSetListener timeController,
+                           TextView calculationDescription){
         super(fragMan,errorController);
         this.recommendedUnitsDisplay=recommendedUnitsDisplay;
         this.insulinChoice=insulinChoice;
-        this.amountTaken=amountTaken;
         this.timeTakenDisplay=timeTakenDisplay;
         this.model=model;
         this.dateFrag=new DateSelectionFragment();
@@ -41,6 +45,8 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
         //update the text field will just result in making it more
         //difficult to type.
         amountTaken.setText(model.getAmountTaken().toString());
+        calculationDescription.setText(model.getCalculationDescription());
+
     }
 
 
@@ -61,8 +67,8 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
             case BASAL:
                 recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString()+" Units of basal insulin");
                 break;
-            case SHORT_ACTING:
-                recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString() + " Units of short acting insulin");
+            case BOLUS:
+                recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString() + " Units of bolus insulin");
                 break;
             case NOT_SET:
                 recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString() + " Units");
@@ -74,7 +80,7 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
             case NOT_SET:
                 insulinChoice.setSelection(0);
                 break;
-            case SHORT_ACTING:
+            case BOLUS:
                 insulinChoice.setSelection(1);
                 break;
             case BASAL:

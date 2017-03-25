@@ -24,7 +24,7 @@ public class InsulinTypeChoiceListener implements AdapterView.OnItemSelectedList
                 model.setTypeTaken(TakeInsulinReadModel.InsulinType.NOT_SET);
                 break;
             case 1:
-                model.setTypeTaken(TakeInsulinReadModel.InsulinType.SHORT_ACTING);
+                model.setTypeTaken(TakeInsulinReadModel.InsulinType.BOLUS);
                 break;
             case 2:
                 model.setTypeTaken(TakeInsulinReadModel.InsulinType.BASAL);
