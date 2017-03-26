@@ -8,6 +8,7 @@ import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadModel;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -60,8 +61,24 @@ public class InsulinTakenDatabase implements InsulinTakenRecord {
 
     @Override
     public List<IInsulinTakenEntry> getAllEntries(Calendar from, Calendar to) {
-        //TODO
-        return null;
+        Cursor cursor = write.rawQuery("Select * from "+
+                InsulinTakenContract.ContentsDefinition.TABLE_NAME+" where "+
+                InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME+">=? AND "+
+                InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME+"<=?",
+                new String[]{formatDateTime(from),formatDateTime(to)});
+        List<IInsulinTakenEntry> entries =new ArrayList<>();
+        TakeInsulinReadModel.InsulinType type;
+        while(cursor.moveToNext()){
+            if(cursor.getString(cursor.getColumnIndex(InsulinTakenContract.ContentsDefinition.COLUMN_BASAL)).equals("TRUE")){
+                type= TakeInsulinReadModel.InsulinType.BASAL;
+            }else{
+                type= TakeInsulinReadModel.InsulinType.BOLUS;
+            }
+            entries.add(new InsulinTakenEntry(
+                    parseTime(cursor.getString(cursor.getColumnIndex(InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME))),
+                    type,cursor.getFloat(cursor.getColumnIndex(InsulinTakenContract.ContentsDefinition.COLUMN_AMOUNT))));
+        }
+        return entries;
     }
 
 
