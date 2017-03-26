@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,55 +12,108 @@
         android:layout_height="wrap_content"
         android:text="Type of Activity"
         tools:layout_editor_absoluteX="144dp"
-        tools:layout_editor_absoluteY="86dp" />
+        tools:layout_editor_absoluteY="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
     <Spinner
         android:id="@+id/activitySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="114dp" />
+        tools:layout_editor_absoluteY="73dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/typeOfActivity"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/startDateAndTimeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activitySpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Start Date and Time" />
+
+    <TextView
+        android:id="@+id/dateAndTimeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:text="TextView"
+        android:layout_above="@+id/DurationTV"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:id="@+id/setDateAndTimeIB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:layout_marginLeft="10dp"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        android:layout_below="@+id/startDateAndTimeTV"
+        android:layout_toRightOf="@+id/dateAndTimeTV" />
+
+    <TextView
+        android:id="@+id/DurationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setDateAndTimeIB"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Duration of Exercise" />
 
     <EditText
         android:id="@+id/hourEText"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="199dp" />
+        android:inputType="numberDecimal"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/DurationTV"
+        android:layout_toLeftOf="@+id/typeOfActivity"
+        android:layout_toStartOf="@+id/typeOfActivity" />
 
     <TextView
-        android:id="@+id/hoursTextView"
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hours"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="212dp" />
+        android:layout_alignBaseline="@+id/hourEText"
+        android:layout_alignBottom="@+id/hourEText"
+        android:layout_toRightOf="@+id/hourEText"
+        android:layout_toEndOf="@+id/hourEText" />
 
     <EditText
         android:id="@+id/minuteEText"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="283dp" />
+        android:inputType="numberDecimal"
+        android:layout_alignBaseline="@+id/hourEText"
+        android:layout_alignBottom="@+id/hourEText"
+        android:layout_toRightOf="@+id/activitySpinner"
+        android:layout_toEndOf="@+id/activitySpinner" />
 
     <TextView
-        android:id="@+id/minutesTextView"
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Minutes"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="297dp" />
+        android:layout_alignBaseline="@+id/minuteEText"
+        android:layout_alignBottom="@+id/minuteEText"
+        android:layout_toRightOf="@+id/minuteEText"
+        android:layout_toEndOf="@+id/minuteEText" />
 
     <ImageButton
         android:id="@+id/saveActivityIB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="372dp" />
+        android:layout_alignLeft="@+id/setDateAndTimeIB"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/setDateAndTimeIB"
+        android:layout_marginBottom="50dp"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

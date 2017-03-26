@@ -17,9 +17,8 @@ public class FitnessInfoView implements ModelObserver {
     private IFitnessInfo lmodel;
     private Context context;
 
-    public FitnessInfoView(TextView tv, FloatingActionButton fab, Context context, IFitnessInfo model){
+    public FitnessInfoView(TextView tv, Context context, IFitnessInfo model){
         mTVCal = tv;
-        mFABAddActivity = fab;
         this.context = context;
         lmodel = model;
     }

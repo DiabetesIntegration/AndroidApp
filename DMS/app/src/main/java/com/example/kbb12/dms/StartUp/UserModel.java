@@ -24,6 +24,13 @@ import java.util.Observer;
 public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
 
     private String exampleData;
+    private int day;
+    private int month;
+    private int year;
+    private int hour;
+    private int minute;
+    private boolean actDateToChange;
+    private boolean actTimeToChange;
 
     private List<ModelObserver> observers;
 
@@ -33,6 +40,15 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
     public UserModel(String exampleData){
         this.exampleData=exampleData;
         observers= new ArrayList<>();
+
+        Calendar now = Calendar.getInstance();
+        day=now.get(Calendar.DAY_OF_MONTH);
+        month=now.get(Calendar.MONTH);
+        year=now.get(Calendar.YEAR);
+        hour=now.get(Calendar.HOUR_OF_DAY);
+        minute=now.get(Calendar.MINUTE);
+        actDateToChange=false;
+        actTimeToChange=false;
     }
 
     public String getExampleData(){

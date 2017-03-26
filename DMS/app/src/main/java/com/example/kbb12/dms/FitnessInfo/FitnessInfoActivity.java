@@ -26,8 +26,9 @@ public class FitnessInfoActivity extends AppCompatActivity {
         FloatingActionButton mFABAddActivity = (FloatingActionButton) findViewById(R.id.AddActivityFAB);
 
         FitnessInfoController controller = new FitnessInfoController(model, this);
+        mFABAddActivity.setOnClickListener(controller);
 
-        FitnessInfoView view = new FitnessInfoView(mTVCal, mFABAddActivity, this, model);
+        FitnessInfoView view = new FitnessInfoView(mTVCal, this, model);
         model.registerObserver(view);
     }
 }
