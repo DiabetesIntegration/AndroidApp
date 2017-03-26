@@ -263,12 +263,18 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
 
     @Override
     public void takeInsulin(){
+        Calendar time =Calendar.getInstance();
+        time.set(Calendar.YEAR,year);
+        time.set(Calendar.MONTH,month);
+        time.set(Calendar.DAY_OF_MONTH,day);
+        time.set(Calendar.HOUR,hour);
+        time.set(Calendar.MINUTE,minute);
         switch (typeTaken){
             case BASAL:
-                model.takeInsulin(year,month,day,hour,minute,actual,true);
+                model.takeInsulin(time,actual,true);
                 break;
             case BOLUS:
-                model.takeInsulin(year,month,day,hour,minute,actual,false);
+                model.takeInsulin(time,actual,false);
                 break;
             case NOT_SET:
                 //This should be unreachable but is here to be extra safe

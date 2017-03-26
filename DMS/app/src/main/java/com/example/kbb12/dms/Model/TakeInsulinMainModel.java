@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public interface TakeInsulinMainModel {
     BasalInsulinEntry getLatestBasalRecommendation();
-    void takeInsulin(int year,int month,int day,int hour,int minute,double amount,boolean basal);
+    void takeInsulin(Calendar time,double amount,boolean basal);
     int getRecentCarbs();
     double getCurrentICR();
     double getCurrentISF();
