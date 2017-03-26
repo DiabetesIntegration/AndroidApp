@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.errorHandling.IErrorController;
 import com.example.kbb12.dms.errorHandling.MasterView;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.IEntryControllerFactory;
@@ -37,6 +38,7 @@ public class BasalInsulinModelBuilderView extends MasterView implements ModelObs
         this.entries=new ArrayList<>();
         timeFragment=new TimeSelectionFragment();
         timeFragment.setController(controllerFactory.createTimeChangeListener());
+        timeFragment.setDismissController(controllerFactory.createTimeDismissListener());
         refreshView();
     }
 
@@ -124,6 +126,11 @@ public class BasalInsulinModelBuilderView extends MasterView implements ModelObs
            newTime.setText(timeString);
         }else{
             newTime.setText("Tap to add a new time");
+            if(android.os.Build.VERSION.SDK_INT >22) {
+                newTime.setTextColor(context.getResources().getColor(R.color.colorAccent, null));
+            }else{
+                newTime.setTextColor(context.getResources().getColor(R.color.colorAccent));
+            }
         }
         newTime.setClickable(true);
         newTime.setOnClickListener(controllerFactory.createTimeEntryListener(entryNumber));

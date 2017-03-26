@@ -31,6 +31,10 @@ public class ValidateBasalInsulinController implements View.OnClickListener {
             return;
         }
         List<BasalInsulinEntry> doses=model.getTempDoses();
+        if(doses.size()<1){
+            model.setError("You must add at least one dosage for your basal insulin.");
+            return;
+        }
         for(BasalInsulinEntry dose:doses){
             if(dose.getDose()<=0){
                 model.setError("You must enter a dosage greater than zero for each entry");

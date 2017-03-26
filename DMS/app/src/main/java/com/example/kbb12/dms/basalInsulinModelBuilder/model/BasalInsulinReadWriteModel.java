@@ -16,5 +16,6 @@ public interface BasalInsulinReadWriteModel extends BasalInsulinReadModel,ErrorR
     void deleteDose();
     void setDose(double dose,int entryNumber);
     void setBasalBrandName(String brandName);
+    void cancelSelection();
     void saveDoses() throws DuplicateDoseException;
 }
