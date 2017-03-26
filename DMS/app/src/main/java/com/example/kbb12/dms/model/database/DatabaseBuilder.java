@@ -53,7 +53,7 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         for(int i=0;i<24;i++){
             db.execSQL("INSERT INTO "
                     + BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME +
-                    " (" + BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE +
+                    " (" + BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +
                     ")VALUES(\"" + String.format("%2d:00",i) + "\")");
         }
         db.execSQL(BasalInsulinModelContractHolder.SQL_CREATE_ENTRIES);

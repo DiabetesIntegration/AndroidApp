@@ -13,21 +13,21 @@ public final class BasalInsulinModelContractHolder {
     /* Inner class that defines the table contents */
     public static class ContentsDefinition implements BaseColumns {
         public static final String TABLE_NAME="BasalModel";
-        public static final String COLUMN_ONE_TITLE = "Name";
-        public static final String COLUMN_TWO_TITLE = "Time";
-        public static final String COLUMN_THREE_TITLE = "ImprovedAmount";
-        public static final String COLUMN_FOUR_TITLE="OrigAmount";
-        public static final String COLUMN_FIVE_TITLE = "LastTaken";
+        public static final String COLUMN_INSULIN_NAME = "Name";
+        public static final String COLUMN_TIME = "Time";
+        public static final String COLUMN_IMPROVED_DOSE = "ImprovedAmount";
+        public static final String COLUMN_ORIG_DOSE ="OrigAmount";
+        public static final String COLUMN_DATE_LAST_TAKEN = "LastTaken";
     }
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME + " (" +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE + " VARCHAR(1000)," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE + " VARCHAR(5)," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE + " FLOAT," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE + " FLOAT," +
-                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE + " DATE," +
-                    "PRIMARY KEY( "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE+" ));";
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_INSULIN_NAME + " VARCHAR(1000)," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME + " VARCHAR(5)," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE + " FLOAT," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_DOSE + " FLOAT," +
+                    BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_DATE_LAST_TAKEN + " DATE," +
+                    "PRIMARY KEY( "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +" ));";
 
 
     public static final String SQL_DELETE_ENTRIES =

@@ -1,10 +1,8 @@
 package com.example.kbb12.dms.model.bolusInsulinModel;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -54,10 +52,10 @@ public class BolusInsulinModel implements IBolusInsulinModel {
             fillISFValues(0,endHour,ISFvalue);
             return;
         }
-        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?";
+        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"=?";
         ContentValues args= new ContentValues();
-        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_FOUR_TITLE, ISFvalue);
-        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_FIVE_TITLE, ISFvalue);
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ISF, ISFvalue);
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ISF, ISFvalue);
         for(int i=startHour;i<(endHour+1);i++) {
             write.update(BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME, args,
                     strFilter, new String[]{String.format("%2d:00", i)});
@@ -70,10 +68,10 @@ public class BolusInsulinModel implements IBolusInsulinModel {
             fillICRValues(0, endHour, ICRvalue);
             return;
         }
-        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?";
+        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"=?";
         ContentValues args= new ContentValues();
-        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TWO_TITLE, ICRvalue);
-        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_THREE_TITLE, ICRvalue);
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ICR, ICRvalue);
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ICR, ICRvalue);
         for(int i=startHour;i<(endHour+1);i++) {
             write.update(BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME, args,
                     strFilter, new String[]{String.format("%2d:00", i)});
@@ -84,8 +82,12 @@ public class BolusInsulinModel implements IBolusInsulinModel {
         Cursor cursor =write.rawQuery("Select * from "+
                 BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         while (cursor.moveToNext()){
-            Log.d("DMS MODEL BOLUS", cursor.getString(0) + "," + cursor.getFloat(1) + "," +
-                    cursor.getFloat(2) + "," + cursor.getFloat(3)+","+cursor.getFloat(4));
+            Log.d("DMS MODEL BOLUS",
+                    cursor.getString(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME)) +
+                            "," + cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ICR)) +
+                            "," + cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ICR)) +
+                            "," + cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ISF))+
+                            "," + cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ISF)));
         }
     }
 
@@ -94,13 +96,13 @@ public class BolusInsulinModel implements IBolusInsulinModel {
         int hour =time.get(Calendar.HOUR);
         Cursor cursor = write.rawQuery("Select * from "+
                 BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+
-                " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?",
+                " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"=?",
                 new String[]{String.format("%2d:00",hour)});
         cursor.moveToNext();
         if(usingImprovements) {
-            return cursor.getFloat(1);
+            return cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ICR));
         }else{
-            return cursor.getFloat(2);
+            return cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ICR));
         }
     }
 
@@ -109,13 +111,13 @@ public class BolusInsulinModel implements IBolusInsulinModel {
         int hour =time.get(Calendar.HOUR);
         Cursor cursor = write.rawQuery("Select * from "+
                         BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME+
-                        " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ONE_TITLE+"=?",
+                        " where "+BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"=?",
                 new String[]{String.format("%2d:00",hour)});
         cursor.moveToNext();
         if(usingImprovements) {
-            return cursor.getFloat(3);
+            return cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ISF));
         }else{
-            return cursor.getFloat(4);
+            return cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ISF));
         }
     }
 

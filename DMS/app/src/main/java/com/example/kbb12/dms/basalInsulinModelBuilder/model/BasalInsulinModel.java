@@ -97,6 +97,14 @@ public class BasalInsulinModel implements BasalInsulinReadWriteModel {
     }
 
     @Override
+    public void cancelSelection() {
+        if(selectedDose!=null&&selectedDose.getHour()==0&&selectedDose.getMinute()==0&&selectedDose.getDose()==0.0){
+            basicDoses.remove(selectedDose);
+        }
+        selectedDose=null;
+    }
+
+    @Override
     public void saveDoses() throws DuplicateDoseException {
         model.saveDoses(basicDoses, basalInsulinBrandName);
     }

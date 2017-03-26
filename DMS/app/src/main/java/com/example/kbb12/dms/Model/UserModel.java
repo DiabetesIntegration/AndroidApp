@@ -112,21 +112,23 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         if(sameDay(lastTaken, now)||timeLater(lastTaken,now)){
             return null;
         }
-        //Set all before it to taken
-        basalInsulinModel.allTakenBefore(mostRecent.getHour(), mostRecent.getMinute(), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH), now.get(Calendar.YEAR));
+        basalInsulinModel.allTakenBefore(mostRecent.getHour(),mostRecent.getMinute(),now.get(Calendar.DAY_OF_MONTH),
+        now.get(Calendar.MONTH),now.get(Calendar.YEAR));
         //Return it
         return mostRecent;
     }
 
 
     @Override
-    public void takeInsulin(int year, int month, int day, int hour, int minute, double amount, boolean basal) {
+    public void takeInsulin(Calendar time, double amount, boolean basal) {
         if(basal){
             //If they're taking basal insulin mark all the times before and including now as taken.
-            basalInsulinModel.allTakenBefore(hour,minute+5,day,month,year);
+            time.add(Calendar.MINUTE,5);
+            basalInsulinModel.allTakenBefore(time.get(Calendar.HOUR),time.get(Calendar.MINUTE)+5,
+                    time.get(Calendar.DAY_OF_MONTH),time.get(Calendar.MONTH),time.get(Calendar.YEAR));
         }
         try {
-            insulinTakenRecord.addEntry(day, month, year, hour, minute, amount, basal);
+            insulinTakenRecord.addEntry(time, amount, basal);
         }catch (SQLiteConstraintException e){
             //Do nothing the entry has already been added.
         }
@@ -166,7 +168,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
             return false;
         }
         Calendar now =Calendar.getInstance();
-        now.add(Calendar.HOUR,-2);
+        now.add(Calendar.HOUR,-4);
         return (now.getTimeInMillis()<lastTaken.getTime().getTimeInMillis());
     }
 
