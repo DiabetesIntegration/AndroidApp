@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kbb12.dms">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -38,7 +42,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kbb12.dms.startUp.MainActivity" />
         </activity>
-        <activity android:name=".mainMenu.MainMenuActivity" />
+        <activity android:name=".mainMenu.MainMenuActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".basalInsulinModelBuilder.BasalInsulinModelBuilderActivity"
             android:label="@string/title_activity_insulin_model_builder" />
