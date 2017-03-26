@@ -7,6 +7,24 @@ import java.util.Calendar;
  */
 
 public class BGReading {
-    public Calendar time;
-    public double reading;
+    private Calendar time;
+    private double reading;
+
+    public BGReading (Calendar time, double reading){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time.getTime());
+        this.time = cal;
+        this.reading = reading;
+    }
+
+    private Calendar getTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time.getTime());
+        return cal;
+    }
+
+    private double getReading(){
+        return reading;
+    }
+
 }

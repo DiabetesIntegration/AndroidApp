@@ -46,11 +46,11 @@ public class CurrentBGModel implements BGRecord {
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                BGReading bg = new BGReading();
-                bg.reading = c.getDouble(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_READING));
-                bg.time = parseCalendar(c.getString(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+                double r = c.getDouble(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING));
+                Calendar time = parseCalendar(c.getString(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+                BGReading reading = new BGReading(time, r);
 
-                readings.add(bg);
+                readings.add(reading);
             } while (c.moveToNext());
         }
         c.close();
@@ -72,9 +72,9 @@ public class CurrentBGModel implements BGRecord {
         if(c.getCount()==0){
             return null;
         }
-        BGReading reading = new BGReading();
-        reading.reading = c.getDouble(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_READING));
-        reading.time = parseCalendar(c.getString(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+        double r = c.getDouble(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING));
+        Calendar time = parseCalendar(c.getString(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+        BGReading reading = new BGReading(time, r);
         c.close();
         return reading;
 
