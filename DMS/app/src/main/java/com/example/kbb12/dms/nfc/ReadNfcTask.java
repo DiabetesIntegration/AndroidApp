@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Created by lidda on 23/03/2017.
@@ -58,7 +59,7 @@ public class ReadNfcTask extends AsyncTask<Tag, Boolean, String> {
             public void run() {
                 vibrator.vibrate(200);
             }
-        }, 200);
+        }, 400);
     }
 
 
@@ -151,6 +152,12 @@ public class ReadNfcTask extends AsyncTask<Tag, Boolean, String> {
 
     @Override
     protected void onPostExecute(final String success) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(activity, "Sensor scanned!", Toast.LENGTH_LONG).show();
+            }
+        });
         buzzTwice();
         parser.parseNfc(success);
     }

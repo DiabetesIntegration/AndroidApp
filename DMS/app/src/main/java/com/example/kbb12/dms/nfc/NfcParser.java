@@ -3,8 +3,11 @@ package com.example.kbb12.dms.nfc;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.model.IBloodGlucoseModel;
+import com.example.kbb12.dms.startUp.ModelHolder;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -16,12 +19,15 @@ import java.util.Map;
 
 public class NfcParser {
 
+    private IBloodGlucoseModel userModel;
     private SharedPreferences sharedPreferences;
     private Activity activity;
+    private static final String TAG = "NfcParser";
 
     public NfcParser(Activity activity){
         sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
         this.activity = activity;
+        userModel = ModelHolder.model;
     }
 
     private int getCurrentSensorTime(){
@@ -54,6 +60,8 @@ public class NfcParser {
     public void parseNfc(String result){
         Calendar now = Calendar.getInstance();
 
+        userModel.addRawData(now, result);
+
         //Get relevant pointers
         int glucosePointer = Integer.parseInt(result.substring(4, 6), 16);
         int elapsedMinutes = Integer.parseInt(result.substring(586,588) + result.substring(584,586),16);
@@ -71,8 +79,6 @@ public class NfcParser {
             final String g = result.substring(i + 2, i + 4) + result.substring(i, i + 2);
             historicalReadings[j] = Integer.parseInt(g, 16);
         }
-        //TODO: SAVE CURRENT READING IN DB
-        double currentReading = linearConversion(readings[((glucosePointer+15)%16)]);
 
         //TODO: More new sensor error checking?
         //If a new sensor
@@ -84,26 +90,36 @@ public class NfcParser {
                 saveSensorStartTime(temp);
             } else {
                 //TODO: Throw an error
+                Log.e(TAG, "Will throw error");
             }
         }
+        //TODO: SAVE CURRENT READING IN DB
+        double currentReading = linearConversion(readings[((glucosePointer+15)%16)]);
+        userModel.addCurrentReading(now, currentReading);
+
+
         saveCurrentSensorTime(elapsedMinutes);
         long tss = getMinutesSinceSensorStart();
         Calendar mostRecent = Calendar.getInstance();
         //This should be the time of the most recent history reading
         mostRecent.add(Calendar.MINUTE,0-((int)tss%15));
-        Calendar c1;
         Calendar c2;
 
         //Now get all the times
-        //ToDo: Stop looping when times overlap or == most recent time in database
         for(int i = (historyPointer+31)%32, j = 0; j<32; j++, i=((i+31)%32)){
             c2 = Calendar.getInstance();
             c2.setTime(mostRecent.getTime());
             mostRecent.add(Calendar.MINUTE, -15);
             historyMap.put(c2, linearConversion(historicalReadings[i]));
         }
-
-        //ToDo: Enter all to db
+        Calendar last = userModel.getMostRecentHistoryReading().time;
+        for(Calendar c: historyMap.keySet()){
+            Log.d(TAG, c.toString() + historyMap.get(c));
+            //Only add to the history database if the reading is after the most recent one
+            if(c.after(last)){
+                userModel.addHistoryReading(c, historyMap.get(c));
+            }
+        }
 
     }
 

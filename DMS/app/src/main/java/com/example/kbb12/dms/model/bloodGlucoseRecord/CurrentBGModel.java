@@ -15,12 +15,12 @@ import java.util.Locale;
  * Created by lidda on 25/03/2017.
  */
 
-public class HistoryBGModel implements BGRecord {
+public class CurrentBGModel implements BGRecord {
 
     private SimpleDateFormat dateFormat;
     private SQLiteDatabase write;
 
-    public HistoryBGModel(SQLiteDatabase write){
+    public CurrentBGModel(SQLiteDatabase write){
         this.write = write;
         dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -36,10 +36,10 @@ public class HistoryBGModel implements BGRecord {
      */
     @Override
     public List<BGReading> getReadingsBetween(Calendar from, Calendar to) {
-        String selectQuery = "SELECT * FROM " + HistoryBGContract.ContentsDefinition.TABLE_NAME + " WHERE " +
-                HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + ">='" + getDateTime(from) +
-                "' AND " +HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + "<='" + getDateTime(to) +
-                "' ORDER BY " + HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC";
+        String selectQuery = "SELECT * FROM " + CurrentBGContract.ContentsDefinition.TABLE_NAME + " WHERE " +
+                CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME + ">='" + getDateTime(from) +
+                "' AND " +CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME + "<='" + getDateTime(to) +
+                "' ORDER BY " + CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC";
         List<BGReading> readings = new ArrayList<>();
         Cursor c = write.rawQuery(selectQuery, null);
 
@@ -47,8 +47,8 @@ public class HistoryBGModel implements BGRecord {
         if (c.moveToFirst()) {
             do {
                 BGReading bg = new BGReading();
-                bg.reading = c.getDouble(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING));
-                bg.time = parseCalendar(c.getString(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+                bg.reading = c.getDouble(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_READING));
+                bg.time = parseCalendar(c.getString(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
 
                 readings.add(bg);
             } while (c.moveToNext());
@@ -59,8 +59,8 @@ public class HistoryBGModel implements BGRecord {
 
     @Override
     public BGReading getMostRecentReading() {
-        String selectQuery = "SELECT * FROM " + HistoryBGContract.ContentsDefinition.TABLE_NAME + " ORDER BY " +
-                HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC LIMIT 1";
+        String selectQuery = "SELECT * FROM " + CurrentBGContract.ContentsDefinition.TABLE_NAME + " ORDER BY " +
+                CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC LIMIT 1";
 
         Cursor c = write.rawQuery(selectQuery, null);
 
@@ -73,8 +73,8 @@ public class HistoryBGModel implements BGRecord {
             return null;
         }
         BGReading reading = new BGReading();
-        reading.reading = c.getDouble(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING));
-        reading.time = parseCalendar(c.getString(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+        reading.reading = c.getDouble(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_READING));
+        reading.time = parseCalendar(c.getString(c.getColumnIndex(CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
         c.close();
         return reading;
 
@@ -84,10 +84,10 @@ public class HistoryBGModel implements BGRecord {
     public void insertReading(Calendar time, double reading) {
 
         ContentValues values = new ContentValues();
-        values.put(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING, reading);
-        values.put(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME, getDateTime(time));
-         // insert row
-        write.insert(HistoryBGContract.ContentsDefinition.TABLE_NAME, null, values);
+        values.put(CurrentBGContract.ContentsDefinition.COLUMN_NAME_READING, reading);
+        values.put(CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME, getDateTime(time));
+        // insert row
+        write.insert(CurrentBGContract.ContentsDefinition.TABLE_NAME, null, values);
 
     }
 
