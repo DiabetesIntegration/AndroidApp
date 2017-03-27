@@ -10,9 +10,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.AddFitness.Controller.ActivityTypeListener;
+import com.example.kbb12.dms.AddFitness.Controller.DateSetListener;
 import com.example.kbb12.dms.AddFitness.Controller.DateTimeListener;
 import com.example.kbb12.dms.AddFitness.Controller.HourTextListener;
 import com.example.kbb12.dms.AddFitness.Controller.MinuteTextListener;
+import com.example.kbb12.dms.AddFitness.Controller.TimeSetListener;
 import com.example.kbb12.dms.AddFitness.Controller.ValidateAndSave;
 import com.example.kbb12.dms.AddFitness.View.AddFitnessView;
 import com.example.kbb12.dms.R;
@@ -54,8 +56,9 @@ public class AddFitnessActivity extends AppCompatActivity {
         ImageButton saveActivity = (ImageButton) findViewById(R.id.saveActivityIB);
         saveActivity.setOnClickListener(new ValidateAndSave(model, this));
 
-        AddFitnessView view = new AddFitnessView(this, model, fragman, mSpinner, mDateTime, mHour, mMins);
+        AddFitnessView view = new AddFitnessView(this, model, fragman, mSpinner, mDateTime, mHour, mMins, new DateSetListener(model), new TimeSetListener(model));
         view.update();
+
         model.registerObserver(view);
     }
 }

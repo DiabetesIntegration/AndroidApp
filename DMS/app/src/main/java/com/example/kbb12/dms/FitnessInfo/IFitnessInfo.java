@@ -8,5 +8,5 @@ import android.content.Context;
 
 public interface IFitnessInfo {
 
-    public double getCalCount(Context context);
+    public int getCalCount(Context context);
 }

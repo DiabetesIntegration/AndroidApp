@@ -25,7 +25,8 @@
                 android:value="com.example.kbb12.dms.StartUp.MainActivity" />
         </activity>
         <activity android:name=".FitnessInfo.FitnessInfoActivity" />
-        <activity android:name=".AddFitness.AddFitnessActivity"></activity>
+        <activity android:name=".AddFitness.AddFitnessActivity" />
+        <activity android:name=".EnterWeight.EnterWeightActivity"></activity>
     </application>
 
 </manifest>

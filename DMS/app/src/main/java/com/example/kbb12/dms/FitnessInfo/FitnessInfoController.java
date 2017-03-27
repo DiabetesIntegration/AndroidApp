@@ -2,9 +2,11 @@ package com.example.kbb12.dms.FitnessInfo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 
 import com.example.kbb12.dms.AddFitness.AddFitnessActivity;
+import com.example.kbb12.dms.EnterWeight.EnterWeightActivity;
 
 /**
  * Created by Garry on 07/03/2017.
@@ -20,9 +22,23 @@ public class FitnessInfoController implements View.OnClickListener  {
         this.currentActivity = currentActivity;
     }
 
-
     @Override
     public void onClick(View view) {
+        SharedPreferences sprefs = currentActivity.getSharedPreferences("fitnessprefs", currentActivity.getApplicationContext().MODE_PRIVATE);
+        double weight;
+        try{
+            weight = Double.longBitsToDouble(sprefs.getLong("weight", Double.doubleToLongBits(0.0)));
+        } catch(NumberFormatException e){
+            Intent intent = new Intent(currentActivity, EnterWeightActivity.class);
+            currentActivity.startActivity(intent);
+            return;
+        }
+        if (weight == 0.0){
+            Intent intent = new Intent(currentActivity, EnterWeightActivity.class);
+            currentActivity.startActivity(intent);
+            return;
+        }
+
         Intent addFitnessIntent = new Intent(currentActivity, AddFitnessActivity.class);
         currentActivity.startActivity(addFitnessIntent);
     }

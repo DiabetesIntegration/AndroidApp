@@ -8,6 +8,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.AddFitness.Controller.DateSetListener;
+import com.example.kbb12.dms.AddFitness.Controller.TimeSetListener;
 import com.example.kbb12.dms.AddFitness.IAddFitness;
 import com.example.kbb12.dms.StartUp.ModelObserver;
 
@@ -31,7 +32,7 @@ public class AddFitnessView implements ModelObserver {
     private DateSelectionFragment dFrag;
     private TimeSelectionFragment tFrag;
 
-    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins){
+    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins, DateSetListener datecontroller, TimeSetListener timecontroller){
         this.context = context;
         this.model = model;
         this.fragman = fragman;
@@ -41,10 +42,11 @@ public class AddFitnessView implements ModelObserver {
         mins = mMins;
 
         dFrag=new DateSelectionFragment();
-        dFrag.setController(new DateSetListener(model));
+        dFrag.setController(datecontroller);
 
         tFrag = new TimeSelectionFragment();
-        tFrag.setController()
+        tFrag.setController(timecontroller);
+
     }
 
     @Override
@@ -59,5 +61,8 @@ public class AddFitnessView implements ModelObserver {
             tFrag.show(fragman,"Set Time");
             return;
         }
+        String dateTime = String.format("%02d",model.getDayTaken())+"/" + String.format("%02d",model.getMonthTaken()+1)+"/" + String.format("%04d",model.getYearTaken())+"   "+String.format("%02d", model.getHourTaken())+":"+String.format("%02d", model.getMinuteTaken());
+        date.setText(dateTime);
+
     }
 }
