@@ -1,7 +1,9 @@
 package com.example.kbb12.dms.AddFitness.View;
 
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -32,7 +34,7 @@ public class AddFitnessView implements ModelObserver {
     private DateSelectionFragment dFrag;
     private TimeSelectionFragment tFrag;
 
-    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins, DateSetListener datecontroller, TimeSetListener timecontroller){
+    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins, DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller){
         this.context = context;
         this.model = model;
         this.fragman = fragman;
@@ -43,20 +45,24 @@ public class AddFitnessView implements ModelObserver {
 
         dFrag=new DateSelectionFragment();
         dFrag.setController(datecontroller);
+        dFrag.setDismissController(datedismisscontroller);
 
         tFrag = new TimeSelectionFragment();
         tFrag.setController(timecontroller);
+        tFrag.setDismissController(timedismisscontroller);
 
     }
 
     @Override
     public void update() {
         if(model.getActDateToChange()){
+            clearPopUp("Set Date");
             dFrag.setDate(model.getDayTaken(),model.getMonthTaken(),model.getYearTaken());
             dFrag.show(fragman,"Set Date");
             return;
         }
         if(model.getActTimeToChange()){
+            clearPopUp("Set Time");
             tFrag.setTime(model.getHourTaken(),model.getMinuteTaken());
             tFrag.show(fragman,"Set Time");
             return;
@@ -65,4 +71,12 @@ public class AddFitnessView implements ModelObserver {
         date.setText(dateTime);
 
     }
+
+    private void clearPopUp(String popUpString){
+        DialogFragment popUp = (DialogFragment) fragman.findFragmentByTag(popUpString);
+        if (popUp != null) {
+            popUp.dismiss();
+        }
+    }
+
 }

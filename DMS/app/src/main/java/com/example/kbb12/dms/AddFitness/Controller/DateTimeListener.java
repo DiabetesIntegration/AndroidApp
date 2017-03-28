@@ -18,7 +18,7 @@ public class DateTimeListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        model.setActDateToChange();
-        //model.setActTimeToChange();
+        model.setActDateToChange(true);
+        //model.setActTimeToChange(true);
     }
 }

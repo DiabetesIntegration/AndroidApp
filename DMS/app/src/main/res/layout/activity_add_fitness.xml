@@ -1,119 +1,128 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.kbb12.dms.AddFitness.AddFitnessActivity">
 
-    <TextView
-        android:id="@+id/typeOfActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type of Activity"
-        tools:layout_editor_absoluteX="144dp"
-        tools:layout_editor_absoluteY="42dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/activitySpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="73dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/typeOfActivity"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Type of Activity"
+            android:id="@+id/typeOfActivity"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="20dp" />
 
-    <TextView
-        android:id="@+id/startDateAndTimeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/activitySpinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="Start Date and Time" />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activitySpinner"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="20dp" />
 
-    <TextView
-        android:id="@+id/dateAndTimeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
-        android:text="TextView"
-        android:layout_above="@+id/DurationTV"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Start Date and Time"
+            android:id="@+id/startDateAndtimeTV"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="20dp" />
 
-    <ImageButton
-        android:id="@+id/setDateAndTimeIB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginLeft="10dp"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar"
-        android:layout_below="@+id/startDateAndTimeTV"
-        android:layout_toRightOf="@+id/dateAndTimeTV" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingLeft="70dp"
+            android:weightSum="1"
+            android:layout_gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/DurationTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/setDateAndTimeIB"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="Duration of Exercise" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="dd/mm/yy  hh:mm"
+                android:id="@+id/dateAndTimeTV"
+                android:layout_below="@+id/textView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_rectangle"
+                android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:id="@+id/hourEText"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/DurationTV"
-        android:layout_toLeftOf="@+id/typeOfActivity"
-        android:layout_toStartOf="@+id/typeOfActivity" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:id="@+id/setDateAndTimeIV"
+                android:src="@android:drawable/ic_menu_my_calendar"
+                android:layout_weight="0.11" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hours"
-        android:layout_alignBaseline="@+id/hourEText"
-        android:layout_alignBottom="@+id/hourEText"
-        android:layout_toRightOf="@+id/hourEText"
-        android:layout_toEndOf="@+id/hourEText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Duration of Exercise"
+            android:id="@+id/DurationTV"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="40dp"
+            android:paddingBottom="30dp" />
 
-    <EditText
-        android:id="@+id/minuteEText"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_alignBaseline="@+id/hourEText"
-        android:layout_alignBottom="@+id/hourEText"
-        android:layout_toRightOf="@+id/activitySpinner"
-        android:layout_toEndOf="@+id/activitySpinner" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="30dp">
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Minutes"
-        android:layout_alignBaseline="@+id/minuteEText"
-        android:layout_alignBottom="@+id/minuteEText"
-        android:layout_toRightOf="@+id/minuteEText"
-        android:layout_toEndOf="@+id/minuteEText" />
+            <EditText
+                android:layout_width="66dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/hourEText" />
 
-    <ImageButton
-        android:id="@+id/saveActivityIB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/setDateAndTimeIB"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/setDateAndTimeIB"
-        android:layout_marginBottom="50dp"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hours"
+                android:id="@+id/hourTView"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/minuteEText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Minutes"
+                android:id="@+id/minTView"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveActivityIV"
+            android:src="@android:drawable/ic_menu_save"
+            android:layout_weight="0.11"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
 
 </RelativeLayout>

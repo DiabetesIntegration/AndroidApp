@@ -29,6 +29,10 @@ public class ValidateAndSave implements View.OnClickListener {
             Toast.makeText(activity, "Please enter minutes less than 60.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(model.getDurhours() == 0 && model.getDurMins() == 0){
+            Toast.makeText(activity, "Please enter the duration of activity.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         SharedPreferences spref = activity.getSharedPreferences("fitnessprefs", Context.MODE_PRIVATE);
         double weight = 0.0;
         try {
@@ -42,6 +46,7 @@ public class ValidateAndSave implements View.OnClickListener {
             return;
         }
 
-        model.saveActivity(activity.getApplicationContext(), model.getActivityType(), model.getYearTaken(), model.getMonthTaken(), model.getDayTaken(), model.getHourTaken(), model.getMinuteTaken(), model.getDurhours(), model.getDurMins(), weight);
+        model.saveActivity(activity.getApplicationContext(), weight);
+        activity.finish();
     }
 }

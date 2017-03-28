@@ -17,15 +17,15 @@ import java.util.Objects;
 
 public class FitnessInfoActivity extends AppCompatActivity {
 
-    //private TextView mTVCal;
-    //private FloatingActionButton mFABAddActivity;
+    FitnessInfoView view;
+    UserModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitness_info);
 
-        UserModel model = ModelHolder.model;
+        model = ModelHolder.model;
 
         TextView mTVCal = (TextView) findViewById(R.id.CaloriesTextView);
         FloatingActionButton mFABAddActivity = (FloatingActionButton) findViewById(R.id.AddActivityFAB);
@@ -33,10 +33,22 @@ public class FitnessInfoActivity extends AppCompatActivity {
         FitnessInfoController controller = new FitnessInfoController(model, this);
         mFABAddActivity.setOnClickListener(controller);
 
-        FitnessInfoView view = new FitnessInfoView(mTVCal, this, model);
+        view = new FitnessInfoView(mTVCal, this, model);
         view.update();
 
         model.registerObserver(view);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        view.update();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        model.removeObserver(view);
+        finish();
+    }
 }

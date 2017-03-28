@@ -25,6 +25,6 @@ public class FitnessInfoView implements ModelObserver {
 
     @Override
     public void update() {
-        mTVCal.setText(Double.toString(lmodel.getCalCount(context)));
+        mTVCal.setText(Integer.toString(lmodel.getCalCount(context)));
     }
 }

@@ -24,7 +24,11 @@ public class HourTextListener implements TextWatcher{
 
     @Override
     public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
-        model.setDurHours(Integer.parseInt(cs.toString()));
+        try {
+            model.setDurHours(Integer.parseInt(cs.toString()));
+        } catch(NumberFormatException e){
+            model.setDurHours(0);
+        }
     }
 
     @Override

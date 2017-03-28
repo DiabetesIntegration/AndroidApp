@@ -78,46 +78,40 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
         }
     }
 
+    public void removeObserver(ModelObserver observer){
+        observers.remove(observer);
+    }
+
     public String getDate() {
         Calendar calendar = Calendar.getInstance();
-        Format format = new SimpleDateFormat("dd.MM.yyyy");
+        Format format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = calendar.getTime();
+        System.out.println("getDate date value: " + date);
         return format.format(date);
     }
 
     public String formatDate() {
-        String tday = "0";
-        String tmonth = "0";
-        String date;
-        if(day<10){
-            tday = "0" + day;
-        }
-        if(month<10){
-            tmonth = "0" + month;
-        }
-        date = tday + "." + tmonth + "." + year;
-        return date;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        Format format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = calendar.getTime();
+        System.out.println("getDate date value: " + date);
+        return format.format(date);
     }
 
-    public String formatTime() {
-        String thours = "0";
-        String tmins = "0";
-        String time;
-        if(hour<10){
-            thours = "0" + hour;
-        }
-        if(minute<10){
-            tmins = "0" + minute;
-        }
-        time = thours + ":" + tmins;
-        return time;
+    public String formatDateTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day, hour, minute);
+        Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = cal.getTime();
+        String datetime = format.format(date);
+        return datetime;
     }
 
     public void addToCalCount(Context context, int cal){
         db = new dbHelper(context);
         int calories;
         int id;
-        //String date = getDate();
         String date = formatDate();
         if(db.DailyEntryExists(date)){
             Cursor cur = db.getDailyEntry(db.findDailyEntry(date));
@@ -135,10 +129,9 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
 
     public void addActivityToDB(Context context, int calories){
         db = new dbHelper(context);
-        String date = formatDate();
-        String time = formatTime();
+        String datetime = formatDateTime();
 
-        db.insertActivityEntry(date, time, calories, activitytype, durhour, durmin);
+        db.insertActivityEntry(datetime, calories, activitytype, durhour, durmin);
     }
 
     @Override
@@ -165,11 +158,11 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
     }
 
     @Override
-    public void setActDateToChange() {
-        if(actDateToChange){
+    public void setActDateToChange(boolean change) {
+        if(actDateToChange==change){
             return;
         }
-        actDateToChange=true;
+        actDateToChange = change;
         notifyObservers();
     }
 
@@ -179,11 +172,11 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
     }
 
     @Override
-    public void setActTimeToChange() {
-        if(actTimeToChange){
+    public void setActTimeToChange(boolean change) {
+        if(actTimeToChange==change){
             return;
         }
-        actTimeToChange=true;
+        actTimeToChange=change;
         notifyObservers();
     }
 
@@ -197,32 +190,15 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
         if(!actDateToChange){
             return;
         }
+        month++;
+        System.out.println("datetaken: " + day + " " + month + " " + year);
         this.day=day;
         this.month=month;
         this.year=year;
         actDateToChange=false;
+
         notifyObservers();
     }
-
-    /*@Override
-    public String getDateTaken() {
-        return null;
-    }*/
-
-   /* @Override
-    public void setDayTaken(int day) {
-        this.day=day;
-    }
-
-    @Override
-    public void setMonthTaken(int month) {
-        this.month=month;
-    }
-
-    @Override
-    public void setYearTaken(int year) {
-        this.year=year;
-    }*/
 
     @Override
     public int getDayTaken() {
@@ -244,26 +220,12 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
         if(!actTimeToChange){
             return;
         }
+        System.out.println("timetaken: " + hour + " " + minute);
         this.hour=hour;
         this.minute=minute;
         actTimeToChange=false;
         notifyObservers();
     }
-
-    /*@Override
-    public String getTimeTaken() {
-        return null;
-    }*/
-
-    /*@Override
-    public void setHourTaken(int hour) {
-
-    }
-
-    @Override
-    public void setMinuteTaken(int minute) {
-
-    }*/
 
     @Override
     public int getHourTaken() {
@@ -296,10 +258,10 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
     }
 
     @Override
-    public void saveActivity(Context context, String activity, int year, int month, int day, int hours, int mins, int durhour, int durmin, double weight) {
+    public void saveActivity(Context context, double weight) {
         db = new dbHelper(context);
 
-        int calories = calculateCalories(activity, weight, durhour, durmin);
+        int calories = calculateCalories(activitytype, weight, durhour, durmin);
 
         addActivityToDB(context, calories);
         addToCalCount(context, calories);

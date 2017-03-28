@@ -24,7 +24,11 @@ public class MinuteTextListener implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
-        model.setDurMins(Integer.parseInt(cs.toString()));
+        try {
+            model.setDurMins(Integer.parseInt(cs.toString()));
+        } catch(NumberFormatException e){
+            model.setDurMins(0);
+        }
     }
 
     @Override

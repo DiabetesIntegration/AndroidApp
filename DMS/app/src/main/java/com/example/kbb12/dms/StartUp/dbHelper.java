@@ -5,6 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
+
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Garry on 08/03/2017.
@@ -18,10 +26,11 @@ public class dbHelper extends SQLiteOpenHelper{
     public static final String ACTIVITY_TABLE = "activitytable";
 
     public static final String COLUMN_ID = "id";
-    public static final String DATE = "date";
     public static final String CALORIES = "calories";
 
-    public static final String TIME = "time";
+    public static final String DATE = "date";
+
+    public static final String DATETIME = "datetime";
     public static final String ACTIVITY_TYPE = "activitytype";
     public static final String DURATION_HRS = "hours";
     public static final String DURATION_MIN = "minutes";
@@ -34,7 +43,7 @@ public class dbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DAILY_TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, " + DATE + " TEXT, " + CALORIES + " INTEGER)");
-        db.execSQL("CREATE TABLE " + DAILY_TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, " + DATE + " TEXT, " + TIME + " TEXT, " + CALORIES + " INTEGER, " + ACTIVITY_TYPE + " TEXT, " + DURATION_HRS + "INTEGER, " + DURATION_MIN + " INTEGER)");
+        db.execSQL("CREATE TABLE " + ACTIVITY_TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, " + DATETIME + " TEXT, " + CALORIES + " INTEGER, " + ACTIVITY_TYPE + " TEXT, " + DURATION_HRS + " INTEGER, " + DURATION_MIN + " INTEGER)");
     }
 
     @Override
@@ -49,24 +58,26 @@ public class dbHelper extends SQLiteOpenHelper{
         ContentValues contentvalues = new ContentValues();
         contentvalues.put(DATE, date);
         contentvalues.put(CALORIES, calories);
+        System.out.println("inserting daily entry: " + calories + " cal to " + date);
         db.insert(DAILY_TABLE, null, contentvalues);
         return true;
     }
 
-    public boolean insertActivityEntry(String date, String time, int calories, String activity, int hours, int minutes) {
+    public boolean insertActivityEntry(String datetime, int calories, String activity, int durhours, int durminutes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DATE, date);
-        contentValues.put(TIME, time);
+        contentValues.put(DATETIME, datetime);
         contentValues.put(CALORIES, calories);
         contentValues.put(ACTIVITY_TYPE, activity);
-        contentValues.put(DURATION_HRS, hours);
-        contentValues.put(DURATION_MIN, minutes);
+        contentValues.put(DURATION_HRS, durhours);
+        contentValues.put(DURATION_MIN, durminutes);
+        System.out.println("inserting activity entry: " + calories + " cal to " + datetime);
         db.insert(ACTIVITY_TABLE, null, contentValues);
         return true;
     }
 
     public boolean DailyEntryExists(String date){
+        System.out.println("checking daily entry exists on " + date);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + DAILY_TABLE + " WHERE " + DATE + " = '" + date + "'", null);
         if (cursor.getCount() <= 0){
@@ -78,8 +89,9 @@ public class dbHelper extends SQLiteOpenHelper{
     }
 
     public int findDailyEntry(String date){
+        System.out.println("finding daily entry for " + date);
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DAILY_TABLE + "WHERE " + DATE + " = '" + date + "'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DAILY_TABLE + " WHERE " + DATE + " = '" + date + "'", null);
         cursor.moveToFirst();
         return cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
     }
@@ -91,6 +103,7 @@ public class dbHelper extends SQLiteOpenHelper{
     }
 
     public boolean updateDailyEntry(int id, String date, int calories){
+        System.out.println("updating daily entry for " + date);
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentvalues = new ContentValues();
         contentvalues.put(DATE, date);
