@@ -17,5 +17,7 @@ public interface IBasalInsulinModel {
 
     void allTakenBefore(Integer hour, Integer minute, int day, int month, int year);
 
+    void improve(BasalInsulinEntry entry,Float improvement);
+
     void log();
 }

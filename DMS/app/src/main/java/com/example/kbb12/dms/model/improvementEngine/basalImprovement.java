@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
 import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
@@ -18,45 +20,76 @@ import java.util.List;
  * Created by kbb12 on 25/03/2017.
  */
 
-public class basalImprovement extends BroadcastReceiver {
+public class BasalImprovement extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
         DatabaseBuilder db = new DatabaseBuilder(context);
         InsulinTakenRecord insulinTakenRecord=db.getInsulinTakenRecord();
         IBasalInsulinModel basalInsulinModel=db.getBasalInsulinModel();
+        BGRecord historyBGModel = db.getHistoryBGRecord();
         Calendar eightHoursAgo =Calendar.getInstance();
         eightHoursAgo.add(Calendar.HOUR,-8);
         Calendar thirtyTwoHoursAgo =Calendar.getInstance();
         thirtyTwoHoursAgo.add(Calendar.HOUR,-32);
         List<IInsulinTakenEntry> insulinTaken=insulinTakenRecord.getAllEntries(thirtyTwoHoursAgo,eightHoursAgo);
-        boolean failed;
-        BasalInsulinEntry matchedDose;
+        BasalInsulinEntry matchedDose=null;
         for(IInsulinTakenEntry entry:insulinTaken){
-            failed=false;
             if(entry.getType().equals(TakeInsulinReadModel.InsulinType.BOLUS)){
-                failed=true;
+                continue;
             }
-            if(!failed){
-                matchedDose=findMatchingRecommendation(entry,basalInsulinModel);
+            matchedDose=findMatchingRecommendation(entry,basalInsulinModel);
+            if(matchedDose==null){
+                continue;
             }
             Calendar eightHourAfter=(Calendar) entry.getTime().clone();
             eightHourAfter.add(Calendar.HOUR,8);
+            Calendar hourBeforeTaken =(Calendar) entry.getTime().clone();
+            hourBeforeTaken.add(Calendar.HOUR,-1);
             List<IInsulinTakenEntry> insulinTakenDuringTest =
-                    insulinTakenRecord.getAllEntries(hourBeforeTaken,eightHourAfter);
+                        insulinTakenRecord.getAllEntries(hourBeforeTaken,eightHourAfter);
             if(insulinTakenDuringTest.size()>1){
-
+                continue;
             }
+            //TODO
             /*
-            Match to dose from model. Complete
-            Check from an hour before to 8 hours after there was no:
-                other insulin taken,
-                carbs eaten,
-                or exercise
-            Find the BG at the time taken and the min and max in the following 8 hrs
-                if(max>=orig+x) then raise recommendation by ten%
-                if(min<=orig-x) then lower recommendation by ten%
-             */
+            List<ICarbEntry> carbsEatenDuringTest = carbDatabase.getAllEntries(hourBeforeTaken,
+                                                            eightHourAfter);
+            if(carbsEatenDuringTest.size()>0){
+                continue;
+            }
+            List<IFitnessEntry> activityDuringTest = fitnessDatabase.getAllEntries(hourBeforeTaken,
+                                                            eightHourAfter);
+            if(activityDuringTest.size()>0){
+                continue;
+            }
+            */
+            List<BGReading> bgReadings=historyBGModel.getReadingsBetween(hourBeforeTaken,eightHourAfter);
+                //Checking there is actually a fair amount of readings before improving based on them.
+            if(bgReadings.size()<30){
+                continue;
+            }
+            BGReading max=null;
+            BGReading min=null;
+            BGReading closest=null;
+            for(BGReading current:bgReadings){
+                if(max==null||max.getReading()<current.getReading()){
+                    max=current;
+                }
+                if(min==null||min.getReading()>current.getReading()){
+                    min=current;
+                }
+                if(closest==null||
+                        Math.abs(entry.getTime().getTimeInMillis()-closest.getTime().getTimeInMillis())>
+                                Math.abs(entry.getTime().getTimeInMillis()-current.getTime().getTimeInMillis())){
+                    closest=current;
+                }
+            }
+            if(max.getReading()>closest.getReading()+1.5){
+                basalInsulinModel.improve(matchedDose,(float)0.5);
+            }else if(min.getReading()<closest.getReading()-1.5){
+                basalInsulinModel.improve(matchedDose,(float) -0.5);
+            }
         }
     }
 

@@ -126,6 +126,15 @@ public class BasalInsulinModel implements IBasalInsulinModel {
         write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,new String[] {formatTime(hour,minute)});
     }
 
+    @Override
+    public void improve(BasalInsulinEntry entry, Float improvement) {
+        ContentValues args = new ContentValues();
+        args.put(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE,entry.getDose()+improvement);
+        String strFilter = BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME+"=";
+        write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,
+                new String[] {formatTime(entry.getHour(),entry.getMinute())});
+    }
+
     private BasalInsulinDose getLatest(boolean usingImprovement){
         Cursor cursor=write.rawQuery("Select "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_INSULIN_NAME +", max("+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"), "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE +" from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         BasalInsulinDose max=null;
