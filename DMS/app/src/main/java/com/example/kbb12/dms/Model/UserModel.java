@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
 import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
 import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
@@ -23,7 +26,7 @@ import java.util.List;
  * The global model used throughout the application.
  */
 public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,
-        TakeInsulinMainModel,BolusInsulinModelBuilderMainModel {
+        TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel {
 
     private String exampleData;
 
@@ -35,6 +38,12 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private InsulinTakenRecord insulinTakenRecord;
 
+    private RawBGRecord rawBGRecord;
+
+    private BGRecord historyBGRecord;
+
+    private BGRecord currentBGRecord;
+
     private boolean usingImprovements=true;
 
     public UserModel(Context context){
@@ -42,6 +51,9 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         basalInsulinModel =db.getBasalInsulinModel();
         bolusInsulinModel= db.getBolusInsulinModel();
         insulinTakenRecord= db.getInsulinTakenRecord();
+        rawBGRecord = db.getRawBGRecord();
+        historyBGRecord = db.getHistoryBGRecord();
+        currentBGRecord = db.getCurrentBGRecord();
         observers= new ArrayList<>();
     }
 
@@ -52,6 +64,26 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     public void saveData(){
 
+    }
+
+    @Override
+    public void addRawData(Calendar c, String data){
+        rawBGRecord.addRawData(data, c);
+    }
+
+    @Override
+    public void addHistoryReading(Calendar c, double reading){
+        historyBGRecord.insertReading(c, reading);
+    }
+
+    @Override
+    public void addCurrentReading(Calendar c, double reading){
+        historyBGRecord.insertReading(c, reading);
+    }
+
+    @Override
+    public BGReading getMostRecentHistoryReading() {
+        return historyBGRecord.getMostRecentReading();
     }
 
     public String getExampleData(){
@@ -154,10 +186,13 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     @Override
     public Double getCurrentBG() {
-        /*
-        TODO this should give the current blood glucose
-         */
-        return 5.5;
+        BGReading reading =currentBGRecord.getMostRecentReading();
+        Calendar fifteenMinutesAgo = Calendar.getInstance();
+        fifteenMinutesAgo.add(Calendar.MINUTE,-15);
+        if(reading.getTime().getTimeInMillis()<fifteenMinutesAgo.getTimeInMillis()){
+            return null;
+        }
+        return reading.getReading();
     }
 
     @Override
