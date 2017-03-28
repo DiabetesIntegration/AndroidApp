@@ -353,17 +353,18 @@ public class BluetoothService extends Service{
                 final String g = result.substring(i + 2, i + 4) + result.substring(i, i + 2);
                 historicalReadings[j] = Integer.parseInt(g, 16);
             }
-
-            //TODO: More new sensor error checking?
-            //If a new sensor
-            if(getCurrentSensorTime()<elapsedMinutes){
+            
+            long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
+            Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
+            //0.5 should be more than enough
+            if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-(elapsedMinutes*1.2))/timeSinceStart)>0.5){
                 if(elapsedMinutes<65){
                     //This can be assumed to be a new sensor
                     Calendar temp = Calendar.getInstance();
                     temp.add(Calendar.MINUTE, (0-elapsedMinutes));
                     saveSensorStartTime(temp);
                 } else {
-                    //TODO: Throw an error
+                    //TODO: Throw an error??
                     Log.e(TAG, "Will throw error");
                     return;
                 }

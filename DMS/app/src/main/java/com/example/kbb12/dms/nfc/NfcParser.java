@@ -80,9 +80,12 @@ public class NfcParser {
             historicalReadings[j] = Integer.parseInt(g, 16);
         }
 
-        //TODO: More new sensor error checking?
+        //TODO: More new sensor error checking FOR OLD SENSOR!!!
         //If a new sensor
-        if(getCurrentSensorTime()<elapsedMinutes){
+        long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
+        Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
+        //0.5 should be more than enough
+        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-(elapsedMinutes*1.2))/timeSinceStart)>0.5){
             if(elapsedMinutes<65){
                 //This can be assumed to be a new sensor
                 Calendar temp = Calendar.getInstance();
@@ -90,6 +93,7 @@ public class NfcParser {
                 saveSensorStartTime(temp);
             } else {
                 //TODO: Throw an error
+                Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
                 Log.e(TAG, "Will throw error");
                 throw new SensorTimeException();
             }
