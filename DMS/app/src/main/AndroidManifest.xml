@@ -23,6 +23,7 @@
             <intent-filter>
                 <action android:name="com.DMS.timedAlertCreator" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.DMS.installed"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".model.improvementEngine.BasalImprovement">
@@ -33,6 +34,7 @@
         <receiver android:name=".model.improvementEngine.ImprovementSetUp">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.DMS.installed"/>
             </intent-filter>
         </receiver>
         <activity android:name=".startUp.MainActivity">

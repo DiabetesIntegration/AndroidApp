@@ -27,7 +27,7 @@ public class InsulinTakenEntry implements IInsulinTakenEntry {
     public TakeInsulinReadModel.InsulinType getType(){
         return type;
     }
-    public Float getAmount(){
+    public float getAmount(){
         return amount;
     }
 }

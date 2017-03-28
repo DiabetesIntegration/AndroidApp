@@ -33,7 +33,7 @@ public class BasalImprovement extends BroadcastReceiver {
         Calendar thirtyTwoHoursAgo =Calendar.getInstance();
         thirtyTwoHoursAgo.add(Calendar.HOUR,-32);
         List<IInsulinTakenEntry> insulinTaken=insulinTakenRecord.getAllEntries(thirtyTwoHoursAgo,eightHoursAgo);
-        BasalInsulinEntry matchedDose=null;
+        BasalInsulinEntry matchedDose;
         for(IInsulinTakenEntry entry:insulinTaken){
             if(entry.getType().equals(TakeInsulinReadModel.InsulinType.BOLUS)){
                 continue;

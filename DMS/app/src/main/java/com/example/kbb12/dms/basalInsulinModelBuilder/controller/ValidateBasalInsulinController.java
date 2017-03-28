@@ -42,8 +42,6 @@ public class ValidateBasalInsulinController implements View.OnClickListener {
         }
         try {
             model.saveDoses();
-            Intent setUpAlerts = new Intent("com.DMS.timedAlertCreator");
-            currentActivity.sendBroadcast(setUpAlerts);
             currentActivity.startActivity(new Intent(currentActivity, BolusInsulinModelBuilder.class));
             currentActivity.finish();
         }catch (DuplicateDoseException e){
