@@ -43,8 +43,6 @@ public class MainMenuActivity extends AppCompatActivity {
             startActivity(nextIntent);
         }
         mAdapter = NfcAdapter.getDefaultAdapter(this);
-        //Intent intent = new Intent(this, BluetoothService.class);
-        //startService(intent);
     }
 
     @Override

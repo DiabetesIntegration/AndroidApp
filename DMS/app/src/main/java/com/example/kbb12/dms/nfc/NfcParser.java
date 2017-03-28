@@ -57,7 +57,7 @@ public class NfcParser {
         return ((val & bitmask) / 153);
     }
 
-    public void parseNfc(String result){
+    public void parseNfc(String result) throws SensorTimeException {
         Calendar now = Calendar.getInstance();
 
         userModel.addRawData(now, result);
@@ -91,6 +91,7 @@ public class NfcParser {
             } else {
                 //TODO: Throw an error
                 Log.e(TAG, "Will throw error");
+                throw new SensorTimeException();
             }
         }
         //TODO: SAVE CURRENT READING IN DB

@@ -152,14 +152,26 @@ public class ReadNfcTask extends AsyncTask<Tag, Boolean, String> {
 
     @Override
     protected void onPostExecute(final String success) {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(activity, "Sensor scanned!", Toast.LENGTH_LONG).show();
-            }
-        });
-        buzzTwice();
-        parser.parseNfc(success);
+
+        try{
+            parser.parseNfc(success);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, "Sensor scanned!", Toast.LENGTH_LONG).show();
+                }
+            });
+            buzzTwice();
+        } catch (SensorTimeException e){
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, "Sensor not started in this app!", Toast.LENGTH_LONG).show();
+                }
+            });
+            buzzOnce();
+        }
+
     }
 
     @Override
