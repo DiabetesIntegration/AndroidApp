@@ -212,20 +212,20 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     }
 
     @Override
-    public void setTimeToChange() {
-        if(timeToChange){
+    public void setTimeToChange(boolean timeToChange) {
+        if(this.timeToChange==timeToChange){
             return;
         }
-        timeToChange=true;
+        this.timeToChange=timeToChange;
         notifyObserver();
     }
 
     @Override
-    public void setDateToChange() {
-        if(dateToChange){
+    public void setDateToChange(boolean dateToChange) {
+        if(this.dateToChange==dateToChange){
             return;
         }
-        dateToChange=true;
+        this.dateToChange=dateToChange;
         notifyObserver();
     }
 

@@ -15,6 +15,8 @@ import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.takeInsulin.controller.AmountTakenListener;
 import com.example.kbb12.dms.takeInsulin.controller.ChangeTimeTakenListener;
 import com.example.kbb12.dms.takeInsulin.controller.DateSetListener;
+import com.example.kbb12.dms.takeInsulin.controller.DismissDateListener;
+import com.example.kbb12.dms.takeInsulin.controller.DismissTimeListener;
 import com.example.kbb12.dms.takeInsulin.controller.InsulinTypeChoiceListener;
 import com.example.kbb12.dms.takeInsulin.controller.TimeSetListener;
 import com.example.kbb12.dms.takeInsulin.controller.ValidateTakeInsulinController;
@@ -44,7 +46,8 @@ public class TakeInsulin extends AppCompatActivity {
                 (TextView) findViewById(R.id.recommendedUnitsDisplay),insulinChoice,amountTaken,
                 (TextView) findViewById(R.id.timeTakenDisplay),model,getFragmentManager(),
                 new DefaultErrorController(model),new DateSetListener(model),
-                new TimeSetListener(model),(TextView) findViewById(R.id.calcDescription));
+                new TimeSetListener(model),(TextView) findViewById(R.id.calcDescription),
+                new DismissTimeListener(model),new DismissDateListener(model));
         view.update();
         model.registerObserver(view);
     }

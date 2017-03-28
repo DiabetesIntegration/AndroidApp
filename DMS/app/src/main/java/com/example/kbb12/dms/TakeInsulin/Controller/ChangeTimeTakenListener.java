@@ -17,6 +17,6 @@ public class ChangeTimeTakenListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        model.setDateToChange();
+        model.setDateToChange(true);
     }
 }

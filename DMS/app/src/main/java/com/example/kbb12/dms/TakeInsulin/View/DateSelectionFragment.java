@@ -3,6 +3,7 @@ package com.example.kbb12.dms.takeInsulin.view;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 /**
@@ -15,9 +16,14 @@ public class DateSelectionFragment extends DialogFragment {
     private int day;
     private int month;
     private int year;
+    private DialogInterface.OnDismissListener dismissListener;
 
     public void setController(DatePickerDialog.OnDateSetListener controller){
         this.controller=controller;
+    }
+
+    public void setDismissControler (DialogInterface.OnDismissListener dismissListener){
+        this.dismissListener=dismissListener;
     }
 
     public void setDate(int day,int month,int year){
@@ -30,5 +36,11 @@ public class DateSelectionFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         return new DatePickerDialog(getActivity(),controller,year,month,day);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissListener.onDismiss(dialog);
     }
 }

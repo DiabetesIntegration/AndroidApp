@@ -189,7 +189,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         BGReading reading =currentBGRecord.getMostRecentReading();
         Calendar fifteenMinutesAgo = Calendar.getInstance();
         fifteenMinutesAgo.add(Calendar.MINUTE,-15);
-        if(reading.getTime().getTimeInMillis()<fifteenMinutesAgo.getTimeInMillis()){
+        if(reading==null||reading.getTime().getTimeInMillis()<fifteenMinutesAgo.getTimeInMillis()){
             return null;
         }
         return reading.getReading();

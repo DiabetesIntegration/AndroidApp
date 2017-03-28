@@ -1,8 +1,10 @@
 package com.example.kbb12.dms.takeInsulin.view;
 
 import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,13 +26,15 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
     private DateSelectionFragment dateFrag;
     private TimeSelectionFragment timeFrag;
 
-    public TakeInsulinView(TextView recommendedUnitsDisplay,Spinner insulinChoice,
-                           EditText amountTaken,TextView timeTakenDisplay,
-                           TakeInsulinReadModel model,FragmentManager fragMan,
+    public TakeInsulinView(TextView recommendedUnitsDisplay, Spinner insulinChoice,
+                           EditText amountTaken, TextView timeTakenDisplay,
+                           TakeInsulinReadModel model, FragmentManager fragMan,
                            IErrorController errorController,
                            DatePickerDialog.OnDateSetListener dateController,
                            TimePickerDialog.OnTimeSetListener timeController,
-                           TextView calculationDescription){
+                           TextView calculationDescription,
+                           DialogInterface.OnDismissListener timeDismissController,
+                           DialogInterface.OnDismissListener dateDismissController){
         super(fragMan,errorController);
         this.recommendedUnitsDisplay=recommendedUnitsDisplay;
         this.insulinChoice=insulinChoice;
@@ -38,8 +42,10 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
         this.model=model;
         this.dateFrag=new DateSelectionFragment();
         dateFrag.setController(dateController);
+        dateFrag.setDismissControler(dateDismissController);
         this.timeFrag= new TimeSelectionFragment();
         timeFrag.setController(timeController);
+        timeFrag.setDismissControler(timeDismissController);
         //Only want to set this the first time. After that it will
         //always be in sync with the model anyway and trying to
         //update the text field will just result in making it more
@@ -54,11 +60,13 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
     public void update() {
         handleError(model.getError());
         if(model.getDateToChange()){
+            clearPopUp("Set Date");
             dateFrag.setDate(model.getDayTaken(),model.getMonthTaken(),model.getYearTaken());
             dateFrag.show(fragMan,"Set Date");
             return;
         }
         if(model.getTimeToChange()){
+            clearPopUp("Set Time");
             timeFrag.setTime(model.getHourTaken(),model.getMinuteTaken());
             timeFrag.show(fragMan,"Set Time");
             return;
@@ -86,6 +94,13 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
             case BASAL:
                 insulinChoice.setSelection(2);
                 break;
+        }
+    }
+
+    private void clearPopUp(String popUpString){
+        DialogFragment popUp = (DialogFragment) fragMan.findFragmentByTag(popUpString);
+        if (popUp != null) {
+            popUp.dismiss();
         }
     }
 }
