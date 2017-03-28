@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.EnterWeight;
+package com.example.kbb12.dms.enterWeight;
 
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +31,7 @@ public class EnterWeightActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try{
                     double weight = Double.parseDouble(weighttext.getText().toString());
-                    spredit.putLong("weight", Double.doubleToLongBits(weight));
+                    spredit.putFloat("weight", (float) weight);
                     spredit.apply();
                 } catch(NumberFormatException e){
                     Toast.makeText(getApplicationContext(), "Please enter a numeric value", Toast.LENGTH_SHORT).show();

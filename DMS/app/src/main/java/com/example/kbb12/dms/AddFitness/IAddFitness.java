@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.AddFitness;
+package com.example.kbb12.dms.addFitness;
 
 import android.content.Context;
 
@@ -34,5 +34,5 @@ public interface IAddFitness {
     public void setDurMins(int mins);
     public int getDurMins();
 
-    public void saveActivity(Context context, double weight);
+    public void saveActivity();
 }

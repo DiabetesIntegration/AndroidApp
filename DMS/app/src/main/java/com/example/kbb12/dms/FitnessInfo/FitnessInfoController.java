@@ -1,12 +1,12 @@
-package com.example.kbb12.dms.FitnessInfo;
+package com.example.kbb12.dms.fitnessInfo;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import com.example.kbb12.dms.AddFitness.AddFitnessActivity;
-import com.example.kbb12.dms.EnterWeight.EnterWeightActivity;
+import com.example.kbb12.dms.addFitness.AddFitnessActivity;
+import com.example.kbb12.dms.enterWeight.EnterWeightActivity;
 
 /**
  * Created by Garry on 07/03/2017.

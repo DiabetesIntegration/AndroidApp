@@ -1,13 +1,7 @@
-package com.example.kbb12.dms.StartUp;
+package com.example.kbb12.dms.addFitness;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.example.kbb12.dms.AddFitness.IAddFitness;
-import com.example.kbb12.dms.FitnessInfo.IFitnessInfo;
-import com.example.kbb12.dms.Template.ITemplateModel;
+import com.example.kbb12.dms.model.AddFitnessMainModel;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -15,15 +9,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Observer;
 
 /**
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
+public class AddFitnessModel implements IAddFitness {
 
-    private String exampleData;
     private String activitytype;
     private int day;
     private int month;
@@ -34,16 +26,13 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
     private int durmin;
     private boolean actDateToChange;
     private boolean actTimeToChange;
+    private AddFitnessMainModel model;
 
     private List<ModelObserver> observers;
 
-    //private float calories;
-    private dbHelper db;
 
-    public UserModel(String exampleData){
-        this.exampleData=exampleData;
+    public AddFitnessModel(AddFitnessMainModel model){
         observers= new ArrayList<>();
-
         activitytype="Walking";
         Calendar now = Calendar.getInstance();
         day=now.get(Calendar.DAY_OF_MONTH);
@@ -55,15 +44,7 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
         actTimeToChange=false;
         durhour=0;
         durmin=0;
-    }
-
-    public String getExampleData(){
-        return exampleData;
-    }
-
-    public void setExampleData(String newData){
-        exampleData=newData;
-        notifyObservers();
+        this.model=model;
     }
 
     public void registerObserver(ModelObserver observer)
@@ -90,61 +71,11 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
         return format.format(date);
     }
 
-    public String formatDate() {
+
+    public void addToCalCount(int cal){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        Format format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = calendar.getTime();
-        System.out.println("getDate date value: " + date);
-        return format.format(date);
-    }
-
-    public String formatDateTime(){
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, day, hour, minute);
-        Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date date = cal.getTime();
-        String datetime = format.format(date);
-        return datetime;
-    }
-
-    public void addToCalCount(Context context, int cal){
-        db = new dbHelper(context);
-        int calories;
-        int id;
-        String date = formatDate();
-        if(db.DailyEntryExists(date)){
-            Cursor cur = db.getDailyEntry(db.findDailyEntry(date));
-            cur.moveToFirst();
-            id = cur.getInt(cur.getColumnIndex("id"));
-            calories = cur.getInt(cur.getColumnIndex("calories"));
-            calories += cal;
-            cur.close();
-
-            db.updateDailyEntry(id, date, calories);
-        } else {
-            db.insertDailyEntry(date, cal);
-        }
-    }
-
-    public void addActivityToDB(Context context, int calories){
-        db = new dbHelper(context);
-        String datetime = formatDateTime();
-
-        db.insertActivityEntry(datetime, calories, activitytype, durhour, durmin);
-    }
-
-    @Override
-    public int getCalCount(Context context) {
-        int calories = 0;
-        db = new dbHelper(context);
-        String date = getDate();
-        if (db.DailyEntryExists(date)){
-            Cursor cur = db.getDailyEntry(db.findDailyEntry(date));
-            cur.moveToFirst();
-            calories = cur.getInt(cur.getColumnIndex("calories"));
-        }
-        return calories;
+        calendar.set(year, month, day, hour, minute);
+        model.addToCalCount(calendar,cal);
     }
 
     @Override
@@ -258,14 +189,10 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
     }
 
     @Override
-    public void saveActivity(Context context, double weight) {
-        db = new dbHelper(context);
-
-        int calories = calculateCalories(activitytype, weight, durhour, durmin);
-
-        addActivityToDB(context, calories);
-        addToCalCount(context, calories);
-
+    public void saveActivity() {
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(year,month,day,hour,minute);
+        model.saveActivity(calendar,activitytype,durhour,durmin);
         resetvals();
     }
 
@@ -283,20 +210,4 @@ public class UserModel implements ITemplateModel, IFitnessInfo, IAddFitness {
         durmin=0;
     }
 
-    public int calculateCalories(String activity, double weight, int hours, int minutes){
-        int length = (hours*60) + minutes;
-        int calories = 0;
-        switch (activity){
-            case "Walking":
-                calories = (int) ((0.055*length*weight)+0.5d);
-                break;
-            case "Running":
-                calories = (int) ((0.183*length*weight)+0.5d);
-                break;
-            case "Cycling":
-                calories = (int) ((0.133*length*weight)+0.5d);
-                break;
-        }
-        return calories;
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.AddFitness.Controller;
+package com.example.kbb12.dms.addFitness.controller;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.kbb12.dms.AddFitness.IAddFitness;
+import com.example.kbb12.dms.addFitness.IAddFitness;
 
 /**
  * Created by Garry on 26/03/2017.
@@ -46,7 +46,7 @@ public class ValidateAndSave implements View.OnClickListener {
             return;
         }
 
-        model.saveActivity(activity.getApplicationContext(), weight);
+        model.saveActivity();
         activity.finish();
     }
 }

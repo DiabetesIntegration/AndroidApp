@@ -1,10 +1,10 @@
-package com.example.kbb12.dms.FitnessInfo;
+package com.example.kbb12.dms.fitnessInfo;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.StartUp.ModelObserver;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
  * Created by Garry on 07/03/2017.
@@ -25,6 +25,6 @@ public class FitnessInfoView implements ModelObserver {
 
     @Override
     public void update() {
-        mTVCal.setText(Integer.toString(lmodel.getCalCount(context)));
+        mTVCal.setText(Integer.toString(lmodel.getCalCount()));
     }
 }

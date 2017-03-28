@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.AddFitness.View;
+package com.example.kbb12.dms.addFitness.view;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

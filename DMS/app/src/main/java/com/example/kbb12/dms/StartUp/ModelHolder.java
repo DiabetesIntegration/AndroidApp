@@ -1,4 +1,6 @@
-package com.example.kbb12.dms.StartUp;
+package com.example.kbb12.dms.startUp;
+
+import com.example.kbb12.dms.model.UserModel;
 
 /**
  * Created by kbb12 on 18/01/2017.

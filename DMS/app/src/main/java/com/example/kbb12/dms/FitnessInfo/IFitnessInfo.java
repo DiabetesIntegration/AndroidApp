@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.FitnessInfo;
+package com.example.kbb12.dms.fitnessInfo;
 
 import android.content.Context;
 
@@ -7,6 +7,5 @@ import android.content.Context;
  */
 
 public interface IFitnessInfo {
-
-    public int getCalCount(Context context);
+    public int getCalCount();
 }

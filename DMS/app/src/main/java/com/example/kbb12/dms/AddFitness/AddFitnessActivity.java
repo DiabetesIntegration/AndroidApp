@@ -1,35 +1,33 @@
-package com.example.kbb12.dms.AddFitness;
+package com.example.kbb12.dms.addFitness;
 
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.AddFitness.Controller.ActivityTypeListener;
-import com.example.kbb12.dms.AddFitness.Controller.DateSetListener;
-import com.example.kbb12.dms.AddFitness.Controller.DateTimeListener;
-import com.example.kbb12.dms.AddFitness.Controller.DismissDateListener;
-import com.example.kbb12.dms.AddFitness.Controller.DismissTimeListener;
-import com.example.kbb12.dms.AddFitness.Controller.HourTextListener;
-import com.example.kbb12.dms.AddFitness.Controller.MinuteTextListener;
-import com.example.kbb12.dms.AddFitness.Controller.TimeSetListener;
-import com.example.kbb12.dms.AddFitness.Controller.ValidateAndSave;
-import com.example.kbb12.dms.AddFitness.View.AddFitnessView;
+import com.example.kbb12.dms.addFitness.controller.ActivityTypeListener;
+import com.example.kbb12.dms.addFitness.controller.DateSetListener;
+import com.example.kbb12.dms.addFitness.controller.DateTimeListener;
+import com.example.kbb12.dms.addFitness.controller.DismissDateListener;
+import com.example.kbb12.dms.addFitness.controller.DismissTimeListener;
+import com.example.kbb12.dms.addFitness.controller.HourTextListener;
+import com.example.kbb12.dms.addFitness.controller.MinuteTextListener;
+import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
+import com.example.kbb12.dms.addFitness.controller.ValidateAndSave;
+import com.example.kbb12.dms.addFitness.view.AddFitnessView;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.StartUp.ModelHolder;
-import com.example.kbb12.dms.StartUp.UserModel;
+import com.example.kbb12.dms.startUp.ModelHolder;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class AddFitnessActivity extends AppCompatActivity {
 
-    UserModel model;
+    AddFitnessModel model;
     AddFitnessView view;
 
     @Override
@@ -37,7 +35,7 @@ public class AddFitnessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_fitness);
 
-        model = ModelHolder.model;
+        model=new AddFitnessModel(ModelHolder.model);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.activitySpinner);
         List<String> list = Arrays.asList("Walking", "Running", "Cycling");

@@ -1,22 +1,17 @@
-package com.example.kbb12.dms.AddFitness.View;
+package com.example.kbb12.dms.addFitness.view;
 
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.AddFitness.Controller.DateSetListener;
-import com.example.kbb12.dms.AddFitness.Controller.TimeSetListener;
-import com.example.kbb12.dms.AddFitness.IAddFitness;
-import com.example.kbb12.dms.StartUp.ModelObserver;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.example.kbb12.dms.addFitness.controller.DateSetListener;
+import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
+import com.example.kbb12.dms.addFitness.IAddFitness;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
  * Created by Garry on 13/03/2017.

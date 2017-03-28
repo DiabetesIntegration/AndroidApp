@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kbb12.dms.EnterWeight.EnterWeightActivity">
+    tools:context="com.example.kbb12.dms.enterWeight.EnterWeightActivity">
 
     <TextView
         android:id="@+id/enterWeightTV"

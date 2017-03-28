@@ -1,8 +1,8 @@
-package com.example.kbb12.dms.AddFitness.Controller;
+package com.example.kbb12.dms.addFitness.controller;
 
 import android.view.View;
 
-import com.example.kbb12.dms.AddFitness.IAddFitness;
+import com.example.kbb12.dms.addFitness.IAddFitness;
 
 /**
  * Created by Garry on 26/03/2017.
