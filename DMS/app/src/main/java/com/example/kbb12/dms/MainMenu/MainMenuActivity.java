@@ -1,18 +1,26 @@
 package com.example.kbb12.dms.mainMenu;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.NfcV;
+import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.bluetooth.BluetoothService;
 import com.example.kbb12.dms.nfc.ReadNfcTask;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
@@ -35,6 +43,8 @@ public class MainMenuActivity extends AppCompatActivity {
             startActivity(nextIntent);
         }
         mAdapter = NfcAdapter.getDefaultAdapter(this);
+        //Intent intent = new Intent(this, BluetoothService.class);
+        //startService(intent);
     }
 
     @Override

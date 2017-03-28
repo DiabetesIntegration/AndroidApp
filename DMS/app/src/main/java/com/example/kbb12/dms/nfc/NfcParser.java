@@ -25,7 +25,7 @@ public class NfcParser {
     private static final String TAG = "NfcParser";
 
     public NfcParser(Activity activity){
-        sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.sensor_prefs), Context.MODE_PRIVATE);
         this.activity = activity;
         userModel = ModelHolder.model;
     }
@@ -112,7 +112,7 @@ public class NfcParser {
             mostRecent.add(Calendar.MINUTE, -15);
             historyMap.put(c2, linearConversion(historicalReadings[i]));
         }
-        Calendar last = userModel.getMostRecentHistoryReading().time;
+        Calendar last = userModel.getMostRecentHistoryReading().getTime();
         for(Calendar c: historyMap.keySet()){
             Log.d(TAG, c.toString() + historyMap.get(c));
             //Only add to the history database if the reading is after the most recent one

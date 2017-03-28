@@ -1,6 +1,14 @@
 package com.example.kbb12.dms.startUp;
 
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -34,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new StartUpController(this));
+
     }
 
 }
