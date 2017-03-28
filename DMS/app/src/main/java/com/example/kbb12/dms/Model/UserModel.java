@@ -3,7 +3,7 @@ package com.example.kbb12.dms.model;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
@@ -144,21 +144,23 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         if(sameDay(lastTaken, now)||timeLater(lastTaken,now)){
             return null;
         }
-        //Set all before it to taken
-        basalInsulinModel.allTakenBefore(mostRecent.getHour(), mostRecent.getMinute(), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH), now.get(Calendar.YEAR));
+        basalInsulinModel.allTakenBefore(mostRecent.getHour(),mostRecent.getMinute(),now.get(Calendar.DAY_OF_MONTH),
+        now.get(Calendar.MONTH),now.get(Calendar.YEAR));
         //Return it
         return mostRecent;
     }
 
 
     @Override
-    public void takeInsulin(int year, int month, int day, int hour, int minute, double amount, boolean basal) {
+    public void takeInsulin(Calendar time, double amount, boolean basal) {
         if(basal){
             //If they're taking basal insulin mark all the times before and including now as taken.
-            basalInsulinModel.allTakenBefore(hour,minute+5,day,month,year);
+            time.add(Calendar.MINUTE,5);
+            basalInsulinModel.allTakenBefore(time.get(Calendar.HOUR),time.get(Calendar.MINUTE)+5,
+                    time.get(Calendar.DAY_OF_MONTH),time.get(Calendar.MONTH),time.get(Calendar.YEAR));
         }
         try {
-            insulinTakenRecord.addEntry(day, month, year, hour, minute, amount, basal);
+            insulinTakenRecord.addEntry(time, amount, basal);
         }catch (SQLiteConstraintException e){
             //Do nothing the entry has already been added.
         }
@@ -184,10 +186,13 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     @Override
     public Double getCurrentBG() {
-        /*
-        TODO this should give the current blood glucose
-         */
-        return 5.5;
+        BGReading reading =currentBGRecord.getMostRecentReading();
+        Calendar fifteenMinutesAgo = Calendar.getInstance();
+        fifteenMinutesAgo.add(Calendar.MINUTE,-15);
+        if(reading==null||reading.getTime().getTimeInMillis()<fifteenMinutesAgo.getTimeInMillis()){
+            return null;
+        }
+        return reading.getReading();
     }
 
     @Override

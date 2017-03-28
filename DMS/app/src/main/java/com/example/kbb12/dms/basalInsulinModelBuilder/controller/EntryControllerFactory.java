@@ -49,4 +49,9 @@ public class EntryControllerFactory implements IEntryControllerFactory {
     public TimePickerDialog.OnTimeSetListener createTimeChangeListener() {
         return new TimeChangeListener(model);
     }
+
+    @Override
+    public DialogInterface.OnDismissListener createTimeDismissListener() {
+        return new DismissTimeChangeListener(model);
+    }
 }

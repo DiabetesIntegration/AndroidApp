@@ -19,6 +19,6 @@ public class DateSetListener implements DatePickerDialog.OnDateSetListener {
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         model.setDateTaken(dayOfMonth,monthOfYear,year);
-        model.setTimeToChange();
+        model.setTimeToChange(true);
     }
 }

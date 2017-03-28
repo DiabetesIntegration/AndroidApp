@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -126,6 +124,15 @@ public class BasalInsulinModel implements IBasalInsulinModel {
         args.put(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_DATE_LAST_TAKEN, formatDate(day, month, year));
         String strFilter = BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"<=?";
         write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,new String[] {formatTime(hour,minute)});
+    }
+
+    @Override
+    public void improve(BasalInsulinEntry entry, Float improvement) {
+        ContentValues args = new ContentValues();
+        args.put(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE,entry.getDose()+improvement);
+        String strFilter = BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME+"=";
+        write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,
+                new String[] {formatTime(entry.getHour(),entry.getMinute())});
     }
 
     private BasalInsulinDose getLatest(boolean usingImprovement){

@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.takeInsulin.model;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.TakeInsulinMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
@@ -212,20 +212,20 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     }
 
     @Override
-    public void setTimeToChange() {
-        if(timeToChange){
+    public void setTimeToChange(boolean timeToChange) {
+        if(this.timeToChange==timeToChange){
             return;
         }
-        timeToChange=true;
+        this.timeToChange=timeToChange;
         notifyObserver();
     }
 
     @Override
-    public void setDateToChange() {
-        if(dateToChange){
+    public void setDateToChange(boolean dateToChange) {
+        if(this.dateToChange==dateToChange){
             return;
         }
-        dateToChange=true;
+        this.dateToChange=dateToChange;
         notifyObserver();
     }
 
@@ -263,12 +263,18 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
 
     @Override
     public void takeInsulin(){
+        Calendar time =Calendar.getInstance();
+        time.set(Calendar.YEAR,year);
+        time.set(Calendar.MONTH,month);
+        time.set(Calendar.DAY_OF_MONTH,day);
+        time.set(Calendar.HOUR,hour);
+        time.set(Calendar.MINUTE,minute);
         switch (typeTaken){
             case BASAL:
-                model.takeInsulin(year,month,day,hour,minute,actual,true);
+                model.takeInsulin(time,actual,true);
                 break;
             case BOLUS:
-                model.takeInsulin(year,month,day,hour,minute,actual,false);
+                model.takeInsulin(time,actual,false);
                 break;
             case NOT_SET:
                 //This should be unreachable but is here to be extra safe

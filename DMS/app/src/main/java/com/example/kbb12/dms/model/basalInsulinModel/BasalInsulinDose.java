@@ -1,7 +1,5 @@
 package com.example.kbb12.dms.model.basalInsulinModel;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-
 /**
  * Created by kbb12 on 27/01/2017.
  */

@@ -9,9 +9,9 @@ public interface TakeInsulinReadWriteModel extends TakeInsulinReadModel,ErrorRea
 
     void setAmountTaken(Double amountTaken);
 
-    void setTimeToChange();
+    void setTimeToChange(boolean timeToChange);
 
-    void setDateToChange();
+    void setDateToChange(boolean dateToChange);
 
     void setTypeTaken(InsulinType typeTaken);
 
