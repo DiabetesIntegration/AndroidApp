@@ -117,7 +117,7 @@ public class NfcParser {
         for(Calendar c: historyMap.keySet()){
             Log.d(TAG, c.toString() + historyMap.get(c));
             //Only add to the history database if the reading is after the most recent one
-            if(c.after(last)){
+            if(c.after(last)&&historyMap.get(c)>0.01){
                 userModel.addHistoryReading(c, historyMap.get(c));
             }
         }
