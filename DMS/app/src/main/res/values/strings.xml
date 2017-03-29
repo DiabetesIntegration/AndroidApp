@@ -2,4 +2,23 @@
     <string name="app_name">DMS</string>
     <string name="title_activity_template">TemplateActivity</string>
     <string name="title_activity_meal_amount">MealAmountActivity</string>
+    <string name="title_activity_insulin_model_builder">DMS</string>
+    <string-array name="insulin_array">
+        <item>Insulin Type</item>
+        <item>Bolus</item>
+        <item>Basal</item>
+    </string-array>
+    <string name="accept">Ok</string>
+
+    <string name="sensor_prefs">com.DMS.sensorPrefs</string>
+    <string name="sensor_current_time">Sensor current time</string>
+    <string name="sensor_start_time">Sensor start time</string>
+
+    <string name="title_activity_bolus_insulin_model_builder">BolusInsulinModelBuilder</string>
+    <string name="title_activity_fitness">fitness</string>
+    <string-array name="fitness">
+        <item>Running</item>
+        <item>Jogging</item>
+        <item>Cycling</item>
+    </string-array>
 </resources>

@@ -1,5 +1,4 @@
-package com.example.kbb12.dms.ErrorHandling;
-
+package com.example.kbb12.dms.errorHandling;
 import android.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -26,7 +25,7 @@ public class ErrorMessageDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInsanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(message).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setMessage(message).setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 controller.errorAcknowledged();

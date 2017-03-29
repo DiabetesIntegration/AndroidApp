@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.ErrorHandling;
+package com.example.kbb12.dms.errorHandling;
 
 /**
  * Created by kbb12 on 30/01/2017.
@@ -16,3 +16,4 @@ public class DefaultErrorController implements IErrorController {
         model.setError(null);
     }
 }
+

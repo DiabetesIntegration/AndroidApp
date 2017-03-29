@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.StartUp;
+package com.example.kbb12.dms.startUp;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,6 @@
-package com.example.kbb12.dms.ErrorHandling;
+package com.example.kbb12.dms.errorHandling;
 
 import android.app.FragmentManager;
-import android.os.Bundle;
 
 /**
  * Created by kbb12 on 30/01/2017.

@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.StartUp;
+package com.example.kbb12.dms.startUp;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Ciaran on 3/10/2017.
  */
-public class MealPlanner implements IMealPlanner {
+public class MealPlanner implements com.example.kbb12.dms.startUp.IMealPlanner {
     private List<IMeal> savedMeals;
     private List<IIngredient> activeIngredients;
     private List<IIngredient> savedIngredients;

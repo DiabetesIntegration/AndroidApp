@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.Template;
+package com.example.kbb12.dms.template;
 
 
 /**

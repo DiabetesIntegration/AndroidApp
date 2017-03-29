@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kbb12.dms.enterWeight.EnterWeightActivity">
+
+    <TextView
+        android:id="@+id/enterWeightTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Enter Weight"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="59dp"
+        android:layout_marginTop="87dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/enterWeightET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/enterWeightTV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:id="@+id/unitkgTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/enterWeightET"
+        android:layout_alignBottom="@+id/enterWeightET"
+        android:layout_toEndOf="@+id/enterWeightET"
+        android:layout_toRightOf="@+id/enterWeightET"
+        android:text="kg"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="279dp"
+        tools:layout_editor_absoluteY="147dp" />
+
+    <ImageButton
+        android:id="@+id/saveWeightIB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_save"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="253dp"
+        android:layout_below="@+id/enterWeightET"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+</RelativeLayout>

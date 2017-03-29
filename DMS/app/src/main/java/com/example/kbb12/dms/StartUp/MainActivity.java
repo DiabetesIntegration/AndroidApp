@@ -1,21 +1,20 @@
-package com.example.kbb12.dms.StartUp;
+package com.example.kbb12.dms.startUp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Button;
 
-import com.example.kbb12.dms.MealList.MealListActivity;
+import com.example.kbb12.dms.mainMenu.MainMenuActivity;
+import com.example.kbb12.dms.model.UserModel;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.Template.TemplateActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
 This will be the activity that creates the user model at the start and passes it on.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private UserModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Creates user model.
-        ModelHolder.model = new UserModel(this);
-        UserModel m = ModelHolder.model;
-        Intent mealListIntent = new Intent(this,MealListActivity.class);
-        //Passes the model to the intent.
-        //templateIntent.putExtra("UserModel", newModel);
-        //Launches the next activity.
-        startActivity(mealListIntent);
+        ModelHolder.model = new UserModel(this,getSharedPreferences("fitnessprefs", MODE_PRIVATE));
+        model = ModelHolder.model;
+        if(model.getDoses().size()>0){
+            Intent nextIntent = new Intent(this, MainMenuActivity.class);
+            if(getIntent().getBooleanExtra("NotificationLaunch",false)){
+                nextIntent.putExtra("NotificationLaunch",true);
+            }
+            startActivity(nextIntent);
+            finish();
+        }
+        Button nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new StartUpController(this));
     }
+
 }
