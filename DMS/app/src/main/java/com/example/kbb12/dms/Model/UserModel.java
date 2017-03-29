@@ -265,16 +265,9 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
     }
 
     private void addActivityToDB(Calendar calendar,int calories,String activity,int durHour,int durMin){
-        activityRecord.insertActivityEntry(formatDateTime(calendar),calories,activity,durHour,durMin);
+        activityRecord.insertActivityEntry(calendar,calories,activity,durHour,durMin);
     }
 
-
-    private String formatDateTime(Calendar calendar){
-        Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date date = calendar.getTime();
-        String datetime = format.format(date);
-        return datetime;
-    }
 
     @Override
     public void saveActivity(Calendar calendar,String activitytype,int durhour,int durmin) {

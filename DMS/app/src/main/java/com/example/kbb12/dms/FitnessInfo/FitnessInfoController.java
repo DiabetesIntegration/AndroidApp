@@ -27,7 +27,7 @@ public class FitnessInfoController implements View.OnClickListener  {
         SharedPreferences sprefs = currentActivity.getSharedPreferences("fitnessprefs", currentActivity.getApplicationContext().MODE_PRIVATE);
         double weight;
         try{
-            weight = Double.longBitsToDouble(sprefs.getLong("weight", Double.doubleToLongBits(0.0)));
+            weight = (double) sprefs.getFloat("weight", (float)0.0);
         } catch(NumberFormatException e){
             Intent intent = new Intent(currentActivity, EnterWeightActivity.class);
             currentActivity.startActivity(intent);

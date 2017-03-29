@@ -36,7 +36,7 @@ public class ValidateAndSave implements View.OnClickListener {
         SharedPreferences spref = activity.getSharedPreferences("fitnessprefs", Context.MODE_PRIVATE);
         double weight = 0.0;
         try {
-            weight = Double.longBitsToDouble(spref.getLong("weight", Double.doubleToLongBits(0.0)));
+            weight = (double) spref.getFloat("weight", (float)0.0);
         } catch(NumberFormatException e){
             Toast.makeText(activity, "You have not entered your weight", Toast.LENGTH_SHORT).show();
             return;

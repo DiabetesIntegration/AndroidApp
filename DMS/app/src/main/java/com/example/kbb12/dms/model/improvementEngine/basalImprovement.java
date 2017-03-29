@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.model.activityRecord.IFitnessEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
@@ -28,6 +30,7 @@ public class BasalImprovement extends BroadcastReceiver {
         InsulinTakenRecord insulinTakenRecord=db.getInsulinTakenRecord();
         IBasalInsulinModel basalInsulinModel=db.getBasalInsulinModel();
         BGRecord historyBGModel = db.getHistoryBGRecord();
+        ActivityRecord activityRecord =db.getActivityRecord();
         Calendar eightHoursAgo =Calendar.getInstance();
         eightHoursAgo.add(Calendar.HOUR,-8);
         Calendar thirtyTwoHoursAgo =Calendar.getInstance();
@@ -58,12 +61,12 @@ public class BasalImprovement extends BroadcastReceiver {
             if(carbsEatenDuringTest.size()>0){
                 continue;
             }
-            List<IFitnessEntry> activityDuringTest = fitnessDatabase.getAllEntries(hourBeforeTaken,
+            */
+            List<IFitnessEntry> activityDuringTest = activityRecord.getAllEntries(hourBeforeTaken,
                                                             eightHourAfter);
             if(activityDuringTest.size()>0){
                 continue;
             }
-            */
             List<BGReading> bgReadings=historyBGModel.getReadingsBetween(hourBeforeTaken,eightHourAfter);
                 //Checking there is actually a fair amount of readings before improving based on them.
             if(bgReadings.size()<30){
