@@ -19,11 +19,11 @@ public final class InsulinTakenContract {
     }
 
     public static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + InsulinTakenContract.ContentsDefinition.TABLE_NAME + " (" +
-                    InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME + " DATE," +
-                    InsulinTakenContract.ContentsDefinition.COLUMN_BASAL + " BOOLEAN," +
-                    InsulinTakenContract.ContentsDefinition.COLUMN_AMOUNT + " FLOAT," +
-                    "PRIMARY KEY( "+ InsulinTakenContract.ContentsDefinition.COLUMN_DATE_TIME +", "+InsulinTakenContract.ContentsDefinition.COLUMN_BASAL +" ));";
+            "CREATE TABLE " + ContentsDefinition.TABLE_NAME + " (" +
+                    ContentsDefinition.COLUMN_DATE_TIME + " DATE," +
+                    ContentsDefinition.COLUMN_BASAL + " BOOLEAN," +
+                    ContentsDefinition.COLUMN_AMOUNT + " FLOAT," +
+                    "PRIMARY KEY( "+ ContentsDefinition.COLUMN_DATE_TIME +", "+ContentsDefinition.COLUMN_BASAL +" ));";
 
 
     public static final String SQL_DELETE_ENTRIES =

@@ -7,6 +7,7 @@ import java.util.Calendar;
  */
 
 public class BGReading {
+
     private Calendar time;
     private double reading;
 

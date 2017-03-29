@@ -1,7 +1,5 @@
 package com.example.kbb12.dms.model.basalInsulinModel;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,6 +16,8 @@ public interface IBasalInsulinModel {
     Calendar getLastTakenAprox(BasalInsulinEntry mostRecent);
 
     void allTakenBefore(Integer hour, Integer minute, int day, int month, int year);
+
+    void improve(BasalInsulinEntry entry,Float improvement);
 
     void log();
 }

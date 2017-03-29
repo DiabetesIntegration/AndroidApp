@@ -24,6 +24,8 @@ public class SaveBolusInsulinListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(model.saveValues()){
+            Intent installed = new Intent("com.DMS.installed");
+            context.sendBroadcast(installed);
             context.startActivity(new Intent(context, MainMenuActivity.class));
             context.finish();
         }
