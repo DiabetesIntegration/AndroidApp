@@ -37,7 +37,8 @@
 
         <activity android:name=".IngredientList.IngredientListActivity" />
         <activity android:name=".IngredientAmount.IngredientsAmountActivity" />
-        <activity android:name=".MealAmount.MealAmountActivity"></activity>
+        <activity android:name=".MealAmount.MealAmountActivity" />
+        <activity android:name=".MealCarbohydrateValue.MealCarbohydrateValueActivity"></activity>
     </application>
 
 </manifest>

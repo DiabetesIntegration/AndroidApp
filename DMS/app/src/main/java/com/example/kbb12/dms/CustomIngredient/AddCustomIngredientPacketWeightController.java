@@ -13,6 +13,7 @@ import com.example.kbb12.dms.StartUp.UserModel;
 public class AddCustomIngredientPacketWeightController implements TextWatcher {
     private IAddCustomIngredient model;
     private Activity currentActivity;
+    private String packetWeightEntry = "";
 
     public AddCustomIngredientPacketWeightController(IAddCustomIngredient model, Activity currentActivity) {
         this.model = model;
@@ -31,6 +32,11 @@ public class AddCustomIngredientPacketWeightController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setCustomPacketWeightVal(s.toString());
+        packetWeightEntry = s.toString();
+    }
+
+
+    public String getPacketWeightEntry() {
+        return packetWeightEntry;
     }
 }

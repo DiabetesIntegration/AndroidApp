@@ -20,6 +20,7 @@ import com.example.kbb12.dms.Template.TemplateActivity;
 public class IngredientsAmountController implements View.OnClickListener, TextWatcher, CompoundButton.OnCheckedChangeListener {
     private IIngredientsAmount model;
     private Activity currentActivity;
+    private String amount = "";
 
     public IngredientsAmountController(IIngredientsAmount model, Activity currentActivity) {
         this.model = model;
@@ -29,28 +30,29 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.ingredientAmountBackButton:
-                //model.setIngredientAmount("");
-                model.setUnits("g");
-                currentActivity.finish();
-                break;
-            case R.id.ingredientAmountConfirmButton:
-                if(model.getIngredientAmount().equals("")) {
-                    Toast.makeText(currentActivity, "Error! Nothing was entered for the amount of ingredient!", Toast.LENGTH_SHORT).show();
+        if(amount.isEmpty()) {
+            model.getIngAmountErrorMessage("Error! Nothing was entered for the ingredient amount!");
+        }
+        else {
+            try {
+                int a = Integer.parseInt(amount);
+                if(model.getUnits().equals("%") && a > 100) {
+                    model.getIngAmountErrorMessage("Error! The percentage eaten cannot exceed 100%!");
                 }
-                //else if(!model.isWeight() && Integer.parseInt(model.getIngredientAmount()) > 100) {
-                //    Toast.makeText(currentActivity, "Error! The percentage of ingredient used cannot exceed 100%!", Toast.LENGTH_SHORT).show();
-                //}
                 else {
-                    model.calculateCarbValOfIngredient(model.getIngredientAmount());
+                    model.setCarbValOfIngredient(amount);
+                    if(!model.ingredientExists()) {
+                        model.addNewIngredient();
+                        model.setIngredientExists(true);
+                    }
                     model.setIngredientListView();
                     nextActivity();
-                    model.setUnits("g");
                 }
-                break;
+            }
+            catch(NumberFormatException e) {
+                model.getIngAmountErrorMessage("Error! The ingredient amount entered is not an integer!");
+            }
         }
-
     }
 
     @Override
@@ -65,7 +67,7 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setIngredientAmount(s.toString());
+        amount = s.toString();
     }
 
     @Override
@@ -79,6 +81,7 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
     }
 
     public void nextActivity(){
+        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientListActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

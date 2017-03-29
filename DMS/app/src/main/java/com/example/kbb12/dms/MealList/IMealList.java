@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.MealList;
 
 import com.example.kbb12.dms.StartUp.IIngredient;
+import com.example.kbb12.dms.StartUp.IMeal;
 
 import java.util.List;
 
@@ -9,11 +10,11 @@ import java.util.List;
  */
 public interface IMealList {
 
-    public void setIngListView();
-    public void setMealItem(int i);
-    public String setEmptyString();
-    public List<String> getSavedMeals();
-    public void getIngredientsForMeal();
     public void setNewMeal();
+    public void setIngListView();
+    public List<String> getSavedMeals();
+    public void setMealItem(int i);
+    public void getIngredientsForMeal();
+    public boolean customMealAtPosition();
 
 }

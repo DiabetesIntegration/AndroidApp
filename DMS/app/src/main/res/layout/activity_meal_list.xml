@@ -9,27 +9,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.kbb12.dms.MealList.MealListActivity">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mealsList"
-        android:divider="#7e7d7b"
-        android:dividerHeight="2dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/addMealButton"
-        android:choiceMode="singleChoice" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addMealButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="@null"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@android:drawable/ic_menu_add"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,5 +26,47 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="65dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Straight to meal carb value..."
+        android:id="@+id/textView4"
+        android:layout_marginBottom="41dp"
+        android:layout_above="@+id/addMealButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addCustomCarbMealButton"
+        android:background="@null"
+        android:src="@android:drawable/ic_menu_add"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Add a New Meal With Ingredients..."
+        android:id="@+id/textView5"
+        android:layout_alignBottom="@+id/addMealButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mealsList"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:choiceMode="singleChoice"
+        android:layout_above="@+id/addCustomCarbMealButton" />
 
 </RelativeLayout>

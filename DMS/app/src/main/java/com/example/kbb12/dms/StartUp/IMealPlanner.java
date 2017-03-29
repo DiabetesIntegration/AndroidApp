@@ -6,22 +6,28 @@ import java.util.List;
  * Created by Ciaran on 3/10/2017.
  */
 public interface IMealPlanner {
-    public boolean addMeal();
-    public boolean addCustomIngredient();
-    public boolean removeMeal(int i);
-    public boolean removeIngredient(int i);
-    public IMeal getMeal(int i);
-    public List<IMeal> getAllMeals();
-    public List<IIngredient> getActiveIngredients();
-    public void setActiveIngredients(List<IIngredient> ing);
-    public void setActiveMealName(String meal);
-    public String getActiveMealName();
-    public String getUnits();
-    public void setUnits(String unit);
+    public void setSavedMeals(List<IMeal> meals);
+    public void setSavedIngredients(List<IIngredient> ingredients);
 
+
+
+    public void setActiveMeal(IMeal m);
+    public IMeal getActiveMeal();
+    public void setActiveIngredient(IIngredient i);
+    public IIngredient getActiveIngredient();
+    public boolean addNewMeal();
+    public boolean addNewIngredient();
+    public List<IIngredient> getMealIngredients();
+    public void setMealIngredients(List<IIngredient> ing);
+    public void removeCreatedIngredient();
+    public void setNewIngredient(boolean nIng);
+    public boolean isNewIngredient();
+    public List<IMeal> getSavedMeals();
+    public List<IIngredient> addToSavedIngredients(List<IIngredient> ingredients);
     public List<IIngredient> getSavedIngredients();
-    public void addToSavedIngredients(List<IIngredient> ingredients);
+
     public void setItemSearch(String search);
     public String getItemSearch();
+
     public void addSearchedIngredient(String itemName);
 }

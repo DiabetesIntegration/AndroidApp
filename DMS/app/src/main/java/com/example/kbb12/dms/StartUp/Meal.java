@@ -9,6 +9,7 @@ import java.util.List;
 public class Meal implements IMeal {
     private String mealName, totalMealCarbs, carbsConsumed, mealAmount;
     private List<IIngredient> ingredients;
+    private boolean isCustom;
 
 
 
@@ -18,14 +19,15 @@ public class Meal implements IMeal {
         carbsConsumed = "";
         mealAmount = "";
         ingredients = new ArrayList<IIngredient>();
+        isCustom = false;
     }
 
 
 
     public Meal(String name, List<IIngredient> m) {
         mealName = name;
-        ingredients = m;
-        totalMealCarbs = calculateTotalCarbs();
+        ingredients = new ArrayList<IIngredient>(m);
+        totalMealCarbs = "";
         carbsConsumed = "";
         mealAmount = "";
     }
@@ -53,6 +55,16 @@ public class Meal implements IMeal {
     @Override
     public String getTotalCarbs() {
         totalMealCarbs = calculateTotalCarbs();
+        return totalMealCarbs;
+    }
+
+    @Override
+    public void setTotalMealCarbs(String val) {
+        totalMealCarbs = val;
+    }
+
+    @Override
+    public String getTotalMealCarbs() {
         return totalMealCarbs;
     }
 
@@ -85,6 +97,29 @@ public class Meal implements IMeal {
     public boolean setIngredients(List<IIngredient> ing) {
         ingredients = new ArrayList<IIngredient>(ing);
         return true;
+    }
+
+
+
+
+    @Override
+    public void setCustomCarbMeal(boolean carb) {
+        isCustom = carb;
+    }
+
+    @Override
+    public boolean getCustomCarbMeal() {
+        return isCustom;
+    }
+
+    @Override
+    public void setCustomCarbsEaten(String amount) {
+        carbsConsumed = amount;
+    }
+
+    @Override
+    public String getCustomCarbsEaten() {
+        return carbsConsumed;
     }
 
 }

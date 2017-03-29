@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.MealList;
 
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,7 @@ import com.example.kbb12.dms.StartUp.UserModel;
 
 public class MealListActivity extends AppCompatActivity {
     private ListView mealList;
-    private ImageButton addMeal;
+    private ImageButton addMeal, addCarb;
     private TextView emptyMealList;
 
     private CustomAdapter cAdapter;
@@ -27,10 +28,13 @@ public class MealListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_list);
 
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         model = ModelHolder.model;
 
         mealList = (ListView) findViewById(R.id.mealsList);
         addMeal = (ImageButton) findViewById(R.id.addMealButton);
+        addCarb = (ImageButton) findViewById(R.id.addCustomCarbMealButton);
         emptyMealList = (TextView) findViewById(R.id.emptyMealList);
 
         cAdapter = new CustomAdapter(this, model);
@@ -38,6 +42,7 @@ public class MealListActivity extends AppCompatActivity {
 
         MealListController controller = new MealListController(model,this);
         addMeal.setOnClickListener(controller);
+        addCarb.setOnClickListener(controller);
         mealList.setOnItemClickListener(controller);
 
 
@@ -49,6 +54,10 @@ public class MealListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        model.removeObserver(view);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

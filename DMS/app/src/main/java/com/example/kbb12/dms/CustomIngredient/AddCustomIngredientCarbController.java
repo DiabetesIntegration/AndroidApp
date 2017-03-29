@@ -11,6 +11,7 @@ import android.util.Log;
 public class AddCustomIngredientCarbController implements TextWatcher {
     private IAddCustomIngredient model;
     private Activity currentActivity;
+    private String carbEntry = "";
 
     public AddCustomIngredientCarbController(IAddCustomIngredient model, Activity currentActivity) {
         this.model = model;
@@ -29,6 +30,10 @@ public class AddCustomIngredientCarbController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setCustomCarbVal(s.toString());
+        carbEntry = s.toString();
+    }
+
+    public String getCarbEntry() {
+        return carbEntry;
     }
 }

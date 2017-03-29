@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.AddIngredient;
 
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.example.kbb12.dms.StartUp.ModelHolder;
 import com.example.kbb12.dms.StartUp.UserModel;
 
 public class AddIngredientActivity extends AppCompatActivity {
-    private ImageButton addCustom;
+    private ImageButton addCustom, scanItem;
     private EditText searchSavedIng;
     private ListView savedIngredientList;
     private ArrayAdapter<String> adapter;
@@ -26,9 +27,12 @@ public class AddIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
 
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         model = ModelHolder.model;
 
         addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
+        scanItem = (ImageButton) findViewById(R.id.scanBarcodeButton);
         searchSavedIng = (EditText) findViewById(R.id.searchDatabaseEntry);
         savedIngredientList = (ListView) findViewById(R.id.listView2);
 
@@ -37,6 +41,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
         AddIngredientController controller = new AddIngredientController(model, this);
         addCustom.setOnClickListener(controller);
+        scanItem.setOnClickListener(controller);
         searchSavedIng.addTextChangedListener(controller);
         savedIngredientList.setOnItemClickListener(controller);
 
@@ -49,6 +54,13 @@ public class AddIngredientActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        model.removeObserver(view);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        model.removeIngListView();
+        model.setAddIngredient(false);
     }
 }

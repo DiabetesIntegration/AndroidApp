@@ -23,14 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        //checking for saved meals should be done here
-        List<IMeal> meals = new ArrayList<IMeal>();
-        List<IIngredient> ingredients = new ArrayList<IIngredient>();
-
 
 
         //Creates user model.
-        ModelHolder.model = new UserModel("60", meals, ingredients);
+        ModelHolder.model = new UserModel(this);
         UserModel m = ModelHolder.model;
         Intent mealListIntent = new Intent(this,MealListActivity.class);
         //Passes the model to the intent.

@@ -27,21 +27,21 @@ public class MealListView implements ModelObserver{
         addMeal = b;
         meals = l;
         this.adapter = adapter;
+        adapter.addAll(model.getSavedMeals());
         this.model = model;
     }
 
     @Override
     public void update() {
-        noMeals.setText(model.setEmptyString());
-        if(noMeals.getText().equals("")) {
-            if(!adapter.isEmpty()) {
-                adapter.clear();
-            }
-            adapter.addAll(model.getSavedMeals());
-
+        if(!adapter.isEmpty()) {
+            adapter.clear();
+        }
+        if(model.getSavedMeals().isEmpty()) {
+            noMeals.setText("No saved meals yet");
         }
         else {
-            adapter.clear();
+            noMeals.setText("");
+            adapter.addAll(model.getSavedMeals());
         }
     }
 }

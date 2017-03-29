@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.IngredientList;
 
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.kbb12.dms.ErrorHandling.DefaultErrorController;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.CustomListView.CustomAdapter;
 import com.example.kbb12.dms.StartUp.ModelHolder;
@@ -28,6 +30,8 @@ public class IngredientListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_list);
 
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         model = ModelHolder.model;
 
         mealName = (EditText) findViewById(R.id.mealNameEntry);
@@ -45,7 +49,10 @@ public class IngredientListActivity extends AppCompatActivity {
         cAdapter = new CustomAdapter(this, model);
         currentIngredients.setAdapter(cAdapter);
 
-        view = new IngredientListView(mealName,currentIngredients,anotherIngredient,completeMeal,cAdapter,model);
+        android.app.FragmentManager fm = getFragmentManager();
+        DefaultErrorController c = new DefaultErrorController(model);
+
+        view = new IngredientListView(mealName,currentIngredients,anotherIngredient,completeMeal,cAdapter,model,fm,c);
         model.registerObserver(view);
 
     }
@@ -59,5 +66,14 @@ public class IngredientListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         model.removeObserver(view);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        cAdapter.clear();
+        if(model.fromIngredient()) {
+            model.removeIngredientFromMeal();
+        }
     }
 }

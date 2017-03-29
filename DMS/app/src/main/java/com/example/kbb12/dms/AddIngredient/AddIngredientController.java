@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 
 import com.example.kbb12.dms.CustomIngredient.AddCustomIngredientActivity;
 import com.example.kbb12.dms.IngredientAmount.IngredientsAmountActivity;
+import com.example.kbb12.dms.MealCarbohydrateValue.MealCarbohydrateValueActivity;
+import com.example.kbb12.dms.R;
 
 /**
  * Created by Ciaran on 3/1/2017.
@@ -25,17 +27,24 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
 
     @Override
     public void onClick(View v) {
-        model.newCustomIngredient();
-        model.itemSearch("");
-        Intent ingredientIntent = new Intent(currentActivity, AddCustomIngredientActivity.class);
-        //Launches the next activity.
-        currentActivity.startActivity(ingredientIntent);
+        switch(v.getId()) {
+            case (R.id.addCustomIngredientButton):
+                model.setNewIngredient();
+                model.setAddIngredient(true);
+                Intent ingredientIntent = new Intent(currentActivity, AddCustomIngredientActivity.class);
+                currentActivity.startActivity(ingredientIntent);
+                break;
+            case (R.id.scanBarcodeButton):
+
+                break;
+        }
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         model.getSavedIngredient(model.getSavedIngredients().get(position));
+        model.setAddIngredient(true);
         addSavedIngredient();
         model.itemSearch("");
     }

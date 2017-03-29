@@ -23,17 +23,8 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/confirmMealAmountButton"
-            android:background="@null"
-            android:src="@android:drawable/ic_input_add"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,5 +57,26 @@
             android:layout_alignStart="@+id/MealAmountText"
             android:layout_toLeftOf="@+id/mealAmountUnits"
             android:layout_toStartOf="@+id/mealAmountUnits" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE MEAL"
+            android:background="@null"
+            android:id="@+id/saveMealButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EAT MEAL"
+            android:background="@null"
+            android:id="@+id/eatMealButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
+
 </RelativeLayout>

@@ -29,26 +29,31 @@ public class IngredientListController implements View.OnClickListener, TextWatch
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.addAnotherIngredientButton) {
-            model.setIngListView(true);
-            anotherIngredientActivity();
-        }
-        else if(v.getId() == R.id.eatMealButton) {
-            if(!model.getMealName().trim().equals("")) {
-                if(model.getIngredientsInMeal().isEmpty()) {
-                    Toast.makeText(currentActivity, "Error! There are no ingredients in the meal!", Toast.LENGTH_SHORT).show();
+        switch(v.getId()) {
+            case (R.id.addAnotherIngredientButton):
+                model.setIngListView(true);
+                anotherIngredientActivity();
+                break;
+            case (R.id.eatMealButton):
+                if(model.getMealName().isEmpty()) {
+                    model.getIngListErrorMessage("Error! No meal name was entered!");
+                }
+                else if(model.getIngredientsInMeal().isEmpty()) {
+                    //no ingredients in meal, all have been deleted
+                    model.getIngListErrorMessage("Error! There are no ingredients in the meal!");
+                }
+                else if(!model.checkMealName()) {
+                    //meal name already exists
+                    model.getIngListErrorMessage("Error! This meal name already exists! Please choose another name!");
                 }
                 else {
-                    model.addNewIngredients();
-                    model.createMeal();
+                    model.setIngredientsForMeal();
+                    model.setTotalCarbs();
+
                     nextActivity();
                     model.setIngListView(false);
                 }
-
-            }
-            else {
-                Toast.makeText(currentActivity, "Error! Nothing was entered for the meal name!", Toast.LENGTH_SHORT).show();
-            }
+                break;
         }
     }
 
@@ -56,7 +61,6 @@ public class IngredientListController implements View.OnClickListener, TextWatch
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         model.setIngredientItem(position);
         editIngredientActivity();
-
     }
 
     @Override
@@ -75,6 +79,7 @@ public class IngredientListController implements View.OnClickListener, TextWatch
     }
 
     public void anotherIngredientActivity(){
+        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, AddIngredientActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);
@@ -88,6 +93,7 @@ public class IngredientListController implements View.OnClickListener, TextWatch
     }
 
     public void editIngredientActivity() {
+        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientsAmountActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

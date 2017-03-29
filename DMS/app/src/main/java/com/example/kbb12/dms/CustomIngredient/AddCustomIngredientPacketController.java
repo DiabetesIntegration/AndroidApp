@@ -11,6 +11,7 @@ import android.util.Log;
 public class AddCustomIngredientPacketController implements TextWatcher {
     private IAddCustomIngredient model;
     private Activity currentActivity;
+    private String packetEntry = "";
 
     public AddCustomIngredientPacketController(IAddCustomIngredient model, Activity currentActivity) {
         this.model = model;
@@ -29,6 +30,10 @@ public class AddCustomIngredientPacketController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setCustomPacketVal(s.toString());
+        packetEntry = s.toString();
+    }
+
+    public String getPacketEntry() {
+        return packetEntry;
     }
 }

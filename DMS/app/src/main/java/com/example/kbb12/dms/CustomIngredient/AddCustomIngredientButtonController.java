@@ -18,41 +18,59 @@ import com.example.kbb12.dms.R;
 public class AddCustomIngredientButtonController implements View.OnClickListener {
     private IAddCustomIngredient model;
     private Activity currentActivity;
+    private AddCustomIngredientNameController name;
+    private AddCustomIngredientCarbController carb;
+    private AddCustomIngredientPacketController packet;
+    private AddCustomIngredientPacketWeightController packetWeight;
 
-    public AddCustomIngredientButtonController(IAddCustomIngredient model, Activity currentActivity) {
+    public AddCustomIngredientButtonController(IAddCustomIngredient model, Activity currentActivity, AddCustomIngredientNameController name, AddCustomIngredientCarbController carb, AddCustomIngredientPacketController packet, AddCustomIngredientPacketWeightController packetWeight) {
         this.model = model;
         this.currentActivity = currentActivity;
+        this.name = name;
+        this.carb = carb;
+        this.packet = packet;
+        this.packetWeight = packetWeight;
     }
 
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.addCustomButton) {
-            if (!model.checkEntry(model.getCustomIngredient().getIngredientName())) {
-                Toast.makeText(currentActivity, "Error! No name was entered for the ingredient!", Toast.LENGTH_SHORT).show();
-            } else if (!model.checkEntry(model.getCustomIngredient().getNutritionalValues().get(0))) {
-                Toast.makeText(currentActivity, "Error! No carb value was entered for the ingredient!", Toast.LENGTH_SHORT).show();
-            } else if (!model.checkEntry(model.getCustomIngredient().getNutritionalValues().get(1))) {
-                Toast.makeText(currentActivity, "Error! No packet value was entered for the ingredient!", Toast.LENGTH_SHORT).show();
-            } else if (!model.checkEntry(model.getCustomIngredient().getNutritionalValues().get(2))) {
-                Toast.makeText(currentActivity, "Error! No sugar value was entered for the ingredient!", Toast.LENGTH_SHORT).show();
-            } else if (!model.checkEntry(model.getCustomIngredient().getNutritionalValues().get(3))) {
-                Toast.makeText(currentActivity, "Error! No value was entered for the packet weight!", Toast.LENGTH_SHORT).show();
-            } else if (Integer.parseInt(model.getCustomIngredient().getNutritionalValues().get(0)) > Integer.parseInt(model.getCustomIngredient().getNutritionalValues().get(1))) {
-                Toast.makeText(currentActivity, "Error! The carb value cannot be greater than the packet value!", Toast.LENGTH_SHORT).show();
-            } else if (Integer.parseInt(model.getCustomIngredient().getNutritionalValues().get(2)) > Integer.parseInt(model.getCustomIngredient().getNutritionalValues().get(0))) {
-                Toast.makeText(currentActivity, "Error! The sugar value cannot be greater than the carb value!", Toast.LENGTH_SHORT).show();
-            } else {
-                nextActivity();
-            }
+        if(name.getNameEntry().isEmpty()) {
+            model.getCustomIngErrorMessage("Error! Nothing was entered for the Name!");
         }
-        else if(v.getId() == R.id.cancelCustomButton) {
-            currentActivity.finish();
+        else if(carb.getCarbEntry().isEmpty()) {
+            model.getCustomIngErrorMessage("Error! No carb value was entered!");
+        }
+        else if(packet.getPacketEntry().isEmpty()) {
+            model.getCustomIngErrorMessage("Error! No packet value was entered!");
+        }
+        else if(packetWeight.getPacketWeightEntry().isEmpty()) {
+            model.getCustomIngErrorMessage("Error! No packet weight was entered!");
+        }
+        else {
+            try {
+                Integer.parseInt(carb.getCarbEntry());
+                Integer.parseInt(packet.getPacketEntry());
+                Integer.parseInt(packetWeight.getPacketWeightEntry());
+                if(Integer.parseInt(carb.getCarbEntry()) > Integer.parseInt(packet.getPacketEntry())) {
+                    model.getCustomIngErrorMessage("Error! The number of carbs cannot be greater than the packet value!");
+                }
+                else {
+                    model.setCustomIngredientName(name.getNameEntry());
+                    String nutrients[] = {carb.getCarbEntry(), packet.getPacketEntry(), packetWeight.getPacketWeightEntry()};
+                    model.setCustomIngredientNutrition(nutrients);
+                    nextActivity();
+                }
+            }
+            catch (NumberFormatException e) {
+                model.getCustomIngErrorMessage("Error! Some values entered are not integers!");
+            }
         }
 
     }
 
     public void nextActivity(){
+        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientsAmountActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

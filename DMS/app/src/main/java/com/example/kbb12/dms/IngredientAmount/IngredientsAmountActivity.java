@@ -1,5 +1,7 @@
 package com.example.kbb12.dms.IngredientAmount;
 
+import android.app.FragmentManager;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,13 +10,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.kbb12.dms.ErrorHandling.DefaultErrorController;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.StartUp.ModelHolder;
 import com.example.kbb12.dms.StartUp.UserModel;
 
 public class IngredientsAmountActivity extends AppCompatActivity {
     private ToggleButton wOrp;
-    private ImageButton exitIngredientAmount, confirmIngredientAmount;
+    private ImageButton confirmIngredientAmount;
     private EditText amountEntry;
     private TextView amountUnit;
     private UserModel model;
@@ -25,22 +28,25 @@ public class IngredientsAmountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients_amount);
 
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         model = ModelHolder.model;
 
         wOrp = (ToggleButton) findViewById(R.id.toggleButton);
-        exitIngredientAmount = (ImageButton) findViewById(R.id.ingredientAmountBackButton);
         confirmIngredientAmount = (ImageButton) findViewById(R.id.ingredientAmountConfirmButton);
         amountEntry = (EditText) findViewById(R.id.amountUsedEntry);
         amountUnit = (TextView) findViewById(R.id.amountUsedUnits);
 
         IngredientsAmountController controller = new IngredientsAmountController(model,this);
         wOrp.setOnCheckedChangeListener(controller);
-        exitIngredientAmount.setOnClickListener(controller);
         confirmIngredientAmount.setOnClickListener(controller);
         amountEntry.addTextChangedListener(controller);
 
+        android.app.FragmentManager fm = getFragmentManager();
+        DefaultErrorController c = new DefaultErrorController(model);
 
-        view = new IngredientsAmountView(wOrp,amountEntry,amountUnit,model);
+
+        view = new IngredientsAmountView(wOrp,amountEntry,amountUnit,model,fm,c);
         model.registerObserver(view);
 
     }

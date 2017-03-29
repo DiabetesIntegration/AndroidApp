@@ -8,6 +8,9 @@ import android.widget.AdapterView;
 
 import com.example.kbb12.dms.AddIngredient.AddIngredientActivity;
 import com.example.kbb12.dms.IngredientList.IngredientListActivity;
+import com.example.kbb12.dms.MealAmount.MealAmountActivity;
+import com.example.kbb12.dms.MealCarbohydrateValue.MealCarbohydrateValueActivity;
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.Template.ITemplateModel;
 
 /**
@@ -26,20 +29,34 @@ public class MealListController implements View.OnClickListener, AdapterView.OnI
 
     @Override
     public void onClick(View v) {
-        model.setIngListView();
-        model.setNewMeal();
-        Intent ingredientIntent = new Intent(currentActivity, AddIngredientActivity.class);
-        //Launches the next activity.
-        currentActivity.startActivity(ingredientIntent);
+        switch(v.getId()) {
+            case (R.id.addCustomCarbMealButton) :
+                model.setNewMeal();
+                Intent mealCarbIntent = new Intent(currentActivity, MealCarbohydrateValueActivity.class);
+                currentActivity.startActivity(mealCarbIntent);
+                break;
+            case (R.id.addMealButton) :
+                model.setIngListView();
+                model.setNewMeal();
+                Intent ingredientIntent = new Intent(currentActivity, AddIngredientActivity.class);
+                //Launches the next activity.
+                currentActivity.startActivity(ingredientIntent);
+                break;
+        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        model.setIngListView();
         model.setMealItem(position);
         model.getIngredientsForMeal();
-        Intent ingredientIntent = new Intent(currentActivity, IngredientListActivity.class);
-        //Launches the next activity.
-        currentActivity.startActivity(ingredientIntent);
+        if(!model.customMealAtPosition()) {
+            model.setIngListView();
+            Intent ingredientIntent = new Intent(currentActivity, IngredientListActivity.class);
+            //Launches the next activity.
+            currentActivity.startActivity(ingredientIntent);
+        }
+        else {
+            //go to gregs screen
+        }
     }
 }

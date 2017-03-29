@@ -52,20 +52,10 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ingredientAmountBackButton"
-        android:src="@android:drawable/ic_delete"
-        android:background="@null"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/ingredientAmountConfirmButton"
         android:src="@android:drawable/ic_input_add"
         android:background="@null"
-        android:layout_alignBottom="@+id/ingredientAmountBackButton"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

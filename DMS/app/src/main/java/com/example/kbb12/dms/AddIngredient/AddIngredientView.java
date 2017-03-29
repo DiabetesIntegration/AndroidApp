@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.AddIngredient;
 
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +24,9 @@ public class AddIngredientView implements ModelObserver {
         this.search = search;
         this.savedIng = savedIng;
         this.adapter = adapter;
+        if(!model.getSavedIngredients().isEmpty()) {
+            adapter.addAll(model.getSavedIngredients());
+        }
         this.model = model;
     }
 

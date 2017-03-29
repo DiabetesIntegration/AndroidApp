@@ -1,5 +1,7 @@
 package com.example.kbb12.dms.StartUp;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,95 +11,98 @@ import java.util.List;
 public class MealPlanner implements IMealPlanner {
     private List<IMeal> savedMeals;
     private List<IIngredient> activeIngredients;
-    private String units;
-    private String activeMealName;
     private List<IIngredient> savedIngredients;
+    private IIngredient activeIngredient;
+    private IMeal activeMeal;
+    private boolean newIngredient;
     private String itemSearch;
 
-    public MealPlanner(List<IMeal> meals, List<IIngredient> savedIng) {
-        savedMeals = meals;
+    public MealPlanner() {
+        savedMeals = new ArrayList<IMeal>();
         activeIngredients = new ArrayList<IIngredient>();
-        units = "g";
-        activeMealName = "";
-        savedIngredients = savedIng;
+        savedIngredients = new ArrayList<IIngredient>();
         itemSearch = "";
+        newIngredient = false;
     }
 
     @Override
-    public boolean addMeal() {
-        savedMeals.add(new Meal());
-        activeMealName = "";
-        activeIngredients.clear();
+    public void setSavedMeals(List<IMeal> meals) {
+        savedMeals = new ArrayList<IMeal>(meals);
+    }
+
+    @Override
+    public void setSavedIngredients(List<IIngredient> ingredients) {
+        savedIngredients = new ArrayList<IIngredient>(ingredients);
+    }
+
+    @Override
+    public void setActiveMeal(IMeal m) {
+        activeMeal = m;
+    }
+
+    @Override
+    public IMeal getActiveMeal() {
+        return activeMeal;
+    }
+
+    @Override
+    public void setActiveIngredient(IIngredient i) {
+        activeIngredient = i;
+    }
+
+    @Override
+    public IIngredient getActiveIngredient() {
+        return activeIngredient;
+    }
+
+    @Override
+    public boolean addNewMeal() {
+        savedMeals.add(getActiveMeal());
         return true;
     }
 
     @Override
-    public boolean addCustomIngredient() {
-        activeIngredients.add(new Ingredient());
+    public boolean addNewIngredient() {
+        activeIngredients.add(getActiveIngredient());
         return true;
     }
 
     @Override
-    public boolean removeMeal(int i) {
-        savedMeals.remove(i);
-        return true;
-    }
-
-    @Override
-    public boolean removeIngredient(int i) {
-        activeIngredients.remove(i);
-        return true;
-    }
-
-    @Override
-    public IMeal getMeal(int i) {
-        return savedMeals.get(i);
-    }
-
-    @Override
-    public List<IMeal> getAllMeals() {
-        return savedMeals;
-    }
-
-    @Override
-    public List<IIngredient> getActiveIngredients() {
+    public List<IIngredient> getMealIngredients() {
         return activeIngredients;
     }
 
     @Override
-    public void setActiveIngredients(List<IIngredient> ing) {
+    public void setMealIngredients(List<IIngredient> ing) {
         activeIngredients = new ArrayList<IIngredient>(ing);
     }
 
     @Override
-    public void setActiveMealName(String meal) {
-        activeMealName = meal;
+    public void removeCreatedIngredient() {
+        activeIngredients.remove(activeIngredients.get(activeIngredients.size()-1));
     }
 
     @Override
-    public String getActiveMealName() {
-        return activeMealName;
+    public void setNewIngredient(boolean nIng) {
+        newIngredient = nIng;
     }
 
     @Override
-    public String getUnits() {
-        return units;
+    public boolean isNewIngredient() {
+        return newIngredient;
     }
 
     @Override
-    public void setUnits(String unit) {
-        units = unit;
+    public List<IMeal> getSavedMeals() {
+        return savedMeals;
     }
 
     @Override
-    public List<IIngredient> getSavedIngredients() {
-        return savedIngredients;
-    }
-
-    @Override
-    public void addToSavedIngredients(List<IIngredient> ingredients) {
-        boolean ingExists = false;
+    public List<IIngredient> addToSavedIngredients(List<IIngredient> ingredients) {
+        boolean ingExists;
+        List<IIngredient> newIngs = new ArrayList<IIngredient>();
         for(int i = 0; i < ingredients.size(); i++) {
+            ingExists = false;
             for(int j = 0; j < savedIngredients.size(); j++) {
                 if(savedIngredients.get(j).getIngredientName().equals(ingredients.get(i).getIngredientName())) {
                     ingExists = true;
@@ -105,10 +110,17 @@ public class MealPlanner implements IMealPlanner {
             }
             if(!ingExists) {
                 savedIngredients.add(ingredients.get(i));
-                ingExists = false;
+                newIngs.add(ingredients.get(i));
             }
         }
+        return newIngs;
     }
+
+    @Override
+    public List<IIngredient> getSavedIngredients() {
+        return savedIngredients;
+    }
+
 
     @Override
     public void setItemSearch(String search) {
@@ -122,10 +134,15 @@ public class MealPlanner implements IMealPlanner {
 
     @Override
     public void addSearchedIngredient(String itemName) {
+        IIngredient ingredient;
         for(int i = 0; i < savedIngredients.size(); i++) {
             if(savedIngredients.get(i).getIngredientName().equals(itemName)) {
-                activeIngredients.add(new Ingredient(savedIngredients.get(i).getIngredientName(),savedIngredients.get(i).getNutritionalValues()));
+                ingredient = new Ingredient(savedIngredients.get(i).getIngredientName(),savedIngredients.get(i).getNutritionalValues());
+                Log.i("tester",ingredient.getIngredientName() + "," + ingredient.getNutritionalValues()[0] + "," + ingredient.getNutritionalValues()[1] + "," + ingredient.getNutritionalValues()[2] + " HERE");
+                setActiveIngredient(ingredient);
+                activeIngredients.add(getActiveIngredient());
             }
         }
     }
+
 }

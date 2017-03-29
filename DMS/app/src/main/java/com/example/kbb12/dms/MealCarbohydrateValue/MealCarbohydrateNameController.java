@@ -1,21 +1,22 @@
-package com.example.kbb12.dms.CustomIngredient;
+package com.example.kbb12.dms.MealCarbohydrateValue;
 
 import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 
 /**
- * Created by Ciaran on 3/1/2017.
+ * Created by Ciaran on 3/14/2017.
  */
-public class AddCustomIngredientSugarController implements TextWatcher {
-    private IAddCustomIngredient model;
+public class MealCarbohydrateNameController implements TextWatcher {
+    private IMealCarbohydrateValue model;
     private Activity currentActivity;
+    private String nameEntry="";
 
-    public AddCustomIngredientSugarController(IAddCustomIngredient model, Activity currentActivity) {
+    public MealCarbohydrateNameController(IMealCarbohydrateValue model, Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
     }
+
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -29,6 +30,11 @@ public class AddCustomIngredientSugarController implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setCustomSugarVal(s.toString());
+        nameEntry = s.toString();
+    }
+
+
+    public String getNameEntry() {
+        return nameEntry;
     }
 }

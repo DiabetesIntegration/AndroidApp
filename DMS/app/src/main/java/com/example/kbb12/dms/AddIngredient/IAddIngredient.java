@@ -9,8 +9,11 @@ import java.util.List;
  */
 public interface IAddIngredient {
 
-    public void newCustomIngredient();
+    public void setNewIngredient();
+    public void removeIngListView();
+    public void setAddIngredient(boolean ing);
     public void itemSearch(String search);
+
     public List<String> getSavedIngredients();
     public void getSavedIngredient(String item);
 }

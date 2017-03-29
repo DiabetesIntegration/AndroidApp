@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.kbb12.dms.MealList.MealListActivity;
+import com.example.kbb12.dms.R;
 
 /**
  * Created by Ciaran on 3/8/2017.
@@ -15,6 +16,7 @@ import com.example.kbb12.dms.MealList.MealListActivity;
 public class MealAmountController implements View.OnClickListener, TextWatcher {
     private IMealAmount model;
     private Activity currentActivity;
+    private String amountEntry = "";
 
     public MealAmountController(IMealAmount model, Activity currentActivity) {
         this.model = model;
@@ -23,16 +25,45 @@ public class MealAmountController implements View.OnClickListener, TextWatcher {
 
     @Override
     public void onClick(View v) {
-        if(model.getMealAmount().equals("")) {
-            Toast.makeText(currentActivity, "Error! Nothing was entered for the amount of meal consumed!", Toast.LENGTH_SHORT).show();
-        }
-        else if(Integer.parseInt(model.getMealAmount()) > 100) {
-            Toast.makeText(currentActivity, "Error! The percentage of meal consumed cannot exceed 100%!", Toast.LENGTH_SHORT).show();
+        if(amountEntry.trim().isEmpty()) {
+            model.getMealAmountErrorMessage("Error! Nothing was entered for the meal amount!");
         }
         else {
-            model.setMealCarbs();
-            nextActivity();
+            try {
+                int a = Integer.parseInt(amountEntry);
+                if(a > 100) {
+                    model.getMealAmountErrorMessage("Error! The meal amount cannot exceed 100%!");
+                }
+                else {
+                    switch(v.getId()) {
+                        case (R.id.saveMealButton) :
+                            addNewMeal();
+                            nextActivity();
+                            break;
+                        case (R.id.eatMealButton) :
+                            addNewMeal();
+                            //go to gregs activity
+                            //add to database - date/time and carb value
+                            break;
+                    }
+                }
+            }
+            catch(NumberFormatException e) {
+                model.getMealAmountErrorMessage("Error! The meal amount must be an integer!");
+            }
         }
+    }
+
+    public void addNewMeal() {
+        model.setMealCarbAmount(amountEntry);
+        model.saveNewIngredients();
+        if(!model.mealExists()) {
+            model.addNewMeal();
+        }
+        else {
+            model.editMeal();
+        }
+        model.setMealListView();
     }
 
     @Override
@@ -47,10 +78,11 @@ public class MealAmountController implements View.OnClickListener, TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        model.setMealAmount(s.toString());
+        amountEntry = s.toString();
     }
 
     public void nextActivity(){
+        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, MealListActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

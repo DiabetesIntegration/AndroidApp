@@ -10,23 +10,36 @@ import java.util.List;
  */
 public class Ingredient implements IIngredient {
     private String ingName, carbAmount, units;
-    private List<String> nutrientInfo;
+    private String nutrientInfo[];
+    public boolean exists;
 
     public Ingredient() {
 
         ingName = "";
         carbAmount = "";
         units = "g";
-        nutrientInfo = new ArrayList<String>();
-        for(int i = 0; i < 4; i++) {
-            nutrientInfo.add("");
+        nutrientInfo = new String[3];
+        for(int i = 0; i < 3; i++) {
+            nutrientInfo[i] = "";
         }
+        exists = false;
     }
 
-    public Ingredient(String name, List<String> n) {
+    public Ingredient(String name, String n[]) {
         ingName = name;
         nutrientInfo = n;
         units = "g";
+        exists = true;
+    }
+
+    @Override
+    public boolean equals(Object i) {
+        if(i instanceof IIngredient) {
+            if(ingName.equals(((IIngredient) i).getIngredientName()) && nutrientInfo.equals(((IIngredient) i).getNutritionalValues())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -40,13 +53,15 @@ public class Ingredient implements IIngredient {
     }
 
     @Override
-    public void addCustomNutrition(String val, int i) {
-        nutrientInfo.set(i,val);
+    public void addCustomNutrition(String vals[]) {
+        //nutrientInfo.set(i,val);
+        //nutrientInfo[i] = val;
+        nutrientInfo = vals;
     }
 
 
     @Override
-    public List<String> getNutritionalValues() {
+    public String[] getNutritionalValues() {
         return nutrientInfo;
     }
 
@@ -58,14 +73,14 @@ public class Ingredient implements IIngredient {
 
     @Override
     public void setCarbAmountByWeight(String weight) {
-        double cVal = (Double.parseDouble(weight)/Double.parseDouble(nutrientInfo.get(1)))*Double.parseDouble(nutrientInfo.get(2));
+        double cVal = (Double.parseDouble(weight)/Double.parseDouble(nutrientInfo[1]))*Double.parseDouble(nutrientInfo[0]);
         carbAmount = cVal + "";
     }
 
     @Override
     public void setCarbAmountByPercent(String percent) {
-        double packetAmount = (Double.parseDouble(percent)/100)*Double.parseDouble(nutrientInfo.get(3));
-        double cVal = (packetAmount/Double.parseDouble(nutrientInfo.get(1)))*Double.parseDouble(nutrientInfo.get(2));
+        double packetAmount = (Double.parseDouble(percent)/100)*Double.parseDouble(nutrientInfo[2]);
+        double cVal = (packetAmount/Double.parseDouble(nutrientInfo[1]))*Double.parseDouble(nutrientInfo[0]);
         carbAmount = cVal + "";
 
     }
@@ -73,6 +88,26 @@ public class Ingredient implements IIngredient {
     @Override
     public String getCarbAmount() {
         return carbAmount;
+    }
+
+    @Override
+    public String getUnit() {
+        return units;
+    }
+
+    @Override
+    public void setUnit(String unit) {
+        units = unit;
+    }
+
+    @Override
+    public void setExists(boolean exist) {
+        exists = exist;
+    }
+
+    @Override
+    public boolean ingredientExists() {
+        return exists;
     }
 
 
