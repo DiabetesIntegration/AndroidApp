@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.model.activityRecord.ActivityRecordContract;
+import com.example.kbb12.dms.model.activityRecord.ActivityRecordDatabase;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModelContractHolder;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
@@ -18,6 +21,9 @@ import com.example.kbb12.dms.model.bloodGlucoseRecord.RawDataContract;
 import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
 import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModelContractHolder;
 import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoContract;
+import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoDatabase;
+import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoRecord;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenContract;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
@@ -37,6 +43,8 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
     private RawBGRecord rawBGRecord;
     private BGRecord historyBGRecord;
     private BGRecord currentBGRecord;
+    private DailyFitnessInfoRecord dailyFitnessInfoRecord;
+    private ActivityRecord activityRecord;
 
     public IBolusInsulinModel getBolusInsulinModel() {
         return bolusInsulinModel;
@@ -62,6 +70,10 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         return currentBGRecord;
     }
 
+    public ActivityRecord getActivityRecord() {
+        return activityRecord;
+    }
+
     public DatabaseBuilder(Context context){
         super(context,DATABASE_NAME,null,versionNumber);
         bolusInsulinModel=new BolusInsulinModel(getWritableDatabase());
@@ -70,7 +82,8 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         rawBGRecord = new RawBGDatabase(getWritableDatabase());
         historyBGRecord = new HistoryBGModel(getWritableDatabase());
         currentBGRecord = new CurrentBGModel(getWritableDatabase());
-
+        dailyFitnessInfoRecord = new DailyFitnessInfoDatabase(getWritableDatabase());
+        activityRecord= new ActivityRecordDatabase(getWritableDatabase());
     }
 
     @Override
@@ -87,6 +100,12 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(RawDataContract.SQL_CREATE_ENTRIES);
         db.execSQL(HistoryBGContract.SQL_CREATE_TABLE);
         db.execSQL(CurrentBGContract.SQL_CREATE_TABLE);
+        db.execSQL(DailyFitnessInfoContract.SQL_CREATE_ENTRIES);
+        db.execSQL(ActivityRecordContract.SQL_CREATE_ENTRIES);
+    }
+
+    public DailyFitnessInfoRecord getDailyFitnessInfoRecord() {
+        return dailyFitnessInfoRecord;
     }
 
     @Override
@@ -97,6 +116,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(RawDataContract.SQL_DELETE_ENTRIES);
         db.execSQL(HistoryBGContract.SQL_DELETE_ENTRIES);
         db.execSQL(CurrentBGContract.SQL_DELETE_ENTRIES);
+        db.execSQL(DailyFitnessInfoContract.SQL_DELETE_ENTRIES);
+        db.execSQL(ActivityRecordContract.SQL_DELETE_ENTRIES);
         onCreate(db);
+
     }
 }

@@ -23,7 +23,7 @@ public class NotificationCreator extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.take_insulin_button)
+                        .setSmallIcon(R.drawable.take_insulin_icon)
                         .setContentTitle("It is time to take insulin")
                         .setContentText("DMS");
         int mNotificationId = 001;

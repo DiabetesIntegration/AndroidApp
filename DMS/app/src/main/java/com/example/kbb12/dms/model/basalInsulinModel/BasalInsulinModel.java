@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -128,11 +126,20 @@ public class BasalInsulinModel implements IBasalInsulinModel {
         write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,new String[] {formatTime(hour,minute)});
     }
 
+    @Override
+    public void improve(BasalInsulinEntry entry, Float improvement) {
+        ContentValues args = new ContentValues();
+        args.put(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE,entry.getDose()+improvement);
+        String strFilter = BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME+"=";
+        write.update(BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,
+                new String[] {formatTime(entry.getHour(),entry.getMinute())});
+    }
+
     private BasalInsulinDose getLatest(boolean usingImprovement){
         Cursor cursor=write.rawQuery("Select "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_INSULIN_NAME +", max("+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"), "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE +" from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         BasalInsulinDose max=null;
         if(cursor.moveToNext()){
-            String time=cursor.getString(cursor.getColumnIndex(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME));
+            String time=cursor.getString(1);
             int tempHour = Integer.parseInt(time.substring(0, 2));
             int tempMinute =Integer.parseInt(time.substring(3,5));
             if(usingImprovement) {

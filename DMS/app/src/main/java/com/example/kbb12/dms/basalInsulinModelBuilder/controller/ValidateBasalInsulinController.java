@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.view.View;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinReadWriteModel;
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.BolusInsulinModelBuilder;
-import com.example.kbb12.dms.mainMenu.MainMenuActivity;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 
 import java.util.List;
@@ -31,6 +30,10 @@ public class ValidateBasalInsulinController implements View.OnClickListener {
             return;
         }
         List<BasalInsulinEntry> doses=model.getTempDoses();
+        if(doses.size()<1){
+            model.setError("You must add at least one dosage for your basal insulin.");
+            return;
+        }
         for(BasalInsulinEntry dose:doses){
             if(dose.getDose()<=0){
                 model.setError("You must enter a dosage greater than zero for each entry");
@@ -39,8 +42,6 @@ public class ValidateBasalInsulinController implements View.OnClickListener {
         }
         try {
             model.saveDoses();
-            Intent setUpAlerts = new Intent("com.DMS.timedAlertCreator");
-            currentActivity.sendBroadcast(setUpAlerts);
             currentActivity.startActivity(new Intent(currentActivity, BolusInsulinModelBuilder.class));
             currentActivity.finish();
         }catch (DuplicateDoseException e){

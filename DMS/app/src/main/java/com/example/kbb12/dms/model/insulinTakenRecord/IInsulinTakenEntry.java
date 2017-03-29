@@ -1,5 +1,7 @@
 package com.example.kbb12.dms.model.insulinTakenRecord;
 
+import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadModel;
+
 import java.util.Calendar;
 
 /**
@@ -8,4 +10,6 @@ import java.util.Calendar;
 
 public interface IInsulinTakenEntry {
     Calendar getTime();
+    TakeInsulinReadModel.InsulinType getType();
+    float getAmount();
 }

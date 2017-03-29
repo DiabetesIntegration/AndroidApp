@@ -37,6 +37,8 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         ImageButton takeInsulinButton = (ImageButton) findViewById(R.id.takeInsulinButton);
         takeInsulinButton.setOnClickListener(new TakeInsulinLauncher(this));
+        ImageButton addActivityButton = (ImageButton) findViewById(R.id.add_activity_button);
+        addActivityButton.setOnClickListener(new AddActivityLauncher(this));
         ModelHolder.model.logModels();
         if(getIntent().getBooleanExtra("NotificationLaunch",false)){
             Intent nextIntent = new Intent(this, TakeInsulin.class);

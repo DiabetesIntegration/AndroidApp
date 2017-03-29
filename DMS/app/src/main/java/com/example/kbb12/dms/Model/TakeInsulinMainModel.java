@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 
 import java.util.Calendar;
 
@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public interface TakeInsulinMainModel {
     BasalInsulinEntry getLatestBasalRecommendation();
-    void takeInsulin(int year,int month,int day,int hour,int minute,double amount,boolean basal);
+    void takeInsulin(Calendar time, double amount, boolean basal);
     int getRecentCarbs();
     double getCurrentICR();
     double getCurrentISF();

@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.basalInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
@@ -94,6 +94,14 @@ public class BasalInsulinModel implements BasalInsulinReadWriteModel {
     @Override
     public void setBasalBrandName(String brandName) {
         basalInsulinBrandName =brandName;
+    }
+
+    @Override
+    public void cancelSelection() {
+        if(selectedDose!=null&&selectedDose.getHour()==0&&selectedDose.getMinute()==0&&selectedDose.getDose()==0.0){
+            basicDoses.remove(selectedDose);
+        }
+        selectedDose=null;
     }
 
     @Override

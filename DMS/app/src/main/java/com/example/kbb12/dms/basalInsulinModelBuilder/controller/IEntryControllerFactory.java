@@ -22,4 +22,6 @@ public interface IEntryControllerFactory {
     public DialogInterface.OnClickListener createCancelDeleteListener();
 
     public TimePickerDialog.OnTimeSetListener createTimeChangeListener();
+
+    public DialogInterface.OnDismissListener createTimeDismissListener();
 }
