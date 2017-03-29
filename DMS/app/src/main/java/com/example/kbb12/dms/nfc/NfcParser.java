@@ -85,7 +85,7 @@ public class NfcParser {
         long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
         Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
         //0.5 should be more than enough
-        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-(elapsedMinutes*1.2))/timeSinceStart)>0.5){
+        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.02){
             if(elapsedMinutes<65){
                 //This can be assumed to be a new sensor
                 Calendar temp = Calendar.getInstance();
@@ -101,6 +101,7 @@ public class NfcParser {
         //TODO: SAVE CURRENT READING IN DB
         double currentReading = linearConversion(readings[((glucosePointer+15)%16)]);
         userModel.addCurrentReading(now, currentReading);
+        Log.d(TAG, "CR: "+ currentReading);
 
 
         saveCurrentSensorTime(elapsedMinutes);
