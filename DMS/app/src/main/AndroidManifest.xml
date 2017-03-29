@@ -51,7 +51,12 @@
 
         <receiver android:name=".model.improvementEngine.BasalImprovement">
             <intent-filter>
-                <action android:name="com.DMS.basalImprovement" />
+                <action android:name="com.DMS.modelImprovement" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".model.improvementEngine.BolusImprovement">
+            <intent-filter>
+                <action android:name="com.DMS.modelImprovement" />
             </intent-filter>
         </receiver>
         <receiver android:name=".model.improvementEngine.ImprovementSetUp">
@@ -60,6 +65,7 @@
                 <action android:name="com.DMS.installed"/>
             </intent-filter>
         </receiver>
+
         <activity android:name=".startUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

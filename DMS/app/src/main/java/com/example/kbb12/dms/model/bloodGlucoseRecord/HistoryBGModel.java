@@ -58,6 +58,30 @@ public class HistoryBGModel implements BGRecord {
     }
 
     @Override
+    public BGReading getMostRecentReadingBefore(Calendar before) {
+        String selectQuery = "SELECT * FROM " + CurrentBGContract.ContentsDefinition.TABLE_NAME +
+                "WHERE "+CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME+"<=?"+" ORDER BY " +
+                CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC LIMIT 1";
+
+        Cursor c = write.rawQuery(selectQuery, new String[]{getDateTime(before)});
+
+        if(c!=null) {
+            c.moveToFirst();
+        } else {
+            return null;
+        }
+        if(c.getCount()==0){
+            return null;
+        }
+        double r = c.getDouble(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING));
+        Calendar time = parseCalendar(c.getString(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+        BGReading reading = new BGReading(time, r);
+        c.close();
+        return reading;
+
+    }
+
+    @Override
     public BGReading getMostRecentReading() {
         String selectQuery = "SELECT * FROM " + HistoryBGContract.ContentsDefinition.TABLE_NAME + " ORDER BY " +
                 HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC LIMIT 1";

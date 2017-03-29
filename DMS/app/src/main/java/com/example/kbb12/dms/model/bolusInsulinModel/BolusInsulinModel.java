@@ -15,6 +15,9 @@ public class BolusInsulinModel implements IBolusInsulinModel {
 
     private SQLiteDatabase write;
 
+    private static final double STEP_DOWN=0.6;
+    private static final double TWO_STEP_DOWN=0.13;
+
     public BolusInsulinModel(SQLiteDatabase write) {
         this.write=write;
     }
@@ -120,5 +123,62 @@ public class BolusInsulinModel implements IBolusInsulinModel {
             return cursor.getFloat(cursor.getColumnIndex(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_ORIG_ISF));
         }
     }
+
+    @Override
+    public void improveICRValue(Calendar time, double percentageChange) {
+        if(percentageChange>0.1){
+            //Limit percentageChange to 10% for safety
+            percentageChange=0.1;
+        }
+        Float currentValue = getICRValue(time,true);
+        Float improvement = currentValue*(float)percentageChange;
+        ContentValues args = new ContentValues();
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ICR,currentValue+improvement);
+        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME+"=";
+        write.update(BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,
+                new String[] {String.format("%2d:00",time.get(Calendar.HOUR))});
+    }
+
+    @Override
+    public void improveISFValue(Calendar time, double percentageChange) {
+        if(percentageChange>0.1){
+            //Limit percentageChange to 10% for safety
+            percentageChange=0.1;
+        }
+        Float currentValue = getISFValue(time,true);
+        Float improvement = currentValue*(float)percentageChange;
+        ContentValues args = new ContentValues();
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ISF,currentValue+improvement);
+        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME+"=";
+        write.update(BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,
+                new String[] {String.format("%2d:00",time.get(Calendar.HOUR))});
+        Calendar temp =(Calendar) time.clone();
+        temp.add(Calendar.HOUR,-1);
+        cascadeISFImprove(temp, percentageChange*STEP_DOWN);
+        temp.add(Calendar.HOUR,-1);
+        cascadeISFImprove(temp,percentageChange*TWO_STEP_DOWN);
+        temp =(Calendar) time.clone();
+        temp.add(Calendar.HOUR,1);
+        cascadeISFImprove(temp, percentageChange*STEP_DOWN);
+        temp.add(Calendar.HOUR,1);
+        cascadeISFImprove(temp,percentageChange*TWO_STEP_DOWN);
+        return;
+    }
+
+    private void cascadeISFImprove(Calendar time,double percentageChange){
+        if(percentageChange>0.1){
+            //Limit percentageChange to 10% for safety
+            percentageChange=0.1;
+        }
+        Float currentValue = getISFValue(time,true);
+        Float improvement = currentValue*(float)percentageChange;
+        ContentValues args = new ContentValues();
+        args.put(BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVING_ISF,currentValue+improvement);
+        String strFilter = BolusInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME+"=";
+        write.update(BolusInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,args,strFilter,
+                new String[] {String.format("%2d:00",time.get(Calendar.HOUR))});
+    }
+
+
 
 }

@@ -25,7 +25,7 @@ public class TakeInsulinModel implements TakeInsulinReadWriteModel {
     private Integer minute;
     private String errorMessage;
     private ModelObserver observer;
-    private double targetBG=5.5;
+    private double targetBG=6.0;
     private String calculationDescription;
 
     public TakeInsulinModel(TakeInsulinMainModel model){

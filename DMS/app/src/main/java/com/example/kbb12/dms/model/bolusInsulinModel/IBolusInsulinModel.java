@@ -15,4 +15,6 @@ public interface IBolusInsulinModel {
     void log();
     Float getICRValue(Calendar time,boolean usingImprovement);
     Float getISFValue(Calendar time,boolean usingImprovement);
+    void improveICRValue(Calendar time,double percentageChange);
+    void improveISFValue(Calendar time,double percentageChange);
 }
