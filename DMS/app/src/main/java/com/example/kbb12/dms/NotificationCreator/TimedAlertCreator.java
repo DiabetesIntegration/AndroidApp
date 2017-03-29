@@ -50,8 +50,8 @@ public class TimedAlertCreator extends BroadcastReceiver {
             //Next notification is tomorrow
             nextTime=minEntryTime;
             nextTime.add(Calendar.DATE,1);
-        }
-        Intent pendInt = new Intent();
+    }
+    Intent pendInt = new Intent();
         pendInt.setAction("com.DMS.basalInsulinNotification");
         pendInt.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0,

@@ -25,7 +25,7 @@ public class NfcParser {
     private static final String TAG = "NfcParser";
 
     public NfcParser(Activity activity){
-        sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.sensor_prefs), Context.MODE_PRIVATE);
         this.activity = activity;
         userModel = ModelHolder.model;
     }
@@ -57,7 +57,7 @@ public class NfcParser {
         return ((val & bitmask) / 153);
     }
 
-    public void parseNfc(String result){
+    public void parseNfc(String result) throws SensorTimeException {
         Calendar now = Calendar.getInstance();
 
         userModel.addRawData(now, result);
@@ -80,9 +80,12 @@ public class NfcParser {
             historicalReadings[j] = Integer.parseInt(g, 16);
         }
 
-        //TODO: More new sensor error checking?
+        //TODO: More new sensor error checking FOR OLD SENSOR!!!
         //If a new sensor
-        if(getCurrentSensorTime()<elapsedMinutes){
+        long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
+        Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
+        //0.5 should be more than enough
+        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.02){
             if(elapsedMinutes<65){
                 //This can be assumed to be a new sensor
                 Calendar temp = Calendar.getInstance();
@@ -90,12 +93,15 @@ public class NfcParser {
                 saveSensorStartTime(temp);
             } else {
                 //TODO: Throw an error
+                Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
                 Log.e(TAG, "Will throw error");
+                throw new SensorTimeException();
             }
         }
         //TODO: SAVE CURRENT READING IN DB
         double currentReading = linearConversion(readings[((glucosePointer+15)%16)]);
         userModel.addCurrentReading(now, currentReading);
+        Log.d(TAG, "CR: "+ currentReading);
 
 
         saveCurrentSensorTime(elapsedMinutes);
@@ -116,7 +122,7 @@ public class NfcParser {
         for(Calendar c: historyMap.keySet()){
             Log.d(TAG, c.toString() + historyMap.get(c));
             //Only add to the history database if the reading is after the most recent one
-            if(c.after(last)){
+            if(c.after(last)&&historyMap.get(c)>0.01){
                 userModel.addHistoryReading(c, historyMap.get(c));
             }
         }

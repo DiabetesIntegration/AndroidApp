@@ -36,7 +36,7 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME="BackingStorage";
-    private static final int versionNumber=5;
+    private static final int versionNumber=6;
     private IBolusInsulinModel bolusInsulinModel;
     private IBasalInsulinModel basalInsulinModel;
     private InsulinTakenRecord insulinTakenRecord;

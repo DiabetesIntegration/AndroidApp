@@ -3,6 +3,7 @@ package com.example.kbb12.dms.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
@@ -94,7 +95,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     @Override
     public void addCurrentReading(Calendar c, double reading){
-        historyBGRecord.insertReading(c, reading);
+        currentBGRecord.insertReading(c, reading);
     }
 
     @Override
@@ -205,7 +206,7 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         BGReading reading =currentBGRecord.getMostRecentReading();
         Calendar fifteenMinutesAgo = Calendar.getInstance();
         fifteenMinutesAgo.add(Calendar.MINUTE,-15);
-        if(reading==null||reading.getTime().getTimeInMillis()<fifteenMinutesAgo.getTimeInMillis()){
+        if(reading==null||reading.getTime().before(fifteenMinutesAgo)){
             return null;
         }
         return reading.getReading();
