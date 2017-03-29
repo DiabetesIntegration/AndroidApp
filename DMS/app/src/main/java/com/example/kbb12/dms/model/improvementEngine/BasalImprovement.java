@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.activityRecord.IFitnessEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
@@ -31,6 +32,7 @@ public class BasalImprovement extends BroadcastReceiver {
         IBasalInsulinModel basalInsulinModel=db.getBasalInsulinModel();
         BGRecord historyBGModel = db.getHistoryBGRecord();
         ActivityRecord activityRecord =db.getActivityRecord();
+        TimeCarbEatenRecord carbRecord = db.getTimeCarbEatenRecord();
         Calendar eightHoursAgo =Calendar.getInstance();
         eightHoursAgo.add(Calendar.HOUR,-8);
         Calendar thirtyTwoHoursAgo =Calendar.getInstance();
@@ -54,14 +56,12 @@ public class BasalImprovement extends BroadcastReceiver {
             if(insulinTakenDuringTest.size()>1){
                 continue;
             }
-            //TODO
-            /*
-            List<ICarbEntry> carbsEatenDuringTest = carbDatabase.getAllEntries(hourBeforeTaken,
+            List<Double> carbsEatenDuringTest = carbRecord.getAllEntries(hourBeforeTaken,
                                                             eightHourAfter);
+            carbsEatenDuringTest.remove(null);
             if(carbsEatenDuringTest.size()>0){
                 continue;
             }
-            */
             List<IFitnessEntry> activityDuringTest = activityRecord.getAllEntries(hourBeforeTaken,
                                                             eightHourAfter);
             if(activityDuringTest.size()>0){
