@@ -139,7 +139,7 @@ public class BasalInsulinModel implements IBasalInsulinModel {
         Cursor cursor=write.rawQuery("Select "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_INSULIN_NAME +", max("+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME +"), "+ BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_IMPROVED_DOSE +" from "+ BasalInsulinModelContractHolder.ContentsDefinition.TABLE_NAME,new String[]{});
         BasalInsulinDose max=null;
         if(cursor.moveToNext()){
-            String time=cursor.getString(cursor.getColumnIndex(BasalInsulinModelContractHolder.ContentsDefinition.COLUMN_TIME));
+            String time=cursor.getString(1);
             int tempHour = Integer.parseInt(time.substring(0, 2));
             int tempMinute =Integer.parseInt(time.substring(3,5));
             if(usingImprovement) {

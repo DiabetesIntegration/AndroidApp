@@ -53,6 +53,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kbb12.dms.startUp.MainActivity" />
         </activity>
+        <activity android:name=".fitnessInfo.FitnessInfoActivity" />
+        <activity android:name=".addFitness.AddFitnessActivity" />
+        <activity android:name=".enterWeight.EnterWeightActivity"></activity>
         <activity android:name=".mainMenu.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED"/>

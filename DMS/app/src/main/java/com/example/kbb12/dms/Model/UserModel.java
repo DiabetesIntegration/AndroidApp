@@ -1,13 +1,16 @@
 package com.example.kbb12.dms.model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 
+import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
 import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoRecord;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
 import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
@@ -17,8 +20,11 @@ import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.startUp.ModelObserver;
 import com.example.kbb12.dms.template.ITemplateModel;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +32,8 @@ import java.util.List;
  * The global model used throughout the application.
  */
 public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,
-        TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel {
+        TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
+        AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel{
 
     private String exampleData;
 
@@ -38,6 +45,10 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private InsulinTakenRecord insulinTakenRecord;
 
+    private DailyFitnessInfoRecord dailyFitnessInfoRecord;
+
+    private ActivityRecord activityRecord;
+
     private RawBGRecord rawBGRecord;
 
     private BGRecord historyBGRecord;
@@ -46,7 +57,9 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
 
     private boolean usingImprovements=true;
 
-    public UserModel(Context context){
+    private SharedPreferences sharPrefEdit;
+
+    public UserModel(Context context,SharedPreferences sharPrefEdit){
         DatabaseBuilder db = new DatabaseBuilder(context);
         basalInsulinModel =db.getBasalInsulinModel();
         bolusInsulinModel= db.getBolusInsulinModel();
@@ -54,7 +67,10 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
         rawBGRecord = db.getRawBGRecord();
         historyBGRecord = db.getHistoryBGRecord();
         currentBGRecord = db.getCurrentBGRecord();
+        dailyFitnessInfoRecord=db.getDailyFitnessInfoRecord();
+        activityRecord=db.getActivityRecord();
         observers= new ArrayList<>();
+        this.sharPrefEdit=sharPrefEdit;
     }
 
     //TODO file handling methods
@@ -242,5 +258,44 @@ public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainMod
     public void logModels(){
         basalInsulinModel.log();
         bolusInsulinModel.log();
+    }
+
+    public void addToCalCount(Calendar calendar,int cal){
+        dailyFitnessInfoRecord.addToCalCount(calendar,cal);
+    }
+
+    private void addActivityToDB(Calendar calendar,int calories,String activity,int durHour,int durMin){
+        activityRecord.insertActivityEntry(calendar,calories,activity,durHour,durMin);
+    }
+
+
+    @Override
+    public void saveActivity(Calendar calendar,String activitytype,int durhour,int durmin) {
+        int calories=calculateCalories(activitytype,durhour,durmin);
+        addActivityToDB(calendar,calories,activitytype,durhour,durmin);
+        addToCalCount(calendar,calories);
+    }
+
+    @Override
+    public int getCalCount() {
+        return dailyFitnessInfoRecord.getCalCount(Calendar.getInstance());
+    }
+
+    private int calculateCalories(String activity, int hours, int minutes){
+        int length = (hours*60) + minutes;
+        int calories = 0;
+        float weight = sharPrefEdit.getFloat("weight",(float) 0.0);
+        switch (activity){
+            case "Walking":
+                calories = (int) ((0.055*length*weight)+0.5d);
+                break;
+            case "Running":
+                calories = (int) ((0.183*length*weight)+0.5d);
+                break;
+            case "Cycling":
+                calories = (int) ((0.133*length*weight)+0.5d);
+                break;
+        }
+        return calories;
     }
 }
