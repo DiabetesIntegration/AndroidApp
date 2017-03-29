@@ -60,7 +60,6 @@
                 <action android:name="com.DMS.installed"/>
             </intent-filter>
         </receiver>
->>>>>>> e9f4e250e94e95781cec34960b043b0e901fe334
         <activity android:name=".startUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
