@@ -16,3 +16,4 @@ public class DefaultErrorController implements IErrorController {
         model.setError(null);
     }
 }
+

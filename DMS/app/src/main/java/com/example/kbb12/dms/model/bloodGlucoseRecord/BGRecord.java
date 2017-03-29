@@ -10,5 +10,6 @@ import java.util.List;
 public interface BGRecord {
     public List<BGReading> getReadingsBetween(Calendar from, Calendar to);
     public BGReading getMostRecentReading();
+    public BGReading getMostRecentReadingBefore(Calendar before);
     public void insertReading(Calendar time, double reading);
 }

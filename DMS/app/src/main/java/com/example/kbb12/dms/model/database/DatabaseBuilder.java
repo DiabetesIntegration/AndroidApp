@@ -4,6 +4,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsContract;
+import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsDatabase;
+import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
+import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsContract;
+import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsDatabase;
+import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenContract;
+import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
+import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbsEatenDatabase;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecordContract;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecordDatabase;
@@ -36,7 +45,7 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME="BackingStorage";
-    private static final int versionNumber=6;
+    private static final int versionNumber=7;
     private IBolusInsulinModel bolusInsulinModel;
     private IBasalInsulinModel basalInsulinModel;
     private InsulinTakenRecord insulinTakenRecord;
@@ -45,6 +54,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
     private BGRecord currentBGRecord;
     private DailyFitnessInfoRecord dailyFitnessInfoRecord;
     private ActivityRecord activityRecord;
+    private SavedIngredientsRecord savedIngredientsRecord;
+    private SavedMealsRecord savedMealsRecord;
+    private TimeCarbEatenRecord timeCarbEatenRecord;
 
     public IBolusInsulinModel getBolusInsulinModel() {
         return bolusInsulinModel;
@@ -74,6 +86,18 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         return activityRecord;
     }
 
+    public SavedIngredientsRecord getSavedIngredientsRecord() {
+        return savedIngredientsRecord;
+    }
+
+    public SavedMealsRecord getSavedMealsRecord() {
+        return savedMealsRecord;
+    }
+
+    public TimeCarbEatenRecord getTimeCarbEatenRecord() {
+        return timeCarbEatenRecord;
+    }
+
     public DatabaseBuilder(Context context){
         super(context,DATABASE_NAME,null,versionNumber);
         bolusInsulinModel=new BolusInsulinModel(getWritableDatabase());
@@ -84,6 +108,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         currentBGRecord = new CurrentBGModel(getWritableDatabase());
         dailyFitnessInfoRecord = new DailyFitnessInfoDatabase(getWritableDatabase());
         activityRecord= new ActivityRecordDatabase(getWritableDatabase());
+        savedIngredientsRecord = new SavedIngredientsDatabase(getWritableDatabase());
+        savedMealsRecord = new SavedMealsDatabase(getWritableDatabase());
+        timeCarbEatenRecord = new TimeCarbsEatenDatabase(getWritableDatabase());
     }
 
     @Override
@@ -102,6 +129,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(CurrentBGContract.SQL_CREATE_TABLE);
         db.execSQL(DailyFitnessInfoContract.SQL_CREATE_ENTRIES);
         db.execSQL(ActivityRecordContract.SQL_CREATE_ENTRIES);
+        db.execSQL(SavedIngredientsContract.SQL_CREATE_TABLE);
+        db.execSQL(SavedMealsContract.SQL_CREATE_TABLE);
+        db.execSQL(TimeCarbEatenContract.SQL_CREATE_TABLE);
     }
 
     public DailyFitnessInfoRecord getDailyFitnessInfoRecord() {
@@ -118,6 +148,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(CurrentBGContract.SQL_DELETE_ENTRIES);
         db.execSQL(DailyFitnessInfoContract.SQL_DELETE_ENTRIES);
         db.execSQL(ActivityRecordContract.SQL_DELETE_ENTRIES);
+        db.execSQL(SavedIngredientsContract.SQL_DELETE_ENTRIES);
+        db.execSQL(SavedMealsContract.SQL_DELETE_ENTRIES);
+        db.execSQL(TimeCarbEatenContract.SQL_DELETE_ENTRIES);
         onCreate(db);
 
     }

@@ -51,7 +51,12 @@
 
         <receiver android:name=".model.improvementEngine.BasalImprovement">
             <intent-filter>
-                <action android:name="com.DMS.basalImprovement" />
+                <action android:name="com.DMS.modelImprovement" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".model.improvementEngine.BolusImprovement">
+            <intent-filter>
+                <action android:name="com.DMS.modelImprovement" />
             </intent-filter>
         </receiver>
         <receiver android:name=".model.improvementEngine.ImprovementSetUp">
@@ -60,6 +65,7 @@
                 <action android:name="com.DMS.installed"/>
             </intent-filter>
         </receiver>
+
         <activity android:name=".startUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,6 +82,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kbb12.dms.startUp.MainActivity" />
         </activity>
+        <activity android:name=".mealList.MealListActivity" />
+        <activity android:name=".addIngredient.AddIngredientActivity" />
+        <activity android:name=".customIngredient.AddCustomIngredientActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ingredientList.IngredientListActivity" />
+        <activity android:name=".ingredientAmount.IngredientsAmountActivity" />
+        <activity android:name=".mealAmount.MealAmountActivity" />
+        <activity android:name=".mealCarbohydrateValue.MealCarbohydrateValueActivity"></activity>
         <activity android:name=".fitnessInfo.FitnessInfoActivity" />
         <activity android:name=".addFitness.AddFitnessActivity" />
         <activity android:name=".enterWeight.EnterWeightActivity"></activity>

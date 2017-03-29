@@ -23,4 +23,5 @@ public class MasterView {
         frag.setMessage(errorMessage);
         frag.show(fragMan, "Error");
     }
+
 }

@@ -16,14 +16,14 @@ public class ImprovementSetUp extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent pendInt = new Intent();
-        pendInt.setAction("com.DMS.basalImprovement");
+        pendInt.setAction("com.DMS.modelImprovement");
         pendInt.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0,
                 pendInt, PendingIntent.FLAG_UPDATE_CURRENT);
         am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(),
                 24*60*60*1000,pi);
-        Intent updateNow = new Intent("com.DMS.basalImprovement");
+        Intent updateNow = new Intent("com.DMS.modelImprovement");
         context.sendBroadcast(updateNow);
     }
 }

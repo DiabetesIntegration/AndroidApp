@@ -23,23 +23,23 @@ public class TemplateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template);
         /* How to get the model */
-        UserModel model = ModelHolder.model;
+        //UserModel model = ModelHolder.model;
         /* Grabs the view elements you need to listen to in the controller
         or update in the view
          */
-        EditText textBoxOne = (EditText) findViewById(R.id.textBoxOne);
-        TextView textBoxTwo = (TextView) findViewById(R.id.textBoxTwo);
+        //EditText textBoxOne = (EditText) findViewById(R.id.textBoxOne);
+        //TextView textBoxTwo = (TextView) findViewById(R.id.textBoxTwo);
 
         /*
         Creates the controller and adds it as a listener to the
         necessary view elements.
          */
-        TemplateController controller = new TemplateController(model,this);
-        textBoxOne.addTextChangedListener(controller);
+        //TemplateController controller = new TemplateController(model,this);
+        //textBoxOne.addTextChangedListener(controller);
 
         /*Creates the view and adds it as an observer to the model */
-        TemplateView view = new TemplateView(textBoxOne,textBoxTwo,model);
-        model.registerObserver(view);
+        //TemplateView view = new TemplateView(textBoxOne,textBoxTwo,model);
+        //model.registerObserver(view);
     }
 }
 

@@ -37,8 +37,8 @@ public class HistoryBGModel implements BGRecord {
     @Override
     public List<BGReading> getReadingsBetween(Calendar from, Calendar to) {
         String selectQuery = "SELECT * FROM " + HistoryBGContract.ContentsDefinition.TABLE_NAME + " WHERE " +
-                HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + ">='" + getDateTime(from) +
-                "' AND " +HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + "<='" + getDateTime(to) +
+                HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " >= '" + getDateTime(from) +
+                "' AND " +HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " <= '" + getDateTime(to) +
                 "' ORDER BY " + HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC";
         List<BGReading> readings = new ArrayList<>();
         Cursor c = write.rawQuery(selectQuery, null);
@@ -55,6 +55,30 @@ public class HistoryBGModel implements BGRecord {
         }
         c.close();
         return readings;
+    }
+
+    @Override
+    public BGReading getMostRecentReadingBefore(Calendar before) {
+        String selectQuery = "SELECT * FROM " + CurrentBGContract.ContentsDefinition.TABLE_NAME +
+                "WHERE "+CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME+"<=?"+" ORDER BY " +
+                CurrentBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC LIMIT 1";
+
+        Cursor c = write.rawQuery(selectQuery, new String[]{getDateTime(before)});
+
+        if(c!=null) {
+            c.moveToFirst();
+        } else {
+            return null;
+        }
+        if(c.getCount()==0){
+            return null;
+        }
+        double r = c.getDouble(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING));
+        Calendar time = parseCalendar(c.getString(c.getColumnIndex(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME)));
+        BGReading reading = new BGReading(time, r);
+        c.close();
+        return reading;
+
     }
 
     @Override

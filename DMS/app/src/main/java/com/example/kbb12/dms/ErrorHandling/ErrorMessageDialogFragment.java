@@ -1,5 +1,4 @@
 package com.example.kbb12.dms.errorHandling;
-
 import android.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
