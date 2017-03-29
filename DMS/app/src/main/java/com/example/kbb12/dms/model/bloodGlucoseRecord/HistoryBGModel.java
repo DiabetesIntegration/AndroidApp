@@ -37,8 +37,8 @@ public class HistoryBGModel implements BGRecord {
     @Override
     public List<BGReading> getReadingsBetween(Calendar from, Calendar to) {
         String selectQuery = "SELECT * FROM " + HistoryBGContract.ContentsDefinition.TABLE_NAME + " WHERE " +
-                HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + ">='" + getDateTime(from) +
-                "' AND " +HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + "<='" + getDateTime(to) +
+                HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " >= '" + getDateTime(from) +
+                "' AND " +HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " <= '" + getDateTime(to) +
                 "' ORDER BY " + HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME + " DESC";
         List<BGReading> readings = new ArrayList<>();
         Cursor c = write.rawQuery(selectQuery, null);

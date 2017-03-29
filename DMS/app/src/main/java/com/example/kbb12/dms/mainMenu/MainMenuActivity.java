@@ -13,6 +13,8 @@ import android.nfc.Tag;
 import android.nfc.tech.NfcV;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +54,11 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        Fragment f = new GraphFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.imageView, f);
+        ft.commit();
         setupForegroundDispatch(this, mAdapter);
     }
 

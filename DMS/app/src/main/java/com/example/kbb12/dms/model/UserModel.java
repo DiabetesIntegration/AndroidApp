@@ -661,6 +661,10 @@ public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateMo
         timeCarbEatenRecord.addRawData(amount, Calendar.getInstance());
     }
 
+    public List<BGReading> getHistoryBetween(Calendar from, Calendar to){
+        return historyBGRecord.getReadingsBetween(from, to);
+    }
+
     @Override
     public IMeal mealToEat() {
         return mealPlanner.getActiveMeal();

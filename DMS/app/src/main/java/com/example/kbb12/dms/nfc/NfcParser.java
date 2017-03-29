@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.model.IBloodGlucoseModel;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
 import com.example.kbb12.dms.startUp.ModelHolder;
 
 import java.util.Calendar;
@@ -54,12 +55,13 @@ public class NfcParser {
 
     private double linearConversion(int val) {
         int bitmask = 0x0FFF;
-        return ((val & bitmask) / 153);
+        return ((val & bitmask) / 153.0);
     }
 
     public void parseNfc(String result) throws SensorTimeException {
         Calendar now = Calendar.getInstance();
 
+        boolean newSensor = false;
         userModel.addRawData(now, result);
 
         //Get relevant pointers
@@ -86,11 +88,12 @@ public class NfcParser {
         Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
         //0.5 should be more than enough
         if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.02){
-            if(elapsedMinutes<65){
+            if(elapsedMinutes<5000){
                 //This can be assumed to be a new sensor
                 Calendar temp = Calendar.getInstance();
                 temp.add(Calendar.MINUTE, (0-elapsedMinutes));
                 saveSensorStartTime(temp);
+                newSensor = true;
             } else {
                 //TODO: Throw an error
                 Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
@@ -118,12 +121,13 @@ public class NfcParser {
             mostRecent.add(Calendar.MINUTE, -15);
             historyMap.put(c2, linearConversion(historicalReadings[i]));
         }
-        Calendar last = userModel.getMostRecentHistoryReading().getTime();
+        BGReading last = userModel.getMostRecentHistoryReading();
         for(Calendar c: historyMap.keySet()){
             Log.d(TAG, c.toString() + historyMap.get(c));
             //Only add to the history database if the reading is after the most recent one
-            if(c.after(last)&&historyMap.get(c)>0.01){
+            if(newSensor||last==null||(last!=null&&c.after(last.getTime())&&historyMap.get(c)>0.01)){
                 userModel.addHistoryReading(c, historyMap.get(c));
+                Log.d(TAG, c.get(Calendar.DAY_OF_MONTH) +"");
             }
         }
 
