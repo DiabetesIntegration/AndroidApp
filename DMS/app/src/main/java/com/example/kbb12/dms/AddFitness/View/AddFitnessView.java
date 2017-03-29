@@ -11,13 +11,15 @@ import android.widget.TextView;
 import com.example.kbb12.dms.addFitness.controller.DateSetListener;
 import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
 import com.example.kbb12.dms.addFitness.IAddFitness;
+import com.example.kbb12.dms.errorHandling.IErrorController;
+import com.example.kbb12.dms.errorHandling.MasterView;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
  * Created by Garry on 13/03/2017.
  */
 
-public class AddFitnessView implements ModelObserver {
+public class AddFitnessView extends MasterView implements ModelObserver {
 
     private Context context;
     private IAddFitness model;
@@ -29,7 +31,10 @@ public class AddFitnessView implements ModelObserver {
     private DateSelectionFragment dFrag;
     private TimeSelectionFragment tFrag;
 
-    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins, DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller){
+    //private IErrorController errcon;
+
+    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins, DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller, IErrorController errcon){
+        super(fragman, errcon);
         this.context = context;
         this.model = model;
         this.fragman = fragman;
@@ -50,6 +55,7 @@ public class AddFitnessView implements ModelObserver {
 
     @Override
     public void update() {
+        handleError(model.getError());
         if(model.getActDateToChange()){
             clearPopUp("Set Date");
             dFrag.setDate(model.getDayTaken(),model.getMonthTaken(),model.getYearTaken());

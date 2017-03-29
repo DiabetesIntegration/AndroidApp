@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class UserModel implements ITemplateModel,BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
-        AddFitnessMainModel,FitnessInfoMainModel{
+        AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel{
 
     private String exampleData;
 

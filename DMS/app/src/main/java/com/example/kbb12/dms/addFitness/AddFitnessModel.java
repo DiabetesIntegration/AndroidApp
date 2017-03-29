@@ -28,6 +28,8 @@ public class AddFitnessModel implements IAddFitness {
     private boolean actTimeToChange;
     private AddFitnessMainModel model;
 
+    private String errorMessage;
+
     private List<ModelObserver> observers;
 
 
@@ -210,4 +212,14 @@ public class AddFitnessModel implements IAddFitness {
         durmin=0;
     }
 
+    @Override
+    public String getError() {
+        return errorMessage;
+    }
+
+    @Override
+    public void setError(String errorMessage) {
+        this.errorMessage=errorMessage;
+        notifyObservers();
+    }
 }

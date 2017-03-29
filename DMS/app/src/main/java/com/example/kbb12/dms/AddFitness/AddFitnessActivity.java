@@ -20,6 +20,7 @@ import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
 import com.example.kbb12.dms.addFitness.controller.ValidateAndSave;
 import com.example.kbb12.dms.addFitness.view.AddFitnessView;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.errorHandling.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 
 import java.util.Arrays;
@@ -60,7 +61,7 @@ public class AddFitnessActivity extends AppCompatActivity {
         ImageView saveActivity = (ImageView) findViewById(R.id.saveActivityIV);
         saveActivity.setOnClickListener(new ValidateAndSave(model, this));
 
-        view = new AddFitnessView(this, model, fragman, mSpinner, mDateTime, mHour, mMins, new DateSetListener(model), new TimeSetListener(model), new DismissDateListener(model), new DismissTimeListener(model));
+        view = new AddFitnessView(this, model, fragman, mSpinner, mDateTime, mHour, mMins, new DateSetListener(model), new TimeSetListener(model), new DismissDateListener(model), new DismissTimeListener(model), new DefaultErrorController(model));
         view.update();
 
         model.registerObserver(view);

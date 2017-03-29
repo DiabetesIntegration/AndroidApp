@@ -2,11 +2,14 @@ package com.example.kbb12.dms.addFitness;
 
 import android.content.Context;
 
+import com.example.kbb12.dms.errorHandling.ErrorReadModel;
+import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
+
 /**
  * Created by Garry on 13/03/2017.
  */
 
-public interface IAddFitness {
+public interface IAddFitness extends ErrorReadModel, ErrorReadWriteModel {
 
     public void setActivityType(String activity);
     public String getActivityType();

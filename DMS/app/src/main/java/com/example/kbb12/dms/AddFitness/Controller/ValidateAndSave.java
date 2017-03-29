@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.kbb12.dms.addFitness.IAddFitness;
 
@@ -26,11 +25,11 @@ public class ValidateAndSave implements View.OnClickListener {
     public void onClick(View view) {
         if(model.getDurMins()>59){
             model.setDurMins(0);
-            Toast.makeText(activity, "Please enter minutes less than 60.", Toast.LENGTH_SHORT).show();
+            model.setError("Please enter minutes less than 60.");
             return;
         }
         if(model.getDurhours() == 0 && model.getDurMins() == 0){
-            Toast.makeText(activity, "Please enter the duration of activity.", Toast.LENGTH_SHORT).show();
+            model.setError("Please enter the duration of activity.");
             return;
         }
         SharedPreferences spref = activity.getSharedPreferences("fitnessprefs", Context.MODE_PRIVATE);
@@ -38,11 +37,11 @@ public class ValidateAndSave implements View.OnClickListener {
         try {
             weight = (double) spref.getFloat("weight", (float)0.0);
         } catch(NumberFormatException e){
-            Toast.makeText(activity, "You have not entered your weight", Toast.LENGTH_SHORT).show();
+            model.setError("You have not entered your weight");
             return;
         }
         if(weight==0.0){
-            Toast.makeText(activity, "You have not entered your weight", Toast.LENGTH_SHORT).show();
+            model.setError("You have not entered your weight.");
             return;
         }
 
