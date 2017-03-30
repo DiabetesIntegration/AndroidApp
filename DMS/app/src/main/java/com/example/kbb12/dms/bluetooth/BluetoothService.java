@@ -162,6 +162,7 @@ public class BluetoothService extends Service{
                 }
             } catch (Exception e) {
                 Log.e(tag, "create() failed", e);
+                finished();
             }
             mmSocket = tmp;
         }
@@ -185,6 +186,7 @@ public class BluetoothService extends Service{
                     mmSocket.close();
                 } catch (IOException e2) {
                     Log.e(tag, "unable to close() socket during connection failure", e2);
+                    finished();
                 }
                 // Start the service over to restart listening mode
                 //BluetoothSerialService.this.start();
@@ -231,6 +233,7 @@ public class BluetoothService extends Service{
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
                 Log.e(tag, "temp sockets not created", e);
+                finished();
             }
 
             mmInStream = tmpIn;
@@ -252,7 +255,8 @@ public class BluetoothService extends Service{
                 Thread.sleep(2000);
                 mmOutStream.write(moreString.getBytes());
                 //  Wait a second Read from the InputStream
-                while(true) {
+                int i=0;
+                while(i<2000) {
                     if (scanner.hasNextLine()) {
                         returned = scanner.nextLine();
                         Log.d(tag, returned);
@@ -260,7 +264,9 @@ public class BluetoothService extends Service{
                         bp.parseNfc(returned);
                         break;
                     }
+                        i++;
                 }
+                mmSocket.close();
             } catch (Exception e) {
                 try {
                     mmInStream.close();
@@ -268,6 +274,7 @@ public class BluetoothService extends Service{
 
                 }catch (Exception e1){
                     Log.e(tag, "Cannot close");
+                    finished();
                 }
             }
         }
@@ -281,8 +288,18 @@ public class BluetoothService extends Service{
         }
     }
 
-    private void finished(String returned) {
-        new BluetoothParser(getApplicationContext()).parseNfc(returned);
+    private void finished() {
+        // Cancel the thread that completed the connection
+        if (mConnectThread != null) {
+            mConnectThread.cancel();
+            mConnectThread = null;
+        }
+
+        // Cancel any thread currently running a connection
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+            mConnectedThread = null;
+        }
 
     }
 
@@ -332,6 +349,7 @@ public class BluetoothService extends Service{
         }
 
         public void parseNfc(String result){
+            boolean newSensor = false;
             Calendar now = Calendar.getInstance();
 
             rawdb.addRawData(result, now);
@@ -353,20 +371,24 @@ public class BluetoothService extends Service{
                 final String g = result.substring(i + 2, i + 4) + result.substring(i, i + 2);
                 historicalReadings[j] = Integer.parseInt(g, 16);
             }
-            
+
+            //TODO: More new sensor error checking FOR OLD SENSOR!!!
+            //If a new sensor
             long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
             Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
             //0.5 should be more than enough
-            if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-(elapsedMinutes*1.2))/timeSinceStart)>0.5){
+            if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.05){
                 if(elapsedMinutes<65){
                     //This can be assumed to be a new sensor
                     Calendar temp = Calendar.getInstance();
                     temp.add(Calendar.MINUTE, (0-elapsedMinutes));
                     saveSensorStartTime(temp);
+                    newSensor = true;
                 } else {
-                    //TODO: Throw an error??
+                    //TODO: Throw an error
+                    Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
                     Log.e(TAG, "Will throw error");
-                    return;
+                    //Dont throw error here, we're about to disconnect anyway
                 }
             }
             //TODO: SAVE CURRENT READING IN DB
@@ -392,7 +414,7 @@ public class BluetoothService extends Service{
             for(Calendar c: historyMap.keySet()){
                 Log.d(TAG, c.toString() + historyMap.get(c));
                 //Only add to the history database if the reading is after the most recent one
-                if(c.after(last)){
+                if(newSensor||last==null||(last!=null&&c.after(last.getTime())&&historyMap.get(c)>0.01)){
                     historydb.insertReading(c, historyMap.get(c));
                 }
             }

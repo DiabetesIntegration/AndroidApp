@@ -60,6 +60,7 @@ public class NfcParser {
 
     public void parseNfc(String result) throws SensorTimeException {
         Calendar now = Calendar.getInstance();
+        Log.e(TAG, result.length() + result);
 
         boolean newSensor = false;
         userModel.addRawData(now, result);
@@ -87,8 +88,8 @@ public class NfcParser {
         long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
         Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
         //0.5 should be more than enough
-        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.02){
-            if(elapsedMinutes<5000){
+        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.05){
+            if(elapsedMinutes<65){
                 //This can be assumed to be a new sensor
                 Calendar temp = Calendar.getInstance();
                 temp.add(Calendar.MINUTE, (0-elapsedMinutes));
