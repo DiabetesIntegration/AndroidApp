@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new StartUpController(this));
-        Intent intent = new Intent(this, BluetoothService.class);
-        startService(intent);
+
     }
 
 }

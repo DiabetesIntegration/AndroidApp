@@ -35,6 +35,7 @@ public class MealListController implements View.OnClickListener, AdapterView.OnI
                 currentActivity.startActivity(mealCarbIntent);
                 break;
             case (R.id.addMealButton) :
+                model.setScanningItems();
                 model.setIngListView();
                 model.setNewMeal();
                 Intent ingredientIntent = new Intent(currentActivity, AddIngredientActivity.class);

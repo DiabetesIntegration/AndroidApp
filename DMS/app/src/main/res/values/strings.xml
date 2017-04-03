@@ -13,6 +13,7 @@
     <string name="sensor_prefs">com.DMS.sensorPrefs</string>
     <string name="sensor_current_time">Sensor current time</string>
     <string name="sensor_start_time">Sensor start time</string>
+    <string name="last_scan">Last Sensor Scan</string>
 
     <string name="title_activity_bolus_insulin_model_builder">BolusInsulinModelBuilder</string>
     <string name="title_activity_fitness">fitness</string>

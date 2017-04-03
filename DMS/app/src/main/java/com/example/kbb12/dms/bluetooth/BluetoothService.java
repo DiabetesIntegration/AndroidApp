@@ -343,12 +343,26 @@ public class BluetoothService extends Service{
             editor.apply();
         }
 
+        private void setLastScan(){
+            Calendar cal = Calendar.getInstance();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putLong(context.getString(R.string.last_scan), cal.getTimeInMillis());
+            editor.apply();
+        }
+
+        private Calendar getSLastscan(){
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(sharedPreferences.getLong(context.getString(R.string.last_scan), 0));
+            return cal;
+        }
+
         private double linearConversion(int val) {
             int bitmask = 0x0FFF;
-            return ((val & bitmask) / 153);
+            return ((val & bitmask) / 153.0);
         }
 
         public void parseNfc(String result){
+            Log.e("BLUETOOTH", result);
             boolean newSensor = false;
             Calendar now = Calendar.getInstance();
 
@@ -357,6 +371,7 @@ public class BluetoothService extends Service{
             //Get relevant pointers
             int glucosePointer = Integer.parseInt(result.substring(4, 6), 16);
             int elapsedMinutes = Integer.parseInt(result.substring(586,588) + result.substring(584,586),16);
+            Log.e("BLUETOOTH", elapsedMinutes+"");
             int historyPointer = Integer.parseInt(result.substring(6, 8), 16);
             int readings[] = new int[16];
             int historicalReadings[] = new int[32];
@@ -384,6 +399,7 @@ public class BluetoothService extends Service{
                     temp.add(Calendar.MINUTE, (0-elapsedMinutes));
                     saveSensorStartTime(temp);
                     newSensor = true;
+                    Log.e("BLUETOOTH", "NEW SENSOR");
                 } else {
                     //TODO: Throw an error
                     Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
@@ -411,13 +427,16 @@ public class BluetoothService extends Service{
                 historyMap.put(c2, linearConversion(historicalReadings[i]));
             }
             Calendar last = historydb.getMostRecentReading().getTime();
+
             for(Calendar c: historyMap.keySet()){
-                Log.d(TAG, c.toString() + historyMap.get(c));
+                Log.d(TAG, last.getTimeInMillis() + " and " + c.getTimeInMillis() + "reading: " + historyMap.get(c));
                 //Only add to the history database if the reading is after the most recent one
-                if(newSensor||last==null||(last!=null&&c.after(last.getTime())&&historyMap.get(c)>0.01)){
+                if(newSensor||last==null||(last!=null&&historyMap.get(c)>0.01&&c.after(getSLastscan()))){
                     historydb.insertReading(c, historyMap.get(c));
                 }
             }
+            setLastScan();
+
 
         }
 

@@ -47,7 +47,6 @@ public class ReadNfcTask extends AsyncTask<Tag, Boolean, String> {
     private void buzzOnce() {
         final Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(300);
-
     }
 
     private void buzzTwice(){
