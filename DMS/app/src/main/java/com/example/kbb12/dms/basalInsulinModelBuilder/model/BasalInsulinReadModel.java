@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.basalInsulinModelBuilder.model;
 
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
-import com.example.kbb12.dms.errorHandling.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
 
 import java.util.List;
 

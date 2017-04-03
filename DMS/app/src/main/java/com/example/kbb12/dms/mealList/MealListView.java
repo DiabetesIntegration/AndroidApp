@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.example.kbb12.dms.customListView.CustomAdapter;
 import com.example.kbb12.dms.startUp.ModelObserver;
-import com.example.kbb12.dms.template.ITemplateModel;
 
 /**
  * Created by Ciaran on 2/6/2017.

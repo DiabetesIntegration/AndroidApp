@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.IBolusControllerFactory;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.model.BolusInsulinReadModel;
-import com.example.kbb12.dms.errorHandling.IErrorController;
-import com.example.kbb12.dms.errorHandling.MasterView;
+import com.example.kbb12.dms.baseScreen.controller.IErrorController;
+import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**

@@ -1,5 +1,6 @@
-package com.example.kbb12.dms.addFitness;
+package com.example.kbb12.dms.addFitness.model;
 
+import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.AddFitnessMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class AddFitnessModel implements IAddFitness {
+public class AddFitnessModel extends BaseModel implements IAddFitness {
 
     private String activitytype;
     private int day;
@@ -28,13 +29,7 @@ public class AddFitnessModel implements IAddFitness {
     private boolean actTimeToChange;
     private AddFitnessMainModel model;
 
-    private String errorMessage;
-
-    private List<ModelObserver> observers;
-
-
     public AddFitnessModel(AddFitnessMainModel model){
-        observers= new ArrayList<>();
         activitytype="Walking";
         Calendar now = Calendar.getInstance();
         day=now.get(Calendar.DAY_OF_MONTH);
@@ -47,22 +42,6 @@ public class AddFitnessModel implements IAddFitness {
         durhour=0;
         durmin=0;
         this.model=model;
-    }
-
-    public void registerObserver(ModelObserver observer)
-    {
-        observers.add(observer);
-        notifyObservers();
-    }
-
-    private void notifyObservers(){
-        for(ModelObserver observer:observers){
-            observer.update();
-        }
-    }
-
-    public void removeObserver(ModelObserver observer){
-        observers.remove(observer);
     }
 
     public String getDate() {
@@ -96,7 +75,7 @@ public class AddFitnessModel implements IAddFitness {
             return;
         }
         actDateToChange = change;
-        notifyObservers();
+        notifyObserver();
     }
 
     @Override
@@ -110,7 +89,7 @@ public class AddFitnessModel implements IAddFitness {
             return;
         }
         actTimeToChange=change;
-        notifyObservers();
+        notifyObserver();
     }
 
     @Override
@@ -130,7 +109,7 @@ public class AddFitnessModel implements IAddFitness {
         this.year=year;
         actDateToChange=false;
 
-        notifyObservers();
+        notifyObserver();
     }
 
     @Override
@@ -157,7 +136,7 @@ public class AddFitnessModel implements IAddFitness {
         this.hour=hour;
         this.minute=minute;
         actTimeToChange=false;
-        notifyObservers();
+        notifyObserver();
     }
 
     @Override
@@ -210,16 +189,5 @@ public class AddFitnessModel implements IAddFitness {
         actTimeToChange=false;
         durhour=0;
         durmin=0;
-    }
-
-    @Override
-    public String getError() {
-        return errorMessage;
-    }
-
-    @Override
-    public void setError(String errorMessage) {
-        this.errorMessage=errorMessage;
-        notifyObservers();
     }
 }

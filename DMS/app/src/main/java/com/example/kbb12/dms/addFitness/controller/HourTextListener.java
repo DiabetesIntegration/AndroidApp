@@ -3,7 +3,7 @@ package com.example.kbb12.dms.addFitness.controller;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.example.kbb12.dms.addFitness.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.IAddFitness;
 
 /**
  * Created by Garry on 26/03/2017.

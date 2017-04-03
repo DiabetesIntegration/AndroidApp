@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.ingredientAmount;
 
-import com.example.kbb12.dms.errorHandling.ErrorReadModel;
-import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
 
 /**
  * Created by Ciaran on 3/6/2017.

@@ -1,6 +1,8 @@
-package com.example.kbb12.dms.errorHandling;
+package com.example.kbb12.dms.baseScreen.view;
 
 import android.app.FragmentManager;
+
+import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 
 /**
  * Created by kbb12 on 30/01/2017.

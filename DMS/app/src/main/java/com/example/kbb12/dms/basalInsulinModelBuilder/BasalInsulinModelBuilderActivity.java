@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.kbb12.dms.errorHandling.DefaultErrorController;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.BrandListener;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.EntryControllerFactory;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.IEntryControllerFactory;

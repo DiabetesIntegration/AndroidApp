@@ -1,18 +1,9 @@
 package com.example.kbb12.dms.fitnessInfo;
 
-import android.content.Context;
-import android.database.Cursor;
-
-import com.example.kbb12.dms.addFitness.IAddFitness;
-import com.example.kbb12.dms.fitnessInfo.IFitnessInfo;
 import com.example.kbb12.dms.model.FitnessInfoMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**

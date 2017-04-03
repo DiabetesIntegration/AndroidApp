@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import com.example.kbb12.dms.addFitness.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.IAddFitness;
 
 /**
  * Created by Garry on 26/03/2017.

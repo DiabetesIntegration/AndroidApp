@@ -8,8 +8,8 @@ import android.util.Log;
 import com.example.kbb12.dms.addIngredient.IAddIngredient;
 import com.example.kbb12.dms.customIngredient.IAddCustomIngredient;
 import com.example.kbb12.dms.customListView.IDeleteCustomItem;
-import com.example.kbb12.dms.errorHandling.ErrorReadModel;
-import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
 import com.example.kbb12.dms.ingredientAmount.IIngredientsAmount;
 import com.example.kbb12.dms.ingredientList.IIngredientList;
 import com.example.kbb12.dms.mealAmount.IMealAmount;
@@ -38,7 +38,6 @@ import com.example.kbb12.dms.startUp.IMealPlanner;
 import com.example.kbb12.dms.startUp.Ingredient;
 import com.example.kbb12.dms.startUp.Meal;
 import com.example.kbb12.dms.startUp.ModelObserver;
-import com.example.kbb12.dms.template.ITemplateModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +50,7 @@ import java.util.Map;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateModel,BasalInsulinModelBuilderMainModel,
+public class UserModel implements ErrorReadModel,ErrorReadWriteModel,BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
         AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel,IMealList, IAddIngredient, IAddCustomIngredient, IIngredientsAmount, IIngredientList, IMealAmount, IDeleteCustomItem, IMealCarbohydrateValue {
 

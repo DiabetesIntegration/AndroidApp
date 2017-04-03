@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.example.kbb12.dms.errorHandling.DefaultErrorController;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.model.UserModel;

@@ -18,9 +18,10 @@ import com.example.kbb12.dms.addFitness.controller.HourTextListener;
 import com.example.kbb12.dms.addFitness.controller.MinuteTextListener;
 import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
 import com.example.kbb12.dms.addFitness.controller.ValidateAndSave;
+import com.example.kbb12.dms.addFitness.model.AddFitnessModel;
 import com.example.kbb12.dms.addFitness.view.AddFitnessView;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.errorHandling.DefaultErrorController;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 
 import java.util.Arrays;

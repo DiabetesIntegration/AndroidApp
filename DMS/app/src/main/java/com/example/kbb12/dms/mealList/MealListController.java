@@ -10,7 +10,6 @@ import com.example.kbb12.dms.ingredientList.IngredientListActivity;
 import com.example.kbb12.dms.mealCarbohydrateValue.MealCarbohydrateValueActivity;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
-import com.example.kbb12.dms.template.ITemplateModel;
 
 /**
  * Created by Ciaran on 2/6/2017.

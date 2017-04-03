@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.ingredientList;
 
-import com.example.kbb12.dms.errorHandling.ErrorReadModel;
-import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
 
 import java.util.List;
 

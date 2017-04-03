@@ -1,4 +1,6 @@
-package com.example.kbb12.dms.errorHandling;
+package com.example.kbb12.dms.baseScreen.controller;
+
+import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
 
 /**
  * Created by kbb12 on 30/01/2017.

@@ -7,8 +7,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.kbb12.dms.customListView.CustomAdapter;
-import com.example.kbb12.dms.errorHandling.IErrorController;
-import com.example.kbb12.dms.errorHandling.MasterView;
+import com.example.kbb12.dms.baseScreen.controller.IErrorController;
+import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**

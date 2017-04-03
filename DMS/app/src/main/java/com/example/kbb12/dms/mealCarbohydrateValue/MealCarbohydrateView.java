@@ -4,8 +4,8 @@ import android.app.FragmentManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.kbb12.dms.errorHandling.IErrorController;
-import com.example.kbb12.dms.errorHandling.MasterView;
+import com.example.kbb12.dms.baseScreen.controller.IErrorController;
+import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**

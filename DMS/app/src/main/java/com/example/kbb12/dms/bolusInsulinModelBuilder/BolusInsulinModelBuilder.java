@@ -14,7 +14,7 @@ import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.KnowsISFListene
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.SaveBolusInsulinListener;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.model.BolusInsulinModelBuilderModel;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.view.BolusInsulinBuilderView;
-import com.example.kbb12.dms.errorHandling.DefaultErrorController;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 
 public class BolusInsulinModelBuilder extends AppCompatActivity {

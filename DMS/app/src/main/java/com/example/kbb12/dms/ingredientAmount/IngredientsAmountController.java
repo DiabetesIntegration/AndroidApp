@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.example.kbb12.dms.ingredientList.IngredientListActivity;
-import com.example.kbb12.dms.template.TemplateActivity;
 
 /**
  * Created by Ciaran on 3/6/2017.

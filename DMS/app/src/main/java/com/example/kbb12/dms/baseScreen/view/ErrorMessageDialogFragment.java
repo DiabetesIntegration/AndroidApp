@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.errorHandling;
+package com.example.kbb12.dms.baseScreen.view;
 import android.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 
 /**
  * Created by kbb12 on 17/02/2016.

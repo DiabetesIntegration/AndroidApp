@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.bolusInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.errorHandling.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
 
 /**
  * Created by kbb12 on 20/01/2017.

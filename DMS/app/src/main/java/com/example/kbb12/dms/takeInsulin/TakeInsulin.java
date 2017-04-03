@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.errorHandling.DefaultErrorController;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.takeInsulin.controller.AmountTakenListener;

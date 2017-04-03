@@ -1,9 +1,7 @@
-package com.example.kbb12.dms.addFitness;
+package com.example.kbb12.dms.addFitness.model;
 
-import android.content.Context;
-
-import com.example.kbb12.dms.errorHandling.ErrorReadModel;
-import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
 
 /**
  * Created by Garry on 13/03/2017.

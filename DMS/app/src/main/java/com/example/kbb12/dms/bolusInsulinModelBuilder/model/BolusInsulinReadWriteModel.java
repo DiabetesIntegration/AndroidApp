@@ -1,7 +1,6 @@
 package com.example.kbb12.dms.bolusInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.errorHandling.ErrorReadWriteModel;
-import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
 
 /**
  * Created by kbb12 on 27/01/2017.

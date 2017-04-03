@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.errorHandling.IErrorController;
-import com.example.kbb12.dms.errorHandling.MasterView;
+import com.example.kbb12.dms.baseScreen.controller.IErrorController;
+import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.IEntryControllerFactory;
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinReadModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
