@@ -3,6 +3,7 @@ package com.example.kbb12.dms.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 import com.example.kbb12.dms.addIngredient.IAddIngredient;
 import com.example.kbb12.dms.customIngredient.IAddCustomIngredient;
@@ -16,6 +17,7 @@ import com.example.kbb12.dms.mealCarbohydrateValue.IMealCarbohydrateValue;
 import com.example.kbb12.dms.mealList.IMealList;
 import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
 import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.mealPlannerRecord.scanningItemsRecord.ScannedItemRecord;
 import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
@@ -80,6 +82,7 @@ public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateMo
     private SavedIngredientsRecord savedIngredientsRecord;
     private SavedMealsRecord savedMealsRecord;
     private TimeCarbEatenRecord timeCarbEatenRecord;
+    private ScannedItemRecord scannedItemRecord;
 
     private IMealPlanner mealPlanner;
     private boolean ingList;
@@ -99,11 +102,15 @@ public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateMo
         savedIngredientsRecord = db.getSavedIngredientsRecord();
         savedMealsRecord = db.getSavedMealsRecord();
         timeCarbEatenRecord = db.getTimeCarbEatenRecord();
+        scannedItemRecord = db.getScannedItemRecord();
         mealPlanner = new com.example.kbb12.dms.startUp.MealPlanner();
         mealPlanner.setSavedIngredients(getDatabaseIngredients());
         mealPlanner.setSavedMeals(getDatabaseMeals());
 
-
+        for(Calendar c : rawBGRecord.getAllBasicData().keySet()){
+            Log.d("Record", rawBGRecord.getAllBasicData().get(c));
+            Log.d("EM: ", rawBGRecord.getAllBasicData().get(c).substring(586,588) + rawBGRecord.getAllBasicData().get(c).substring(584,586));
+        }
         ingList = false;
         this.sharPrefEdit=sharPrefEdit;
     }
@@ -125,11 +132,13 @@ public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateMo
     @Override
     public void addHistoryReading(Calendar c, double reading){
         historyBGRecord.insertReading(c, reading);
+        notifyObservers();
     }
 
     @Override
     public void addCurrentReading(Calendar c, double reading){
         currentBGRecord.insertReading(c, reading);
+        notifyObservers();
     }
 
     @Override
@@ -401,6 +410,15 @@ public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateMo
         return mealPlanner.getActiveMeal();
     }
 
+    @Override
+    public void setScanningItems() {
+        if(scannedItemRecord.getAllSavedItems().isEmpty()) {
+            scannedItemRecord.saveItem("Napolina Fusilli Pasta", "72", "100", "1000");
+            scannedItemRecord.saveItem("Napolina Chopped Tomatoes", "3.6", "100", "100");
+            scannedItemRecord.saveItem("Dolmio Tomato and Basil Sauce", "8.4", "100", "100");
+        }
+    }
+
     //-----------------------------------------------------------------------------------
     //IAddIngredient
 
@@ -461,6 +479,39 @@ public class UserModel implements ErrorReadModel,ErrorReadWriteModel,ITemplateMo
     @Override
     public void getSavedIngredient(String item) {
         mealPlanner.addSearchedIngredient(item);
+    }
+
+    @Override
+    public boolean setScannedIngredient(String code) {
+        List<List<String>> scanDB = scannedItemRecord.getAllSavedItems();
+        if(code.equals("5000232823458")) {
+            String nut[] = new String [3];
+            nut[0] = scanDB.get(0).get(1);
+            nut[1] = scanDB.get(0).get(2);
+            nut[2] = scanDB.get(0).get(3);
+            mealPlanner.getActiveIngredient().setIngredientName(scanDB.get(0).get(0));
+            mealPlanner.getActiveIngredient().addCustomNutrition(nut);
+            return true;
+        }
+        else if(code.equals("5010061001613")) {
+            String nut[] = new String [3];
+            nut[0] = scanDB.get(1).get(1);
+            nut[1] = scanDB.get(1).get(2);
+            nut[2] = scanDB.get(1).get(3);
+            mealPlanner.getActiveIngredient().setIngredientName(scanDB.get(1).get(0));
+            mealPlanner.getActiveIngredient().addCustomNutrition(nut);
+            return true;
+        }
+        else if(code.equals("4002359640469")) {
+            String nut[] = new String [3];
+            nut[0] = scanDB.get(2).get(1);
+            nut[1] = scanDB.get(2).get(2);
+            nut[2] = scanDB.get(2).get(3);
+            mealPlanner.getActiveIngredient().setIngredientName(scanDB.get(2).get(0));
+            mealPlanner.getActiveIngredient().addCustomNutrition(nut);
+            return true;
+        }
+        return false;
     }
 
 

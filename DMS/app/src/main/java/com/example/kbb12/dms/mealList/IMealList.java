@@ -19,4 +19,6 @@ public interface IMealList {
     public void addNewDateCarbMealList(String amount);
     public IMeal mealCarbToEatMealList();
 
+    public void setScanningItems();
+
 }

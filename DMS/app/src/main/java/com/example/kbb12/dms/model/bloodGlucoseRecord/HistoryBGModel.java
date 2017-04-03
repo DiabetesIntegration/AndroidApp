@@ -3,6 +3,7 @@ package com.example.kbb12.dms.model.bloodGlucoseRecord;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -113,6 +114,7 @@ public class HistoryBGModel implements BGRecord {
         values.put(HistoryBGContract.ContentsDefinition.COLUMN_NAME_READING, reading);
         values.put(HistoryBGContract.ContentsDefinition.COLUMN_NAME_TIME, getDateTime(time));
          // insert row
+        Log.d("HistoryDb", reading + getDateTime(time));
         write.insert(HistoryBGContract.ContentsDefinition.TABLE_NAME, null, values);
 
     }

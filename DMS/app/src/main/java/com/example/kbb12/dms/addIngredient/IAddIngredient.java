@@ -14,4 +14,6 @@ public interface IAddIngredient {
 
     public List<String> getSavedIngredients();
     public void getSavedIngredient(String item);
+
+    public boolean setScannedIngredient(String code);
 }

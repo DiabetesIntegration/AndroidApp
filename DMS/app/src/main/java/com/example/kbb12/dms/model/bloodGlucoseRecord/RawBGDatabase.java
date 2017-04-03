@@ -3,6 +3,7 @@ package com.example.kbb12.dms.model.bloodGlucoseRecord;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ public class RawBGDatabase implements RawBGRecord {
     public long addRawData(String rawData, Calendar timestamp) {
 
         ContentValues values = new ContentValues();
+        Log.d("RAWDB", rawData);
         values.put(RawDataContract.ContentsDefinition.COLUMN_NAME_DATA, rawData);
         values.put(RawDataContract.ContentsDefinition.COLUMN_NAME_TIME, getDateTime(timestamp));
 

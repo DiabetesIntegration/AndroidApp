@@ -23,15 +23,19 @@ import android.widget.ImageButton;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.bluetooth.BluetoothService;
+import com.example.kbb12.dms.model.UserModel;
 import com.example.kbb12.dms.nfc.ReadNfcTask;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
+
+import static com.example.kbb12.dms.startUp.ModelHolder.model;
 
 public class MainMenuActivity extends AppCompatActivity {
 
 
     private NfcAdapter mAdapter;
     private static final String TAG = "MainMenuActivity";
+    private GraphFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +47,25 @@ public class MainMenuActivity extends AppCompatActivity {
         addActivityButton.setOnClickListener(new AddActivityLauncher(this));
         ImageButton mealPlanner = (ImageButton) findViewById(R.id.meal_planner_button);
         mealPlanner.setOnClickListener(new MealPlannerLauncher(this));
-        ModelHolder.model.logModels();
+        model.logModels();
         if(getIntent().getBooleanExtra("NotificationLaunch",false)){
             Intent nextIntent = new Intent(this, TakeInsulin.class);
             startActivity(nextIntent);
         }
         mAdapter = NfcAdapter.getDefaultAdapter(this);
+        Intent intent = new Intent(this, BluetoothService.class);
+        startService(intent);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        Fragment f = new GraphFragment();
+        fragment = new GraphFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.imageView, f);
+        ft.replace(R.id.imageView, fragment);
         ft.commit();
+
         setupForegroundDispatch(this, mAdapter);
     }
 
@@ -66,6 +73,8 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         stopForegroundDispatch(this, mAdapter);
+        model.removeObserver(fragment);
+
     }
 
     /**

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import com.example.kbb12.dms.customIngredient.AddCustomIngredientActivity;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.R;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 /**
  * Created by Ciaran on 3/1/2017.
@@ -33,7 +34,9 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
                 currentActivity.startActivity(ingredientIntent);
                 break;
             case (R.id.scanBarcodeButton):
-
+                model.setNewIngredient();
+                model.setAddIngredient(true);
+                new IntentIntegrator(currentActivity).initiateScan();
                 break;
         }
 

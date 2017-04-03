@@ -10,8 +10,10 @@ import com.example.kbb12.dms.model.IBloodGlucoseModel;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
 import com.example.kbb12.dms.startUp.ModelHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -23,11 +25,13 @@ public class NfcParser {
     private IBloodGlucoseModel userModel;
     private SharedPreferences sharedPreferences;
     private Activity activity;
+    private SimpleDateFormat simpleDateFormat;
     private static final String TAG = "NfcParser";
 
     public NfcParser(Activity activity){
         sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.sensor_prefs), Context.MODE_PRIVATE);
         this.activity = activity;
+        simpleDateFormat = new SimpleDateFormat("yyyy-MMM-dd HH:mm", Locale.getDefault());
         userModel = ModelHolder.model;
     }
 
@@ -44,13 +48,26 @@ public class NfcParser {
     private void saveCurrentSensorTime(int currentTime){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(activity.getString(R.string.sensor_current_time), currentTime);
-        editor.commit();
+        editor.apply();
     }
 
     private void saveSensorStartTime(Calendar startTime){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(activity.getString(R.string.sensor_start_time), startTime.getTimeInMillis());
-        editor.commit();
+        editor.apply();
+    }
+
+    private void setLastScan(){
+        Calendar cal = Calendar.getInstance();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(activity.getString(R.string.last_scan), cal.getTimeInMillis());
+        editor.apply();
+    }
+
+    private Calendar getSLastscan(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(sharedPreferences.getLong(activity.getString(R.string.last_scan), 0));
+        return cal;
     }
 
     private double linearConversion(int val) {
@@ -60,6 +77,7 @@ public class NfcParser {
 
     public void parseNfc(String result) throws SensorTimeException {
         Calendar now = Calendar.getInstance();
+        Log.e(TAG, result.length() + result);
 
         boolean newSensor = false;
         userModel.addRawData(now, result);
@@ -87,8 +105,8 @@ public class NfcParser {
         long timeSinceStart = ((now.getTimeInMillis()/1000/60)-(getSensorStartTime().getTimeInMillis()/1000/60));
         Log.d(TAG, "tss: "+timeSinceStart + " em: " + elapsedMinutes);
         //0.5 should be more than enough
-        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.02){
-            if(elapsedMinutes<5000){
+        if(getCurrentSensorTime()>elapsedMinutes||(Math.abs(timeSinceStart-elapsedMinutes)/timeSinceStart)>0.05){
+            if(elapsedMinutes<65){
                 //This can be assumed to be a new sensor
                 Calendar temp = Calendar.getInstance();
                 temp.add(Calendar.MINUTE, (0-elapsedMinutes));
@@ -125,11 +143,12 @@ public class NfcParser {
         for(Calendar c: historyMap.keySet()){
             Log.d(TAG, c.toString() + historyMap.get(c));
             //Only add to the history database if the reading is after the most recent one
-            if(newSensor||last==null||(last!=null&&c.after(last.getTime())&&historyMap.get(c)>0.01)){
+            if(newSensor||last==null||(last!=null&&historyMap.get(c)>0.01&&c.after(getSLastscan()))){
                 userModel.addHistoryReading(c, historyMap.get(c));
                 Log.d(TAG, c.get(Calendar.DAY_OF_MONTH) +"");
             }
         }
+        setLastScan();
 
     }
 
