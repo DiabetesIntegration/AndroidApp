@@ -6,13 +6,11 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.example.kbb12.dms.customIngredient.IAddCustomIngredient;
-import com.example.kbb12.dms.customListView.IDeleteCustomItem;
 import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
 import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 import com.example.kbb12.dms.ingredientAmount.IIngredientsAmount;
 import com.example.kbb12.dms.ingredientList.IIngredientList;
 import com.example.kbb12.dms.mealAmount.IMealAmount;
-import com.example.kbb12.dms.mealCarbohydrateValue.IMealCarbohydrateValue;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord.ScannedItemRecord;
@@ -48,10 +46,10 @@ import java.util.Map;
  * Created by kbb12 on 17/01/2017.
  * The global model used throughout the application.
  */
-public class UserModel implements BaseReadModel,BaseReadWriteModel,BasalInsulinModelBuilderMainModel,
+public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
         AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel, IAddCustomIngredient,
-        IIngredientsAmount, IIngredientList, IMealAmount, IDeleteCustomItem, IMealCarbohydrateValue,
+        IIngredientsAmount, IIngredientList, IMealAmount, MealCarbohydrateMainModel,
         MealListMainModel{
 
     private String exampleData;
@@ -349,22 +347,9 @@ public class UserModel implements BaseReadModel,BaseReadWriteModel,BasalInsulinM
     }
 
 
-    public void registerObserver(ModelObserver observer)
-    {
-        observers.add(observer);
-        notifyObservers();
-    }
-
-    private void notifyObservers(){
-        for(ModelObserver observer:observers){
-            observer.update();
-        }
-    }
-
-
-    public void removeObserver(ModelObserver observer) {
-        observers.remove(observer);
-
+    @Override
+    public void setError(String errorMessage) {
+        //TODO
     }
 
     //-----------------------------------------------------------------------------------
@@ -389,7 +374,6 @@ public class UserModel implements BaseReadModel,BaseReadWriteModel,BasalInsulinM
     @Override
     public void getCustomIngErrorMessage(String err) {
         setError(err);
-        notifyObservers();
     }
 
     //------------------------------------------------------------------------------------
@@ -399,7 +383,6 @@ public class UserModel implements BaseReadModel,BaseReadWriteModel,BasalInsulinM
     @Override
     public void setUnits(String unit) {
         mealPlanner.getActiveIngredient().setUnit(unit);
-        notifyObservers();
     }
 
     @Override
@@ -633,88 +616,6 @@ public class UserModel implements BaseReadModel,BaseReadWriteModel,BasalInsulinM
         savedMealsRecord.editMeal(index,mealPlanner.getActiveMeal().getMealName(),ingIds,ingCarbAmounts,mealPlanner.getActiveMeal().getTotalCarbs(),"0");
     }
 
-    @Override
-    public boolean removeIngredient(int index) {
-        mealPlanner.getMealIngredients().remove(index);
-        notifyObservers();
-        return true;
-    }
-
-
-
-
-
-    //----------------------------------------------------------------------------------------
-    //IMealCarbohydrateValue
-
-    @Override
-    public void setStraightCarbs(boolean straightCarbs) {
-        mealPlanner.getActiveMeal().setCustomCarbMeal(straightCarbs);
-    }
-
-    @Override
-    public boolean addCarbMeal() {
-        for(int i = 0; i < mealPlanner.getSavedMeals().size(); i++) {
-            if(mealPlanner.getActiveMeal().getMealName().equals(mealPlanner.getSavedMeals().get(i).getMealName())) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public void setCarbMealName(String name) {
-        mealPlanner.getActiveMeal().setMealName(name);
-    }
-
-    @Override
-    public void setCarbMealValue(String value) {
-        mealPlanner.getActiveMeal().setCustomCarbsEaten(value);
-    }
-
-    @Override
-    public void addNewCarbMeal() {
-        mealPlanner.addNewMeal();
-        saveCustomMealToDB();
-    }
-
-    @Override
-    public void notIngredientList(boolean list) {
-        ingList = list;
-    }
-
-    @Override
-    public void getMealCarbohydrateErrorMessage(String err) {
-        setError(err);
-        notifyObservers();
-    }
-
-    @Override
-    public void addNewDateCarb(String amount) {
-        timeCarbEatenRecord.addRawData(amount,Calendar.getInstance());
-    }
-
-    @Override
-    public IMeal mealCarbToEat() {
-        return mealPlanner.getActiveMeal();
-    }
-
-
-    //-----------------------------------------------------------------------------------
-    //Error Messages
-
-    @Override
-    public void setError(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    @Override
-    public String getError() {
-        return errorMessage;
-    }
-
-
     private List<IMeal> getDatabaseMeals() {
         List<IMeal> meals = new ArrayList<IMeal>();
         Map<Integer, List<String>> m = savedMealsRecord.getAllMeals();
@@ -831,6 +732,16 @@ public class UserModel implements BaseReadModel,BaseReadWriteModel,BasalInsulinM
             meals.add(meal);
         }
         return meals;
+    }
+
+    @Override
+    public void saveMeal(String name, int amount) {
+        savedMealsRecord.saveMeal(name, ",", ",",Integer.toString(amount),"1");
+    }
+
+    @Override
+    public void registerCarbs(int amount) {
+        timeCarbEatenRecord.addRawData(Integer.toString(amount),Calendar.getInstance());
     }
 
     @Override

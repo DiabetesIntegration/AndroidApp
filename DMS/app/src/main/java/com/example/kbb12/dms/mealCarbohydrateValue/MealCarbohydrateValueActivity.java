@@ -5,20 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.mealCarbohydrateValue.controller.MealCarbohydrateButtonController;
+import com.example.kbb12.dms.mealCarbohydrateValue.model.MealCarbohydrateModel;
+import com.example.kbb12.dms.mealCarbohydrateValue.model.MealCarbohydrateReadWriteModel;
+import com.example.kbb12.dms.mealCarbohydrateValue.view.MealCarbohydrateView;
 import com.example.kbb12.dms.startUp.ModelHolder;
-import com.example.kbb12.dms.model.UserModel;
 
 public class MealCarbohydrateValueActivity extends AppCompatActivity {
-    private EditText nameEntry, numberEntry;
-    private Button eatMeal, saveMeal;
-    private ImageButton confirmMeal;
-
-    private UserModel model;
-    private MealCarbohydrateView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,41 +23,25 @@ public class MealCarbohydrateValueActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model = ModelHolder.model;
+        MealCarbohydrateReadWriteModel model = new MealCarbohydrateModel(ModelHolder.model);
 
-        nameEntry = (EditText) findViewById(R.id.carbMealNameEntry);
-        numberEntry = (EditText) findViewById(R.id.carbMealCarbEntry);
-        eatMeal = (Button) findViewById(R.id.eatCarbMealButton);
-        saveMeal = (Button) findViewById(R.id.saveCarbMealButton);
+        EditText nameEntry = (EditText) findViewById(R.id.carbMealNameEntry);
+        EditText numberEntry = (EditText) findViewById(R.id.carbMealCarbEntry);
+        Button eatMeal = (Button) findViewById(R.id.eatCarbMealButton);
+        Button saveMeal = (Button) findViewById(R.id.saveCarbMealButton);
 
-        MealCarbohydrateNameController nameC = new MealCarbohydrateNameController(model,this);
-        MealCarbohydrateValueController valueC = new MealCarbohydrateValueController(model,this);
-        MealCarbohydrateButtonController controller = new MealCarbohydrateButtonController(model,this,nameC,valueC);
+        MealCarbohydrateButtonController controller = new MealCarbohydrateButtonController(model,this);
 
         eatMeal.setOnClickListener(controller);
         saveMeal.setOnClickListener(controller);
-        nameEntry.addTextChangedListener(nameC);
-        numberEntry.addTextChangedListener(valueC);
+        nameEntry.addTextChangedListener(controller.getMealCarbohydrateNameController());
+        numberEntry.addTextChangedListener(controller.getMealCarbohydrateValueController());
 
 
         android.app.FragmentManager fm = getFragmentManager();
         DefaultErrorController c = new DefaultErrorController(model);
 
-        view = new MealCarbohydrateView(nameEntry,numberEntry,eatMeal,saveMeal,model,fm,c);
+        MealCarbohydrateView view = new MealCarbohydrateView(model,fm,c);
         model.registerObserver(view);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        model.removeObserver(view);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        model.setStraightCarbs(false);
     }
 }
