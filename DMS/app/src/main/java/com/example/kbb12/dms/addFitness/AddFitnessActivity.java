@@ -62,16 +62,10 @@ public class AddFitnessActivity extends AppCompatActivity {
         ImageView saveActivity = (ImageView) findViewById(R.id.saveActivityIV);
         saveActivity.setOnClickListener(new ValidateAndSave(model, this));
 
-        view = new AddFitnessView(this, model, fragman, mSpinner, mDateTime, mHour, mMins, new DateSetListener(model), new TimeSetListener(model), new DismissDateListener(model), new DismissTimeListener(model), new DefaultErrorController(model));
+        view = new AddFitnessView(model, fragman, mDateTime, new DateSetListener(model), new TimeSetListener(model), new DismissDateListener(model), new DismissTimeListener(model), new DefaultErrorController(model));
         view.update();
 
         model.registerObserver(view);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        model.removeObserver(view);
     }
 
     @Override

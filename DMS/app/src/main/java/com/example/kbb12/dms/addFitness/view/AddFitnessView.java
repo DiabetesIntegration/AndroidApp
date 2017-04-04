@@ -21,27 +21,19 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 
 public class AddFitnessView extends MasterView implements ModelObserver {
 
-    private Context context;
     private IAddFitness model;
     private FragmentManager fragman;
-    private Spinner spinner;
     private TextView date;
-    private EditText hours;
-    private EditText mins;
     private DateSelectionFragment dFrag;
     private TimeSelectionFragment tFrag;
 
     //private IErrorController errcon;
 
-    public AddFitnessView(Context context, IAddFitness model, FragmentManager fragman, Spinner spinner, TextView mDateTime, EditText mHours, EditText mMins, DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller, IErrorController errcon){
+    public AddFitnessView(IAddFitness model, FragmentManager fragman, TextView mDateTime,DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller, IErrorController errcon){
         super(fragman, errcon);
-        this.context = context;
         this.model = model;
         this.fragman = fragman;
-        this.spinner = spinner;
         date = mDateTime;
-        hours = mHours;
-        mins = mMins;
 
         dFrag=new DateSelectionFragment();
         dFrag.setController(datecontroller);

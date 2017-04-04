@@ -2,19 +2,12 @@ package com.example.kbb12.dms.addFitness.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.AddFitnessMainModel;
-import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Created by kbb12 on 17/01/2017.
- * The global model used throughout the application.
- */
 public class AddFitnessModel extends BaseModel implements IAddFitness {
 
     private String activitytype;
@@ -108,7 +101,6 @@ public class AddFitnessModel extends BaseModel implements IAddFitness {
         this.month=month;
         this.year=year;
         actDateToChange=false;
-
         notifyObserver();
     }
 
@@ -175,6 +167,7 @@ public class AddFitnessModel extends BaseModel implements IAddFitness {
         calendar.set(year,month,day,hour,minute);
         model.saveActivity(calendar,activitytype,durhour,durmin);
         resetvals();
+        notifyObserver();
     }
 
     private void resetvals() {
