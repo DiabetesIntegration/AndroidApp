@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.kbb12.dms.fitnessInfo.FitnessInfoActivity;
 import com.example.kbb12.dms.mealList.MealListActivity;
 
 /**

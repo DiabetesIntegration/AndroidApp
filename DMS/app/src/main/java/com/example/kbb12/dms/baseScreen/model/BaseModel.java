@@ -6,7 +6,7 @@ import com.example.kbb12.dms.startUp.ModelObserver;
  * Created by kbb12 on 03/04/2017.
  */
 
-public class BaseModel implements ErrorReadWriteModel {
+public class BaseModel implements BaseReadWriteModel {
 
     private String errorMessage;
     private ModelObserver observer;

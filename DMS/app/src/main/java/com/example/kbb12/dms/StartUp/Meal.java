@@ -108,7 +108,7 @@ public class Meal implements IMeal {
     }
 
     @Override
-    public boolean getCustomCarbMeal() {
+    public boolean isCustomCarbMeal() {
         return isCustom;
     }
 

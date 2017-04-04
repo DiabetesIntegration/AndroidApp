@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord;
+package com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord;
 
 import java.util.Calendar;
 import java.util.List;

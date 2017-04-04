@@ -1,11 +1,11 @@
 package com.example.kbb12.dms.takeInsulin.model;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 /**
  * Created by kbb12 on 24/02/2017.
  */
-public interface TakeInsulinReadWriteModel extends TakeInsulinReadModel,ErrorReadWriteModel {
+public interface TakeInsulinReadWriteModel extends TakeInsulinReadModel,BaseReadWriteModel {
 
     void setAmountTaken(Double amountTaken);
 

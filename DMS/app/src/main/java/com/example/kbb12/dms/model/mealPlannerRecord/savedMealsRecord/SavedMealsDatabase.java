@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord;
+package com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord;
 
 import android.content.ContentValues;
 import android.database.Cursor;

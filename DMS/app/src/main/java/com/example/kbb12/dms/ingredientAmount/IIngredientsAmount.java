@@ -1,12 +1,12 @@
 package com.example.kbb12.dms.ingredientAmount;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 /**
  * Created by Ciaran on 3/6/2017.
  */
-public interface IIngredientsAmount extends ErrorReadModel, ErrorReadWriteModel {
+public interface IIngredientsAmount extends BaseReadModel, BaseReadWriteModel {
 
     public void setUnits(String unit);
     public String getUnits();

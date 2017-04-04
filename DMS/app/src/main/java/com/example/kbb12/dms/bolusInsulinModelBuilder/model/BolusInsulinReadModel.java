@@ -1,11 +1,11 @@
 package com.example.kbb12.dms.bolusInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
 
 /**
  * Created by kbb12 on 20/01/2017.
  */
-public interface BolusInsulinReadModel extends ErrorReadModel {
+public interface BolusInsulinReadModel extends BaseReadModel {
     boolean knowsISF();
     boolean knowsICR();
     Double getICR();

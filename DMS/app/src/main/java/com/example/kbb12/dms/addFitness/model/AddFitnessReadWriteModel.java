@@ -1,13 +1,12 @@
 package com.example.kbb12.dms.addFitness.model;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 /**
  * Created by Garry on 13/03/2017.
  */
 
-public interface AddFitnessReadWriteModel extends AddFitnessReadModel, ErrorReadWriteModel {
+public interface AddFitnessReadWriteModel extends AddFitnessReadModel, BaseReadWriteModel {
 
     public void setActivityType(String activity);
     public void setActDateToChange(boolean change);

@@ -1,11 +1,11 @@
 package com.example.kbb12.dms.takeInsulin.model;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
 
 /**
  * Created by kbb12 on 24/02/2017.
  */
-public interface TakeInsulinReadModel extends ErrorReadModel {
+public interface TakeInsulinReadModel extends BaseReadModel {
 
     public enum InsulinType{
         NOT_SET, BASAL,BOLUS

@@ -1,12 +1,12 @@
 package com.example.kbb12.dms.basalInsulinModelBuilder.model;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 
 /**
  * Created by kbb12 on 27/01/2017.
  */
-public interface BasalInsulinReadWriteModel extends BasalInsulinReadModel,ErrorReadWriteModel {
+public interface BasalInsulinReadWriteModel extends BasalInsulinReadModel,BaseReadWriteModel {
     void setHour(int hour);
     void setMinute(int minute);
     void deselectTime();

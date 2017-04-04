@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.addIngredient.controller.AddIngredientController;
+import com.example.kbb12.dms.addIngredient.model.IAddIngredient;
+import com.example.kbb12.dms.addIngredient.view.AddIngredientView;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.model.UserModel;
@@ -21,7 +24,7 @@ public class AddIngredientActivity extends AppCompatActivity {
     private EditText searchSavedIng;
     private ListView savedIngredientList;
     private ArrayAdapter<String> adapter;
-    private UserModel model;
+    private IAddIngredient model;
     private AddIngredientView view;
 
     @Override
@@ -31,14 +34,14 @@ public class AddIngredientActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model = ModelHolder.model;
+        model =(IAddIngredient) ModelHolder.model;
 
         addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
         scanItem = (ImageButton) findViewById(R.id.scanBarcodeButton);
         searchSavedIng = (EditText) findViewById(R.id.searchDatabaseEntry);
         savedIngredientList = (ListView) findViewById(R.id.listView2);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         savedIngredientList.setAdapter(adapter);
 
         AddIngredientController controller = new AddIngredientController(model, this);
@@ -48,7 +51,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         savedIngredientList.setOnItemClickListener(controller);
 
 
-        view = new AddIngredientView(addCustom,searchSavedIng,savedIngredientList,adapter,model);
+        view = new AddIngredientView(adapter,model);
         model.registerObserver(view);
     }
 

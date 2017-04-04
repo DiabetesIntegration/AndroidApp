@@ -9,18 +9,14 @@ import android.widget.TextView;
 
 import com.example.kbb12.dms.customListView.CustomAdapter;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.mealList.controller.MealListController;
+import com.example.kbb12.dms.mealList.model.MealListModel;
+import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;
+import com.example.kbb12.dms.mealList.view.MealListView;
 import com.example.kbb12.dms.startUp.ModelHolder;
-import com.example.kbb12.dms.model.UserModel;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 public class MealListActivity extends AppCompatActivity {
-    private ListView mealList;
-    private ImageButton addMeal, addCarb;
-    private TextView emptyMealList;
-
-    private CustomAdapter cAdapter;
-
-    private UserModel model;
-    private MealListView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +25,14 @@ public class MealListActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model = ModelHolder.model;
+        MealListReadWriteModel model = new MealListModel(ModelHolder.model);
 
-        mealList = (ListView) findViewById(R.id.mealsList);
-        addMeal = (ImageButton) findViewById(R.id.addMealButton);
-        addCarb = (ImageButton) findViewById(R.id.addCustomCarbMealButton);
-        emptyMealList = (TextView) findViewById(R.id.emptyMealList);
+        ListView mealList = (ListView) findViewById(R.id.mealsList);
+        ImageButton addMeal = (ImageButton) findViewById(R.id.addMealButton);
+        ImageButton addCarb = (ImageButton) findViewById(R.id.addCustomCarbMealButton);
+        TextView emptyMealList = (TextView) findViewById(R.id.emptyMealList);
 
-        cAdapter = new CustomAdapter(this, model);
+        CustomAdapter cAdapter = new CustomAdapter(this, model);
         mealList.setAdapter(cAdapter);
 
         MealListController controller = new MealListController(model,this);
@@ -45,18 +41,9 @@ public class MealListActivity extends AppCompatActivity {
         mealList.setOnItemClickListener(controller);
 
 
-        view = new MealListView(emptyMealList,mealList,addMeal,cAdapter,model);
+        ModelObserver view = new MealListView(emptyMealList,cAdapter,model);
         model.registerObserver(view);
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealList;
+package com.example.kbb12.dms.mealList.controller;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,16 +9,17 @@ import com.example.kbb12.dms.addIngredient.AddIngredientActivity;
 import com.example.kbb12.dms.ingredientList.IngredientListActivity;
 import com.example.kbb12.dms.mealCarbohydrateValue.MealCarbohydrateValueActivity;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 /**
  * Created by Ciaran on 2/6/2017.
  */
 public class MealListController implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private IMealList model;
+    private MealListReadWriteModel model;
     private Activity currentActivity;
 
-    public MealListController(IMealList model, Activity currentActivity) {
+    public MealListController(MealListReadWriteModel model, Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
     }
@@ -34,8 +35,6 @@ public class MealListController implements View.OnClickListener, AdapterView.OnI
                 currentActivity.startActivity(mealCarbIntent);
                 break;
             case (R.id.addMealButton) :
-                model.setScanningItems();
-                model.setIngListView();
                 model.setNewMeal();
                 Intent ingredientIntent = new Intent(currentActivity, AddIngredientActivity.class);
                 //Launches the next activity.
@@ -47,15 +46,13 @@ public class MealListController implements View.OnClickListener, AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         model.setMealItem(position);
-        model.getIngredientsForMeal();
-        if(!model.customMealAtPosition()) {
-            model.setIngListView();
+        if(!model.isCustomMealAtPosition()) {
             Intent ingredientIntent = new Intent(currentActivity, IngredientListActivity.class);
             //Launches the next activity.
             currentActivity.startActivity(ingredientIntent);
         }
         else {
-            model.addNewDateCarbMealList(model.mealCarbToEatMealList().getCustomCarbsEaten());
+            //TODO
             Intent templateIntent = new Intent(currentActivity, TakeInsulin.class);
             //Launches the next activity.
             currentActivity.startActivity(templateIntent);

@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealPlannerRecord.scanningItemsRecord;
+package com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord;
 
 import android.provider.BaseColumns;
 

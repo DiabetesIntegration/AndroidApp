@@ -1,10 +1,9 @@
-package com.example.kbb12.dms.mealList;
+package com.example.kbb12.dms.mealList.view;
 
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.customListView.CustomAdapter;
+import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
@@ -13,15 +12,11 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 public class MealListView implements ModelObserver{
 
     private TextView noMeals;
-    private ImageButton addMeal;
-    private ListView meals;
     private CustomAdapter adapter;
-    private IMealList model;
+    private MealListReadWriteModel model;
 
-    public MealListView(TextView t, ListView l, ImageButton b, CustomAdapter adapter, IMealList model) {
+    public MealListView(TextView t, CustomAdapter adapter, MealListReadWriteModel model) {
         noMeals = t;
-        addMeal = b;
-        meals = l;
         this.adapter = adapter;
         adapter.addAll(model.getSavedMeals());
         this.model = model;

@@ -1,10 +1,9 @@
-package com.example.kbb12.dms.mealPlannerRecord.scanningItemsRecord;
+package com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

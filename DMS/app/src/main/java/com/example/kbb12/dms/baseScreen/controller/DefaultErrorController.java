@@ -1,15 +1,15 @@
 package com.example.kbb12.dms.baseScreen.controller;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 /**
  * Created by kbb12 on 30/01/2017.
  */
 public class DefaultErrorController implements IErrorController {
 
-    ErrorReadWriteModel model;
+    BaseReadWriteModel model;
 
-    public DefaultErrorController(ErrorReadWriteModel model){
+    public DefaultErrorController(BaseReadWriteModel model){
         this.model=model;
     }
 

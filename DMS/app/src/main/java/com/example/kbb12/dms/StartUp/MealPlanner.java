@@ -18,9 +18,9 @@ public class MealPlanner implements com.example.kbb12.dms.startUp.IMealPlanner {
     private String itemSearch;
 
     public MealPlanner() {
-        savedMeals = new ArrayList<IMeal>();
-        activeIngredients = new ArrayList<IIngredient>();
-        savedIngredients = new ArrayList<IIngredient>();
+        savedMeals = new ArrayList<>();
+        activeIngredients = new ArrayList<>();
+        savedIngredients = new ArrayList<>();
         itemSearch = "";
         newIngredient = false;
     }
@@ -74,7 +74,7 @@ public class MealPlanner implements com.example.kbb12.dms.startUp.IMealPlanner {
 
     @Override
     public void setMealIngredients(List<IIngredient> ing) {
-        activeIngredients = new ArrayList<IIngredient>(ing);
+        activeIngredients = new ArrayList<>(ing);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.addIngredient;
+package com.example.kbb12.dms.addIngredient.model;
 
 import java.util.List;
 

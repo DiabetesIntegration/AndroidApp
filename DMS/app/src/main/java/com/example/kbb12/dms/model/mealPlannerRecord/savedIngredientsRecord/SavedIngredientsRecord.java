@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord;
+package com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord;
 
 import java.util.List;
 import java.util.Map;

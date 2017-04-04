@@ -1,10 +1,11 @@
-package com.example.kbb12.dms.addIngredient;
+package com.example.kbb12.dms.addIngredient.view;
 
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.kbb12.dms.addIngredient.model.IAddIngredient;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
@@ -12,16 +13,10 @@ import com.example.kbb12.dms.startUp.ModelObserver;
  */
 public class AddIngredientView implements ModelObserver {
 
-    private ImageButton addCustom;
-    private EditText search;
-    private ListView savedIng;
     private ArrayAdapter<String> adapter;
     private IAddIngredient model;
 
-    public AddIngredientView(ImageButton b, EditText search, ListView savedIng, ArrayAdapter adapter, IAddIngredient model) {
-        addCustom = b;
-        this.search = search;
-        this.savedIng = savedIng;
+    public AddIngredientView(ArrayAdapter adapter, IAddIngredient model) {
         this.adapter = adapter;
         if(!model.getSavedIngredients().isEmpty()) {
             adapter.addAll(model.getSavedIngredients());

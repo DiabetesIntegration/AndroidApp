@@ -22,7 +22,7 @@ public interface IMeal {
 
 
     public void setCustomCarbMeal(boolean carb);
-    public boolean getCustomCarbMeal();
+    public boolean isCustomCarbMeal();
     public void setCustomCarbsEaten(String amount);
     public String getCustomCarbsEaten();
 }

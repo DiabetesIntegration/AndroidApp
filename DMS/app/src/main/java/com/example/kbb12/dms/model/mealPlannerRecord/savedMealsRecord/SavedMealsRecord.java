@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord;
+package com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord;
 
 import com.example.kbb12.dms.startUp.IMeal;
 

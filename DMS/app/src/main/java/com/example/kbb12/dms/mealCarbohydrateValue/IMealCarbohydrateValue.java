@@ -1,13 +1,13 @@
 package com.example.kbb12.dms.mealCarbohydrateValue;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 import com.example.kbb12.dms.startUp.IMeal;
 
 /**
  * Created by Ciaran on 3/14/2017.
  */
-public interface IMealCarbohydrateValue extends ErrorReadModel, ErrorReadWriteModel {
+public interface IMealCarbohydrateValue extends BaseReadModel, BaseReadWriteModel {
 
     public void setStraightCarbs(boolean straightCarbs);
     public boolean addCarbMeal();

@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.addIngredient;
+package com.example.kbb12.dms.addIngredient.controller;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.kbb12.dms.addIngredient.model.IAddIngredient;
 import com.example.kbb12.dms.customIngredient.AddCustomIngredientActivity;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.R;

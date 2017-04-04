@@ -1,14 +1,14 @@
 package com.example.kbb12.dms.ingredientList;
 
-import com.example.kbb12.dms.baseScreen.model.ErrorReadModel;
-import com.example.kbb12.dms.baseScreen.model.ErrorReadWriteModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
+import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 import java.util.List;
 
 /**
  * Created by Ciaran on 3/2/2017.
  */
-public interface IIngredientList extends ErrorReadModel, ErrorReadWriteModel {
+public interface IIngredientList extends BaseReadModel, BaseReadWriteModel {
 
     public List<String> getIngredientsInMeal();
     public String getMealName();
