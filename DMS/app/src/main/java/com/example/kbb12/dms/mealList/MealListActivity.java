@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.kbb12.dms.customListView.CustomAdapter;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.customListView.CustomListViewControllerFactory;
 import com.example.kbb12.dms.mealList.controller.MealListController;
 import com.example.kbb12.dms.mealList.model.MealListModel;
 import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;
@@ -32,7 +33,7 @@ public class MealListActivity extends AppCompatActivity {
         ImageButton addCarb = (ImageButton) findViewById(R.id.addCustomCarbMealButton);
         TextView emptyMealList = (TextView) findViewById(R.id.emptyMealList);
 
-        CustomAdapter cAdapter = new CustomAdapter(this, model);
+        CustomAdapter cAdapter = new CustomAdapter(this, new CustomListViewControllerFactory(model));
         mealList.setAdapter(cAdapter);
 
         MealListController controller = new MealListController(model,this);

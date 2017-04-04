@@ -20,13 +20,12 @@ import java.util.List;
 public class CustomAdapter extends BaseAdapter implements ListAdapter {
     private List<String> items;
     private Context context;
-    private IDeleteCustomItem model;
-    private CustomListViewController controller;
+    private ICustomListViewControllerFactory controllerFactory;
 
-    public CustomAdapter(Context context, IDeleteCustomItem model) {
-        items = new ArrayList<String>();
+    public CustomAdapter(Context context, ICustomListViewControllerFactory controllerFactory) {
+        items = new ArrayList<>();
         this.context = context;
-        this.model = model;
+        this.controllerFactory=controllerFactory;
     }
 
     public boolean isEmpty() {
@@ -77,9 +76,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
 
         ImageView delete = (ImageView) view.findViewById(R.id.delete_item);
-
-        CustomListViewController controller = new CustomListViewController(position, model);
-        delete.setOnClickListener(controller);
+        delete.setOnClickListener(controllerFactory.getCustomListViewController(position));
 
         return view;
     }
