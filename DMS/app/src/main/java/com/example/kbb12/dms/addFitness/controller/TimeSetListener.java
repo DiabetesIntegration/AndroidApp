@@ -3,7 +3,7 @@ package com.example.kbb12.dms.addFitness.controller;
 import android.app.TimePickerDialog;
 import android.widget.TimePicker;
 
-import com.example.kbb12.dms.addFitness.model.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.AddFitnessReadWriteModel;
 
 /**
  * Created by Garry on 27/03/2017.
@@ -11,9 +11,9 @@ import com.example.kbb12.dms.addFitness.model.IAddFitness;
 
 public class TimeSetListener implements TimePickerDialog.OnTimeSetListener {
 
-        private IAddFitness model;
+        private AddFitnessReadWriteModel model;
 
-        public TimeSetListener(IAddFitness model){
+        public TimeSetListener(AddFitnessReadWriteModel model){
             this.model=model;
         }
 

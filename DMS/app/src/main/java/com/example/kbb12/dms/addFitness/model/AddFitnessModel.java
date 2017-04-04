@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddFitnessModel extends BaseModel implements IAddFitness {
+public class AddFitnessModel extends BaseModel implements AddFitnessReadWriteModel {
 
     private String activitytype;
     private int day;
@@ -55,11 +55,6 @@ public class AddFitnessModel extends BaseModel implements IAddFitness {
     @Override
     public void setActivityType(String activity) {
         activitytype=activity;
-    }
-
-    @Override
-    public String getActivityType() {
-        return activitytype;
     }
 
     @Override

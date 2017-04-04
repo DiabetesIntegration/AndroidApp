@@ -3,7 +3,7 @@ package com.example.kbb12.dms.addFitness.controller;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.example.kbb12.dms.addFitness.model.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.AddFitnessReadWriteModel;
 
 /**
  * Created by Garry on 26/03/2017.
@@ -11,9 +11,9 @@ import com.example.kbb12.dms.addFitness.model.IAddFitness;
 
 public class MinuteTextListener implements TextWatcher {
 
-    IAddFitness model;
+    AddFitnessReadWriteModel model;
 
-    public MinuteTextListener(IAddFitness model){
+    public MinuteTextListener(AddFitnessReadWriteModel model){
         this.model=model;
     }
 

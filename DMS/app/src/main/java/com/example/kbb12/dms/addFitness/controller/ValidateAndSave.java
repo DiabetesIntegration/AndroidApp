@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import com.example.kbb12.dms.addFitness.model.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.AddFitnessReadWriteModel;
 
 /**
  * Created by Garry on 26/03/2017.
@@ -13,10 +13,10 @@ import com.example.kbb12.dms.addFitness.model.IAddFitness;
 
 public class ValidateAndSave implements View.OnClickListener {
 
-    IAddFitness model;
+    AddFitnessReadWriteModel model;
     Activity activity;
 
-    public ValidateAndSave(IAddFitness model, Activity activity){
+    public ValidateAndSave(AddFitnessReadWriteModel model, Activity activity){
         this.model=model;
         this.activity=activity;
     }

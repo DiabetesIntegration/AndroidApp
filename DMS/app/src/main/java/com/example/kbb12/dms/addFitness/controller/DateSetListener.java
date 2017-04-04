@@ -3,7 +3,7 @@ package com.example.kbb12.dms.addFitness.controller;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 
-import com.example.kbb12.dms.addFitness.model.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.AddFitnessReadWriteModel;
 
 /**
  * Created by Garry on 26/03/2017.
@@ -11,9 +11,9 @@ import com.example.kbb12.dms.addFitness.model.IAddFitness;
 
 public class DateSetListener implements DatePickerDialog.OnDateSetListener {
 
-    private IAddFitness model;
+    private AddFitnessReadWriteModel model;
 
-    public DateSetListener(IAddFitness model){
+    public DateSetListener(AddFitnessReadWriteModel model){
         this.model=model;
     }
 

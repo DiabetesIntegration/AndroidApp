@@ -2,15 +2,13 @@ package com.example.kbb12.dms.addFitness.view;
 
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.addFitness.controller.DateSetListener;
 import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
-import com.example.kbb12.dms.addFitness.model.IAddFitness;
+import com.example.kbb12.dms.addFitness.model.AddFitnessReadModel;
+import com.example.kbb12.dms.addFitness.model.AddFitnessReadWriteModel;
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.startUp.ModelObserver;
@@ -21,7 +19,7 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 
 public class AddFitnessView extends MasterView implements ModelObserver {
 
-    private IAddFitness model;
+    private AddFitnessReadModel model;
     private FragmentManager fragman;
     private TextView date;
     private DateSelectionFragment dFrag;
@@ -29,7 +27,7 @@ public class AddFitnessView extends MasterView implements ModelObserver {
 
     //private IErrorController errcon;
 
-    public AddFitnessView(IAddFitness model, FragmentManager fragman, TextView mDateTime,DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller, IErrorController errcon){
+    public AddFitnessView(AddFitnessReadModel model, FragmentManager fragman, TextView mDateTime, DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller, IErrorController errcon){
         super(fragman, errcon);
         this.model = model;
         this.fragman = fragman;
