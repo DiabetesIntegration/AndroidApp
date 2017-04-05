@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.mealCarbohydrateValue.controller;
+package com.example.kbb12.dms.baseScreen.controller;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -6,7 +6,7 @@ import android.text.TextWatcher;
 /**
  * Created by Ciaran on 3/14/2017.
  */
-public class MealCarbohydrateTextController implements TextWatcher {
+public class BasicTextWatcher implements TextWatcher {
     private String entry ="";
 
 

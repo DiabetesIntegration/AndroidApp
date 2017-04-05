@@ -8,14 +8,13 @@ import android.widget.ImageButton;
 
 import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.customIngredient.controller.AddCustomIngredientController;
+import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
+import com.example.kbb12.dms.customIngredient.view.AddCustomIngredientView;
 import com.example.kbb12.dms.startUp.ModelHolder;
-import com.example.kbb12.dms.model.UserModel;
+import com.example.kbb12.dms.startUp.ModelObserver;
 
 public class AddCustomIngredientActivity extends AppCompatActivity {
-    private EditText ingredientName, carbVal, packVal, packetWeight;
-    private ImageButton createCustom;
-    private UserModel model;
-    private AddCustomIngredientView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,52 +23,30 @@ public class AddCustomIngredientActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model = ModelHolder.model;
+        AddCustomIngredientReadWriteModel model = ModelHolder.model;
 
 
-        ingredientName = (EditText) findViewById(R.id.customItemName);
-        carbVal = (EditText) findViewById(R.id.carbValNum);
-        packVal = (EditText) findViewById(R.id.packetValNum);
-        packetWeight = (EditText) findViewById(R.id.packetWeightNum);
+        EditText ingredientName = (EditText) findViewById(R.id.customItemName);
+        EditText carbVal = (EditText) findViewById(R.id.carbValNum);
+        EditText packVal = (EditText) findViewById(R.id.packetValNum);
+        EditText packetWeight = (EditText) findViewById(R.id.packetWeightNum);
 
 
-        createCustom = (ImageButton) findViewById(R.id.addCustomButton);
+        ImageButton createCustom = (ImageButton) findViewById(R.id.addCustomButton);
 
-        AddCustomIngredientNameController nameC = new AddCustomIngredientNameController(model,this);
-        AddCustomIngredientCarbController carbC = new AddCustomIngredientCarbController(model,this);
-        AddCustomIngredientPacketController packetC = new AddCustomIngredientPacketController(model,this);
-        AddCustomIngredientPacketWeightController packetWeightC = new AddCustomIngredientPacketWeightController(model,this);
-        ingredientName.addTextChangedListener(nameC);
-        carbVal.addTextChangedListener(carbC);
-        packVal.addTextChangedListener(packetC);
-        packetWeight.addTextChangedListener(packetWeightC);
-
-        AddCustomIngredientButtonController controller = new AddCustomIngredientButtonController(model,this,nameC,carbC,packetC,packetWeightC);
+        AddCustomIngredientController controller = new AddCustomIngredientController(model,this);
         createCustom.setOnClickListener(controller);
-
+        ingredientName.addTextChangedListener(controller.getNameWatcher());
+        carbVal.addTextChangedListener(controller.getCarbWatcher());
+        packVal.addTextChangedListener(controller.getPacketWatcher());
+        packetWeight.addTextChangedListener(controller.getPacketWeightWatcher());
         android.app.FragmentManager fm = getFragmentManager();
         DefaultErrorController c = new DefaultErrorController(model);
 
 
 
-        view = new AddCustomIngredientView(ingredientName,carbVal,packVal,packetWeight,model,fm,c);
+        ModelObserver view = new AddCustomIngredientView(ingredientName,carbVal,packVal,packetWeight,model,fm,c);
         model.registerObserver(view);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        model.removeObserver(view);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        model.clearActiveIngreident();
-    }
 }

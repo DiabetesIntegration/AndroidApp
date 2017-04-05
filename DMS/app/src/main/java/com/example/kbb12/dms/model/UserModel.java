@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
-import com.example.kbb12.dms.customIngredient.IAddCustomIngredient;
+import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
 import com.example.kbb12.dms.ingredientAmount.IIngredientsAmount;
 import com.example.kbb12.dms.ingredientList.IIngredientList;
 import com.example.kbb12.dms.mealAmount.IMealAmount;
@@ -45,7 +45,7 @@ import java.util.Map;
  */
 public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
-        AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel, IAddCustomIngredient,
+        AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel, AddCustomIngredientReadWriteModel,
         IIngredientsAmount, IIngredientList, IMealAmount, MealCarbohydrateMainModel,
         MealListMainModel,AddIngredientMainModel{
 
@@ -344,7 +344,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
     //-----------------------------------------------------------------------------------
-    //IAddCustomIngredient
+    //AddCustomIngredientReadWriteModel
 
     @Override
     public void setCustomIngredientName(String name) {

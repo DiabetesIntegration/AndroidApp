@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.customIngredient;
+package com.example.kbb12.dms.customIngredient.view;
 
 import android.app.FragmentManager;
 import android.widget.EditText;
@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
+import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
@@ -14,9 +15,9 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 public class AddCustomIngredientView extends MasterView implements ModelObserver {
     private EditText ingredientName, carbVal, packVal, weightVal;
     private ImageButton createCustom, cancelCustom;
-    private IAddCustomIngredient model;
+    private AddCustomIngredientReadWriteModel model;
 
-    public AddCustomIngredientView(EditText name, EditText carb, EditText packet, EditText weight, IAddCustomIngredient model, FragmentManager fm, IErrorController errorC) {
+    public AddCustomIngredientView(EditText name, EditText carb, EditText packet, EditText weight, AddCustomIngredientReadWriteModel model, FragmentManager fm, IErrorController errorC) {
         super(fm,errorC);
         ingredientName = name;
         carbVal = carb;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextWatcher;
 import android.view.View;
 
+import com.example.kbb12.dms.baseScreen.controller.BasicTextWatcher;
 import com.example.kbb12.dms.mealCarbohydrateValue.model.MealCarbohydrateReadWriteModel;
 import com.example.kbb12.dms.mealList.MealListActivity;
 import com.example.kbb12.dms.R;
@@ -16,15 +17,15 @@ import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 public class MealCarbohydrateButtonController implements View.OnClickListener {
     private MealCarbohydrateReadWriteModel model;
     private Activity currentActivity;
-    private MealCarbohydrateTextController name;
-    private MealCarbohydrateTextController value;
+    private BasicTextWatcher name;
+    private BasicTextWatcher value;
 
     public MealCarbohydrateButtonController(MealCarbohydrateReadWriteModel model,
                                             Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
-        this.name = new MealCarbohydrateTextController();
-        this.value = new MealCarbohydrateTextController();
+        this.name = new BasicTextWatcher();
+        this.value = new BasicTextWatcher();
     }
     
     public TextWatcher getMealCarbohydrateNameController(){
