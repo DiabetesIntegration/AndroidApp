@@ -99,7 +99,10 @@ public class Meal implements IMeal {
         return true;
     }
 
-
+    @Override
+    public void addIngredient(IIngredient ingredient) {
+        ingredients.add(ingredient);
+    }
 
 
     @Override

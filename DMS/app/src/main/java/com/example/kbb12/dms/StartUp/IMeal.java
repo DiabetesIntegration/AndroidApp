@@ -19,7 +19,7 @@ public interface IMeal {
     public String getMealAmount();
     public List<IIngredient> getAllIngredients();
     public boolean setIngredients(List<IIngredient> ing);
-
+    void addIngredient(IIngredient ingredient);
 
     public void setCustomCarbMeal(boolean carb);
     public boolean isCustomCarbMeal();

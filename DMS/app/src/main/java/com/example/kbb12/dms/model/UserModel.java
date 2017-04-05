@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.example.kbb12.dms.customIngredient.IAddCustomIngredient;
-import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
-import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 import com.example.kbb12.dms.ingredientAmount.IIngredientsAmount;
 import com.example.kbb12.dms.ingredientList.IIngredientList;
 import com.example.kbb12.dms.mealAmount.IMealAmount;
@@ -33,7 +31,6 @@ import com.example.kbb12.dms.startUp.IMeal;
 import com.example.kbb12.dms.startUp.IMealPlanner;
 import com.example.kbb12.dms.startUp.Ingredient;
 import com.example.kbb12.dms.startUp.Meal;
-import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,11 +47,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
         AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel, IAddCustomIngredient,
         IIngredientsAmount, IIngredientList, IMealAmount, MealCarbohydrateMainModel,
-        MealListMainModel{
-
-    private String exampleData;
-
-    private List<ModelObserver> observers;
+        MealListMainModel,AddIngredientMainModel{
 
     private IBasalInsulinModel basalInsulinModel;
 
@@ -84,8 +77,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private IMeal activeMeal;
 
     private IMealPlanner mealPlanner;
-    private boolean ingList;
-    private String errorMessage;
 
     public UserModel(Context context,SharedPreferences sharPrefEdit){
         DatabaseBuilder db = new DatabaseBuilder(context);
@@ -658,18 +649,18 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
 
-    private List<IIngredient> getDatabaseIngredients() {
-        List<IIngredient> ingredients = new ArrayList<IIngredient>();
+    public List<IIngredient> getSavedIngredients() {
+        List<IIngredient> ingredients = new ArrayList<>();
         Map <Integer, List<String>> ing = savedIngredientsRecord.getAllSavedIngredients();
 
-        List<Integer> idAttribute = new ArrayList<Integer>(ing.keySet());
+        List<Integer> idAttribute = new ArrayList<>(ing.keySet());
         Collections.sort(idAttribute);
         String iName;
-        String iNutrition[] = new String[3];
+        String iNutrition[];
         List<String> attributes;
         IIngredient savedIng;
         for(int i = 0; i < ing.size(); i++) {
-            attributes = new ArrayList<String>(ing.get(idAttribute.get(i)));
+            attributes = new ArrayList<>(ing.get(idAttribute.get(i)));
             iNutrition = new String[3];
             iName = attributes.get(0);
             iNutrition[0] = attributes.get(1);
@@ -680,6 +671,16 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         }
 
         return ingredients;
+    }
+
+    @Override
+    public void addIngredientToMeal(IIngredient ingredient) {
+        activeMeal.addIngredient(ingredient);
+    }
+
+    @Override
+    public List<List<String>> getAllScanableItems() {
+        return scannedItemRecord.getAllSavedItems();
     }
 
     @Override

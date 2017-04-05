@@ -27,12 +27,12 @@ public class MealPlanner implements com.example.kbb12.dms.startUp.IMealPlanner {
 
     @Override
     public void setSavedMeals(List<IMeal> meals) {
-        savedMeals = new ArrayList<IMeal>(meals);
+        savedMeals = new ArrayList<>(meals);
     }
 
     @Override
     public void setSavedIngredients(List<IIngredient> ingredients) {
-        savedIngredients = new ArrayList<IIngredient>(ingredients);
+        savedIngredients = new ArrayList<>(ingredients);
     }
 
     @Override

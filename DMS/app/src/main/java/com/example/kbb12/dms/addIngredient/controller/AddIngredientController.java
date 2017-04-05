@@ -7,7 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.example.kbb12.dms.addIngredient.model.IAddIngredient;
+import com.example.kbb12.dms.addIngredient.model.AddIngredientReadWriteModel;
 import com.example.kbb12.dms.customIngredient.AddCustomIngredientActivity;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.R;
@@ -17,10 +17,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
  * Created by Ciaran on 3/1/2017.
  */
 public class AddIngredientController implements View.OnClickListener, AdapterView.OnItemClickListener, TextWatcher {
-    IAddIngredient model;
+    AddIngredientReadWriteModel model;
     private Activity currentActivity;
 
-    public AddIngredientController(IAddIngredient model, Activity currentActivity) {
+    public AddIngredientController(AddIngredientReadWriteModel model, Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
     }
@@ -29,14 +29,10 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
     public void onClick(View v) {
         switch(v.getId()) {
             case (R.id.addCustomIngredientButton):
-                model.setNewIngredient();
-                model.setAddIngredient(true);
                 Intent ingredientIntent = new Intent(currentActivity, AddCustomIngredientActivity.class);
                 currentActivity.startActivity(ingredientIntent);
                 break;
             case (R.id.scanBarcodeButton):
-                model.setNewIngredient();
-                model.setAddIngredient(true);
                 new IntentIntegrator(currentActivity).initiateScan();
                 break;
         }
@@ -45,10 +41,9 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        model.getSavedIngredient(model.getSavedIngredients().get(position));
-        model.setAddIngredient(true);
-        addSavedIngredient();
-        model.itemSearch("");
+        model.setIngredient(model.getSavedIngredients().get(position));
+        Intent ingredientIntent = new Intent(currentActivity, IngredientsAmountActivity.class);
+        currentActivity.startActivity(ingredientIntent);
     }
 
     @Override
@@ -67,8 +62,6 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
     }
 
     public void addSavedIngredient() {
-        Intent ingredientIntent = new Intent(currentActivity, IngredientsAmountActivity.class);
-        //Launches the next activity.
-        currentActivity.startActivity(ingredientIntent);
+
     }
 }

@@ -11,11 +11,10 @@ import android.widget.ListView;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.addIngredient.controller.AddIngredientController;
-import com.example.kbb12.dms.addIngredient.model.IAddIngredient;
+import com.example.kbb12.dms.addIngredient.model.AddIngredientReadWriteModel;
 import com.example.kbb12.dms.addIngredient.view.AddIngredientView;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.startUp.ModelHolder;
-import com.example.kbb12.dms.model.UserModel;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -24,7 +23,7 @@ public class AddIngredientActivity extends AppCompatActivity {
     private EditText searchSavedIng;
     private ListView savedIngredientList;
     private ArrayAdapter<String> adapter;
-    private IAddIngredient model;
+    private AddIngredientReadWriteModel model;
     private AddIngredientView view;
 
     @Override
@@ -34,7 +33,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model =(IAddIngredient) ModelHolder.model;
+        model =(AddIngredientReadWriteModel) ModelHolder.model;
 
         addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
         scanItem = (ImageButton) findViewById(R.id.scanBarcodeButton);
@@ -53,20 +52,6 @@ public class AddIngredientActivity extends AppCompatActivity {
 
         view = new AddIngredientView(adapter,model);
         model.registerObserver(view);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        model.removeIngListView();
-        model.setAddIngredient(false);
     }
 
 
