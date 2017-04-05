@@ -49,7 +49,8 @@ public class GraphFragment extends Fragment implements ModelObserver {
         View v = inflater.inflate(R.layout.chart_fragment, container, false);
         form = new SimpleDateFormat("HH:mm", Locale.getDefault());
         model = ModelHolder.model;
-        model.registerObserver(this);
+        //TODO
+        //model.registerObserver(this);
         Calendar now = Calendar.getInstance();
         Calendar then = Calendar.getInstance();
         then.add(Calendar.HOUR, -12);

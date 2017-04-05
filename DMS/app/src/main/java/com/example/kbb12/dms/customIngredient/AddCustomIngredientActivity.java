@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.customIngredient.controller.AddCustomIngredientController;
+import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientModel;
 import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
 import com.example.kbb12.dms.customIngredient.view.AddCustomIngredientView;
 import com.example.kbb12.dms.startUp.ModelHolder;
@@ -23,7 +24,7 @@ public class AddCustomIngredientActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        AddCustomIngredientReadWriteModel model = ModelHolder.model;
+        AddCustomIngredientReadWriteModel model = new AddCustomIngredientModel(ModelHolder.model);
 
 
         EditText ingredientName = (EditText) findViewById(R.id.customItemName);

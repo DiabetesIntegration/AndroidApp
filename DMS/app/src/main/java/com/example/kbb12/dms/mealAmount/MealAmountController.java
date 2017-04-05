@@ -42,7 +42,8 @@ public class MealAmountController implements View.OnClickListener, TextWatcher {
                             break;
                         case (R.id.eatMealButton) :
                             addNewMeal();
-                            model.addNewMealDateCarb(model.mealToEat().getCarbsEaten());
+                            //TODO
+                            //model.addNewMealDateCarb(model.mealToEat().getCarbsEaten());
                             currentActivity.finish();
                             Intent templateIntent = new Intent(currentActivity, TakeInsulin.class);
                             //Launches the next activity.

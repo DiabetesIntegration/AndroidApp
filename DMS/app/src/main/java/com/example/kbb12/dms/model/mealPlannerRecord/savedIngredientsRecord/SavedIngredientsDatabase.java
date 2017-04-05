@@ -44,4 +44,34 @@ public class SavedIngredientsDatabase implements SavedIngredientsRecord {
 
         return ingredients;
     }
+
+    @Override
+    public IIngredient getIngredientByName(String name) {
+        String selectQuery = "SELECT  * FROM " +
+                SavedIngredientsContract.ContentsDefinition.TABLE_NAME+
+                " where "+SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME +"=?";
+        Cursor c = write.rawQuery(selectQuery, new String[]{name});
+        if(c.moveToNext()){
+            return new Ingredient(
+                    c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME)),
+                    Double.parseDouble(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_CARBVAL))),
+                    Integer.parseInt(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_WEIGHT))));
+        }
+        return null;
+    }
+
+    @Override
+    public IIngredient getIngredientByBarcode(String barcode) {
+        String selectQuery = "SELECT  * FROM " +
+                SavedIngredientsContract.ContentsDefinition.TABLE_NAME+
+                " where "+SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_BARCODE +"=?";
+        Cursor c = write.rawQuery(selectQuery, new String[]{barcode});
+        if(c.moveToNext()){
+            return new Ingredient(
+                    c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME)),
+                    Double.parseDouble(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_CARBVAL))),
+                    Integer.parseInt(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_WEIGHT))));
+        }
+        return null;
+    }
 }

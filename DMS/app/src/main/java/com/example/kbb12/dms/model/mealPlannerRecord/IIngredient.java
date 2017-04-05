@@ -9,4 +9,5 @@ public interface IIngredient {
     String getName();
     Double getCarbsPerHundredG();
     Integer getPacketWeight();
+    String getBarcode();
 }

@@ -44,6 +44,7 @@ public class IngredientListController implements View.OnClickListener, TextWatch
                     model.setError("Error! This meal name already exists! Please choose another name!");
                 }
                 else {
+                    model.saveMeal();
                     nextActivity();
                 }
                 break;

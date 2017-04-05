@@ -3,6 +3,7 @@ package com.example.kbb12.dms.mealCarbohydrateValue.model;
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.MealCarbohydrateMainModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 /**
  * Created by kbb12 on 04/04/2017.
@@ -19,7 +20,7 @@ public class MealCarbohydrateModel extends BaseModel implements MealCarbohydrate
     @Override
     public boolean isNameTaken(String name) {
         for(IMeal current:model.getSavedMeals()) {
-            if(current.getMealName().equals(name)) {
+            if(current.getName().equals(name)) {
                 return true;
             }
         }
@@ -28,7 +29,7 @@ public class MealCarbohydrateModel extends BaseModel implements MealCarbohydrate
 
     @Override
     public void addNewCarbMeal(String name, int value) {
-        model.saveMeal(name,value);
+        model.saveMeal(new Meal(name,value));
     }
 
     @Override

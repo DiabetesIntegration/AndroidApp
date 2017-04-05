@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
+import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord.ScannedItemRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
@@ -60,9 +60,9 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private SavedIngredientsRecord savedIngredientsRecord;
     private SavedMealsRecord savedMealsRecord;
     private TimeCarbEatenRecord timeCarbEatenRecord;
-    private ScannedItemRecord scannedItemRecord;
 
     private IMeal activeMeal;
+    private IIngredient activeIngredient;
 
     public UserModel(Context context,SharedPreferences sharPrefEdit){
         DatabaseBuilder db = new DatabaseBuilder(context);
@@ -77,21 +77,29 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         savedIngredientsRecord = db.getSavedIngredientsRecord();
         savedMealsRecord = db.getSavedMealsRecord();
         timeCarbEatenRecord = db.getTimeCarbEatenRecord();
-        scannedItemRecord = db.getScannedItemRecord();
         for(Calendar c : rawBGRecord.getAllBasicData().keySet()){
             Log.d("Record", rawBGRecord.getAllBasicData().get(c));
             Log.d("EM: ", rawBGRecord.getAllBasicData().get(c).substring(586,588) + rawBGRecord.getAllBasicData().get(c).substring(584,586));
         }
         this.sharPrefEdit=sharPrefEdit;
         activeMeal =null;
+        activeIngredient=null;
         setUpScanningExamples();
     }
 
     private void setUpScanningExamples(){
-        if(scannedItemRecord.getAllSavedItems().isEmpty()) {
-            scannedItemRecord.saveItem("Napolina Fusilli Pasta", "72", "100", "1000");
-            scannedItemRecord.saveItem("Napolina Chopped Tomatoes", "3.6", "100", "100");
-            scannedItemRecord.saveItem("Dolmio Tomato and Basil Sauce", "8.4", "100", "100");
+        IIngredient example;
+        if(getIngredientByBarcode("5000232823458")==null){
+            example=new Ingredient("Napolina Fusilli Pasta", 72.0, 1000,"5000232823458");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("5010061001613")==null){
+            example=new Ingredient("Napolina Chopped Tomatoes", 3.6, 100,"5010061001613");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("4002359640469")==null){
+            example=new Ingredient("Dolmio Tomato and Basil Sauce", 8.4, 100,"4002359640469");
+            savedIngredientsRecord.saveIngredient(example);
         }
     }
 
@@ -325,8 +333,13 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
     @Override
-    public List<List<String>> getAllScanableItems() {
-        return scannedItemRecord.getAllSavedItems();
+    public IIngredient getIngredientByName(String name) {
+        return savedIngredientsRecord.getIngredientByName(name);
+    }
+
+    @Override
+    public IIngredient getIngredientByBarcode(String barcode) {
+        return savedIngredientsRecord.getIngredientByBarcode(barcode);
     }
 
     @Override
@@ -337,6 +350,30 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public IMeal getActiveMeal() {
         return activeMeal;
+    }
+
+    @Override
+    public boolean mealNameUsed(String newName) {
+        if(newName.equals(activeMeal.getName())){
+            return false;
+        }
+        for(IMeal current:savedMealsRecord.getAllMeals(savedIngredientsRecord.getAllSavedIngredients())){
+            if(current.getName().equals(newName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void setActiveIngredient(IIngredient ingredient) {
+        this.activeIngredient=ingredient;
+    }
+
+    @Override
+    public void updateActiveMeal(IMeal meal) {
+        savedMealsRecord.editMeal(activeMeal.getName(),meal);
+        activeMeal=meal;
     }
 
     @Override

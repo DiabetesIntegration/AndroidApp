@@ -11,5 +11,6 @@ public interface SavedIngredientsRecord {
 
     void saveIngredient(IIngredient ingredient);
     List<IIngredient> getAllSavedIngredients();
-
+    IIngredient getIngredientByName(String name);
+    IIngredient getIngredientByBarcode(String barcode);
 }

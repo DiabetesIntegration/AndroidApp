@@ -41,50 +41,17 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
 
     @Override
     public boolean setScannedIngredient(String code) {
-        IIngredient ingredient = new Ingredient();
-        List<List<String>> scanDB = model.getAllScanableItems();
-        if(code.equals("5000232823458")) {
-            String nut[] = new String [3];
-            nut[0] = scanDB.get(0).get(1);
-            nut[1] = scanDB.get(0).get(2);
-            nut[2] = scanDB.get(0).get(3);
-            ingredient.setName(scanDB.get(0).get(0));
-            ingredient.addCustomNutrition(nut);
-            model.addIngredientToMeal(ingredient);
-            return true;
+        IIngredient ingredient = model.getIngredientByBarcode(code);
+        if(ingredient==null){
+            return false;
         }
-        else if(code.equals("5010061001613")) {
-            String nut[] = new String [3];
-            nut[0] = scanDB.get(1).get(1);
-            nut[1] = scanDB.get(1).get(2);
-            nut[2] = scanDB.get(1).get(3);
-            ingredient.setIngredientName(scanDB.get(1).get(0));
-            ingredient.addCustomNutrition(nut);
-            model.addIngredientToMeal(ingredient);
-            return true;
-        }
-        else if(code.equals("4002359640469")) {
-            String nut[] = new String [3];
-            nut[0] = scanDB.get(2).get(1);
-            nut[1] = scanDB.get(2).get(2);
-            nut[2] = scanDB.get(2).get(3);
-            ingredient.setIngredientName(scanDB.get(2).get(0));
-            ingredient.addCustomNutrition(nut);
-            model.addIngredientToMeal(ingredient);
-            return true;
-        }
-        return false;
+        model.addIngredientToMeal(ingredient);
+        return true;
     }
 
     @Override
     public void setIngredient(String ingredientName) {
-        List<IIngredient> allIngredients = model.getSavedIngredients();
-        for(IIngredient ingredient:allIngredients){
-            if(ingredient.getName().equals(ingredientName)){
-                model.addIngredientToMeal(ingredient);
-                break;
-            }
-        }
+        model.addIngredientToMeal(model.getIngredientByName(ingredientName));
     }
 
 }

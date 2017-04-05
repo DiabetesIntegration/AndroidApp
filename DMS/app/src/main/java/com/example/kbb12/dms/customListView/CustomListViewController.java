@@ -16,11 +16,6 @@ public class CustomListViewController implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(model.isIngredientList()) {
-            model.removeIngredient(index);
-        }
-        else {
-            model.removeMeal(index);
-        }
+        model.removeItem(index);
     }
 }

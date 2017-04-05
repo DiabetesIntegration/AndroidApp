@@ -10,10 +10,9 @@ import java.util.List;
 /**
  * Created by Ciaran on 3/2/2017.
  */
-public interface IngredientListReadWriteModel extends BaseReadWriteModel,IDeleteCustomItem,IngredientListReadModel {
+public interface IngredientListReadModel extends BaseReadModel {
 
-    void setMealName(String mealName);
-    void setEditableIngredientPosition(int pos);
-    boolean checkMealName();
-    void saveMeal();
+    String getMealName();
+    List<IIngredient> getIngredients();
+    Double getAmountOf(IIngredient ingredient);
 }

@@ -36,11 +36,12 @@ public class SavedMealsDatabase implements SavedMealsRecord {
 
 
     @Override
-    public void editMeal(IMeal meal) {
+    public void editMeal(String name,IMeal meal) {
         ContentValues values = new ContentValues();
+        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME,meal.getName());
         values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS, getIngredientsString(meal));
         values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTAMOUNTS, getAmountsString(meal));
-        write.update(SavedMealsContract.ContentsDefinition.TABLE_NAME, values, SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME +" = ?", new String[] {meal.getName()});
+        write.update(SavedMealsContract.ContentsDefinition.TABLE_NAME, values, SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME +" = ?", new String[] {name});
     }
 
     @Override

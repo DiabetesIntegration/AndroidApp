@@ -48,6 +48,9 @@ public class AddCustomIngredientController implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        int carbValue;
+        int packetValue;
+        int packetWeightValue;
         if(name.getEntry().isEmpty()) {
             model.setError("Error! Nothing was entered for the Name!");
         }
@@ -62,14 +65,14 @@ public class AddCustomIngredientController implements View.OnClickListener {
         }
         else {
             try {
-                Integer.parseInt(carb.getEntry());
-                Integer.parseInt(packet.getEntry());
-                Integer.parseInt(packetWeight.getEntry());
+                carbValue=Integer.parseInt(carb.getEntry());
+                packetValue=Integer.parseInt(packet.getEntry());
+                packetWeightValue=Integer.parseInt(packetWeight.getEntry());
                 if(Integer.parseInt(carb.getEntry()) > Integer.parseInt(packet.getEntry())) {
                     model.setError("Error! The number of carbs cannot be greater than the packet value!");
                 }
                 else {
-                    model.save(name.getEntry(),carb.getEntry(),packet.getEntry(),packetWeight.getEntry());
+                    model.save(name.getEntry(),carbValue,packetValue,packetWeightValue);
                     nextActivity();
                 }
             }

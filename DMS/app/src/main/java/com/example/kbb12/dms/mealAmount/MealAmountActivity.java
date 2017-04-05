@@ -31,7 +31,8 @@ public class MealAmountActivity extends AppCompatActivity {
         saveMeal = (Button) findViewById(R.id.saveMealButton);
         eatMeal = (Button) findViewById(R.id.eatMealButton);
         mealAmount = (EditText) findViewById(R.id.mealAmountPercent);
-
+        //TODO
+/*
         MealAmountController controller = new MealAmountController(model,this);
         saveMeal.setOnClickListener(controller);
         eatMeal.setOnClickListener(controller);
@@ -42,12 +43,7 @@ public class MealAmountActivity extends AppCompatActivity {
 
         view = new MealAmountView(mealAmount,model,fm,c);
         model.registerObserver(view);
+        */
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        model.removeObserver(view);
-    }
 }

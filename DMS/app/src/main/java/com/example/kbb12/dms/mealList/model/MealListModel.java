@@ -30,10 +30,10 @@ public class MealListModel extends BaseModel implements MealListReadWriteModel {
         List<String> meals  = new ArrayList<String>();
         for(IMeal current:model.getSavedMeals()) {
             if(current.isCustomCarbMeal()) {
-                meals.add(current.getMealName() + " - " + current.getCustomCarbsEaten() + "g of carbohydrate in meal (No ingredients)");
+                meals.add(current.getName() + " - " + current.getNumCarbs() + "g of carbohydrate in meal (No ingredients)");
             }
             else {
-                meals.add(current.getMealName() + " - " + current.getTotalMealCarbs() + "g of carbohydrate in meal");
+                meals.add(current.getName() + " - " + current.getNumCarbs() + "g of carbohydrate in meal");
             }
         }
         return meals;

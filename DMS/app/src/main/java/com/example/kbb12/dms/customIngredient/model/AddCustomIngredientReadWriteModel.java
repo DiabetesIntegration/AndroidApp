@@ -8,5 +8,5 @@ import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
  */
 public interface AddCustomIngredientReadWriteModel extends BaseReadModel, BaseReadWriteModel {
 
-    void save(String name,String carbs,String packet,String packetWeight);
+    void save(String name,double carbs,double perGrams,int packetWeight);
 }

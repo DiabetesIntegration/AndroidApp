@@ -73,7 +73,8 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         stopForegroundDispatch(this, mAdapter);
-        model.removeObserver(fragment);
+        //TODO
+        //model.removeObserver(fragment);
 
     }
 

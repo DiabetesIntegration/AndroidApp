@@ -11,5 +11,6 @@ import java.util.List;
 public interface AddIngredientMainModel {
     List<IIngredient> getSavedIngredients();
     void addIngredientToMeal(IIngredient ingredient);
-    List<List<String>> getAllScanableItems();
+    IIngredient getIngredientByName(String name);
+    IIngredient getIngredientByBarcode(String barcode);
 }

@@ -6,8 +6,13 @@ import android.widget.EditText;
 import com.example.kbb12.dms.customListView.CustomAdapter;
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
+import com.example.kbb12.dms.ingredientList.model.IngredientListReadModel;
 import com.example.kbb12.dms.ingredientList.model.IngredientListReadWriteModel;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.startUp.ModelObserver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ciaran on 3/6/2017.
@@ -15,17 +20,16 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 public class IngredientListView extends MasterView implements ModelObserver {
     private EditText mName;
     private CustomAdapter adapter;
-    private IngredientListReadWriteModel model;
+    private IngredientListReadModel model;
 
 
-    public IngredientListView(EditText mealName, CustomAdapter adapter, IngredientListReadWriteModel model,
+    public IngredientListView(EditText mealName, CustomAdapter adapter, IngredientListReadModel model,
                               FragmentManager fm, IErrorController errorC) {
         super(fm,errorC);
         mName = mealName;
         this.adapter = adapter;
-        this.adapter.addAll(model.getIngredientsInMeal());
         this.model = model;
-        adapter.addAll(model.getIngredientsInMeal());
+        update();
     }
 
 
@@ -33,13 +37,16 @@ public class IngredientListView extends MasterView implements ModelObserver {
     @Override
     public void update() {
         handleError(model.getError());
-
         if(!adapter.isEmpty()) {
             adapter.clear();
         }
-        adapter.addAll(model.getIngredientsInMeal());
-
+        List<String> ingredientsStrings = new ArrayList<>();
+        Double numCarbs;
+        for(IIngredient ingredient:model.getIngredients()){
+            numCarbs=(model.getAmountOf(ingredient)/100.0)*ingredient.getCarbsPerHundredG();
+            ingredientsStrings.add(String.format("%s - %.2f of carbs",ingredient.getName(),numCarbs));
+        }
+        adapter.addAll(ingredientsStrings);
         mName.setText(model.getMealName());
-
     }
 }

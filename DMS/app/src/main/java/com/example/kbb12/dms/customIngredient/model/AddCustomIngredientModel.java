@@ -18,10 +18,10 @@ public class AddCustomIngredientModel extends BaseModel implements AddCustomIngr
         this.model=model;
     }
 
+
     @Override
-    public void save(String name, String carbs,String packet,String packetWeight) {
-        String nutrients[] = {carbs, packet, packetWeight};
-        IIngredient ingredient = new Ingredient(name,nutrients);
-        model.addIngredientToMeal(ingredient);
+    public void save(String name, double carbs, double perGrams, int packetWeight) {
+        //The calculations is to turn the carbs into carbs per 100g
+        model.addIngredientToMeal(new Ingredient(name,(carbs/perGrams)*100,packetWeight));
     }
 }

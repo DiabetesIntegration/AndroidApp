@@ -11,7 +11,7 @@ import java.util.List;
 public interface SavedMealsRecord {
 
     void saveMeal(IMeal meal);
-    void editMeal(IMeal meal);
+    void editMeal(String oldName,IMeal meal);
     void deleteMeal(IMeal m);
     List<IMeal> getAllMeals(List<IIngredient> allIngredients);
 

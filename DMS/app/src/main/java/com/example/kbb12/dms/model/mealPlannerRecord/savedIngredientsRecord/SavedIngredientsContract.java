@@ -12,13 +12,17 @@ public class SavedIngredientsContract {
         public static final String COLUMN_NAME_INGNAME = "name";
         public static final String COLUMN_NAME_CARBVAL = "carbVal";
         public static final String COLUMN_NAME_WEIGHT = "packetWeight";
+        public static final String COLUMN_NAME_BARCODE = "barcode";
     }
 
-    public static final String SQL_CREATE_TABLE = "CREATE TABLE "
-            + ContentsDefinition.TABLE_NAME + " (" + ContentsDefinition._ID + " INTEGER PRIMARY KEY," + ContentsDefinition.COLUMN_NAME_INGNAME
-            + " TEXT," + ContentsDefinition.COLUMN_NAME_CARBVAL
-            + " TEXT," + ContentsDefinition.COLUMN_NAME_WEIGHT
-            + " TEXT" + ")";
+    public static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + ContentsDefinition.TABLE_NAME + " (" +
+                    ContentsDefinition.COLUMN_NAME_INGNAME + " TEXT," +
+                    ContentsDefinition.COLUMN_NAME_CARBVAL + " TEXT," +
+                    ContentsDefinition.COLUMN_NAME_WEIGHT + " TEXT," +
+                    ContentsDefinition.COLUMN_NAME_BARCODE + " TEXT," +
+                    "PRIMARY KEY( "+ ContentsDefinition.COLUMN_NAME_INGNAME +" ));";
+
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + ContentsDefinition.TABLE_NAME;

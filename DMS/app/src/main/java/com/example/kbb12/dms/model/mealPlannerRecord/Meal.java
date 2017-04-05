@@ -17,6 +17,14 @@ public class Meal implements IMeal {
         amounts = new ArrayList<>();
     }
 
+    public Meal(String name,int numCarbs){
+        mealName=name;
+        this.ingredients=new ArrayList<>();
+        ingredients.add(new Ingredient.BasicIngredient());
+        this.amounts=new ArrayList<>();
+        amounts.add((double)numCarbs);
+    }
+
     public Meal(String name, List<IIngredient> ingredients, List<Double> amounts) {
         mealName = name;
         this.ingredients = new ArrayList<>(ingredients);
@@ -51,5 +59,35 @@ public class Meal implements IMeal {
                 amounts.set(i,amount);
             }
         }
+    }
+
+    @Override
+    public Double getAmountOf(IIngredient ingredient) {
+        for(int i=0;i<ingredients.size();i++){
+            if(ingredient.getName().equals(ingredient.getName())){
+                return amounts.get(i);
+            }
+        }
+        return 0.0;
+    }
+
+    @Override
+    public void removeIngredient(int index) {
+        ingredients.remove(index);
+        amounts.remove(index);
+    }
+
+    @Override
+    public double getNumCarbs() {
+        double totalCarbs=0.0;
+        for(int i=0;i<ingredients.size();i++){
+            totalCarbs+=(ingredients.get(i).getCarbsPerHundredG()/100)*amounts.get(i);
+        }
+        return totalCarbs;
+    }
+
+    @Override
+    public boolean isCustomCarbMeal() {
+        return (ingredients.size()==1&&ingredients.get(0).getName().equals("Custom"));
     }
 }

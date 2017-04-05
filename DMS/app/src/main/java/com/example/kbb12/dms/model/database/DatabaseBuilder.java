@@ -10,9 +10,6 @@ import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.Save
 import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsContract;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsDatabase;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord.ScannedItemContract;
-import com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord.ScannedItemDatabase;
-import com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord.ScannedItemRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenContract;
 import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbsEatenDatabase;
@@ -48,7 +45,7 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME="BackingStorage";
-    private static final int versionNumber=12;
+    private static final int versionNumber=13;
     private IBolusInsulinModel bolusInsulinModel;
     private IBasalInsulinModel basalInsulinModel;
     private InsulinTakenRecord insulinTakenRecord;
@@ -60,7 +57,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
     private SavedIngredientsRecord savedIngredientsRecord;
     private SavedMealsRecord savedMealsRecord;
     private TimeCarbEatenRecord timeCarbEatenRecord;
-    private ScannedItemRecord scannedItemRecord;
 
     public IBolusInsulinModel getBolusInsulinModel() {
         return bolusInsulinModel;
@@ -102,10 +98,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         return timeCarbEatenRecord;
     }
 
-    public ScannedItemRecord getScannedItemRecord() {
-        return scannedItemRecord;
-    }
-
     public DatabaseBuilder(Context context){
         super(context,DATABASE_NAME,null,versionNumber);
         bolusInsulinModel=new BolusInsulinModel(getWritableDatabase());
@@ -119,7 +111,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         savedIngredientsRecord = new SavedIngredientsDatabase(getWritableDatabase());
         savedMealsRecord = new SavedMealsDatabase(getWritableDatabase());
         timeCarbEatenRecord = new TimeCarbsEatenDatabase(getWritableDatabase());
-        scannedItemRecord = new ScannedItemDatabase(getWritableDatabase());
     }
 
     @Override
@@ -138,10 +129,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(CurrentBGContract.SQL_CREATE_TABLE);
         db.execSQL(DailyFitnessInfoContract.SQL_CREATE_ENTRIES);
         db.execSQL(ActivityRecordContract.SQL_CREATE_ENTRIES);
-        db.execSQL(SavedIngredientsContract.SQL_CREATE_TABLE);
-        db.execSQL(SavedMealsContract.SQL_CREATE_TABLE);
+        db.execSQL(SavedIngredientsContract.SQL_CREATE_ENTRIES);
+        db.execSQL(SavedMealsContract.SQL_CREATE_ENTRIES);
         db.execSQL(TimeCarbEatenContract.SQL_CREATE_TABLE);
-        db.execSQL(ScannedItemContract.SQL_CREATE_TABLE);
     }
 
     public DailyFitnessInfoRecord getDailyFitnessInfoRecord() {
@@ -161,7 +151,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(SavedIngredientsContract.SQL_DELETE_ENTRIES);
         db.execSQL(SavedMealsContract.SQL_DELETE_ENTRIES);
         db.execSQL(TimeCarbEatenContract.SQL_DELETE_ENTRIES);
-        db.execSQL(ScannedItemContract.SQL_DELETE_ENTRIES);
         onCreate(db);
 
     }

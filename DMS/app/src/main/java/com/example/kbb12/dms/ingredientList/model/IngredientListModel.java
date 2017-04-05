@@ -3,6 +3,8 @@ package com.example.kbb12.dms.ingredientList.model;
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.IngredientsListMainModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.List;
 
@@ -13,38 +15,54 @@ import java.util.List;
 public class IngredientListModel extends BaseModel implements IngredientListReadWriteModel {
 
     private IngredientsListMainModel model;
+    private IMeal active;
 
     public IngredientListModel(IngredientsListMainModel model){
         this.model=model;
+        active=model.getActiveMeal();
     }
 
-    @Override
-    public boolean removeItem(int index) {
-        return false;
-    }
 
     @Override
     public String getMealName() {
-        return null;
+        return active.getName();
     }
 
     @Override
     public void setMealName(String mealName) {
-
+        active=new Meal(mealName,active.getIngredients(),active.getAmounts());
+        notifyObserver();
     }
 
     @Override
     public void setEditableIngredientPosition(int pos) {
-
+        model.setActiveIngredient(active.getIngredients().get(pos));
     }
 
     @Override
     public boolean checkMealName() {
-        return false;
+        return model.mealNameUsed(active.getName());
+    }
+
+    @Override
+    public void saveMeal() {
+        model.updateActiveMeal(active);
     }
 
     @Override
     public List<IIngredient> getIngredients() {
-        return null;
+        return active.getIngredients();
+    }
+
+    @Override
+    public Double getAmountOf(IIngredient ingredient) {
+        return active.getAmountOf(ingredient);
+    }
+
+    @Override
+    public boolean removeItem(int index) {
+        active.removeIngredient(index);
+        notifyObserver();
+        return false;
     }
 }
