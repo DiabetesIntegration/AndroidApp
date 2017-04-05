@@ -32,8 +32,8 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
         List<String> matchingIngredientNames = new ArrayList<>();
         List<IIngredient> allIngredients = model.getSavedIngredients();
         for(IIngredient ingredient:allIngredients){
-            if(ingredient.getIngredientName().contains(searchTerm)){
-                matchingIngredientNames.add(ingredient.getIngredientName());
+            if(ingredient.getName().contains(searchTerm)){
+                matchingIngredientNames.add(ingredient.getName());
             }
         }
         return matchingIngredientNames;
@@ -48,7 +48,7 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
             nut[0] = scanDB.get(0).get(1);
             nut[1] = scanDB.get(0).get(2);
             nut[2] = scanDB.get(0).get(3);
-            ingredient.setIngredientName(scanDB.get(0).get(0));
+            ingredient.setName(scanDB.get(0).get(0));
             ingredient.addCustomNutrition(nut);
             model.addIngredientToMeal(ingredient);
             return true;
@@ -80,7 +80,7 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
     public void setIngredient(String ingredientName) {
         List<IIngredient> allIngredients = model.getSavedIngredients();
         for(IIngredient ingredient:allIngredients){
-            if(ingredient.getIngredientName().equals(ingredientName)){
+            if(ingredient.getName().equals(ingredientName)){
                 model.addIngredientToMeal(ingredient);
                 break;
             }

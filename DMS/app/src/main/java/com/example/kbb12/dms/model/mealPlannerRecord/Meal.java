@@ -37,4 +37,19 @@ public class Meal implements IMeal {
     public List<Double> getAmounts() {
         return amounts;
     }
+
+    @Override
+    public void addIngredient(IIngredient ingredient, double amount) {
+        ingredients.add(ingredient);
+        amounts.add(amount);
+    }
+
+    @Override
+    public void updateAmount(IIngredient ingredient, double amount) {
+        for(int i=0;i<ingredients.size();i++){
+            if(ingredient.getName().equals(ingredients.get(i).getName())){
+                amounts.set(i,amount);
+            }
+        }
+    }
 }

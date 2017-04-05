@@ -9,4 +9,6 @@ public interface IMeal {
     String getName();
     List<IIngredient> getIngredients();
     List<Double> getAmounts();
+    void addIngredient(IIngredient ingredient,double amount);
+    void updateAmount(IIngredient ingredient,double amount);
 }

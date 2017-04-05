@@ -11,14 +11,12 @@ public class ScannedItemContract {
         public static final String TABLE_NAME = "scanneritems";
         public static final String COLUMN_NAME_INGNAMESCAN = "nameScan";
         public static final String COLUMN_NAME_CARBVALSCAN = "carbValScan";
-        public static final String COLUMN_NAME_PACKETVALSCAN = "packetValScan";
         public static final String COLUMN_NAME_WEIGHTSCAN = "packetWeightScan";
     }
 
     public static final String SQL_CREATE_TABLE = "CREATE TABLE "
             + ContentsDefinition.TABLE_NAME + " (" + ContentsDefinition._ID + " INTEGER PRIMARY KEY," + ContentsDefinition.COLUMN_NAME_INGNAMESCAN
             + " TEXT," + ContentsDefinition.COLUMN_NAME_CARBVALSCAN
-            + " TEXT," + ContentsDefinition.COLUMN_NAME_PACKETVALSCAN
             + " TEXT," + ContentsDefinition.COLUMN_NAME_WEIGHTSCAN
             + " TEXT" + ")";
 

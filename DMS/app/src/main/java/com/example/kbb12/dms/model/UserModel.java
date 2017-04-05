@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
-import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
-import com.example.kbb12.dms.ingredientList.IIngredientList;
-import com.example.kbb12.dms.mealAmount.IMealAmount;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
 import com.example.kbb12.dms.model.mealPlannerRecord.scanningItemsRecord.ScannedItemRecord;
@@ -27,15 +24,9 @@ import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
-import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
-import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by kbb12 on 17/01/2017.
@@ -43,9 +34,8 @@ import java.util.Map;
  */
 public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
-        AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel, AddCustomIngredientReadWriteModel,
-        IngredientsAmountMainModel, IIngredientList, IMealAmount, MealCarbohydrateMainModel,
-        MealListMainModel,AddIngredientMainModel{
+        AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel,IngredientsAmountMainModel,
+        MealCarbohydrateMainModel, MealListMainModel,AddIngredientMainModel,IngredientsListMainModel{
 
     private IBasalInsulinModel basalInsulinModel;
 
@@ -122,13 +112,15 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public void addHistoryReading(Calendar c, double reading){
         historyBGRecord.insertReading(c, reading);
-        notifyObservers();
+        //TODO
+        //notifyObservers();
     }
 
     @Override
     public void addCurrentReading(Calendar c, double reading){
         currentBGRecord.insertReading(c, reading);
-        notifyObservers();
+        //TODO
+        //notifyObservers();
     }
 
     @Override
@@ -318,345 +310,18 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         return calories;
     }
 
-
-    @Override
-    public void setError(String errorMessage) {
-        //TODO
-    }
-
-    //-----------------------------------------------------------------------------------
-    //AddCustomIngredientReadWriteModel
-
-    @Override
-    public void setCustomIngredientName(String name) {
-        mealPlanner.getActiveIngredient().setIngredientName(name);
-    }
-
-    @Override
-    public void setCustomIngredientNutrition(String values[]) {
-        mealPlanner.getActiveIngredient().addCustomNutrition(values);
-    }
-
-    @Override
-    public void clearActiveIngreident() {
-        mealPlanner.setActiveIngredient(null);
-    }
-
-
-    @Override
-    public void getCustomIngErrorMessage(String err) {
-        setError(err);
-    }
-
-    //------------------------------------------------------------------------------------
-    //IngredientsAmountReadWriteModel
-
-
-    @Override
-    public void setUnits(String unit) {
-        mealPlanner.getActiveIngredient().setUnit(unit);
-    }
-
-    @Override
-    public String getUnits() {
-        return mealPlanner.getActiveIngredient().getUnit();
-    }
-
-    @Override
-    public void setCarbValOfIngredient(String amount) {
-        if(getUnits().equals("g")) {
-            mealPlanner.getActiveIngredient().setCarbAmountByWeight(amount);
-        }
-        else {
-            mealPlanner.getActiveIngredient().setCarbAmountByPercent(amount);
-        }
-    }
-
-    @Override
-    public void setIngredientListView() {
-        ingList = true;
-    }
-
-    @Override
-    public void setIngredientExists(boolean exist) {
-        mealPlanner.getActiveIngredient().setExists(exist);
-    }
-
-    @Override
-    public boolean ingredientExists() {
-        return mealPlanner.getActiveIngredient().ingredientExists();
-    }
-
-    @Override
-    public void addNewIngredient() {
-        mealPlanner.addNewIngredient();
-    }
-
-    @Override
-    public void getIngAmountErrorMessage(String err) {
-        setError(err);
-        notifyObservers();
-    }
-
-    //-----------------------------------------------------------------------------------
-    //IIngredientList
-
-    @Override
-    public List<String> getIngredientsInMeal() {
-        List<String> ingNames = new ArrayList<String>();
-        for(int i = 0; i < mealPlanner.getMealIngredients().size(); i++) {
-            ingNames.add(mealPlanner.getMealIngredients().get(i).getIngredientName() + " - " + mealPlanner.getMealIngredients().get(i).getCarbAmount() + "g of carbs");
-        }
-        return ingNames;
-    }
-
-    @Override
-    public String getMealName() {
-        return mealPlanner.getActiveMeal().getMealName();
-    }
-
-    @Override
-    public boolean fromIngredient() {
-        return mealPlanner.isNewIngredient();
-    }
-
-    @Override
-    public void removeIngredientFromMeal() {
-        mealPlanner.removeCreatedIngredient();
-    }
-
-    @Override
-    public void setMealName(String n) {
-        mealPlanner.getActiveMeal().setMealName(n);
-    }
-
-    @Override
-    public void setIngListView(boolean meal) {
-        ingList = meal;
-    }
-
-    @Override
-    public void setIngredientsForMeal() {
-        mealPlanner.getActiveMeal().setIngredients(mealPlanner.getMealIngredients());
-    }
-
-    @Override
-    public void setIngredientItem(int i) {
-        mealPlanner.setActiveIngredient(mealPlanner.getMealIngredients().get(i));
-    }
-
-    @Override
-    public void setTotalCarbs() {
-        mealPlanner.getActiveMeal().setTotalMealCarbs(mealPlanner.getActiveMeal().getTotalCarbs());
-    }
-
-    @Override
-    public boolean checkMealName() {
-        for(int i = 0; i < mealPlanner.getSavedMeals().size(); i++) {
-            if(getMealName().equals((mealPlanner.getSavedMeals().get(i).getMealName())) && (!mealPlanner.getActiveMeal().equals(mealPlanner.getSavedMeals().get(i)))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void getIngListErrorMessage(String err) {
-        setError(err);
-        notifyObservers();
-    }
-
-
-    //---------------------------------------------------------------------------------------
-    //IMealAmount
-
-    @Override
-    public void setMealCarbAmount(String amount) {
-        mealPlanner.getActiveMeal().setMealAmount(amount);
-        mealPlanner.getActiveMeal().setCarbsEaten();
-    }
-
-    @Override
-    public boolean mealExists() {
-        for(int i = 0; i < mealPlanner.getSavedMeals().size(); i++) {
-            if(mealPlanner.getSavedMeals().get(i).equals(mealPlanner.getActiveMeal())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void addNewMeal() {
-        mealPlanner.addNewMeal();
-        saveMealToDB();
-    }
-
-    @Override
-    public void setMealListView() {
-        ingList = false;
-    }
-
-    @Override
-    public void saveNewIngredients() {
-        saveIngToDB(mealPlanner.addToSavedIngredients(mealPlanner.getMealIngredients()));
-        notifyObservers();
-    }
-
-    @Override
-    public void editMeal() {
-        editMealInDB();
-    }
-
-    @Override
-    public void getMealAmountErrorMessage(String err) {
-        setError(err);
-        notifyObservers();
-    }
-
-    @Override
-    public void addNewMealDateCarb(String amount) {
-        timeCarbEatenRecord.addRawData(amount, Calendar.getInstance());
-    }
-
     public List<BGReading> getHistoryBetween(Calendar from, Calendar to){
         return historyBGRecord.getReadingsBetween(from, to);
     }
 
-    @Override
-    public IMeal mealToEat() {
-        return mealPlanner.getActiveMeal();
-    }
-
-
-    private void saveMealToDB() {
-        String ingIndex = "";
-        String ingVal = "";
-        for(int i = 0; i < mealPlanner.getMealIngredients().size(); i++) {
-            for(int j = 0; j < mealPlanner.getSavedIngredients().size(); j++) {
-                if(mealPlanner.getMealIngredients().get(i).equals(mealPlanner.getSavedIngredients().get(j))) {
-                    ingIndex += j + ",";
-                    ingVal +=  mealPlanner.getMealIngredients().get(i).getCarbAmount() + "," ;
-                }
-            }
-        }
-        ingIndex = ingIndex.substring(0,ingIndex.length()-1);
-        ingVal = ingVal.substring(0,ingVal.length()-1);
-        savedMealsRecord.saveMeal(mealPlanner.getActiveMeal().getMealName(), ingIndex, ingVal, mealPlanner.getActiveMeal().getTotalCarbs(),"0");
-    }
-
-    private void saveCustomMealToDB() {
-        savedMealsRecord.saveMeal(mealPlanner.getActiveMeal().getMealName(), ",", ",", mealPlanner.getActiveMeal().getCustomCarbsEaten(),"1");
-    }
-
-
-
-    private void saveIngToDB(List<IIngredient> newI) {
-        for(int i = 0; i < newI.size(); i++) {
-            savedIngredientsRecord.saveIngredient(newI.get(i).getIngredientName(),newI.get(i).getNutritionalValues()[0],newI.get(i).getNutritionalValues()[1],newI.get(i).getNutritionalValues()[2]);
-        }
-    }
-
-
-
-    private void editMealInDB() {
-        Map<Integer, List<String>> m = savedMealsRecord.getAllMeals();
-
-        List<Integer> idAttribute = new ArrayList<Integer>(m.keySet());
-        Collections.sort(idAttribute);
-        Integer index = -1;
-        String ingIds = "";
-        String ingCarbAmounts = "";
-
-        for(int i = 0; i < m.size(); i++) {
-            if(mealPlanner.getActiveMeal().equals(mealPlanner.getSavedMeals().get(i))) {
-                index = idAttribute.get(i);
-                break;
-            }
-        }
-
-        for(int i = 0; i < mealPlanner.getMealIngredients().size(); i++) {
-            for(int j = 0; j < mealPlanner.getSavedIngredients().size(); j++) {
-                if(mealPlanner.getMealIngredients().get(i).equals(mealPlanner.getSavedIngredients().get(j))) {
-                    ingIds += j + ",";
-                    ingCarbAmounts +=  mealPlanner.getMealIngredients().get(i).getCarbAmount() + "," ;
-                }
-            }
-        }
-        ingIds = ingIds.substring(0,ingIds.length()-1);
-        ingCarbAmounts = ingCarbAmounts.substring(0,ingCarbAmounts.length()-1);
-        savedMealsRecord.editMeal(index,mealPlanner.getActiveMeal().getMealName(),ingIds,ingCarbAmounts,mealPlanner.getActiveMeal().getTotalCarbs(),"0");
-    }
-
-    private List<IMeal> getDatabaseMeals() {
-        List<IMeal> meals = new ArrayList<IMeal>();
-        Map<Integer, List<String>> m = savedMealsRecord.getAllMeals();
-
-        List<Integer> idAttribute = new ArrayList<Integer>(m.keySet());
-        Collections.sort(idAttribute);
-
-        String mName,tCarb,custom;
-        List<String> ings, ingsVals;
-        List<String> attributes;
-        List<IIngredient> mealIng;
-        Meal meal;
-        for(int i = 0; i < m.size(); i++) {
-            mealIng = new ArrayList<IIngredient>();
-            attributes = m.get(idAttribute.get(i));
-            mName = attributes.get(0);
-            ings = Arrays.asList(attributes.get(1).split(","));
-            ingsVals = Arrays.asList(attributes.get(2).split(","));
-            tCarb = attributes.get(3);
-            custom = attributes.get(4);
-
-            if(custom.equals("0")) {
-                for(int j = 0; j < ings.size(); j++) {
-                    mealIng.add(mealPlanner.getSavedIngredients().get(Integer.parseInt(ings.get(j))));
-                    mealIng.get(mealIng.size()-1).setCarbAmount(ingsVals.get(j));
-                }
-                meal = new Meal(mName, mealIng);
-                meal.setCustomCarbMeal(false);
-                meal.setTotalMealCarbs(tCarb);
-            }
-            else {
-                meal = new Meal();
-                meal.setMealName(mName);
-                meal.setCustomCarbMeal(true);
-                meal.setCustomCarbsEaten(tCarb);
-            }
-            meals.add(meal);
-        }
-        return meals;
-    }
-
 
     public List<IIngredient> getSavedIngredients() {
-        List<IIngredient> ingredients = new ArrayList<>();
-        Map <Integer, List<String>> ing = savedIngredientsRecord.getAllSavedIngredients();
-
-        List<Integer> idAttribute = new ArrayList<>(ing.keySet());
-        Collections.sort(idAttribute);
-        String iName;
-        String iNutrition[];
-        List<String> attributes;
-        IIngredient savedIng;
-        for(int i = 0; i < ing.size(); i++) {
-            attributes = new ArrayList<>(ing.get(idAttribute.get(i)));
-            iNutrition = new String[3];
-            iName = attributes.get(0);
-            iNutrition[0] = attributes.get(1);
-            iNutrition[1] = attributes.get(2);
-            iNutrition[2] = attributes.get(3);
-            savedIng = new Ingredient(iName, iNutrition);
-            ingredients.add(savedIng);
-        }
-
-        return ingredients;
+        return savedIngredientsRecord.getAllSavedIngredients();
     }
 
     @Override
     public void addIngredientToMeal(IIngredient ingredient) {
-        activeMeal.addIngredient(ingredient);
+        activeMeal.addIngredient(ingredient,0);
     }
 
     @Override
@@ -676,49 +341,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public List<IMeal> getSavedMeals() {
-        List<IMeal> meals = new ArrayList<IMeal>();
-        Map<Integer, List<String>> m = savedMealsRecord.getAllMeals();
-
-        List<Integer> idAttribute = new ArrayList<Integer>(m.keySet());
-        Collections.sort(idAttribute);
-
-        String mName,tCarb,custom;
-        List<String> ings, ingsVals;
-        List<String> attributes;
-        List<IIngredient> mealIng;
-        Meal meal;
-        for(int i = 0; i < m.size(); i++) {
-            mealIng = new ArrayList<>();
-            attributes = m.get(idAttribute.get(i));
-            mName = attributes.get(0);
-            ings = Arrays.asList(attributes.get(1).split(","));
-            ingsVals = Arrays.asList(attributes.get(2).split(","));
-            tCarb = attributes.get(3);
-            custom = attributes.get(4);
-
-            if(custom.equals("0")) {
-                for(int j = 0; j < ings.size(); j++) {
-                    mealIng.add(mealPlanner.getSavedIngredients().get(Integer.parseInt(ings.get(j))));
-                    mealIng.get(mealIng.size()-1).setCarbAmount(ingsVals.get(j));
-                }
-                meal = new Meal(mName, mealIng);
-                meal.setCustomCarbMeal(false);
-                meal.setTotalMealCarbs(tCarb);
-            }
-            else {
-                meal = new Meal();
-                meal.setMealName(mName);
-                meal.setCustomCarbMeal(true);
-                meal.setCustomCarbsEaten(tCarb);
-            }
-            meals.add(meal);
-        }
-        return meals;
+        return savedMealsRecord.getAllMeals(savedIngredientsRecord.getAllSavedIngredients());
     }
 
     @Override
-    public void saveMeal(String name, int amount) {
-        savedMealsRecord.saveMeal(name, ",", ",",Integer.toString(amount),"1");
+    public void saveMeal(IMeal meal) {
+        savedMealsRecord.saveMeal(meal);
     }
 
     @Override
@@ -729,5 +357,10 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public void deleteMeal(IMeal meal) {
         savedMealsRecord.deleteMeal(meal);
+    }
+
+    @Override
+    public void setIngredientAmount(int amount) {
+        //TODO
     }
 }

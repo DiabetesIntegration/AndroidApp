@@ -11,6 +11,11 @@ import android.widget.ListView;
 import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.customListView.CustomAdapter;
+import com.example.kbb12.dms.customListView.CustomListViewControllerFactory;
+import com.example.kbb12.dms.ingredientList.controller.IngredientListController;
+import com.example.kbb12.dms.ingredientList.model.IngredientListModel;
+import com.example.kbb12.dms.ingredientList.model.IngredientListReadWriteModel;
+import com.example.kbb12.dms.ingredientList.view.IngredientListView;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.model.UserModel;
 
@@ -31,7 +36,7 @@ public class IngredientListActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model = ModelHolder.model;
+        IngredientListReadWriteModel model = new IngredientListModel(ModelHolder.model);
 
         mealName = (EditText) findViewById(R.id.mealNameEntry);
         currentIngredients = (ListView) findViewById(R.id.ingredientsList);
@@ -45,34 +50,15 @@ public class IngredientListActivity extends AppCompatActivity {
         completeMeal.setOnClickListener(controller);
 
 
-        cAdapter = new CustomAdapter(this, model);
+        cAdapter = new CustomAdapter(this, new CustomListViewControllerFactory(model));
         currentIngredients.setAdapter(cAdapter);
 
         android.app.FragmentManager fm = getFragmentManager();
         DefaultErrorController c = new DefaultErrorController(model);
 
-        view = new IngredientListView(mealName,currentIngredients,anotherIngredient,completeMeal,cAdapter,model,fm,c);
+        view = new IngredientListView(mealName,cAdapter,model,fm,c);
         model.registerObserver(view);
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        model.removeObserver(view);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        cAdapter.clear();
-        if(model.fromIngredient()) {
-            model.removeIngredientFromMeal();
-        }
-    }
 }

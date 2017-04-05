@@ -11,20 +11,19 @@ import android.widget.ListView;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.addIngredient.controller.AddIngredientController;
+import com.example.kbb12.dms.addIngredient.model.AddIngredientModel;
 import com.example.kbb12.dms.addIngredient.model.AddIngredientReadWriteModel;
 import com.example.kbb12.dms.addIngredient.view.AddIngredientView;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.startUp.ModelHolder;
+import com.example.kbb12.dms.startUp.ModelObserver;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.List;
+
 public class AddIngredientActivity extends AppCompatActivity {
-    private ImageButton addCustom, scanItem;
-    private EditText searchSavedIng;
-    private ListView savedIngredientList;
-    private ArrayAdapter<String> adapter;
     private AddIngredientReadWriteModel model;
-    private AddIngredientView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +32,14 @@ public class AddIngredientActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model =(AddIngredientReadWriteModel) ModelHolder.model;
+        model =new AddIngredientModel(ModelHolder.model);
 
-        addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
-        scanItem = (ImageButton) findViewById(R.id.scanBarcodeButton);
-        searchSavedIng = (EditText) findViewById(R.id.searchDatabaseEntry);
-        savedIngredientList = (ListView) findViewById(R.id.listView2);
+        ImageButton addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
+        ImageButton scanItem = (ImageButton) findViewById(R.id.scanBarcodeButton);
+        EditText searchSavedIng = (EditText) findViewById(R.id.searchDatabaseEntry);
+        ListView savedIngredientList = (ListView) findViewById(R.id.listView2);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         savedIngredientList.setAdapter(adapter);
 
         AddIngredientController controller = new AddIngredientController(model, this);
@@ -50,7 +49,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         savedIngredientList.setOnItemClickListener(controller);
 
 
-        view = new AddIngredientView(adapter,model);
+        ModelObserver view = new AddIngredientView(adapter,model);
         model.registerObserver(view);
     }
 

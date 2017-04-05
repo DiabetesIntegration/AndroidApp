@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface MealCarbohydrateMainModel {
     List<IMeal> getSavedMeals();
-    void saveMeal(String name,int amount);
+    void saveMeal(IMeal meal);
     void registerCarbs(int amount);
 }

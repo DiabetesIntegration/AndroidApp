@@ -1,14 +1,12 @@
-package com.example.kbb12.dms.ingredientList;
+package com.example.kbb12.dms.ingredientList.view;
 
 import android.app.FragmentManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.example.kbb12.dms.customListView.CustomAdapter;
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
+import com.example.kbb12.dms.ingredientList.model.IngredientListReadWriteModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
@@ -16,19 +14,14 @@ import com.example.kbb12.dms.startUp.ModelObserver;
  */
 public class IngredientListView extends MasterView implements ModelObserver {
     private EditText mName;
-    private ListView iList;
-    private ImageButton addIng;
-    private Button finishList;
     private CustomAdapter adapter;
-    private IIngredientList model;
+    private IngredientListReadWriteModel model;
 
 
-    public IngredientListView(EditText mealName, ListView currentIngredients, ImageButton anotherIngredient, Button completeMeal, CustomAdapter adapter, IIngredientList model, FragmentManager fm, IErrorController errorC) {
+    public IngredientListView(EditText mealName, CustomAdapter adapter, IngredientListReadWriteModel model,
+                              FragmentManager fm, IErrorController errorC) {
         super(fm,errorC);
         mName = mealName;
-        iList = currentIngredients;
-        addIng = anotherIngredient;
-        finishList = completeMeal;
         this.adapter = adapter;
         this.adapter.addAll(model.getIngredientsInMeal());
         this.model = model;
