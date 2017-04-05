@@ -4,19 +4,19 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.kbb12.dms.startUp.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by Ciaran on 3/28/2017.
  */
 public class SavedMealsDatabase implements SavedMealsRecord {
     private SQLiteDatabase write;
-    private String name;
 
 
     public SavedMealsDatabase(SQLiteDatabase write) {
@@ -25,60 +25,84 @@ public class SavedMealsDatabase implements SavedMealsRecord {
 
 
     @Override
-    public long saveMeal(String n, String ing, String ingVal, String tCarb, String custom) {
+    public void saveMeal(IMeal meal) {
         ContentValues values = new ContentValues();
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME, n);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS, ing);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTVALS, ingVal);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_TOTALCARBS, tCarb);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_CUSTOMCARBS, custom);
-
+        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME, meal.getName());
+        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS, getIngredientsString(meal));
+        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTAMOUNTS, getAmountsString(meal));
         // insert row
-        long id = write.insert(SavedMealsContract.ContentsDefinition.TABLE_NAME, null, values);
-
-        return id;
+        write.insert(SavedMealsContract.ContentsDefinition.TABLE_NAME, null, values);
     }
 
 
     @Override
-    public long editMeal(Integer id, String n, String ing, String ingVal, String tCarb, String custom) {
+    public void editMeal(IMeal meal) {
         ContentValues values = new ContentValues();
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME, n);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS, ing);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTVALS, ingVal);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_TOTALCARBS, tCarb);
-        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_CUSTOMCARBS, custom);
-
-        return write.update(SavedMealsContract.ContentsDefinition.TABLE_NAME, values, SavedMealsContract.ContentsDefinition._ID +" = ?", new String[] {Integer.toString(id)});
+        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS, getIngredientsString(meal));
+        values.put(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTAMOUNTS, getAmountsString(meal));
+        write.update(SavedMealsContract.ContentsDefinition.TABLE_NAME, values, SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME +" = ?", new String[] {meal.getName()});
     }
 
     @Override
-    public long deleteMeal(IMeal m) {
-        String name = m.getMealName();
-        return write.delete(SavedMealsContract.ContentsDefinition.TABLE_NAME, "name = ? ", new String[] {name} );
+    public void deleteMeal(IMeal m) {
+        write.delete(SavedMealsContract.ContentsDefinition.TABLE_NAME, "name = ? ", new String[] {m.getName()} );
     }
 
     @Override
-    public Map<Integer, List<String>> getAllMeals() {
-        Map<Integer, List<String>> basicData = new HashMap<Integer, List<String>>();
-
+    public List<IMeal> getAllMeals(List<IIngredient> allIngredients) {
+        List<IMeal> meals = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + SavedMealsContract.ContentsDefinition.TABLE_NAME;
-
         Cursor c = write.rawQuery(selectQuery, null);
-
-        if (c.moveToFirst()) {
-            do {
-                List<String> values = new ArrayList<String>();
-                int id = c.getInt(c.getColumnIndex(SavedMealsContract.ContentsDefinition._ID));
-                values.add(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME)));
-                values.add(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS)));
-                values.add(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTVALS)));
-                values.add(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_TOTALCARBS)));
-                values.add(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_CUSTOMCARBS)));
-                basicData.put(id,values);
-            } while (c.moveToNext());
+        while (c.moveToNext()) {
+            meals.add(
+                    new Meal(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_MEALNAME)),
+                            reverseIngredientsString(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTS)),allIngredients),
+                            reverseAmountsString(c.getString(c.getColumnIndex(SavedMealsContract.ContentsDefinition.COLUMN_NAME_INGREDIENTAMOUNTS)))));
         }
 
-        return basicData;
+        return meals;
+    }
+
+    private String getIngredientsString(IMeal meal){
+        String ingredientNames="";
+        ingredientNames+=meal.getIngredients().get(0).getName();
+        for(int i=1;i<meal.getIngredients().size();i++){
+            ingredientNames+=","+meal.getIngredients().get(i).getName();
+        }
+        return ingredientNames;
+    }
+
+    private List<IIngredient> reverseIngredientsString(String ingredientsString,List<IIngredient> allIngredients){
+        Scanner scan = new Scanner(ingredientsString).useDelimiter(",");
+        String currentName;
+        List<IIngredient> ingredients=new ArrayList<>();
+        while(scan.hasNext()){
+            currentName=scan.next();
+            for(IIngredient current:allIngredients){
+                if(current.getName().equals(currentName)){
+                    ingredients.add(current);
+                    break;
+                }
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    private String getAmountsString(IMeal meal){
+        String amounts="";
+        amounts+=Double.toString(meal.getAmounts().get(0));
+        for(int i=1;i<meal.getIngredients().size();i++){
+            amounts+=","+Double.toString(meal.getAmounts().get(0));
+        }
+        return amounts;
+    }
+
+    private List<Double> reverseAmountsString(String amounts){
+        List<Double> amountsList = new ArrayList<>();
+        Scanner scan = new Scanner(amounts).useDelimiter(",");
+        while (scan.hasNextDouble()){
+            amountsList.add(scan.nextDouble());
+        }
+        return amountsList;
     }
 }

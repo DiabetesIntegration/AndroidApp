@@ -8,7 +8,6 @@ import android.view.View;
 import com.example.kbb12.dms.baseScreen.controller.BasicTextWatcher;
 import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
-import com.example.kbb12.dms.startUp.IIngredient;
 
 /**
  * Created by Ciaran on 3/1/2017.

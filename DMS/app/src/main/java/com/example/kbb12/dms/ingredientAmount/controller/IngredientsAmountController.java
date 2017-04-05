@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.ingredientAmount;
+package com.example.kbb12.dms.ingredientAmount.controller;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,17 +7,18 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.example.kbb12.dms.ingredientAmount.model.IngredientsAmountReadWriteModel;
 import com.example.kbb12.dms.ingredientList.IngredientListActivity;
 
 /**
  * Created by Ciaran on 3/6/2017.
  */
 public class IngredientsAmountController implements View.OnClickListener, TextWatcher, CompoundButton.OnCheckedChangeListener {
-    private IIngredientsAmount model;
+    private IngredientsAmountReadWriteModel model;
     private Activity currentActivity;
     private String amount = "";
 
-    public IngredientsAmountController(IIngredientsAmount model, Activity currentActivity) {
+    public IngredientsAmountController(IngredientsAmountReadWriteModel model, Activity currentActivity) {
         this.model = model;
         this.currentActivity = currentActivity;
     }
@@ -26,26 +27,21 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
     @Override
     public void onClick(View v) {
         if(amount.isEmpty()) {
-            model.getIngAmountErrorMessage("Error! Nothing was entered for the ingredient amount!");
+            model.setError("Error! Nothing was entered for the ingredient amount!");
         }
         else {
             try {
                 int a = Integer.parseInt(amount);
                 if(model.getUnits().equals("%") && a > 100) {
-                    model.getIngAmountErrorMessage("Error! The percentage eaten cannot exceed 100%!");
+                    model.setError("Error! The percentage eaten cannot exceed 100%!");
                 }
                 else {
-                    model.setCarbValOfIngredient(amount);
-                    if(!model.ingredientExists()) {
-                        model.addNewIngredient();
-                        model.setIngredientExists(true);
-                    }
-                    model.setIngredientListView();
+                    model.saveAmount(a);
                     nextActivity();
                 }
             }
             catch(NumberFormatException e) {
-                model.getIngAmountErrorMessage("Error! The ingredient amount entered is not an integer!");
+                model.setError("Error! The ingredient amount entered is not an integer!");
             }
         }
     }

@@ -2,8 +2,8 @@ package com.example.kbb12.dms.customIngredient.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.AddIngredientMainModel;
-import com.example.kbb12.dms.startUp.IIngredient;
-import com.example.kbb12.dms.startUp.Ingredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 
 /**
  * Created by kbb12 on 05/04/2017.

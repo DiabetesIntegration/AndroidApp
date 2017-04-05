@@ -1,7 +1,6 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.startUp.IIngredient;
-import com.example.kbb12.dms.startUp.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 
 import java.util.List;
 

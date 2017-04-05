@@ -1,12 +1,12 @@
-package com.example.kbb12.dms.ingredientAmount;
+package com.example.kbb12.dms.ingredientAmount.view;
 
 import android.app.FragmentManager;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
+import com.example.kbb12.dms.ingredientAmount.model.IngredientsAmountReadWriteModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**
@@ -14,15 +14,14 @@ import com.example.kbb12.dms.startUp.ModelObserver;
  */
 public class IngredientsAmountView extends MasterView implements ModelObserver  {
     private ToggleButton weightPrecentage;
-    private EditText amount;
     private TextView unit;
-    private IIngredientsAmount model;
+    private IngredientsAmountReadWriteModel model;
 
 
-    public IngredientsAmountView(ToggleButton b, EditText entry, TextView units, IIngredientsAmount model, FragmentManager fm, IErrorController errorC) {
+    public IngredientsAmountView(ToggleButton b, TextView units, IngredientsAmountReadWriteModel model,
+                                 FragmentManager fm, IErrorController errorC) {
         super(fm,errorC);
         weightPrecentage = b;
-        amount = entry;
         unit = units;
         this.model = model;
         unit.setText("g");
@@ -33,7 +32,7 @@ public class IngredientsAmountView extends MasterView implements ModelObserver  
     public void update() {
         handleError(model.getError());
         unit.setText(model.getUnits());
-        if(unit.getText().equals("g")) {
+        if(model.getUnits().equals("g")) {
             weightPrecentage.setText("Weight");
         }
         else {

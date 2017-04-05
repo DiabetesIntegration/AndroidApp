@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
-import com.example.kbb12.dms.ingredientAmount.IIngredientsAmount;
 import com.example.kbb12.dms.ingredientList.IIngredientList;
 import com.example.kbb12.dms.mealAmount.IMealAmount;
 import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
@@ -26,11 +25,10 @@ import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.startUp.IIngredient;
-import com.example.kbb12.dms.startUp.IMeal;
-import com.example.kbb12.dms.startUp.IMealPlanner;
-import com.example.kbb12.dms.startUp.Ingredient;
-import com.example.kbb12.dms.startUp.Meal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +44,7 @@ import java.util.Map;
 public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
         AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel, AddCustomIngredientReadWriteModel,
-        IIngredientsAmount, IIngredientList, IMealAmount, MealCarbohydrateMainModel,
+        IngredientsAmountMainModel, IIngredientList, IMealAmount, MealCarbohydrateMainModel,
         MealListMainModel,AddIngredientMainModel{
 
     private IBasalInsulinModel basalInsulinModel;
@@ -76,8 +74,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     private IMeal activeMeal;
 
-    private IMealPlanner mealPlanner;
-
     public UserModel(Context context,SharedPreferences sharPrefEdit){
         DatabaseBuilder db = new DatabaseBuilder(context);
         basalInsulinModel =db.getBasalInsulinModel();
@@ -88,20 +84,14 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         currentBGRecord = db.getCurrentBGRecord();
         dailyFitnessInfoRecord=db.getDailyFitnessInfoRecord();
         activityRecord=db.getActivityRecord();
-        observers= new ArrayList<>();
         savedIngredientsRecord = db.getSavedIngredientsRecord();
         savedMealsRecord = db.getSavedMealsRecord();
         timeCarbEatenRecord = db.getTimeCarbEatenRecord();
         scannedItemRecord = db.getScannedItemRecord();
-        mealPlanner = new com.example.kbb12.dms.startUp.MealPlanner();
-        mealPlanner.setSavedIngredients(getDatabaseIngredients());
-        mealPlanner.setSavedMeals(getDatabaseMeals());
-
         for(Calendar c : rawBGRecord.getAllBasicData().keySet()){
             Log.d("Record", rawBGRecord.getAllBasicData().get(c));
             Log.d("EM: ", rawBGRecord.getAllBasicData().get(c).substring(586,588) + rawBGRecord.getAllBasicData().get(c).substring(584,586));
         }
-        ingList = false;
         this.sharPrefEdit=sharPrefEdit;
         activeMeal =null;
         setUpScanningExamples();
@@ -144,15 +134,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public BGReading getMostRecentHistoryReading() {
         return historyBGRecord.getMostRecentReading();
-    }
-
-    public String getExampleData(){
-        return exampleData;
-    }
-
-    public void setExampleData(String newData){
-        exampleData=newData;
-        notifyObservers();
     }
 
     @Override
@@ -368,7 +349,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
     //------------------------------------------------------------------------------------
-    //IIngredientsAmount
+    //IngredientsAmountReadWriteModel
 
 
     @Override

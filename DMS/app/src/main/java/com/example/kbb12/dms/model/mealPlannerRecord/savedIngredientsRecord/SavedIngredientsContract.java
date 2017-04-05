@@ -11,14 +11,12 @@ public class SavedIngredientsContract {
         public static final String TABLE_NAME = "savedIngredients";
         public static final String COLUMN_NAME_INGNAME = "name";
         public static final String COLUMN_NAME_CARBVAL = "carbVal";
-        public static final String COLUMN_NAME_PACKETVAL = "packetVal";
         public static final String COLUMN_NAME_WEIGHT = "packetWeight";
     }
 
     public static final String SQL_CREATE_TABLE = "CREATE TABLE "
             + ContentsDefinition.TABLE_NAME + " (" + ContentsDefinition._ID + " INTEGER PRIMARY KEY," + ContentsDefinition.COLUMN_NAME_INGNAME
             + " TEXT," + ContentsDefinition.COLUMN_NAME_CARBVAL
-            + " TEXT," + ContentsDefinition.COLUMN_NAME_PACKETVAL
             + " TEXT," + ContentsDefinition.COLUMN_NAME_WEIGHT
             + " TEXT" + ")";
 

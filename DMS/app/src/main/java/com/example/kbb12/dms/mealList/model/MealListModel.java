@@ -2,8 +2,8 @@ package com.example.kbb12.dms.mealList.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.MealListMainModel;
-import com.example.kbb12.dms.startUp.IMeal;
-import com.example.kbb12.dms.startUp.Meal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.ArrayList;
 import java.util.List;

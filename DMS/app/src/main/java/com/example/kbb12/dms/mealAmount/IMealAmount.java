@@ -2,7 +2,7 @@ package com.example.kbb12.dms.mealAmount;
 
 import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
 import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
-import com.example.kbb12.dms.startUp.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 /**
  * Created by Ciaran on 3/8/2017.

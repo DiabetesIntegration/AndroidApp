@@ -2,7 +2,7 @@ package com.example.kbb12.dms.mealCarbohydrateValue.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.MealCarbohydrateMainModel;
-import com.example.kbb12.dms.startUp.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 /**
  * Created by kbb12 on 04/04/2017.

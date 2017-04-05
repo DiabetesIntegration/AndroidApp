@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.startUp.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 import java.util.List;
 
