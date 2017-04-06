@@ -1,8 +1,7 @@
 package com.example.kbb12.dms.customIngredient.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
-import com.example.kbb12.dms.model.AddIngredientMainModel;
-import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.CustomIngredientMainModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 
 /**
@@ -12,16 +11,36 @@ import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 public class AddCustomIngredientModel extends BaseModel implements AddCustomIngredientReadWriteModel {
 
 
-    private AddIngredientMainModel model;
+    private CustomIngredientMainModel model;
 
-    public AddCustomIngredientModel(AddIngredientMainModel model){
+    public AddCustomIngredientModel(CustomIngredientMainModel model){
         this.model=model;
     }
 
 
     @Override
     public void save(String name, double carbs, double perGrams, int packetWeight) {
-        //The calculations is to turn the carbs into carbs per 100g
-        model.addIngredientToMeal(new Ingredient(name,(carbs/perGrams)*100,packetWeight));
+        //The calculation is to turn the carbs into carbs per 100g
+        model.saveIngredient(new Ingredient(name,(carbs/perGrams)*100,packetWeight));
+    }
+
+    @Override
+    public boolean hasExisting() {
+        return model.getActiveIngredient()!=null;
+    }
+
+    @Override
+    public String getIngredientName() {
+        return model.getActiveIngredient().getName();
+    }
+
+    @Override
+    public Double getCarbPerHundred() {
+        return model.getActiveIngredient().getCarbsPerHundredG();
+    }
+
+    @Override
+    public Integer getPacketWeight() {
+        return model.getActiveIngredient().getPacketWeight();
     }
 }

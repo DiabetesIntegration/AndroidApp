@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.model;
 
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface MealCarbohydrateMainModel {
     List<IMeal> getSavedMeals();
     void saveMeal(IMeal meal);
     void registerCarbs(int amount);
+    void setActiveMeal(IMeal meal);
+    void setActiveIngredient(IIngredient ingredient);
 }

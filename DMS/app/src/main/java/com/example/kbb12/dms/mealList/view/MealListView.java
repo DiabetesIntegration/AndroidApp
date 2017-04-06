@@ -2,7 +2,7 @@ package com.example.kbb12.dms.mealList.view;
 
 import android.widget.TextView;
 
-import com.example.kbb12.dms.customListView.CustomAdapter;
+import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 

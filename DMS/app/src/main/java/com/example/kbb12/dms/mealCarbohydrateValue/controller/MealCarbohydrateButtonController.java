@@ -53,6 +53,7 @@ public class MealCarbohydrateButtonController implements View.OnClickListener {
                 }else {
                         //error, name for meal already exists
                     model.setError("Error! The entered meal name already exists! Please enter a new meal name!");
+                    return;
                 }
                 switch(v.getId()) {
                     case (R.id.saveCarbMealButton) :

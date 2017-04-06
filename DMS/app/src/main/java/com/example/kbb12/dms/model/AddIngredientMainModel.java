@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AddIngredientMainModel {
     List<IIngredient> getSavedIngredients();
-    void addIngredientToMeal(IIngredient ingredient);
     IIngredient getIngredientByName(String name);
     IIngredient getIngredientByBarcode(String barcode);
+    void setActiveIngredient(IIngredient ingredient);
 }

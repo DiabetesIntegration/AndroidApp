@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Add new Ingredient..."
+        android:textColor="@color/colorAccent"
         android:id="@+id/addAnotherIngredientText"
         android:layout_marginBottom="91dp"
         android:layout_alignParentBottom="true"
@@ -32,20 +33,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addAnotherIngredientButton"
+        android:tint="@color/colorAccent"
         android:src="@android:drawable/ic_menu_add"
         android:background="@null"
         android:layout_alignBottom="@+id/addAnotherIngredientText"
         android:layout_toRightOf="@+id/mealNameEntry"
         android:layout_toEndOf="@+id/mealNameEntry" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
+        android:id="@+id/saveMealButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Eat..."
-        android:id="@+id/eatMealButton"
+        android:layout_alignBaseline="@+id/textView34"
+        android:layout_alignBottom="@+id/textView34"
+        android:layout_toLeftOf="@+id/mealNameEntry"
+        android:layout_toStartOf="@+id/mealNameEntry"
+        android:text="Save Meal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="15dp"
+        android:layout_toEndOf="@+id/addAnotherIngredientText"
+        android:layout_toRightOf="@+id/addAnotherIngredientText"
+        android:text="Eat Meal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorAccent" />
 
     <ListView
         android:layout_width="wrap_content"

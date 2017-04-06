@@ -7,9 +7,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.customListView.CustomAdapter;
+import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.customListView.CustomListViewControllerFactory;
+import com.example.kbb12.dms.baseScreen.customListView.CustomListViewControllerFactory;
 import com.example.kbb12.dms.mealList.controller.MealListController;
 import com.example.kbb12.dms.mealList.model.MealListModel;
 import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;

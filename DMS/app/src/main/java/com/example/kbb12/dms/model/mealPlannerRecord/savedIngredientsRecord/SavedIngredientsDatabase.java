@@ -32,6 +32,15 @@ public class SavedIngredientsDatabase implements SavedIngredientsRecord {
     }
 
     @Override
+    public void updateIngredient(String oldName, IIngredient ingredient) {
+        ContentValues values = new ContentValues();
+        values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME,ingredient.getName());
+        values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_WEIGHT, ingredient.getPacketWeight());
+        values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_CARBVAL, ingredient.getCarbsPerHundredG());
+        write.update(SavedIngredientsContract.ContentsDefinition.TABLE_NAME, values, SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME +" = ?", new String[] {oldName});
+    }
+
+    @Override
     public List<IIngredient> getAllSavedIngredients() {
         List<IIngredient> ingredients = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + SavedIngredientsContract.ContentsDefinition.TABLE_NAME;

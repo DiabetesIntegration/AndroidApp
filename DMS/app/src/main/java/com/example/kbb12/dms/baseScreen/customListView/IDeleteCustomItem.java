@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.customListView;
+package com.example.kbb12.dms.baseScreen.customListView;
 
 /**
  * Created by Ciaran on 3/12/2017.

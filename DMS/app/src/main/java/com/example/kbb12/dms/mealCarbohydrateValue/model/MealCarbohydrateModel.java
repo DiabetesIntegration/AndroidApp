@@ -30,6 +30,8 @@ public class MealCarbohydrateModel extends BaseModel implements MealCarbohydrate
     @Override
     public void addNewCarbMeal(String name, int value) {
         model.saveMeal(new Meal(name,value));
+        model.setActiveMeal(null);
+        model.setActiveIngredient(null);
     }
 
     @Override

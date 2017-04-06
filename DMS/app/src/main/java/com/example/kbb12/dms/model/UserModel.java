@@ -36,7 +36,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
         AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel,IngredientsAmountMainModel,
         MealCarbohydrateMainModel, MealListMainModel,AddIngredientMainModel,IngredientsListMainModel,
-        MealAmountMainModel{
+        MealAmountMainModel,CustomIngredientMainModel{
 
     private IBasalInsulinModel basalInsulinModel;
 
@@ -327,10 +327,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         return savedIngredientsRecord.getAllSavedIngredients();
     }
 
-    @Override
-    public void addIngredientToMeal(IIngredient ingredient) {
-        activeMeal.addIngredient(ingredient,0);
-    }
 
     @Override
     public IIngredient getIngredientByName(String name) {
@@ -404,6 +400,26 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void setIngredientAmount(int amount) {
-        //TODO
+        activeMeal.setAmountOf(activeIngredient,amount);
+    }
+
+    @Override
+    public Integer getActiveIngredientPacketWeight() {
+        return activeIngredient.getPacketWeight();
+    }
+
+    @Override
+    public void saveIngredient(IIngredient ingredient) {
+        if(activeIngredient==null){
+            savedIngredientsRecord.saveIngredient(ingredient);
+        }else{
+            savedIngredientsRecord.updateIngredient(activeIngredient.getName(),ingredient);
+        }
+        activeIngredient=ingredient;
+    }
+
+    @Override
+    public IIngredient getActiveIngredient() {
+        return activeIngredient;
     }
 }

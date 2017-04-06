@@ -10,6 +10,7 @@ import java.util.List;
 public interface SavedIngredientsRecord {
 
     void saveIngredient(IIngredient ingredient);
+    void updateIngredient(String oldName,IIngredient ingredient);
     List<IIngredient> getAllSavedIngredients();
     IIngredient getIngredientByName(String name);
     IIngredient getIngredientByBarcode(String barcode);

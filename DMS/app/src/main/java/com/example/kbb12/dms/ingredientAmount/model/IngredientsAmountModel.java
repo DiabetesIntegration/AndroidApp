@@ -25,7 +25,12 @@ public class IngredientsAmountModel extends BaseModel implements IngredientsAmou
 
     @Override
     public void saveAmount(int amount) {
-        model.setIngredientAmount(amount);
+        if(units.equals("g")) {
+            model.setIngredientAmount(amount);
+        }else{
+            model.setIngredientAmount((int)(((double)model.getActiveIngredientPacketWeight()/100)*amount));
+        }
+        model.setActiveIngredient(null);
     }
 
     @Override

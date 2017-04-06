@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.customListView;
+package com.example.kbb12.dms.baseScreen.customListView;
 
 import android.content.Context;
 import android.view.LayoutInflater;

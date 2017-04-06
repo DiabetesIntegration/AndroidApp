@@ -45,13 +45,18 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
         if(ingredient==null){
             return false;
         }
-        model.addIngredientToMeal(ingredient);
+        model.setActiveIngredient(ingredient);
         return true;
     }
 
     @Override
     public void setIngredient(String ingredientName) {
-        model.addIngredientToMeal(model.getIngredientByName(ingredientName));
+        model.setActiveIngredient(model.getIngredientByName(ingredientName));
+    }
+
+    @Override
+    public void setUpNewIngredient() {
+        model.setActiveIngredient(null);
     }
 
 }

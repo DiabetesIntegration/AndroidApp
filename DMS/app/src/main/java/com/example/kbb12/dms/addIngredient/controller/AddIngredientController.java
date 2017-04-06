@@ -29,6 +29,7 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
     public void onClick(View v) {
         switch(v.getId()) {
             case (R.id.addCustomIngredientButton):
+                model.setUpNewIngredient();
                 Intent ingredientIntent = new Intent(currentActivity, AddCustomIngredientActivity.class);
                 currentActivity.startActivity(ingredientIntent);
                 break;
@@ -61,7 +62,4 @@ public class AddIngredientController implements View.OnClickListener, AdapterVie
         model.itemSearch(s.toString());
     }
 
-    public void addSavedIngredient() {
-
-    }
 }

@@ -13,17 +13,17 @@ import com.example.kbb12.dms.startUp.ModelObserver;
  * Created by Ciaran on 3/1/2017.
  */
 public class AddCustomIngredientView extends MasterView implements ModelObserver {
-    private EditText ingredientName, carbVal, packVal, weightVal;
-    private ImageButton createCustom, cancelCustom;
     private AddCustomIngredientReadWriteModel model;
 
     public AddCustomIngredientView(EditText name, EditText carb, EditText packet, EditText weight, AddCustomIngredientReadWriteModel model, FragmentManager fm, IErrorController errorC) {
         super(fm,errorC);
-        ingredientName = name;
-        carbVal = carb;
-        packVal = packet;
-        weightVal = weight;
         this.model = model;
+        if(model.hasExisting()){
+            name.setText(model.getIngredientName());
+            carb.setText(String.format("%d",model.getCarbPerHundred()));
+            packet.setText("100");
+            weight.setText(model.getPacketWeight());
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.IngredientsListMainModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.List;
@@ -47,6 +48,11 @@ public class IngredientListModel extends BaseModel implements IngredientListRead
     @Override
     public void saveMeal() {
         model.updateActiveMeal(active);
+    }
+
+    @Override
+    public void newActiveIngredient() {
+        model.setActiveIngredient(null);
     }
 
     @Override

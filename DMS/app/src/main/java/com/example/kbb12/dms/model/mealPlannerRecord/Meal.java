@@ -53,12 +53,15 @@ public class Meal implements IMeal {
     }
 
     @Override
-    public void updateAmount(IIngredient ingredient, double amount) {
+    public void setAmountOf(IIngredient ingredient, double amount) {
         for(int i=0;i<ingredients.size();i++){
             if(ingredient.getName().equals(ingredients.get(i).getName())){
                 amounts.set(i,amount);
+                return;
             }
         }
+        ingredients.add(ingredient);
+        amounts.add(amount);
     }
 
     @Override

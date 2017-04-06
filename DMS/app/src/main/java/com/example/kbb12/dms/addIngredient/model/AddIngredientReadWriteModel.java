@@ -10,4 +10,5 @@ public interface AddIngredientReadWriteModel extends BaseReadWriteModel,AddIngre
     void itemSearch(String search);
     boolean setScannedIngredient(String code);
     void setIngredient(String ingredient);
+    void setUpNewIngredient();
 }
