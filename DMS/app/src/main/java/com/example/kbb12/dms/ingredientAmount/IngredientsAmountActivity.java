@@ -1,15 +1,15 @@
 package com.example.kbb12.dms.ingredientAmount;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.ingredientAmount.controller.IngredientsAmountController;
 import com.example.kbb12.dms.ingredientAmount.model.IngredientsAmountModel;
 import com.example.kbb12.dms.ingredientAmount.model.IngredientsAmountReadWriteModel;
@@ -19,14 +19,16 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 
 public class IngredientsAmountActivity extends AppCompatActivity {
 
+    IngredientsAmountReadWriteModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients_amount);
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        IngredientsAmountReadWriteModel model = new IngredientsAmountModel(ModelHolder.model);
+        ModelHolder.model.setLastIngAmountActivity(this);
+        model = new IngredientsAmountModel(ModelHolder.model);
 
         ToggleButton wOrp = (ToggleButton) findViewById(R.id.toggleButton);
         ImageButton confirmIngredientAmount = (ImageButton) findViewById(R.id.ingredientAmountConfirmButton);
@@ -45,5 +47,11 @@ public class IngredientsAmountActivity extends AppCompatActivity {
         ModelObserver view = new IngredientsAmountView(wOrp,amountUnit,model,fm,c);
         model.registerObserver(view);
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        model.removeActiveIngredient();
+        super.onBackPressed();
     }
 }

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.view.View;
 
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinReadWriteModel;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.BolusInsulinModelBuilder;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
 
 import java.util.List;

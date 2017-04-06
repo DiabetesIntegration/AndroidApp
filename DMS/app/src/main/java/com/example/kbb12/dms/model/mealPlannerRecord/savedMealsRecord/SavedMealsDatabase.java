@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.ArrayList;
@@ -79,14 +80,18 @@ public class SavedMealsDatabase implements SavedMealsRecord {
         List<IIngredient> ingredients=new ArrayList<>();
         while(scan.hasNext()){
             currentName=scan.next();
-            for(IIngredient current:allIngredients){
-                if(current.getName().equals(currentName)){
-                    ingredients.add(current);
-                    break;
+            if(currentName.equals("Custom")){
+                ingredients.add(new Ingredient.BasicIngredient());
+            }else {
+                for (IIngredient current : allIngredients) {
+                    if (current.getName().equals(currentName)) {
+                        ingredients.add(current);
+                        break;
+                    }
                 }
             }
         }
-        return new ArrayList<>();
+        return ingredients;
     }
 
     private String getAmountsString(IMeal meal){

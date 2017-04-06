@@ -72,7 +72,6 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
     }
 
     public void nextActivity(){
-        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientListActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

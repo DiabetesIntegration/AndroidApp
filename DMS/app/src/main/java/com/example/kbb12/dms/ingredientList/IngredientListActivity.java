@@ -1,16 +1,17 @@
 package com.example.kbb12.dms.ingredientList;
 
+import android.app.ActivityManager;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.baseScreen.customListView.CustomListViewControllerFactory;
 import com.example.kbb12.dms.ingredientList.controller.IngredientListController;
@@ -18,8 +19,9 @@ import com.example.kbb12.dms.ingredientList.model.IngredientListModel;
 import com.example.kbb12.dms.ingredientList.model.IngredientListReadWriteModel;
 import com.example.kbb12.dms.ingredientList.view.IngredientListView;
 import com.example.kbb12.dms.startUp.ModelHolder;
-import com.example.kbb12.dms.model.UserModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
+
+import java.util.List;
 
 public class IngredientListActivity extends AppCompatActivity {
 
@@ -29,7 +31,6 @@ public class IngredientListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ingredient_list);
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         IngredientListReadWriteModel model = new IngredientListModel(ModelHolder.model);
 
         EditText mealName = (EditText) findViewById(R.id.mealNameEntry);

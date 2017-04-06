@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.takeInsulin;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.takeInsulin.controller.AmountTakenListener;
 import com.example.kbb12.dms.takeInsulin.controller.ChangeTimeTakenListener;

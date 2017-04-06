@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.bluetooth;
 
-import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;

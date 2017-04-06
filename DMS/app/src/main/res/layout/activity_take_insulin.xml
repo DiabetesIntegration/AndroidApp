@@ -72,7 +72,7 @@
         android:paddingBottom="10dp">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/addMealText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Type of Insulin Taken:"

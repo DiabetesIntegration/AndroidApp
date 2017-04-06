@@ -2,9 +2,9 @@ package com.example.kbb12.dms.enterWeight.view;
 
 import android.app.FragmentManager;
 
-import com.example.kbb12.dms.enterWeight.IEnterWeight;
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
+import com.example.kbb12.dms.enterWeight.IEnterWeight;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 /**

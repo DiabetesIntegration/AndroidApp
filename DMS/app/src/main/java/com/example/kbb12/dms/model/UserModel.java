@@ -1,16 +1,16 @@
 package com.example.kbb12.dms.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
-import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
@@ -19,12 +19,14 @@ import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoRecord;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
 import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
-import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
-import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -65,6 +67,10 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private IMeal activeMeal;
     private IIngredient activeIngredient;
 
+    private Activity lastAddIngActivity;
+    private Activity lastCustomIngActivity;
+    private Activity lastIngAmountActivity;
+
     public UserModel(Context context,SharedPreferences sharPrefEdit){
         DatabaseBuilder db = new DatabaseBuilder(context);
         basalInsulinModel =db.getBasalInsulinModel();
@@ -86,6 +92,30 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         activeMeal =null;
         activeIngredient=null;
         setUpScanningExamples();
+        lastAddIngActivity =null;
+        lastCustomIngActivity=null;
+        lastIngAmountActivity=null;
+    }
+
+    public void setLastAddIngActivity(Activity lastAddIngActivity){
+        if(this.lastAddIngActivity!=null){
+            lastAddIngActivity.finish();
+        }
+        if(this.lastCustomIngActivity!=null){
+            lastCustomIngActivity.finish();
+        }
+        if(this.lastIngAmountActivity!=null){
+            lastIngAmountActivity.finish();
+        }
+        this.lastAddIngActivity=lastAddIngActivity;
+    }
+
+    public void setLastCustomIngActivity(Activity customIngActivity){
+        this.lastCustomIngActivity=customIngActivity;
+    }
+
+    public void setLastIngAmountActivity(Activity lastIngAmountActivity){
+        this.lastIngAmountActivity=lastIngAmountActivity;
     }
 
     private void setUpScanningExamples(){
@@ -385,7 +415,11 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void saveMeal(IMeal meal) {
-        savedMealsRecord.saveMeal(meal);
+        if(activeMeal.getName().equals("")) {
+            savedMealsRecord.saveMeal(meal);
+        }else{
+            savedMealsRecord.editMeal(activeMeal.getName(),meal);
+        }
     }
 
     @Override
@@ -406,6 +440,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public Integer getActiveIngredientPacketWeight() {
         return activeIngredient.getPacketWeight();
+    }
+
+    @Override
+    public void removeActiveIngredient() {
+        activeMeal.removeIngredient(activeIngredient);
+        activeIngredient=null;
     }
 
     @Override

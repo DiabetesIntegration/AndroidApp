@@ -4,7 +4,6 @@ import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.IngredientsListMainModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
-import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.Meal;
 
 import java.util.List;

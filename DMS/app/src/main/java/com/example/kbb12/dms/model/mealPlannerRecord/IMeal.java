@@ -13,6 +13,7 @@ public interface IMeal {
     void setAmountOf(IIngredient ingredient, double amount);
     Double getAmountOf(IIngredient ingredient);
     void removeIngredient(int index);
+    void removeIngredient(IIngredient ingredient);
     double getNumCarbs();
     boolean isCustomCarbMeal();
 }

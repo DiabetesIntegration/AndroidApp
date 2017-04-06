@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.ingredientAmount.model;
 
-import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
 import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 /**
@@ -10,4 +9,5 @@ public interface IngredientsAmountReadWriteModel extends BaseReadWriteModel, Ing
 
     void saveAmount(int amount);
     void setUnits(String units);
+    void removeActiveIngredient();
 }

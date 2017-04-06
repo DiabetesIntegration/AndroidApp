@@ -17,8 +17,8 @@
         android:tint="@color/colorAccent"
         android:src="@android:drawable/ic_menu_add"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView5"
-        android:layout_toEndOf="@+id/textView5" />
+        android:layout_toRightOf="@+id/addMealText"
+        android:layout_toEndOf="@+id/addMealText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Straight to meal carb value..."
         android:textColor="@color/colorAccent"
-        android:id="@+id/textView4"
+        android:id="@+id/addCustomCarbMealText"
         android:layout_marginBottom="41dp"
         android:layout_above="@+id/addMealButton"
         android:layout_alignParentLeft="true"
@@ -47,16 +47,16 @@
         android:tint="@color/colorAccent"
         android:background="@null"
         android:src="@android:drawable/ic_menu_add"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4" />
+        android:layout_alignBottom="@+id/addCustomCarbMealText"
+        android:layout_toRightOf="@+id/addCustomCarbMealText"
+        android:layout_toEndOf="@+id/addCustomCarbMealText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Add a New Meal With Ingredients..."
-        android:id="@+id/textView5"
+        android:id="@+id/addMealText"
         android:textColor="@color/colorAccent"
         android:layout_alignBottom="@+id/addMealButton"
         android:layout_alignParentLeft="true"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/mealsList"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textView5"
+        android:layout_toEndOf="@+id/addMealText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:choiceMode="singleChoice"

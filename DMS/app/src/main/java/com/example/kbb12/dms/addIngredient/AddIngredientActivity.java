@@ -1,9 +1,10 @@
 package com.example.kbb12.dms.addIngredient;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,14 +25,14 @@ import java.util.List;
 
 public class AddIngredientActivity extends AppCompatActivity {
     private AddIngredientReadWriteModel model;
+    private List<Activity> betterNameNeeded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
-
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        ModelHolder.model.setLastAddIngActivity(this);
         model =new AddIngredientModel(ModelHolder.model);
 
         ImageButton addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);

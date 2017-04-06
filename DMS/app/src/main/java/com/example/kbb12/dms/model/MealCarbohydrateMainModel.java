@@ -15,4 +15,5 @@ public interface MealCarbohydrateMainModel {
     void registerCarbs(int amount);
     void setActiveMeal(IMeal meal);
     void setActiveIngredient(IIngredient ingredient);
+    IMeal getActiveMeal();
 }

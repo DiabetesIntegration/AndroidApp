@@ -1,9 +1,9 @@
 package com.example.kbb12.dms.basalInsulinModelBuilder.model;
 
+import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
+import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
 import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
 import com.example.kbb12.dms.startUp.ModelObserver;
 
 import java.util.ArrayList;

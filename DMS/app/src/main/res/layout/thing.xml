@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Type of Insulin Taken:"
-            android:id="@+id/textView5" />
+            android:id="@+id/addMealText" />
 
         <Spinner
             android:layout_width="wrap_content"

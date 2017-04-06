@@ -7,8 +7,6 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import com.example.kbb12.dms.mealAmount.model.MealAmountReadWriteModel;
-import com.example.kbb12.dms.mealList.MealListActivity;
-import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 /**

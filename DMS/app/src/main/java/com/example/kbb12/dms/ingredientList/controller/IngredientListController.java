@@ -7,14 +7,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.addIngredient.AddIngredientActivity;
 import com.example.kbb12.dms.customIngredient.AddCustomIngredientActivity;
-import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.ingredientList.model.IngredientListReadWriteModel;
 import com.example.kbb12.dms.mealAmount.MealAmountActivity;
-import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.mealList.MealListActivity;
-import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 /**
  * Created by Ciaran on 3/6/2017.

@@ -19,6 +19,9 @@ public class MealCarbohydrateModel extends BaseModel implements MealCarbohydrate
 
     @Override
     public boolean isNameTaken(String name) {
+        if(model.getActiveMeal().getName().equals(name)){
+            return false;
+        }
         for(IMeal current:model.getSavedMeals()) {
             if(current.getName().equals(name)) {
                 return true;
@@ -37,5 +40,20 @@ public class MealCarbohydrateModel extends BaseModel implements MealCarbohydrate
     @Override
     public void eatCarbs(int amount) {
         model.registerCarbs(amount);
+    }
+
+    @Override
+    public boolean hasMeal() {
+        return !model.getActiveMeal().getName().equals("");
+    }
+
+    @Override
+    public String getMealName() {
+        return model.getActiveMeal().getName();
+    }
+
+    @Override
+    public Integer getMealCarbs() {
+        return (int) model.getActiveMeal().getNumCarbs();
     }
 }

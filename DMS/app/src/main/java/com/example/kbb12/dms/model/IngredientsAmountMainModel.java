@@ -9,5 +9,5 @@ import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 public interface IngredientsAmountMainModel {
     void setIngredientAmount(int amount);
     Integer getActiveIngredientPacketWeight();
-    void setActiveIngredient(IIngredient ingredient);
+    void removeActiveIngredient();
 }

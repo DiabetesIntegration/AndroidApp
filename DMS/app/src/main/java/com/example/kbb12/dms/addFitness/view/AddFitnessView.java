@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.example.kbb12.dms.addFitness.controller.DateSetListener;
 import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
 import com.example.kbb12.dms.addFitness.model.AddFitnessReadModel;
-import com.example.kbb12.dms.addFitness.model.AddFitnessReadWriteModel;
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.startUp.ModelObserver;

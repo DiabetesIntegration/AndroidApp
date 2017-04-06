@@ -8,13 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.BolusControllerFactory;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.KnowsICRListener;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.KnowsISFListener;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.controller.SaveBolusInsulinListener;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.model.BolusInsulinModelBuilderModel;
 import com.example.kbb12.dms.bolusInsulinModelBuilder.view.BolusInsulinBuilderView;
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 
 public class BolusInsulinModelBuilder extends AppCompatActivity {

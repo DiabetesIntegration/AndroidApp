@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.text.TextWatcher;
 import android.view.View;
 
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.baseScreen.controller.BasicTextWatcher;
 import com.example.kbb12.dms.mealCarbohydrateValue.model.MealCarbohydrateReadWriteModel;
 import com.example.kbb12.dms.mealList.MealListActivity;
-import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 /**

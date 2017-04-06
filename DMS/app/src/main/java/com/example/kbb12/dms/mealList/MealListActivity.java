@@ -1,14 +1,14 @@
 package com.example.kbb12.dms.mealList;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.baseScreen.customListView.CustomListViewControllerFactory;
 import com.example.kbb12.dms.mealList.controller.MealListController;
 import com.example.kbb12.dms.mealList.model.MealListModel;
@@ -30,7 +30,9 @@ public class MealListActivity extends AppCompatActivity {
 
         ListView mealList = (ListView) findViewById(R.id.mealsList);
         ImageButton addMeal = (ImageButton) findViewById(R.id.addMealButton);
+        TextView addMealText = (TextView) findViewById(R.id.addMealText);
         ImageButton addCarb = (ImageButton) findViewById(R.id.addCustomCarbMealButton);
+        TextView addCarbText = (TextView) findViewById(R.id.addCustomCarbMealText);
         TextView emptyMealList = (TextView) findViewById(R.id.emptyMealList);
 
         CustomAdapter cAdapter = new CustomAdapter(this, new CustomListViewControllerFactory(model));
@@ -38,7 +40,9 @@ public class MealListActivity extends AppCompatActivity {
 
         MealListController controller = new MealListController(model,this);
         addMeal.setOnClickListener(controller);
+        addMealText.setOnClickListener(controller);
         addCarb.setOnClickListener(controller);
+        addCarbText.setOnClickListener(controller);
         mealList.setOnItemClickListener(controller);
 
 

@@ -1,8 +1,8 @@
 package com.example.kbb12.dms.fitnessInfo;
 
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.R;

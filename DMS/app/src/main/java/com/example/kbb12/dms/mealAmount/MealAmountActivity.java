@@ -1,8 +1,8 @@
 package com.example.kbb12.dms.mealAmount;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,8 +12,8 @@ import com.example.kbb12.dms.mealAmount.controller.MealAmountController;
 import com.example.kbb12.dms.mealAmount.model.MealAmountModel;
 import com.example.kbb12.dms.mealAmount.model.MealAmountReadWriteModel;
 import com.example.kbb12.dms.mealAmount.view.MealAmountView;
-import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.model.UserModel;
+import com.example.kbb12.dms.startUp.ModelHolder;
 
 public class MealAmountActivity extends AppCompatActivity {
     private Button saveMeal, eatMeal;

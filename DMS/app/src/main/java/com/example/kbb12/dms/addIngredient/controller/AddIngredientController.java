@@ -7,10 +7,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.addIngredient.model.AddIngredientReadWriteModel;
 import com.example.kbb12.dms.customIngredient.AddCustomIngredientActivity;
 import com.example.kbb12.dms.ingredientAmount.IngredientsAmountActivity;
-import com.example.kbb12.dms.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 /**

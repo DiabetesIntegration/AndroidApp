@@ -4,26 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsContract;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsDatabase;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsContract;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsDatabase;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenContract;
-import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbsEatenDatabase;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecordContract;
 import com.example.kbb12.dms.model.activityRecord.ActivityRecordDatabase;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModel;
 import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModelContractHolder;
 import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.CurrentBGContract;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.CurrentBGModel;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.HistoryBGContract;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.HistoryBGModel;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGDatabase;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
 import com.example.kbb12.dms.model.bloodGlucoseRecord.RawDataContract;
@@ -36,6 +27,15 @@ import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoRecord;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenContract;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
 import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsContract;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsDatabase;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsContract;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsDatabase;
+import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenContract;
+import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
+import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbsEatenDatabase;
 
 /**
  * Created by kbb12 on 24/03/2017.

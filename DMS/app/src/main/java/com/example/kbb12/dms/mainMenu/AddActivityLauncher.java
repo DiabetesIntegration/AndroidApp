@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.kbb12.dms.addFitness.AddFitnessActivity;
 import com.example.kbb12.dms.fitnessInfo.FitnessInfoActivity;
-import com.example.kbb12.dms.takeInsulin.TakeInsulin;
 
 /**
  * Created by kbb12 on 24/02/2017.

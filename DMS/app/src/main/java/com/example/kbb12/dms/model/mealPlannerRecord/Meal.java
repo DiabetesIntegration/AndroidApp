@@ -81,6 +81,17 @@ public class Meal implements IMeal {
     }
 
     @Override
+    public void removeIngredient(IIngredient ingredient) {
+        for(int i=0;i<ingredients.size();i++){
+            if(ingredients.get(i).getName().equals(ingredient.getName())){
+                ingredients.remove(i);
+                amounts.remove(i);
+                return;
+            }
+        }
+    }
+
+    @Override
     public double getNumCarbs() {
         double totalCarbs=0.0;
         for(int i=0;i<ingredients.size();i++){

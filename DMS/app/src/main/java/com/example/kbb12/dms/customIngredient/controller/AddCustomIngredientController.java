@@ -84,7 +84,6 @@ public class AddCustomIngredientController implements View.OnClickListener {
     }
 
     public void nextActivity(){
-        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, IngredientsAmountActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

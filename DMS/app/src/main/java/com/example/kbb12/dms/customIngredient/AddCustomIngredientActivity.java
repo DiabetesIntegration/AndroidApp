@@ -1,13 +1,13 @@
 package com.example.kbb12.dms.customIngredient;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.customIngredient.controller.AddCustomIngredientController;
 import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientModel;
 import com.example.kbb12.dms.customIngredient.model.AddCustomIngredientReadWriteModel;
@@ -23,7 +23,7 @@ public class AddCustomIngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_custom_ingredient);
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        ModelHolder.model.setLastCustomIngActivity(this);
         AddCustomIngredientReadWriteModel model = new AddCustomIngredientModel(ModelHolder.model);
 
 

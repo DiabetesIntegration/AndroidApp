@@ -1,11 +1,8 @@
 package com.example.kbb12.dms.bluetooth;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +26,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Vector;
 
 public class BluetoothService extends Service{
     private static final String tag="BluetoothService";

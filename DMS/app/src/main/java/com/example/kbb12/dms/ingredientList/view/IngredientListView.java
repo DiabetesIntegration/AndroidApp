@@ -3,8 +3,8 @@ package com.example.kbb12.dms.ingredientList.view;
 import android.app.FragmentManager;
 import android.widget.EditText;
 
-import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.baseScreen.controller.IErrorController;
+import com.example.kbb12.dms.baseScreen.customListView.CustomAdapter;
 import com.example.kbb12.dms.baseScreen.view.MasterView;
 import com.example.kbb12.dms.ingredientList.model.IngredientListReadModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;

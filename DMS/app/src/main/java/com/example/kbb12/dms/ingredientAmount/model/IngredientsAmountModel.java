@@ -30,11 +30,15 @@ public class IngredientsAmountModel extends BaseModel implements IngredientsAmou
         }else{
             model.setIngredientAmount((int)(((double)model.getActiveIngredientPacketWeight()/100)*amount));
         }
-        model.setActiveIngredient(null);
     }
 
     @Override
     public void setUnits(String units) {
         this.units=units;
+    }
+
+    @Override
+    public void removeActiveIngredient() {
+        model.removeActiveIngredient();
     }
 }

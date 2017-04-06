@@ -1,20 +1,20 @@
 package com.example.kbb12.dms.basalInsulinModelBuilder;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.BrandListener;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.EntryControllerFactory;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.IEntryControllerFactory;
 import com.example.kbb12.dms.basalInsulinModelBuilder.controller.ValidateBasalInsulinController;
 import com.example.kbb12.dms.basalInsulinModelBuilder.model.BasalInsulinModel;
 import com.example.kbb12.dms.basalInsulinModelBuilder.view.BasalInsulinModelBuilderView;
-import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.startUp.ModelObserver;
 

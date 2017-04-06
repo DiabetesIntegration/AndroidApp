@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="What is your basal insulin called?"
-        android:id="@+id/textView4"
+        android:id="@+id/addCustomCarbMealText"
         android:layout_weight="1"/>
     <EditText
         android:layout_width="match_parent"

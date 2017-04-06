@@ -1,14 +1,15 @@
 package com.example.kbb12.dms.addFitness;
 
 import android.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.addFitness.controller.ActivityTypeListener;
 import com.example.kbb12.dms.addFitness.controller.DateSetListener;
 import com.example.kbb12.dms.addFitness.controller.DateTimeListener;
@@ -20,7 +21,6 @@ import com.example.kbb12.dms.addFitness.controller.TimeSetListener;
 import com.example.kbb12.dms.addFitness.controller.ValidateAndSave;
 import com.example.kbb12.dms.addFitness.model.AddFitnessModel;
 import com.example.kbb12.dms.addFitness.view.AddFitnessView;
-import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.startUp.ModelHolder;
 

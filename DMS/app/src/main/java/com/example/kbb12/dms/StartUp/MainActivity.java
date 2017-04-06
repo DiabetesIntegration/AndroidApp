@@ -1,15 +1,13 @@
 package com.example.kbb12.dms.startUp;
 
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
-import com.example.kbb12.dms.bluetooth.BluetoothService;
+import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.mainMenu.MainMenuActivity;
 import com.example.kbb12.dms.model.UserModel;
-import com.example.kbb12.dms.R;
 
 /*
 This will be the activity that creates the user model at the start and passes it on.

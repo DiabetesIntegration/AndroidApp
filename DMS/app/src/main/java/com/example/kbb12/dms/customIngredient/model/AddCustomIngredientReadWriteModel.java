@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.customIngredient.model;
 
-import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
 import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
 
 /**

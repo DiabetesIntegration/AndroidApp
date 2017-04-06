@@ -1,7 +1,6 @@
 package com.example.kbb12.dms.bolusInsulinModelBuilder.controller;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
