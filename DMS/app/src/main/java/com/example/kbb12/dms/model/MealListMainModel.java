@@ -1,5 +1,6 @@
 package com.example.kbb12.dms.model;
 
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface MealListMainModel {
     void setActiveMeal(IMeal activeMeal);
+    void setActiveIngredient(IIngredient ingredient);
     IMeal getActiveMeal();
     List<IMeal> getSavedMeals();
     void deleteMeal(IMeal meal);

@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.addIngredient.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseReadModel;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
 
 import java.util.List;
 
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface AddIngredientReadModel extends BaseReadModel {
     List<String> getSavedIngredients();
+    IIngredient getIngredient();
 }

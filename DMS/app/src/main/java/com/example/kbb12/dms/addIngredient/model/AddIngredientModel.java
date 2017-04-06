@@ -3,6 +3,7 @@ package com.example.kbb12.dms.addIngredient.model;
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.AddIngredientMainModel;
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,11 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
     }
 
     @Override
+    public IIngredient getIngredient() {
+        return model.getActiveIngredient();
+    }
+
+    @Override
     public boolean setScannedIngredient(String code) {
         IIngredient ingredient = model.getIngredientByBarcode(code);
         if(ingredient==null){
@@ -56,6 +62,11 @@ public class AddIngredientModel extends BaseModel implements AddIngredientReadWr
     @Override
     public void setUpNewIngredient() {
         model.setActiveIngredient(null);
+    }
+
+    @Override
+    public IMeal getActiveMeal() {
+        return model.getActiveMeal();
     }
 
 }

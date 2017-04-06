@@ -17,7 +17,6 @@ import java.util.List;
  * Created by Ciaran on 3/6/2017.
  */
 public class IngredientListView extends MasterView implements ModelObserver {
-    private EditText mName;
     private CustomAdapter adapter;
     private IngredientListReadModel model;
 
@@ -25,7 +24,7 @@ public class IngredientListView extends MasterView implements ModelObserver {
     public IngredientListView(EditText mealName, CustomAdapter adapter, IngredientListReadModel model,
                               FragmentManager fm, IErrorController errorC) {
         super(fm,errorC);
-        mName = mealName;
+        mealName.setText(model.getMealName());
         this.adapter = adapter;
         this.model = model;
         update();
@@ -46,6 +45,5 @@ public class IngredientListView extends MasterView implements ModelObserver {
             ingredientsStrings.add(String.format("%s - %.2f of carbs",ingredient.getName(),numCarbs));
         }
         adapter.addAll(ingredientsStrings);
-        mName.setText(model.getMealName());
     }
 }

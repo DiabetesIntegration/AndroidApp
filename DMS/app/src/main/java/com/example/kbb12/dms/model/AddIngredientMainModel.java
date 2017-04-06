@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.model;
 
 import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface AddIngredientMainModel {
     IIngredient getIngredientByName(String name);
     IIngredient getIngredientByBarcode(String barcode);
     void setActiveIngredient(IIngredient ingredient);
+    IIngredient getActiveIngredient();
+    IMeal getActiveMeal();
 }

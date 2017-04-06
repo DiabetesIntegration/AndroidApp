@@ -45,6 +45,12 @@ public class MealListModel extends BaseModel implements MealListReadWriteModel {
     }
 
     @Override
+    public void clearActives() {
+        model.setActiveMeal(null);
+        model.setActiveIngredient(null);
+    }
+
+    @Override
     public boolean isSelectedMealCustom() {
         return model.getActiveMeal().isCustomCarbMeal();
     }

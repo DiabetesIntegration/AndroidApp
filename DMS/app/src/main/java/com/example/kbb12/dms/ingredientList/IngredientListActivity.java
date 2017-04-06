@@ -25,13 +25,16 @@ import java.util.List;
 
 public class IngredientListActivity extends AppCompatActivity {
 
+    private IngredientListReadWriteModel model;
+    private ModelObserver view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_list);
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        IngredientListReadWriteModel model = new IngredientListModel(ModelHolder.model);
+        model = new IngredientListModel(ModelHolder.model);
 
         EditText mealName = (EditText) findViewById(R.id.mealNameEntry);
         ListView currentIngredients = (ListView) findViewById(R.id.ingredientsList);
@@ -55,9 +58,18 @@ public class IngredientListActivity extends AppCompatActivity {
         android.app.FragmentManager fm = getFragmentManager();
         DefaultErrorController c = new DefaultErrorController(model);
 
-        ModelObserver view = new IngredientListView(mealName,cAdapter,model,fm,c);
+        view = new IngredientListView(mealName,cAdapter,model,fm,c);
         model.registerObserver(view);
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(model.getActiveMeal()==null){
+            //Can't add an ingredient without a meal
+            finish();
+        }
+        view.update();
+    }
 }

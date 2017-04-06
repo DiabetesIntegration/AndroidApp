@@ -47,7 +47,7 @@ public class IngredientListController implements View.OnClickListener, TextWatch
                     model.setError("Error! There are no ingredients in the meal!");
                     return;
                 }
-                else if(!model.checkMealName()) {
+                else if(model.checkMealName()) {
                     //meal name already exists
                     model.setError("Error! This meal name already exists! Please choose another name!");
                     return;
@@ -58,13 +58,11 @@ public class IngredientListController implements View.OnClickListener, TextWatch
                 break;
         }
         currentActivity.startActivity(nextIntent);
-        currentActivity.finish();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         model.setEditableIngredientPosition(position);
-        currentActivity.finish();
         Intent templateIntent = new Intent(currentActivity, AddCustomIngredientActivity.class);
         //Launches the next activity.
         currentActivity.startActivity(templateIntent);

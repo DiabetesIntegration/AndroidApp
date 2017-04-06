@@ -2,6 +2,8 @@ package com.example.kbb12.dms.ingredientAmount.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.IngredientsAmountMainModel;
+import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 /**
  * Created by kbb12 on 05/04/2017.
@@ -24,6 +26,11 @@ public class IngredientsAmountModel extends BaseModel implements IngredientsAmou
     }
 
     @Override
+    public IIngredient getActiveIngredient() {
+        return model.getActiveIngredient();
+    }
+
+    @Override
     public void saveAmount(int amount) {
         if(units.equals("g")) {
             model.setIngredientAmount(amount);
@@ -40,5 +47,10 @@ public class IngredientsAmountModel extends BaseModel implements IngredientsAmou
     @Override
     public void removeActiveIngredient() {
         model.removeActiveIngredient();
+    }
+
+    @Override
+    public IMeal getActiveMeal() {
+        return model.getActiveMeal();
     }
 }

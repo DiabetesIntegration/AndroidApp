@@ -27,9 +27,7 @@ public class IngredientsAmountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ingredients_amount);
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        ModelHolder.model.setLastIngAmountActivity(this);
         model = new IngredientsAmountModel(ModelHolder.model);
-
         ToggleButton wOrp = (ToggleButton) findViewById(R.id.toggleButton);
         ImageButton confirmIngredientAmount = (ImageButton) findViewById(R.id.ingredientAmountConfirmButton);
         EditText amountEntry = (EditText) findViewById(R.id.amountUsedEntry);
@@ -53,5 +51,14 @@ public class IngredientsAmountActivity extends AppCompatActivity {
     public void onBackPressed(){
         model.removeActiveIngredient();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(model.getActiveIngredient()==null||model.getActiveMeal()==null){
+            //Can't set an amount if there isn't an ingredient
+            finish();
+        }
     }
 }

@@ -23,7 +23,6 @@ public class AddCustomIngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_custom_ingredient);
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        ModelHolder.model.setLastCustomIngActivity(this);
         AddCustomIngredientReadWriteModel model = new AddCustomIngredientModel(ModelHolder.model);
 
 

@@ -19,9 +19,9 @@ public class AddCustomIngredientView extends MasterView implements ModelObserver
         this.model = model;
         if(model.hasExisting()){
             name.setText(model.getIngredientName());
-            carb.setText(String.format("%d",model.getCarbPerHundred()));
+            carb.setText(String.format("%d",model.getCarbPerHundred().intValue()));
             packet.setText("100");
-            weight.setText(model.getPacketWeight());
+            weight.setText(model.getPacketWeight().toString());
         }
     }
 

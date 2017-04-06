@@ -19,6 +19,9 @@ import com.example.kbb12.dms.startUp.ModelObserver;
 
 public class MealListActivity extends AppCompatActivity {
 
+    private MealListReadWriteModel model;
+    private ModelObserver view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +29,7 @@ public class MealListActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MealListReadWriteModel model = new MealListModel(ModelHolder.model);
-
+        model = new MealListModel(ModelHolder.model);
         ListView mealList = (ListView) findViewById(R.id.mealsList);
         ImageButton addMeal = (ImageButton) findViewById(R.id.addMealButton);
         TextView addMealText = (TextView) findViewById(R.id.addMealText);
@@ -46,9 +48,16 @@ public class MealListActivity extends AppCompatActivity {
         mealList.setOnItemClickListener(controller);
 
 
-        ModelObserver view = new MealListView(emptyMealList,cAdapter,model);
+        view = new MealListView(emptyMealList,cAdapter,model);
         model.registerObserver(view);
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        model.clearActives();
+        view.update();
     }
 
 }

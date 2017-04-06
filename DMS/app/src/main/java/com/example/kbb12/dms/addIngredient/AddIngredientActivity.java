@@ -32,9 +32,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        ModelHolder.model.setLastAddIngActivity(this);
         model =new AddIngredientModel(ModelHolder.model);
-
         ImageButton addCustom = (ImageButton) findViewById(R.id.addCustomIngredientButton);
         ImageButton scanItem = (ImageButton) findViewById(R.id.scanBarcodeButton);
         EditText searchSavedIng = (EditText) findViewById(R.id.searchDatabaseEntry);
@@ -69,4 +67,14 @@ public class AddIngredientActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(model.getActiveMeal()==null){
+            //Can't add an ingredient without a meal
+            finish();
+        }
+    }
+
 }

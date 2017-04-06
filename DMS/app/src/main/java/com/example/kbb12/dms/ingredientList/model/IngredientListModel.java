@@ -55,6 +55,11 @@ public class IngredientListModel extends BaseModel implements IngredientListRead
     }
 
     @Override
+    public IMeal getActiveMeal() {
+        return model.getActiveMeal();
+    }
+
+    @Override
     public List<IIngredient> getIngredients() {
         return active.getIngredients();
     }

@@ -1,6 +1,7 @@
 package com.example.kbb12.dms.ingredientAmount.model;
 
 import com.example.kbb12.dms.baseScreen.model.BaseReadWriteModel;
+import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
 
 /**
  * Created by Ciaran on 3/6/2017.
@@ -10,4 +11,5 @@ public interface IngredientsAmountReadWriteModel extends BaseReadWriteModel, Ing
     void saveAmount(int amount);
     void setUnits(String units);
     void removeActiveIngredient();
+    IMeal getActiveMeal();
 }

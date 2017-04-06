@@ -67,10 +67,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private IMeal activeMeal;
     private IIngredient activeIngredient;
 
-    private Activity lastAddIngActivity;
-    private Activity lastCustomIngActivity;
-    private Activity lastIngAmountActivity;
-
     public UserModel(Context context,SharedPreferences sharPrefEdit){
         DatabaseBuilder db = new DatabaseBuilder(context);
         basalInsulinModel =db.getBasalInsulinModel();
@@ -92,30 +88,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         activeMeal =null;
         activeIngredient=null;
         setUpScanningExamples();
-        lastAddIngActivity =null;
-        lastCustomIngActivity=null;
-        lastIngAmountActivity=null;
-    }
-
-    public void setLastAddIngActivity(Activity lastAddIngActivity){
-        if(this.lastAddIngActivity!=null){
-            lastAddIngActivity.finish();
-        }
-        if(this.lastCustomIngActivity!=null){
-            lastCustomIngActivity.finish();
-        }
-        if(this.lastIngAmountActivity!=null){
-            lastIngAmountActivity.finish();
-        }
-        this.lastAddIngActivity=lastAddIngActivity;
-    }
-
-    public void setLastCustomIngActivity(Activity customIngActivity){
-        this.lastCustomIngActivity=customIngActivity;
-    }
-
-    public void setLastIngAmountActivity(Activity lastIngAmountActivity){
-        this.lastIngAmountActivity=lastIngAmountActivity;
     }
 
     private void setUpScanningExamples(){
@@ -404,7 +376,11 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void updateActiveMeal(IMeal meal) {
-        savedMealsRecord.editMeal(activeMeal.getName(),meal);
+        if(activeMeal.getName()==""){
+            savedMealsRecord.saveMeal(meal);
+        }else {
+            savedMealsRecord.editMeal(activeMeal.getName(), meal);
+        }
         activeMeal=meal;
     }
 
@@ -453,6 +429,9 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         if(activeIngredient==null){
             savedIngredientsRecord.saveIngredient(ingredient);
         }else{
+            if(activeMeal.getAmountOf(activeIngredient)!=null&&activeMeal.getAmountOf(activeIngredient)>0){
+                activeMeal.removeIngredient(activeIngredient);
+            }
             savedIngredientsRecord.updateIngredient(activeIngredient.getName(),ingredient);
         }
         activeIngredient=ingredient;
