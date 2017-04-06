@@ -61,22 +61,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SAVE MEAL"
-            android:background="@null"
-            android:id="@+id/saveMealButton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="EAT MEAL"
+            android:textColor="@color/colorAccent"
             android:background="@null"
             android:id="@+id/eatMealButton"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </RelativeLayout>

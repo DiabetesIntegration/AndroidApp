@@ -20,6 +20,7 @@ public class MealListView implements ModelObserver{
         this.adapter = adapter;
         adapter.addAll(model.getSavedMeals());
         this.model = model;
+        update();
     }
 
     @Override

@@ -42,27 +42,8 @@ public class TimeCarbsEatenDatabase implements TimeCarbEatenRecord {
         return entries;
     }
 
-
     @Override
-    public Map<Calendar, String> getAllBasicData() {
-        Map<Calendar, String> basicData = new HashMap<Calendar, String>();
-
-        String selectQuery = "SELECT  * FROM " + TimeCarbEatenContract.ContentsDefinition.TABLE_NAME;
-
-        Cursor c = write.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to map
-        if (c.moveToFirst()) {
-            do {
-                basicData.put(parseCalendar(c.getString(c.getColumnIndex(TimeCarbEatenContract.ContentsDefinition.COLUMN_NAME_DATETIME))), c.getString(c.getColumnIndex(TimeCarbEatenContract.ContentsDefinition.COLUMN_NAME_CARBCONSUMED)));
-            } while (c.moveToNext());
-        }
-
-        return basicData;
-    }
-
-    @Override
-    public long addRawData(String rawData, Calendar timestamp) {
+    public long addCarbsEaten(Integer rawData, Calendar timestamp) {
         ContentValues values = new ContentValues();
         values.put(TimeCarbEatenContract.ContentsDefinition.COLUMN_NAME_CARBCONSUMED, rawData);
         values.put(TimeCarbEatenContract.ContentsDefinition.COLUMN_NAME_DATETIME, getDateTime(timestamp));

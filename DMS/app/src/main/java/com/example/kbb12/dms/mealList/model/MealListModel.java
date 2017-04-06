@@ -27,7 +27,7 @@ public class MealListModel extends BaseModel implements MealListReadWriteModel {
 
     @Override
     public List<String> getSavedMeals() {
-        List<String> meals  = new ArrayList<String>();
+        List<String> meals  = new ArrayList<>();
         for(IMeal current:model.getSavedMeals()) {
             if(current.isCustomCarbMeal()) {
                 meals.add(current.getName() + " - " + current.getNumCarbs() + "g of carbohydrate in meal (No ingredients)");
@@ -40,12 +40,12 @@ public class MealListModel extends BaseModel implements MealListReadWriteModel {
     }
 
     @Override
-    public void setMealItem(int i) {
+    public void selectMeal(int i) {
         model.setActiveMeal(model.getSavedMeals().get(i));
     }
 
     @Override
-    public boolean isCustomMealAtPosition() {
+    public boolean isSelectedMealCustom() {
         return model.getActiveMeal().isCustomCarbMeal();
     }
 

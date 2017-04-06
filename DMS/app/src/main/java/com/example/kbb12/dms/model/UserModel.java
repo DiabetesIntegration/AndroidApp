@@ -35,7 +35,8 @@ import java.util.List;
 public class UserModel implements BasalInsulinModelBuilderMainModel,
         TakeInsulinMainModel,BolusInsulinModelBuilderMainModel, IBloodGlucoseModel,
         AddFitnessMainModel,FitnessInfoMainModel, EnterWeightMainModel,IngredientsAmountMainModel,
-        MealCarbohydrateMainModel, MealListMainModel,AddIngredientMainModel,IngredientsListMainModel{
+        MealCarbohydrateMainModel, MealListMainModel,AddIngredientMainModel,IngredientsListMainModel,
+        MealAmountMainModel{
 
     private IBasalInsulinModel basalInsulinModel;
 
@@ -141,7 +142,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         try {
             Calendar currentTime = Calendar.getInstance();
             Calendar lastTaken;
-            String date;
             for (BasalInsulinEntry dose : basicDoses) {
                 lastTaken=Calendar.getInstance();
                 if(dose.getHour()>currentTime.get(Calendar.HOUR_OF_DAY)||(dose.getHour().equals(currentTime.get(Calendar.HOUR_OF_DAY))&&dose.getMinute()>currentTime.get(Calendar.MINUTE))){
@@ -343,6 +343,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
     @Override
+    public void eatCurrentMeal(double percentEaten) {
+        timeCarbEatenRecord.addCarbsEaten((int)(activeMeal.getNumCarbs()*(percentEaten/100)),
+                Calendar.getInstance());
+    }
+
+    @Override
     public void setActiveMeal(IMeal activeMeal) {
         this.activeMeal=activeMeal;
     }
@@ -388,7 +394,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void registerCarbs(int amount) {
-        timeCarbEatenRecord.addRawData(Integer.toString(amount),Calendar.getInstance());
+        timeCarbEatenRecord.addCarbsEaten(amount,Calendar.getInstance());
     }
 
     @Override

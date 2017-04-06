@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 
 import com.example.kbb12.dms.addIngredient.AddIngredientActivity;
 import com.example.kbb12.dms.ingredientList.IngredientListActivity;
+import com.example.kbb12.dms.mealAmount.MealAmountActivity;
 import com.example.kbb12.dms.mealCarbohydrateValue.MealCarbohydrateValueActivity;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.mealList.model.MealListReadWriteModel;
@@ -45,15 +46,14 @@ public class MealListController implements View.OnClickListener, AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        model.setMealItem(position);
-        if(!model.isCustomMealAtPosition()) {
+        model.selectMeal(position);
+        if(!model.isSelectedMealCustom()) {
             Intent ingredientIntent = new Intent(currentActivity, IngredientListActivity.class);
             //Launches the next activity.
             currentActivity.startActivity(ingredientIntent);
         }
         else {
-            //TODO
-            Intent templateIntent = new Intent(currentActivity, TakeInsulin.class);
+            Intent templateIntent = new Intent(currentActivity, MealAmountActivity.class);
             //Launches the next activity.
             currentActivity.startActivity(templateIntent);
             currentActivity.finish();

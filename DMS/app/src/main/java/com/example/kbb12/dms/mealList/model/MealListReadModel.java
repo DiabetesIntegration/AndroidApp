@@ -7,6 +7,5 @@ import java.util.List;
  */
 public interface MealListReadModel {
     List<String> getSavedMeals();
-    boolean isCustomMealAtPosition();
-
+    boolean isSelectedMealCustom();
 }

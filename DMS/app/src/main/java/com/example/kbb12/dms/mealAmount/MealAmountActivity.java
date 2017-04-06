@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.baseScreen.controller.DefaultErrorController;
+import com.example.kbb12.dms.mealAmount.controller.MealAmountController;
+import com.example.kbb12.dms.mealAmount.model.MealAmountModel;
+import com.example.kbb12.dms.mealAmount.model.MealAmountReadWriteModel;
+import com.example.kbb12.dms.mealAmount.view.MealAmountView;
 import com.example.kbb12.dms.startUp.ModelHolder;
 import com.example.kbb12.dms.model.UserModel;
 
@@ -26,24 +30,20 @@ public class MealAmountActivity extends AppCompatActivity {
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        model = ModelHolder.model;
+        MealAmountReadWriteModel model = new MealAmountModel(ModelHolder.model);
 
         saveMeal = (Button) findViewById(R.id.saveMealButton);
         eatMeal = (Button) findViewById(R.id.eatMealButton);
         mealAmount = (EditText) findViewById(R.id.mealAmountPercent);
-        //TODO
-/*
         MealAmountController controller = new MealAmountController(model,this);
-        saveMeal.setOnClickListener(controller);
         eatMeal.setOnClickListener(controller);
         mealAmount.addTextChangedListener(controller);
 
         android.app.FragmentManager fm = getFragmentManager();
         DefaultErrorController c = new DefaultErrorController(model);
 
-        view = new MealAmountView(mealAmount,model,fm,c);
+        view = new MealAmountView(model,fm,c);
         model.registerObserver(view);
-        */
     }
 
 }

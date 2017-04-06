@@ -26,6 +26,7 @@ public class SavedIngredientsDatabase implements SavedIngredientsRecord {
         values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME, ingredient.getName());
         values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_CARBVAL, ingredient.getCarbsPerHundredG());
         values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_WEIGHT, ingredient.getPacketWeight());
+        values.put(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_BARCODE, ingredient.getBarcode());
         // insert row
         write.insert(SavedIngredientsContract.ContentsDefinition.TABLE_NAME, null, values);
     }
@@ -39,7 +40,8 @@ public class SavedIngredientsDatabase implements SavedIngredientsRecord {
             ingredients.add(new Ingredient(
                     c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_INGNAME)),
                     Double.parseDouble(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_CARBVAL))),
-                    Integer.parseInt(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_WEIGHT)))));
+                    Integer.parseInt(c.getString(c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_WEIGHT))),
+                    c.getString((c.getColumnIndex(SavedIngredientsContract.ContentsDefinition.COLUMN_NAME_BARCODE)))));
         }
 
         return ingredients;
