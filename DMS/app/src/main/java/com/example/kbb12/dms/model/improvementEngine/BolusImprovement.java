@@ -4,16 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
-import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
-import com.example.kbb12.dms.model.activityRecord.IFitnessEntry;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
-import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.database.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.model.database.activityRecord.IFitnessEntry;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGRecord;
+import com.example.kbb12.dms.model.database.bolusInsulinModel.IBolusInsulinModel;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
-import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
-import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
-import com.example.kbb12.dms.takeInsulin.model.TakeInsulinReadModel;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.IInsulinTakenEntry;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
+import com.example.kbb12.dms.individualScreens.takeInsulin.model.TakeInsulinReadModel;
 
 import java.util.Calendar;
 import java.util.List;

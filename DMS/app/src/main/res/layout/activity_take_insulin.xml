@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
-    tools:context="com.example.kbb12.dms.takeInsulin.TakeInsulin">
+    tools:context=".individualScreens.takeInsulin.TakeInsulin">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
         android:paddingBottom="10dp">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/addMealText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Type of Insulin Taken:"

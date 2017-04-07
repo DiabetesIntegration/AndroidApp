@@ -38,7 +38,7 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".bluetooth.TimedBTRunner">
+        <receiver android:name=".individualScreens.mainMenu.model.bluetooth.TimedBTRunner">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
@@ -46,7 +46,7 @@
         </receiver>
 
         <service android:exported="false"
-            android:name=".bluetooth.BluetoothService">
+            android:name=".individualScreens.mainMenu.model.bluetooth.BluetoothService">
             <intent-filter>
                 <action android:name="com.DMS.bluetoothService" />
             </intent-filter>
@@ -69,7 +69,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".startUp.MainActivity">
+        <activity android:name=".individualScreens.startUp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,15 +79,15 @@
         <activity
             android:name=".template.TemplateActivity"
             android:label="@string/title_activity_template"
-            android:parentActivityName=".startUp.MainActivity"
+            android:parentActivityName=".individualScreens.startUp.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.kbb12.dms.startUp.MainActivity" />
+                android:value=".individualScreens.startUp.MainActivity" />
         </activity>
-        <activity android:name=".mealList.MealListActivity" />
-        <activity android:name=".addIngredient.AddIngredientActivity" />
-        <activity android:name=".customIngredient.AddCustomIngredientActivity" />
+        <activity android:name=".individualScreens.mealList.MealListActivity" />
+        <activity android:name=".individualScreens.addIngredient.AddIngredientActivity" />
+        <activity android:name=".individualScreens.customIngredient.AddCustomIngredientActivity" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -96,25 +96,24 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ingredientList.IngredientListActivity" />
-        <activity android:name=".ingredientAmount.IngredientsAmountActivity" />
-        <activity android:name=".mealAmount.MealAmountActivity" />
-        <activity android:name=".mealCarbohydrateValue.MealCarbohydrateValueActivity"></activity>
-        <activity android:name=".fitnessInfo.FitnessInfoActivity" />
-        <activity android:name=".addFitness.AddFitnessActivity" />
-        <activity android:name=".enterWeight.EnterWeightActivity"></activity>
-        <activity android:name=".mainMenu.MainMenuActivity">
+        <activity android:name=".individualScreens.ingredientList.IngredientListActivity" />
+        <activity android:name=".individualScreens.ingredientAmount.IngredientsAmountActivity" />
+        <activity android:name=".individualScreens.mealAmount.MealAmountActivity" />
+        <activity android:name=".individualScreens.mealCarbohydrateValue.MealCarbohydrateValueActivity"></activity>
+        <activity android:name=".individualScreens.fitnessInfo.FitnessInfoActivity" />
+        <activity android:name=".individualScreens.addFitness.AddFitnessActivity" />
+        <activity android:name=".individualScreens.enterWeight.EnterWeightActivity"></activity>
+        <activity android:name=".individualScreens.mainMenu.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".basalInsulinModelBuilder.BasalInsulinModelBuilderActivity"
+            android:name=".individualScreens.basalInsulinModelBuilder.BasalInsulinModelBuilderActivity"
             android:label="@string/title_activity_insulin_model_builder" />
-        <activity android:name=".takeInsulin.TakeInsulin" />
+        <activity android:name=".individualScreens.takeInsulin.TakeInsulin" />
         <activity
-            android:name=".bolusInsulinModelBuilder.BolusInsulinModelBuilder"
-            android:label="@string/title_activity_bolus_insulin_model_builder"
+            android:name=".individualScreens.bolusInsulinModelBuilder.BolusInsulinModelBuilder"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.startUp.MainActivity;
+import com.example.kbb12.dms.individualScreens.startUp.MainActivity;
 
 /**
  * Created by kbb12 on 19/02/2017.

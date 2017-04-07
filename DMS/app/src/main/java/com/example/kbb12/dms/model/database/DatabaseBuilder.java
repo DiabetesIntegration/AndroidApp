@@ -4,41 +4,38 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsContract;
-import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsDatabase;
-import com.example.kbb12.dms.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
-import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsContract;
-import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsDatabase;
-import com.example.kbb12.dms.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.mealPlannerRecord.scanningItemsRecord.ScannedItemContract;
-import com.example.kbb12.dms.mealPlannerRecord.scanningItemsRecord.ScannedItemDatabase;
-import com.example.kbb12.dms.mealPlannerRecord.scanningItemsRecord.ScannedItemRecord;
-import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenContract;
-import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
-import com.example.kbb12.dms.mealPlannerRecord.timeCarbEatenRecord.TimeCarbsEatenDatabase;
-import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
-import com.example.kbb12.dms.model.activityRecord.ActivityRecordContract;
-import com.example.kbb12.dms.model.activityRecord.ActivityRecordDatabase;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModel;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinModelContractHolder;
-import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.CurrentBGContract;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.CurrentBGModel;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.HistoryBGContract;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.HistoryBGModel;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGDatabase;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.RawDataContract;
-import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModel;
-import com.example.kbb12.dms.model.bolusInsulinModel.BolusInsulinModelContractHolder;
-import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
-import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoContract;
-import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoDatabase;
-import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoRecord;
-import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenContract;
-import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenDatabase;
-import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.model.database.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.model.database.activityRecord.ActivityRecordContract;
+import com.example.kbb12.dms.model.database.activityRecord.ActivityRecordDatabase;
+import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinModel;
+import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinModelContractHolder;
+import com.example.kbb12.dms.model.database.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGRecord;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.CurrentBGContract;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.CurrentBGModel;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.HistoryBGContract;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.HistoryBGModel;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.RawBGDatabase;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.RawBGRecord;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.RawDataContract;
+import com.example.kbb12.dms.model.database.bolusInsulinModel.BolusInsulinModel;
+import com.example.kbb12.dms.model.database.bolusInsulinModel.BolusInsulinModelContractHolder;
+import com.example.kbb12.dms.model.database.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.database.dailyFitnessInfo.DailyFitnessInfoContract;
+import com.example.kbb12.dms.model.database.dailyFitnessInfo.DailyFitnessInfoDatabase;
+import com.example.kbb12.dms.model.database.dailyFitnessInfo.DailyFitnessInfoRecord;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.InsulinTakenContract;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.InsulinTakenDatabase;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsContract;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsDatabase;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedMealsRecord.SavedMealsContract;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedMealsRecord.SavedMealsDatabase;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenContract;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbsEatenDatabase;
 
 /**
  * Created by kbb12 on 24/03/2017.
@@ -48,7 +45,7 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME="BackingStorage";
-    private static final int versionNumber=12;
+    private static final int versionNumber=13;
     private IBolusInsulinModel bolusInsulinModel;
     private IBasalInsulinModel basalInsulinModel;
     private InsulinTakenRecord insulinTakenRecord;
@@ -60,7 +57,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
     private SavedIngredientsRecord savedIngredientsRecord;
     private SavedMealsRecord savedMealsRecord;
     private TimeCarbEatenRecord timeCarbEatenRecord;
-    private ScannedItemRecord scannedItemRecord;
 
     public IBolusInsulinModel getBolusInsulinModel() {
         return bolusInsulinModel;
@@ -102,10 +98,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         return timeCarbEatenRecord;
     }
 
-    public ScannedItemRecord getScannedItemRecord() {
-        return scannedItemRecord;
-    }
-
     public DatabaseBuilder(Context context){
         super(context,DATABASE_NAME,null,versionNumber);
         bolusInsulinModel=new BolusInsulinModel(getWritableDatabase());
@@ -119,7 +111,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         savedIngredientsRecord = new SavedIngredientsDatabase(getWritableDatabase());
         savedMealsRecord = new SavedMealsDatabase(getWritableDatabase());
         timeCarbEatenRecord = new TimeCarbsEatenDatabase(getWritableDatabase());
-        scannedItemRecord = new ScannedItemDatabase(getWritableDatabase());
     }
 
     @Override
@@ -138,10 +129,9 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(CurrentBGContract.SQL_CREATE_TABLE);
         db.execSQL(DailyFitnessInfoContract.SQL_CREATE_ENTRIES);
         db.execSQL(ActivityRecordContract.SQL_CREATE_ENTRIES);
-        db.execSQL(SavedIngredientsContract.SQL_CREATE_TABLE);
-        db.execSQL(SavedMealsContract.SQL_CREATE_TABLE);
+        db.execSQL(SavedIngredientsContract.SQL_CREATE_ENTRIES);
+        db.execSQL(SavedMealsContract.SQL_CREATE_ENTRIES);
         db.execSQL(TimeCarbEatenContract.SQL_CREATE_TABLE);
-        db.execSQL(ScannedItemContract.SQL_CREATE_TABLE);
     }
 
     public DailyFitnessInfoRecord getDailyFitnessInfoRecord() {
@@ -161,7 +151,6 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
         db.execSQL(SavedIngredientsContract.SQL_DELETE_ENTRIES);
         db.execSQL(SavedMealsContract.SQL_DELETE_ENTRIES);
         db.execSQL(TimeCarbEatenContract.SQL_DELETE_ENTRIES);
-        db.execSQL(ScannedItemContract.SQL_DELETE_ENTRIES);
         onCreate(db);
 
     }

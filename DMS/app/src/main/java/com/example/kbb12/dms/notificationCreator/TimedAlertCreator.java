@@ -6,8 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
-import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.model.database.basalInsulinModel.IBasalInsulinModel;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
 
 import java.util.Calendar;

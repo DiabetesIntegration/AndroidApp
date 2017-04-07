@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kbb12.dms.addIngredient.AddIngredientActivity">
+    tools:context=".individualScreens.addIngredient.AddIngredientActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Add your own item..."
+        android:textColor="@color/colorAccent"
         android:id="@+id/addCustomIngredientPrompt"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/addCustomIngredientButton"
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/addCustomIngredientButton"
         android:src="@android:drawable/ic_menu_add"
+        android:tint="@color/colorAccent"
         android:background="@null"
         android:layout_alignBottom="@+id/addCustomIngredientPrompt"
         android:layout_alignRight="@+id/addIngredientTitle"

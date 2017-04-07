@@ -7,9 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kbb12.dms.mealAmount.MealAmountActivity">
+    tools:context=".individualScreens.mealAmount.MealAmountActivity">
 
-    <RelativeLayout tools:context="com.example.kbb12.dms.mealAmount.MealAmountActivity"
+    <RelativeLayout tools:context=".individualScreens.mealAmount.MealAmountActivity"
         tools:showIn="@layout/activity_meal_amount"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -61,22 +61,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SAVE MEAL"
-            android:background="@null"
-            android:id="@+id/saveMealButton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="EAT MEAL"
+            android:textColor="@color/colorAccent"
             android:background="@null"
             android:id="@+id/eatMealButton"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </RelativeLayout>
