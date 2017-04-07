@@ -32,19 +32,6 @@ public class ValidateAndSave implements View.OnClickListener {
             model.setError("Please enter the duration of activity.");
             return;
         }
-        SharedPreferences spref = activity.getSharedPreferences("fitnessprefs", Context.MODE_PRIVATE);
-        double weight = 0.0;
-        try {
-            weight = (double) spref.getFloat("weight", (float)0.0);
-        } catch(NumberFormatException e){
-            model.setError("You have not entered your weight");
-            return;
-        }
-        if(weight==0.0){
-            model.setError("You have not entered your weight.");
-            return;
-        }
-
         model.saveActivity();
         activity.finish();
     }

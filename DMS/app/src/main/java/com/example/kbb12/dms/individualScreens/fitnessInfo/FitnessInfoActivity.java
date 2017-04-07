@@ -22,7 +22,7 @@ public class FitnessInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitness_info);
 
-        model = new FitnessInfoModel(ModelHolder.model,getSharedPreferences("fitnessprefs", getApplicationContext().MODE_PRIVATE));
+        model = new FitnessInfoModel(ModelHolder.model);
 
         TextView mTVCal = (TextView) findViewById(R.id.CaloriesTextView);
         FloatingActionButton mFABAddActivity = (FloatingActionButton) findViewById(R.id.AddActivityFAB);

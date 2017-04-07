@@ -56,7 +56,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     private boolean usingImprovements=true;
 
-    private SharedPreferences sharPrefEdit;
+    private SharedPreferences sharPref;
 
     private SavedIngredientsRecord savedIngredientsRecord;
     private SavedMealsRecord savedMealsRecord;
@@ -65,7 +65,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private IMeal activeMeal;
     private IIngredient activeIngredient;
 
-    public UserModel(Context context,SharedPreferences sharPrefEdit){
+    public UserModel(Context context,SharedPreferences sharPref){
         DatabaseBuilder db = new DatabaseBuilder(context);
         basalInsulinModel =db.getBasalInsulinModel();
         bolusInsulinModel= db.getBolusInsulinModel();
@@ -82,7 +82,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
             Log.d("Record", rawBGRecord.getAllBasicData().get(c));
             Log.d("EM: ", rawBGRecord.getAllBasicData().get(c).substring(586,588) + rawBGRecord.getAllBasicData().get(c).substring(584,586));
         }
-        this.sharPrefEdit=sharPrefEdit;
+        this.sharPref = sharPref;
         activeMeal =null;
         activeIngredient=null;
         setUpScanningExamples();
@@ -290,7 +290,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private int calculateCalories(String activity, int hours, int minutes){
         int length = (hours*60) + minutes;
         int calories = 0;
-        float weight = sharPrefEdit.getFloat("weight",(float) 0.0);
+        double weight = getWeight();
         switch (activity){
             case "Walking":
                 calories = (int) ((0.055*length*weight)+0.5d);
@@ -425,5 +425,17 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public IIngredient getActiveIngredient() {
         return activeIngredient;
+    }
+
+    @Override
+    public double getWeight() {
+        return sharPref.getFloat("weight",(float)0.0);
+    }
+
+    @Override
+    public void setWeight(double weight) {
+        SharedPreferences.Editor edit= sharPref.edit();
+        edit.putFloat("weight",(float)weight);
+        edit.commit();
     }
 }

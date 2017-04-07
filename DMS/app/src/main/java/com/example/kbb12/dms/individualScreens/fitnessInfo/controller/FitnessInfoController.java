@@ -30,7 +30,6 @@ public class FitnessInfoController implements View.OnClickListener  {
             currentActivity.startActivity(intent);
             return;
         }
-
         Intent addFitnessIntent = new Intent(currentActivity, AddFitnessActivity.class);
         currentActivity.startActivity(addFitnessIntent);
     }

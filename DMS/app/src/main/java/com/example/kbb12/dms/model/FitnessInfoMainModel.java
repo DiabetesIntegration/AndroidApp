@@ -6,4 +6,5 @@ package com.example.kbb12.dms.model;
 
 public interface FitnessInfoMainModel {
     int getCalCount();
+    double getWeight();
 }

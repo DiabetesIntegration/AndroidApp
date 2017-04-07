@@ -12,11 +12,9 @@ import com.example.kbb12.dms.model.FitnessInfoMainModel;
 public class FitnessInfoModel extends BaseModel implements IFitnessInfo {
 
     private FitnessInfoMainModel model;
-    private SharedPreferences sprefs;
 
-    public FitnessInfoModel(FitnessInfoMainModel model,SharedPreferences sprefs){
+    public FitnessInfoModel(FitnessInfoMainModel model){
         this.model=model;
-        this.sprefs=sprefs;
     }
 
     @Override
@@ -26,7 +24,7 @@ public class FitnessInfoModel extends BaseModel implements IFitnessInfo {
 
     @Override
     public double getWeight() {
-        return  (double) sprefs.getFloat("weight", (float)0.0);
+        return  model.getWeight();
     }
 
 }

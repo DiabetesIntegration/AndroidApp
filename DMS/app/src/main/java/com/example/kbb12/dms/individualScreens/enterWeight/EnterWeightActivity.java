@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.model.ModelHolder;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.individualScreens.enterWeight.controller.EnterWeightController;
 import com.example.kbb12.dms.individualScreens.enterWeight.model.EnterWeightModel;
@@ -22,7 +23,7 @@ public class EnterWeightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_weight);
 
-        EnterWeightReadWriteModel model= new EnterWeightModel(getApplication().getSharedPreferences("fitnessprefs", Context.MODE_PRIVATE).edit());
+        EnterWeightReadWriteModel model= new EnterWeightModel(ModelHolder.model);
 
         EditText weighttext = (EditText) findViewById(R.id.enterWeightET);
         TextView savebut = (TextView) findViewById(R.id.saveWeightIB);

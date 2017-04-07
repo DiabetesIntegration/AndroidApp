@@ -5,4 +5,6 @@ package com.example.kbb12.dms.model;
  */
 
 public interface EnterWeightMainModel {
+    double getWeight();
+    void setWeight(double weight);
 }
