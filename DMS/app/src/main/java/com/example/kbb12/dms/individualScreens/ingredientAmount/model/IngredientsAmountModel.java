@@ -42,6 +42,7 @@ public class IngredientsAmountModel extends BaseModel implements IngredientsAmou
     @Override
     public void setUnits(String units) {
         this.units=units;
+        notifyObserver();
     }
 
     @Override

@@ -34,9 +34,11 @@ public class IngredientsAmountView extends MasterView implements ModelObserver  
         unit.setText(model.getUnits());
         if(model.getUnits().equals("g")) {
             weightPrecentage.setText("Weight");
+            unit.setText("g");
         }
         else {
             weightPrecentage.setText("Percentage");
+            unit.setText("%");
         }
     }
 }
