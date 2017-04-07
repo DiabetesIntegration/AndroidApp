@@ -25,7 +25,7 @@ import java.util.List;
 
 public class AddIngredientActivity extends AppCompatActivity {
     private AddIngredientReadWriteModel model;
-    private List<Activity> betterNameNeeded;
+    private ModelObserver view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         savedIngredientList.setOnItemClickListener(controller);
 
 
-        ModelObserver view = new AddIngredientView(adapter,model);
+        view = new AddIngredientView(adapter,model);
         model.registerObserver(view);
     }
 
@@ -75,6 +75,7 @@ public class AddIngredientActivity extends AppCompatActivity {
             //Can't add an ingredient without a meal
             finish();
         }
+        view.update();
     }
 
 }
