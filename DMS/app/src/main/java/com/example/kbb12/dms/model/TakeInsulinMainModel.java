@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
 
 import java.util.Calendar;
 

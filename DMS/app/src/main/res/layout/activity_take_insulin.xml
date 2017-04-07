@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
-    tools:context="com.example.kbb12.dms.takeInsulin.TakeInsulin">
+    tools:context=".individualScreens.takeInsulin.TakeInsulin">
 
     <ScrollView
         android:layout_width="match_parent"

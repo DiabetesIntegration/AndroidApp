@@ -1,32 +1,30 @@
 package com.example.kbb12.dms.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
-import com.example.kbb12.dms.model.activityRecord.ActivityRecord;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.model.basalInsulinModel.BasalInsulinEntry;
-import com.example.kbb12.dms.model.basalInsulinModel.DuplicateDoseException;
-import com.example.kbb12.dms.model.basalInsulinModel.IBasalInsulinModel;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.BGReading;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.BGRecord;
-import com.example.kbb12.dms.model.bloodGlucoseRecord.RawBGRecord;
-import com.example.kbb12.dms.model.bolusInsulinModel.IBolusInsulinModel;
-import com.example.kbb12.dms.model.dailyFitnessInfo.DailyFitnessInfoRecord;
+import com.example.kbb12.dms.model.database.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinDose;
+import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.model.database.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.model.database.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGRecord;
+import com.example.kbb12.dms.model.database.bloodGlucoseRecord.RawBGRecord;
+import com.example.kbb12.dms.model.database.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.model.database.dailyFitnessInfo.DailyFitnessInfoRecord;
 import com.example.kbb12.dms.model.database.DatabaseBuilder;
-import com.example.kbb12.dms.model.insulinTakenRecord.IInsulinTakenEntry;
-import com.example.kbb12.dms.model.insulinTakenRecord.InsulinTakenRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.IIngredient;
-import com.example.kbb12.dms.model.mealPlannerRecord.IMeal;
-import com.example.kbb12.dms.model.mealPlannerRecord.Ingredient;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.model.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.IInsulinTakenEntry;
+import com.example.kbb12.dms.model.database.insulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.Ingredient;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.model.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -106,15 +104,6 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         }
     }
 
-    //TODO file handling methods
-    public boolean loadData(){
-        return false;
-    }
-
-    public void saveData(){
-
-    }
-
     @Override
     public void addRawData(Calendar c, String data){
         rawBGRecord.addRawData(data, c);
@@ -123,15 +112,11 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public void addHistoryReading(Calendar c, double reading){
         historyBGRecord.insertReading(c, reading);
-        //TODO
-        //notifyObservers();
     }
 
     @Override
     public void addCurrentReading(Calendar c, double reading){
         currentBGRecord.insertReading(c, reading);
-        //TODO
-        //notifyObservers();
     }
 
     @Override
