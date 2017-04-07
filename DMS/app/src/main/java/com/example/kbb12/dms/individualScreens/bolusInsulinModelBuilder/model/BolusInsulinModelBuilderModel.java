@@ -280,6 +280,11 @@ public class BolusInsulinModelBuilderModel extends BaseModel implements BolusIns
                 return false;
             }
         }else{
+            if(!knowsISF&&numBasBolUnitsPerDay<numBolUnitsPerDay){
+                setError("The total number of basal and bolus units must be greater than the number" +
+                        " of bolus units");
+                return false;
+            }
             if(numBolUnitsPerDay==null){
                 setError("You must enter your average number of bolus units per day to work out" +
                         " an approximate Insulin to carbohydrate ratio.");

@@ -42,11 +42,4 @@ public class BolusInsulinModelBuilder extends AppCompatActivity {
         view.update();
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Bolus Insulin Set-Up");
-    }
-
 }

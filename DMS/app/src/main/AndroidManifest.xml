@@ -114,7 +114,6 @@
         <activity android:name=".individualScreens.takeInsulin.TakeInsulin" />
         <activity
             android:name=".individualScreens.bolusInsulinModelBuilder.BolusInsulinModelBuilder"
-            android:label="@string/title_activity_bolus_insulin_model_builder"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

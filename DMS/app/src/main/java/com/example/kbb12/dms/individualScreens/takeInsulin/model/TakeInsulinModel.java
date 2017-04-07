@@ -48,7 +48,7 @@ public class TakeInsulinModel extends BaseModel implements TakeInsulinReadWriteM
         //now be too late to take them.
         BasalInsulinEntry entry = model.getLatestBasalRecommendation();
         if(null==entry){
-            calculationDescription+="\nYou are not over-due for a basal insulin dose";
+            calculationDescription+="\nYou are not over-due for a basal insulin dose.";
             recommended=0.0;
             actual=0.0;
             typeTaken=InsulinType.NOT_SET;
@@ -73,7 +73,7 @@ public class TakeInsulinModel extends BaseModel implements TakeInsulinReadWriteM
         Double bloodGlucose=model.getCurrentBG();
         if(model.hasTakenBolusInsulinRecently()){
             calculationDescription+="You have injected bolus insulin recently. We do not recommend" +
-                    "doing so again until this has fully taken effect.";
+                    " doing so again until this has fully taken effect.";
             recommended=0.0;
             actual=0.0;
             return false;

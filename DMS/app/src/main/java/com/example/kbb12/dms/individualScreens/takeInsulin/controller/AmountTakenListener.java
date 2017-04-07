@@ -23,7 +23,11 @@ public class AmountTakenListener implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        model.setAmountTaken(Double.parseDouble(s.toString()));
+        if(s.toString().equals("")){
+            model.setAmountTaken(0.0);
+        }else {
+            model.setAmountTaken(Double.parseDouble(s.toString()));
+        }
     }
 
     @Override
