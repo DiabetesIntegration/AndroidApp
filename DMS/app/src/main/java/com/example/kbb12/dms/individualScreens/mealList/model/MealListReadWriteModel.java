@@ -9,5 +9,4 @@ import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseReadWrit
 public interface MealListReadWriteModel extends BaseReadWriteModel,MealListReadModel,IDeleteCustomItem {
     void setNewMeal();
     void selectMeal(int i);
-    void clearActives();
 }

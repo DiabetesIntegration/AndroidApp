@@ -56,7 +56,6 @@ public class MealListActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        model.clearActives();
         view.update();
     }
 
