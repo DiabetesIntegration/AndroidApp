@@ -32,13 +32,8 @@ public class IngredientsAmountController implements View.OnClickListener, TextWa
         else {
             try {
                 int a = Integer.parseInt(amount);
-                if(model.getUnits().equals("%") && a > 100) {
-                    model.setError("Error! The percentage eaten cannot exceed 100%!");
-                }
-                else {
-                    model.saveAmount(a);
-                    nextActivity();
-                }
+                model.saveAmount(a);
+                nextActivity();
             }
             catch(NumberFormatException e) {
                 model.setError("Error! The ingredient amount entered is not an integer!");
