@@ -6,7 +6,7 @@ import android.widget.EditText;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
 import com.example.kbb12.dms.individualScreens.mealCarbohydrateValue.model.MealCarbohydrateReadWriteModel;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 /**
  * Created by Ciaran on 3/14/2017.
@@ -17,7 +17,7 @@ public class MealCarbohydrateView extends MasterView implements ModelObserver {
     public MealCarbohydrateView(MealCarbohydrateReadWriteModel model,
                                 FragmentManager fm, IErrorController errorC, EditText nameEntry,
                                 EditText numberEntry) {
-        super(fm,errorC);
+        super(fm,errorC,model);
         this.model = model;
         if(model.hasMeal()){
             nameEntry.setText(model.getMealName());
@@ -25,8 +25,4 @@ public class MealCarbohydrateView extends MasterView implements ModelObserver {
         }
     }
 
-    @Override
-    public void update() {
-        handleError(model.getError());
-    }
 }

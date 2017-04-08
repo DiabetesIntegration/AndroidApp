@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.text.TextWatcher;
 import android.view.View;
 
-import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.BasicTextWatcher;
+import com.example.kbb12.dms.reusableFunctionality.BasicTextWatcher;
 import com.example.kbb12.dms.individualScreens.customIngredient.model.AddCustomIngredientReadWriteModel;
 import com.example.kbb12.dms.individualScreens.ingredientAmount.IngredientsAmountActivity;
 

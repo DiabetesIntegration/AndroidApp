@@ -7,9 +7,9 @@ import android.view.View;
  */
 public class CustomListViewController implements View.OnClickListener{
     private int index;
-    private IDeleteCustomItem model;
+    private ICustomListViewModel model;
 
-    public CustomListViewController(int position, IDeleteCustomItem model) {
+    public CustomListViewController(int position, ICustomListViewModel model) {
         index = position;
         this.model = model;
     }

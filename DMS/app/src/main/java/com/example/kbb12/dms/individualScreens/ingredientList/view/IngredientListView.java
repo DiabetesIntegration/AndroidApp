@@ -8,7 +8,7 @@ import com.example.kbb12.dms.reusableFunctionality.customListView.CustomAdapter;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
 import com.example.kbb12.dms.individualScreens.ingredientList.model.IngredientListReadModel;
 import com.example.kbb12.dms.model.database.mealPlannerRecord.IIngredient;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class IngredientListView extends MasterView implements ModelObserver {
 
     public IngredientListView(EditText mealName, CustomAdapter adapter, IngredientListReadModel model,
                               FragmentManager fm, IErrorController errorC) {
-        super(fm,errorC);
+        super(fm,errorC,model);
         mealName.setText(model.getMealName());
         this.adapter = adapter;
         this.model = model;
@@ -34,7 +34,7 @@ public class IngredientListView extends MasterView implements ModelObserver {
 
     @Override
     public void update() {
-        handleError(model.getError());
+        super.update();
         if(!adapter.isEmpty()) {
             adapter.clear();
         }

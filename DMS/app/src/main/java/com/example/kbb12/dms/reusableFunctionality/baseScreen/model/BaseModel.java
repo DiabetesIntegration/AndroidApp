@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.reusableFunctionality.baseScreen.model;
 
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 /**
  * Created by kbb12 on 03/04/2017.

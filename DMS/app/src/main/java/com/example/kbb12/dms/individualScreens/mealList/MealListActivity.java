@@ -15,7 +15,7 @@ import com.example.kbb12.dms.individualScreens.mealList.model.MealListModel;
 import com.example.kbb12.dms.individualScreens.mealList.model.MealListReadWriteModel;
 import com.example.kbb12.dms.individualScreens.mealList.view.MealListView;
 import com.example.kbb12.dms.model.ModelHolder;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 public class MealListActivity extends AppCompatActivity {
 

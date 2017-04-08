@@ -15,7 +15,7 @@ import com.example.kbb12.dms.individualScreens.ingredientAmount.model.Ingredient
 import com.example.kbb12.dms.individualScreens.ingredientAmount.model.IngredientsAmountReadWriteModel;
 import com.example.kbb12.dms.individualScreens.ingredientAmount.view.IngredientsAmountView;
 import com.example.kbb12.dms.model.ModelHolder;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 public class IngredientsAmountActivity extends AppCompatActivity {
 

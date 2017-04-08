@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 import com.example.kbb12.dms.individualScreens.takeInsulin.model.TakeInsulinReadModel;
 
 /**
@@ -35,7 +35,7 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
                            TextView calculationDescription,
                            DialogInterface.OnDismissListener timeDismissController,
                            DialogInterface.OnDismissListener dateDismissController){
-        super(fragMan,errorController);
+        super(fragMan,errorController,model);
         this.recommendedUnitsDisplay=recommendedUnitsDisplay;
         this.insulinChoice=insulinChoice;
         this.timeTakenDisplay=timeTakenDisplay;
@@ -58,7 +58,7 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
 
     @Override
     public void update() {
-        handleError(model.getError());
+        super.update();
         if(model.getDateToChange()){
             clearPopUp("Set Date");
             dateFrag.setDate(model.getDayTaken(),model.getMonthTaken(),model.getYearTaken());

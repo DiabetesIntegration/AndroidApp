@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.reusableFunctionality.baseScreen.controller;
+package com.example.kbb12.dms.reusableFunctionality;
 
 import android.text.Editable;
 import android.text.TextWatcher;

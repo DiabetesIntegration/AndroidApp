@@ -1,4 +1,4 @@
-package com.example.kbb12.dms.notificationCreator;
+package com.example.kbb12.dms.model.notificationCreator;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

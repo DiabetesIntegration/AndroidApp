@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.individualScreens.addIngredient;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -17,11 +16,10 @@ import com.example.kbb12.dms.individualScreens.addIngredient.model.AddIngredient
 import com.example.kbb12.dms.individualScreens.addIngredient.view.AddIngredientView;
 import com.example.kbb12.dms.individualScreens.ingredientAmount.IngredientsAmountActivity;
 import com.example.kbb12.dms.model.ModelHolder;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.DefaultErrorController;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.List;
 
 public class AddIngredientActivity extends AppCompatActivity {
     private AddIngredientReadWriteModel model;
@@ -48,7 +46,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         savedIngredientList.setOnItemClickListener(controller);
 
 
-        view = new AddIngredientView(adapter,model);
+        view = new AddIngredientView(adapter,model,getFragmentManager(),new DefaultErrorController(model));
         model.registerObserver(view);
     }
 
