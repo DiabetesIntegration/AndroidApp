@@ -2,8 +2,8 @@ package com.example.kbb12.dms.individualScreens.addIngredient.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.AddIngredientMainModel;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IIngredient;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.database.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.database.mealPlannerRecord.IMeal;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,10 +15,6 @@ import com.example.kbb12.dms.individualScreens.startUp.MainActivity;
  */
 public class NotificationCreator extends BroadcastReceiver {
 
-    public NotificationCreator(){
-
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationCompat.Builder mBuilder =

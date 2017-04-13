@@ -2,8 +2,8 @@ package com.example.kbb12.dms.individualScreens.mealCarbohydrateValue.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.MealCarbohydrateMainModel;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IMeal;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.Meal;
+import com.example.kbb12.dms.database.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.database.mealPlannerRecord.Meal;
 
 /**
  * Created by kbb12 on 04/04/2017.

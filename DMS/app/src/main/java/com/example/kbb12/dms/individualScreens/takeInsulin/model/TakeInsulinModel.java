@@ -2,7 +2,7 @@ package com.example.kbb12.dms.individualScreens.takeInsulin.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.TakeInsulinMainModel;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinEntry;
 
 import java.util.Calendar;
 

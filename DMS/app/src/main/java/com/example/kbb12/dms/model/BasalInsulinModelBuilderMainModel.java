@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.model.database.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinDose;
+import com.example.kbb12.dms.database.basalInsulinModel.DuplicateDoseException;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.example.kbb12.dms.individualScreens.customIngredient.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.CustomIngredientMainModel;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.Ingredient;
+import com.example.kbb12.dms.database.mealPlannerRecord.Ingredient;
 
 /**
  * Created by kbb12 on 05/04/2017.

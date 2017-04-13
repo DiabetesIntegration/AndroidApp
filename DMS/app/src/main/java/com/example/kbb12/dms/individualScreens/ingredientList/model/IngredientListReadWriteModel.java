@@ -2,7 +2,7 @@ package com.example.kbb12.dms.individualScreens.ingredientList.model;
 
 import com.example.kbb12.dms.reusableFunctionality.customListView.ICustomListViewModel;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseReadWriteModel;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.database.mealPlannerRecord.IMeal;
 
 /**
  * Created by Ciaran on 3/2/2017.

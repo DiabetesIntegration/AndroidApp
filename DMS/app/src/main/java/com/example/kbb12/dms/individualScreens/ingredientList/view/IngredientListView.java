@@ -7,7 +7,7 @@ import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.IErrorC
 import com.example.kbb12.dms.reusableFunctionality.customListView.CustomAdapter;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
 import com.example.kbb12.dms.individualScreens.ingredientList.model.IngredientListReadModel;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.database.mealPlannerRecord.IIngredient;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 import java.util.ArrayList;

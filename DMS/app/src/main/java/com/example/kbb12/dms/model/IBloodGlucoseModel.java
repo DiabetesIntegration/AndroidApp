@@ -1,6 +1,6 @@
 package com.example.kbb12.dms.model;
 
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.BGReading;
 
 import java.util.Calendar;
 import java.util.List;

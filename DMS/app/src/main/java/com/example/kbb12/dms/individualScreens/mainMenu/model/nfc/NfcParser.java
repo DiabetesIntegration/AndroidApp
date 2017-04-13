@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.individualScreens.mainMenu.model.MainMenuReadWriteModel;
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.BGReading;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

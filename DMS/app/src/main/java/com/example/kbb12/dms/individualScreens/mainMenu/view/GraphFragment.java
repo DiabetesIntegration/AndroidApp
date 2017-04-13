@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.individualScreens.mainMenu.model.MainMenuReadModel;
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.BGReading;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
