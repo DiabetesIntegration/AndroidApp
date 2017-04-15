@@ -360,12 +360,17 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
     @Override
-    public void updateActiveMeal(IMeal meal) {
+    public void updateAndSaveActiveMeal(IMeal meal) {
         if(activeMeal.getName()==""){
             savedMealsRecord.saveMeal(meal);
         }else {
             savedMealsRecord.editMeal(activeMeal.getName(), meal);
         }
+        activeMeal=meal;
+    }
+
+    @Override
+    public void updateActiveMeal(IMeal meal){
         activeMeal=meal;
     }
 

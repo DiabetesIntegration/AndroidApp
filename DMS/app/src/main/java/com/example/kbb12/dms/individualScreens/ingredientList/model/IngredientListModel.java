@@ -31,6 +31,7 @@ public class IngredientListModel extends BaseModel implements IngredientListRead
     @Override
     public void setMealName(String mealName) {
         active=new Meal(mealName,active.getIngredients(),active.getAmounts());
+        model.updateActiveMeal(active);
         notifyObserver();
     }
 
@@ -46,7 +47,7 @@ public class IngredientListModel extends BaseModel implements IngredientListRead
 
     @Override
     public void saveMeal() {
-        model.updateActiveMeal(active);
+        model.updateAndSaveActiveMeal(active);
     }
 
     @Override

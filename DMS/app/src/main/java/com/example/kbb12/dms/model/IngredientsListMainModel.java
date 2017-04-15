@@ -11,5 +11,6 @@ public interface IngredientsListMainModel {
     IMeal getActiveMeal();
     boolean mealNameUsed(String name);
     void setActiveIngredient(IIngredient ingredient);
+    void updateAndSaveActiveMeal(IMeal meal);
     void updateActiveMeal(IMeal meal);
 }
