@@ -16,24 +16,15 @@ public class TakeInsulinModel extends BaseModel implements TakeInsulinReadWriteM
     private Double actual;
     private InsulinType typeTaken;
     private InsulinType typeRecommended;
-    private Integer day;
-    private Integer month;
-    private Integer year;
+    private Calendar timeTaken;
     private boolean dateToChange;
     private boolean timeToChange;
-    private Integer hour;
-    private Integer minute;
     private double targetBG=6.0;
     private String calculationDescription;
 
     public TakeInsulinModel(TakeInsulinMainModel model){
         this.model=model;
-        Calendar now = Calendar.getInstance();
-        day=now.get(Calendar.DAY_OF_MONTH);
-        month=now.get(Calendar.MONTH);
-        year=now.get(Calendar.YEAR);
-        hour=now.get(Calendar.HOUR_OF_DAY);
-        minute=now.get(Calendar.MINUTE);
+        timeTaken = Calendar.getInstance();
         dateToChange=false;
         timeToChange=false;
         calculationDescription="";
@@ -132,37 +123,17 @@ public class TakeInsulinModel extends BaseModel implements TakeInsulinReadWriteM
     }
 
     @Override
-    public int getDayTaken() {
-        return day;
+    public Calendar getTimeTaken(){
+        return timeTaken;
     }
 
     @Override
-    public int getMonthTaken() {
-        return month;
-    }
-
-    @Override
-    public int getYearTaken() {
-        return year;
-    }
-
-    @Override
-    public int getHourTaken() {
-        return hour;
-    }
-
-    @Override
-    public int getMinuteTaken() {
-        return minute;
-    }
-
-    @Override
-    public boolean getTimeToChange() {
+    public boolean isTimeToChange() {
         return timeToChange;
     }
 
     @Override
-    public boolean getDateToChange() {
+    public boolean isDateToChange() {
         return dateToChange;
     }
 
@@ -217,9 +188,9 @@ public class TakeInsulinModel extends BaseModel implements TakeInsulinReadWriteM
         if(!dateToChange){
             return;
         }
-        this.day=day;
-        this.month=month;
-        this.year=year;
+        timeTaken.set(Calendar.DAY_OF_MONTH,day);
+        timeTaken.set(Calendar.MONTH,month);
+        timeTaken.set(Calendar.YEAR,year);
         dateToChange=false;
         notifyObserver();
     }
@@ -229,26 +200,20 @@ public class TakeInsulinModel extends BaseModel implements TakeInsulinReadWriteM
         if(!timeToChange){
             return;
         }
-        this.hour=hour;
-        this.minute=minute;
+        timeTaken.set(Calendar.HOUR,hour);
+        timeTaken.set(Calendar.MINUTE,minute);
         timeToChange=false;
         notifyObserver();
     }
 
     @Override
     public void takeInsulin(){
-        Calendar time =Calendar.getInstance();
-        time.set(Calendar.YEAR,year);
-        time.set(Calendar.MONTH,month);
-        time.set(Calendar.DAY_OF_MONTH,day);
-        time.set(Calendar.HOUR,hour);
-        time.set(Calendar.MINUTE,minute);
         switch (typeTaken){
             case BASAL:
-                model.takeInsulin(time,actual,true);
+                model.takeInsulin(timeTaken,actual,true);
                 break;
             case BOLUS:
-                model.takeInsulin(time,actual,false);
+                model.takeInsulin(timeTaken,actual,false);
                 break;
             case NOT_SET:
                 //This should be unreachable but is here to be extra safe

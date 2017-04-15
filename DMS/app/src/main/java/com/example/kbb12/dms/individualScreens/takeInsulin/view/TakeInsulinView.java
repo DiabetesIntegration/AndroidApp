@@ -14,6 +14,8 @@ import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 import com.example.kbb12.dms.individualScreens.takeInsulin.model.TakeInsulinReadModel;
 
+import java.util.Calendar;
+
 /**
  * Created by kbb12 on 24/02/2017.
  */
@@ -59,15 +61,17 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
     @Override
     public void update() {
         super.update();
-        if(model.getDateToChange()){
+        if(model.isDateToChange()){
             clearPopUp("Set Date");
-            dateFrag.setDate(model.getDayTaken(),model.getMonthTaken(),model.getYearTaken());
+            Calendar taken=model.getTimeTaken();
+            dateFrag.setDate(taken.get(Calendar.DAY_OF_MONTH),taken.get(Calendar.MONTH),taken.get(Calendar.YEAR));
             dateFrag.show(fragMan,"Set Date");
             return;
         }
-        if(model.getTimeToChange()){
+        if(model.isTimeToChange()){
             clearPopUp("Set Time");
-            timeFrag.setTime(model.getHourTaken(),model.getMinuteTaken());
+            Calendar taken = model.getTimeTaken();
+            timeFrag.setTime(taken.get(Calendar.HOUR),taken.get(Calendar.MINUTE));
             timeFrag.show(fragMan,"Set Time");
             return;
         }
@@ -82,7 +86,13 @@ public class TakeInsulinView extends MasterView implements ModelObserver {
                 recommendedUnitsDisplay.setText(model.getRecommendedUnits().toString() + " Units");
                 break;
         }
-        String dateTime = String.format("%02d",model.getDayTaken())+"/" + String.format("%02d",model.getMonthTaken()+1)+"/" + String.format("%04d",model.getYearTaken())+"   "+String.format("%02d", model.getHourTaken())+":"+String.format("%02d", model.getMinuteTaken());
+        Calendar taken = model.getTimeTaken();
+        int day = taken.get(Calendar.DAY_OF_MONTH);
+        int month = taken.get(Calendar.MONTH);
+        int year = taken.get(Calendar.YEAR);
+        int hour = taken.get(Calendar.HOUR);
+        int minute = taken.get(Calendar.MINUTE);
+        String dateTime = String.format("%02d",day)+"/" + String.format("%02d",month+1)+"/" + String.format("%04d",year)+"   "+String.format("%02d", hour)+":"+String.format("%02d", minute);
         timeTakenDisplay.setText(dateTime);
         switch (model.getTypeTaken()){
             case NOT_SET:

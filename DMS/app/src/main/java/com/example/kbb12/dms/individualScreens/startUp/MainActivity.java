@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             }
             Intent nextIntent = new Intent(this, MainMenuActivity.class);
             if(getIntent().getBooleanExtra("NotificationLaunch",false)){
+                //Added to allow the application to direct the user straight to the take insulin
+                //screen if they are responding to a notification.
                 nextIntent.putExtra("NotificationLaunch",true);
             }
             startActivity(nextIntent);

@@ -10,6 +10,7 @@ import com.example.kbb12.dms.individualScreens.fitnessInfo.controller.FitnessInf
 import com.example.kbb12.dms.individualScreens.fitnessInfo.model.FitnessInfoModel;
 import com.example.kbb12.dms.individualScreens.fitnessInfo.view.FitnessInfoView;
 import com.example.kbb12.dms.model.ModelHolder;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.DefaultErrorController;
 
 
 public class FitnessInfoActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class FitnessInfoActivity extends AppCompatActivity {
         FitnessInfoController controller = new FitnessInfoController(model, this);
         mFABAddActivity.setOnClickListener(controller);
 
-        view = new FitnessInfoView(mTVCal, this, model);
+        view = new FitnessInfoView(mTVCal, model,getFragmentManager(),new DefaultErrorController(model));
         view.update();
 
         model.registerObserver(view);
