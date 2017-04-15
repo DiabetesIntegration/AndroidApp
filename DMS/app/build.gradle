@@ -10,8 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testApplicationId "com.example.kbb12.dmsTest"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -20,6 +19,11 @@ android {
         }
     }
 }
+
+configurations.all {
+    resolutionStrategy {
+        force 'org.hamcrest:hamcrest-core:1.3'
+    }}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -30,7 +34,6 @@ dependencies {
 
     compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
     compile 'com.google.zxing:core:3.2.0'
-
-    // Required -- JUnit 4 framework
-    compile 'junit:junit:4.12'
+    compile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'junit:junit:4.12'
 }
