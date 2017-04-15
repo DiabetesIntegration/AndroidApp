@@ -1,5 +1,8 @@
 package com.example.kbb12.dms.model.bluetooth;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,13 +10,17 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.database.bloodGlucoseRecord.BGRecord;
 import com.example.kbb12.dms.database.bloodGlucoseRecord.RawBGRecord;
 import com.example.kbb12.dms.database.DatabaseBuilder;
+import com.example.kbb12.dms.individualScreens.startUp.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -406,8 +413,43 @@ public class BluetoothService extends Service{
             //TODO: SAVE CURRENT READING IN DB
             double currentReading = linearConversion(readings[((glucosePointer+15)%16)]);
             currentdb.insertReading(now, currentReading);
+            if(currentReading<2.5){
+                AudioManager am;
+                am= (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                am.setStreamVolume(
+                        AudioManager.STREAM_NOTIFICATION,
+                        am.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION),
+                        0);
+                //For Normal mode
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.take_insulin_icon)
+                                .setContentTitle("Your blood glucose is dangerously low.")
+                                .setContentText("DMS");
+                int mNotificationId = 001;
+                Intent resultIntent = new Intent(context, MainActivity.class);
+                resultIntent.putExtra("NotificationLaunch",true);
+                PendingIntent resultPendingIntent =
+                        PendingIntent.getActivity(
+                                context,
+                                0,
+                                resultIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setAutoCancel(true);
+                mBuilder.setContentIntent(resultPendingIntent);
+                mBuilder.setVibrate(new long[]{0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500});
+                mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
 
-
+                // Gets an instance of the NotificationManager service
+                NotificationManager mNotifyMgr =
+                        (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                // Builds the notification and issues it.
+                Notification notification = mBuilder.build();
+                notification.flags |=Notification.FLAG_INSISTENT;
+                mNotifyMgr.notify(mNotificationId, notification);
+            }
             saveCurrentSensorTime(elapsedMinutes);
             long tss = getMinutesSinceSensorStart();
             Calendar mostRecent = Calendar.getInstance();
