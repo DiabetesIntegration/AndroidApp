@@ -18,7 +18,11 @@ public class MealAmountModel extends BaseModel implements MealAmountReadWriteMod
 
     @Override
     public void eatCurrentMeal(int percentEaten) {
+        setError("Number of carbs: "+model.getActiveMeal().getNumCarbs()*((double) percentEaten/100));
+        return;
+        /*
         model.eatCurrentMeal(percentEaten);
         model.setActiveMeal(null);
+        */
     }
 }

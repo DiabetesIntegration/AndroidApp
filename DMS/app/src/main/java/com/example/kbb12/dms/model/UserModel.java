@@ -63,6 +63,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private TimeCarbEatenRecord timeCarbEatenRecord;
 
     private IMeal activeMeal;
+    private String activeMealOrigName;
     private IIngredient activeIngredient;
 
     public UserModel(Context context,SharedPreferences sharPref){
@@ -334,6 +335,11 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public void setActiveMeal(IMeal activeMeal) {
         this.activeMeal=activeMeal;
+        if(activeMeal==null){
+            this.activeMealOrigName="";
+        }else {
+            this.activeMealOrigName = activeMeal.getName();
+        }
     }
 
     @Override
@@ -361,12 +367,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void updateAndSaveActiveMeal(IMeal meal) {
-        if(activeMeal.getName()==""){
+        if(activeMealOrigName.equals("")){
             savedMealsRecord.saveMeal(meal);
         }else {
-            savedMealsRecord.editMeal(activeMeal.getName(), meal);
+            savedMealsRecord.editMeal(activeMealOrigName, meal);
         }
-        activeMeal=meal;
+        setActiveMeal(meal);
     }
 
     @Override
@@ -381,11 +387,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void saveMeal(IMeal meal) {
-        if(activeMeal.getName().equals("")) {
+        if(activeMealOrigName.equals("")) {
             savedMealsRecord.saveMeal(meal);
         }else{
-            savedMealsRecord.editMeal(activeMeal.getName(),meal);
+            savedMealsRecord.editMeal(activeMealOrigName,meal);
         }
+        setActiveMeal(meal);
     }
 
     @Override
