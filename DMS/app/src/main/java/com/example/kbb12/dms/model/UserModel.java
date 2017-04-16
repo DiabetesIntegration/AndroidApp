@@ -103,6 +103,18 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
             example=new Ingredient("Dolmio Tomato and Basil Sauce", 8.4, 100,"4002359640469");
             savedIngredientsRecord.saveIngredient(example);
         }
+        if(getIngredientByBarcode("5012035936648")==null){
+            example=new Ingredient("Haribo Tangfastics", 50.0, 215, "5012035936648");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("21043123")==null){
+            example=new Ingredient("ASDA Conchigle Pasta", 31.0, 500, "21043123");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("25215342")==null){
+            example=new Ingredient("Conchigle Pasta", 30.0, 300, "21043123");
+            savedIngredientsRecord.saveIngredient(example);
+        }
     }
 
     @Override
