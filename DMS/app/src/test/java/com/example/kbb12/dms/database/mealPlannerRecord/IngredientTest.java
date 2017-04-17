@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 public class IngredientTest {
     @Mock
     Ingredient model;
+    IIngredient basicmodel;
     String name;
     Double amPerHundred;
     Integer pWeight;
@@ -31,6 +32,8 @@ public class IngredientTest {
         pWeight = 100;
         barcode = "19403866382";
         model = new Ingredient(name,amPerHundred,pWeight);
+        basicmodel = new Ingredient.BasicIngredient();
+
     }
 
 
@@ -66,6 +69,12 @@ public class IngredientTest {
 
     @Test
     public void getCustom() throws Exception {
+        Double val = 100.0;
+        Integer w = 100;
+        assertEquals("Custom",basicmodel.getName());
+        assertEquals(val,basicmodel.getCarbsPerHundredG());
+        assertEquals(w,basicmodel.getPacketWeight());
+        assertEquals(null,basicmodel.getBarcode());
 
     }
 
