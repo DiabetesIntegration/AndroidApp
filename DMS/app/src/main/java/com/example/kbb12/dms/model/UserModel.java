@@ -66,8 +66,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private String activeMealOrigName;
     private IIngredient activeIngredient;
 
-    public UserModel(Context context,SharedPreferences sharPref){
-        DatabaseBuilder db = new DatabaseBuilder(context);
+    public UserModel(DatabaseBuilder db,SharedPreferences sharPref){
         basalInsulinModel =db.getBasalInsulinModel();
         bolusInsulinModel= db.getBolusInsulinModel();
         insulinTakenRecord= db.getInsulinTakenRecord();

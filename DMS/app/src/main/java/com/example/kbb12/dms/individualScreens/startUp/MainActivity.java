@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.database.DatabaseBuilder;
 import com.example.kbb12.dms.individualScreens.bolusInsulinModelBuilder.BolusInsulinModelBuilder;
 import com.example.kbb12.dms.individualScreens.mainMenu.MainMenuActivity;
 import com.example.kbb12.dms.model.ModelHolder;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Creates user model.
-        ModelHolder.model = new UserModel(this,getSharedPreferences("fitnessprefs", MODE_PRIVATE));
+        ModelHolder.model = new UserModel(new DatabaseBuilder(this),getSharedPreferences("fitnessprefs", MODE_PRIVATE));
         model = ModelHolder.model;
         if(model.getDoses().size()>0){
             if(model.getCurrentICR()==0.0) {
