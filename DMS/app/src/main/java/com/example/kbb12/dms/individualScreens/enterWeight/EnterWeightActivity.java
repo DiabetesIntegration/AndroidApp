@@ -1,6 +1,5 @@
 package com.example.kbb12.dms.individualScreens.enterWeight;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -12,8 +11,8 @@ import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.Default
 import com.example.kbb12.dms.individualScreens.enterWeight.controller.EnterWeightController;
 import com.example.kbb12.dms.individualScreens.enterWeight.model.EnterWeightModel;
 import com.example.kbb12.dms.individualScreens.enterWeight.model.EnterWeightReadWriteModel;
-import com.example.kbb12.dms.individualScreens.enterWeight.view.EnterWeightView;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 public class EnterWeightActivity extends AppCompatActivity {
 
@@ -31,7 +30,7 @@ public class EnterWeightActivity extends AppCompatActivity {
         android.app.FragmentManager fragman = getFragmentManager();
 
         savebut.setOnClickListener(new EnterWeightController(this, weighttext, model));
-        ModelObserver view = new EnterWeightView(model, fragman, new DefaultErrorController(model));
+        ModelObserver view = new MasterView(fragman, new DefaultErrorController(model),model);
         model.registerObserver(view);
 
     }

@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseReadModel;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinEntry;
 
 import java.util.List;
 

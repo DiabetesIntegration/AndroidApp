@@ -5,25 +5,25 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
-import com.example.kbb12.dms.model.database.activityRecord.ActivityRecord;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
-import com.example.kbb12.dms.model.database.basalInsulinModel.DuplicateDoseException;
-import com.example.kbb12.dms.model.database.basalInsulinModel.IBasalInsulinModel;
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGRecord;
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.RawBGRecord;
-import com.example.kbb12.dms.model.database.bolusInsulinModel.IBolusInsulinModel;
-import com.example.kbb12.dms.model.database.dailyFitnessInfo.DailyFitnessInfoRecord;
-import com.example.kbb12.dms.model.database.DatabaseBuilder;
-import com.example.kbb12.dms.model.database.insulinTakenRecord.IInsulinTakenEntry;
-import com.example.kbb12.dms.model.database.insulinTakenRecord.InsulinTakenRecord;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IIngredient;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.IMeal;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.Ingredient;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
-import com.example.kbb12.dms.model.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
+import com.example.kbb12.dms.database.activityRecord.ActivityRecord;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinDose;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.database.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.database.basalInsulinModel.IBasalInsulinModel;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.BGRecord;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.RawBGRecord;
+import com.example.kbb12.dms.database.bolusInsulinModel.IBolusInsulinModel;
+import com.example.kbb12.dms.database.dailyFitnessInfo.DailyFitnessInfoRecord;
+import com.example.kbb12.dms.database.DatabaseBuilder;
+import com.example.kbb12.dms.database.insulinTakenRecord.IInsulinTakenEntry;
+import com.example.kbb12.dms.database.insulinTakenRecord.InsulinTakenRecord;
+import com.example.kbb12.dms.database.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.database.mealPlannerRecord.IMeal;
+import com.example.kbb12.dms.database.mealPlannerRecord.Ingredient;
+import com.example.kbb12.dms.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
+import com.example.kbb12.dms.database.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
+import com.example.kbb12.dms.database.mealPlannerRecord.timeCarbEatenRecord.TimeCarbEatenRecord;
 
 import java.util.Calendar;
 import java.util.List;
@@ -63,10 +63,10 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private TimeCarbEatenRecord timeCarbEatenRecord;
 
     private IMeal activeMeal;
+    private String activeMealOrigName;
     private IIngredient activeIngredient;
 
-    public UserModel(Context context,SharedPreferences sharPref){
-        DatabaseBuilder db = new DatabaseBuilder(context);
+    public UserModel(DatabaseBuilder db,SharedPreferences sharPref){
         basalInsulinModel =db.getBasalInsulinModel();
         bolusInsulinModel= db.getBolusInsulinModel();
         insulinTakenRecord= db.getInsulinTakenRecord();
@@ -100,6 +100,18 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         }
         if(getIngredientByBarcode("4002359640469")==null){
             example=new Ingredient("Dolmio Tomato and Basil Sauce", 8.4, 100,"4002359640469");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("5012035936648")==null){
+            example=new Ingredient("Haribo Tangfastics", 50.0, 215, "5012035936648");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("21043123")==null){
+            example=new Ingredient("ASDA Conchigle Pasta", 31.0, 500, "21043123");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("25215342")==null){
+            example=new Ingredient("Conchigle Pasta", 30.0, 300, "21043123");
             savedIngredientsRecord.saveIngredient(example);
         }
     }
@@ -334,6 +346,11 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public void setActiveMeal(IMeal activeMeal) {
         this.activeMeal=activeMeal;
+        if(activeMeal==null){
+            this.activeMealOrigName="";
+        }else {
+            this.activeMealOrigName = activeMeal.getName();
+        }
     }
 
     @Override
@@ -360,12 +377,17 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     }
 
     @Override
-    public void updateActiveMeal(IMeal meal) {
-        if(activeMeal.getName()==""){
+    public void updateAndSaveActiveMeal(IMeal meal) {
+        if(activeMealOrigName.equals("")){
             savedMealsRecord.saveMeal(meal);
         }else {
-            savedMealsRecord.editMeal(activeMeal.getName(), meal);
+            savedMealsRecord.editMeal(activeMealOrigName, meal);
         }
+        setActiveMeal(meal);
+    }
+
+    @Override
+    public void updateActiveMeal(IMeal meal){
         activeMeal=meal;
     }
 
@@ -376,11 +398,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void saveMeal(IMeal meal) {
-        if(activeMeal.getName().equals("")) {
+        if(activeMealOrigName.equals("")) {
             savedMealsRecord.saveMeal(meal);
         }else{
-            savedMealsRecord.editMeal(activeMeal.getName(),meal);
+            savedMealsRecord.editMeal(activeMealOrigName,meal);
         }
+        setActiveMeal(meal);
     }
 
     @Override

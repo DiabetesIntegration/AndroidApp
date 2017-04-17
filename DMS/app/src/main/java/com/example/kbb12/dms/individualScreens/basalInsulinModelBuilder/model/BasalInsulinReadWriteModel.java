@@ -1,7 +1,7 @@
 package com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseReadWriteModel;
-import com.example.kbb12.dms.model.database.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.database.basalInsulinModel.DuplicateDoseException;
 
 /**
  * Created by kbb12 on 27/01/2017.

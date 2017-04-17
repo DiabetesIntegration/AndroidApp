@@ -6,7 +6,7 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import com.example.kbb12.dms.R;
-import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.BasicTextWatcher;
+import com.example.kbb12.dms.reusableFunctionality.BasicTextWatcher;
 import com.example.kbb12.dms.individualScreens.mealCarbohydrateValue.model.MealCarbohydrateReadWriteModel;
 import com.example.kbb12.dms.individualScreens.mealList.MealListActivity;
 import com.example.kbb12.dms.individualScreens.takeInsulin.TakeInsulin;

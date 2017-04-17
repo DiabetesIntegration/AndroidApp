@@ -16,7 +16,7 @@ import com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.model.Ba
 import com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.view.BasalInsulinModelBuilderView;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.model.ModelHolder;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 public class BasalInsulinModelBuilderActivity extends AppCompatActivity {
 

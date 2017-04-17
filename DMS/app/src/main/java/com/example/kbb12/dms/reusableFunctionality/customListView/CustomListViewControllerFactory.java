@@ -8,9 +8,9 @@ import android.view.View;
 
 public class CustomListViewControllerFactory implements ICustomListViewControllerFactory {
 
-    private IDeleteCustomItem model;
+    private ICustomListViewModel model;
 
-    public CustomListViewControllerFactory(IDeleteCustomItem model){
+    public CustomListViewControllerFactory(ICustomListViewModel model){
         this.model=model;
     }
 

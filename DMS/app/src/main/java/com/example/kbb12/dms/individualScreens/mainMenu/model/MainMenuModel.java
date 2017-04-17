@@ -2,7 +2,7 @@ package com.example.kbb12.dms.individualScreens.mainMenu.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.IBloodGlucoseModel;
-import com.example.kbb12.dms.model.database.bloodGlucoseRecord.BGReading;
+import com.example.kbb12.dms.database.bloodGlucoseRecord.BGReading;
 
 import java.util.Calendar;
 import java.util.List;

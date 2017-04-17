@@ -13,7 +13,7 @@ import com.example.kbb12.dms.individualScreens.customIngredient.model.AddCustomI
 import com.example.kbb12.dms.individualScreens.customIngredient.model.AddCustomIngredientReadWriteModel;
 import com.example.kbb12.dms.individualScreens.customIngredient.view.AddCustomIngredientView;
 import com.example.kbb12.dms.model.ModelHolder;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 public class AddCustomIngredientActivity extends AppCompatActivity {
 

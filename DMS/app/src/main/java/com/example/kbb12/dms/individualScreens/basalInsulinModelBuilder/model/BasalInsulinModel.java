@@ -2,9 +2,9 @@ package com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseModel;
 import com.example.kbb12.dms.model.BasalInsulinModelBuilderMainModel;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinDose;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
-import com.example.kbb12.dms.model.database.basalInsulinModel.DuplicateDoseException;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinDose;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.database.basalInsulinModel.DuplicateDoseException;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,8 +15,8 @@ import com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.controll
 import com.example.kbb12.dms.individualScreens.basalInsulinModelBuilder.model.BasalInsulinReadModel;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
-import com.example.kbb12.dms.model.database.basalInsulinModel.BasalInsulinEntry;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.database.basalInsulinModel.BasalInsulinEntry;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class BasalInsulinModelBuilderView extends MasterView implements ModelObs
     TimeSelectionFragment timeFragment;
 
     public BasalInsulinModelBuilderView(LinearLayout insulinList, IEntryControllerFactory controllerFactory, BasalInsulinReadModel model, Context context, FragmentManager fragMan, IErrorController errorController){
-        super(fragMan,errorController);
+        super(fragMan,errorController,model);
         this.insulinList=insulinList;
         this.controllerFactory=controllerFactory;
         this.model=model;
@@ -47,7 +47,7 @@ public class BasalInsulinModelBuilderView extends MasterView implements ModelObs
     public void update() {
         //Only refreshing the view if it doesn't already match the model
         //This stops continuous loops.
-        handleError(model.getError());
+        super.update();
         if(model.isTimeSelected()){
             timeFragment.show(fragMan,"Enter time");
             return;

@@ -7,7 +7,7 @@ import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseReadWrit
  */
 public class DefaultErrorController implements IErrorController {
 
-    BaseReadWriteModel model;
+    private BaseReadWriteModel model;
 
     public DefaultErrorController(BaseReadWriteModel model){
         this.model=model;

@@ -15,7 +15,7 @@ import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.IErrorC
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
 import com.example.kbb12.dms.individualScreens.bolusInsulinModelBuilder.controller.IBolusControllerFactory;
 import com.example.kbb12.dms.individualScreens.bolusInsulinModelBuilder.model.BolusInsulinReadModel;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 /**
  * Created by kbb12 on 10/03/2017.
@@ -38,7 +38,7 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
                                    LinearLayout insulinSensitivityFactorDetailsHolder,
                                    BolusInsulinReadModel model,Context context,
                                    IBolusControllerFactory factory) {
-        super(fragMan, controller);
+        super(fragMan, controller,model);
         this.insulinToCarbDetailHolder=insulinToCarbDetailHolder;
         this.insulinSensitivityFactorDetailsHolder = insulinSensitivityFactorDetailsHolder;
         this.model=model;
@@ -253,7 +253,7 @@ public class BolusInsulinBuilderView extends MasterView implements ModelObserver
 
     @Override
     public void update() {
-        handleError(model.getError());
+        super.update();
         if(knewICR!=model.knowsICR()){
             setICRDetails();
         }

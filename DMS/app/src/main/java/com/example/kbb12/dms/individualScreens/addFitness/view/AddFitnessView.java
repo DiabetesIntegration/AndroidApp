@@ -10,7 +10,7 @@ import com.example.kbb12.dms.individualScreens.addFitness.controller.TimeSetList
 import com.example.kbb12.dms.individualScreens.addFitness.model.AddFitnessReadModel;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.IErrorController;
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.MasterView;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 /**
  * Created by Garry on 13/03/2017.
@@ -27,7 +27,7 @@ public class AddFitnessView extends MasterView implements ModelObserver {
     //private IErrorController errcon;
 
     public AddFitnessView(AddFitnessReadModel model, FragmentManager fragman, TextView mDateTime, DateSetListener datecontroller, TimeSetListener timecontroller, DialogInterface.OnDismissListener datedismisscontroller, DialogInterface.OnDismissListener timedismisscontroller, IErrorController errcon){
-        super(fragman, errcon);
+        super(fragman, errcon,model);
         this.model = model;
         this.fragman = fragman;
         date = mDateTime;
@@ -44,7 +44,7 @@ public class AddFitnessView extends MasterView implements ModelObserver {
 
     @Override
     public void update() {
-        handleError(model.getError());
+        super.update();
         if(model.getActDateToChange()){
             clearPopUp("Set Date");
             dFrag.setDate(model.getDayTaken(),model.getMonthTaken(),model.getYearTaken());

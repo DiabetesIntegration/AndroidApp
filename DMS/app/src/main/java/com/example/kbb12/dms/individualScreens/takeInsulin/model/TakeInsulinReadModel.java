@@ -2,12 +2,14 @@ package com.example.kbb12.dms.individualScreens.takeInsulin.model;
 
 import com.example.kbb12.dms.reusableFunctionality.baseScreen.model.BaseReadModel;
 
+import java.util.Calendar;
+
 /**
  * Created by kbb12 on 24/02/2017.
  */
 public interface TakeInsulinReadModel extends BaseReadModel {
 
-    public enum InsulinType{
+    enum InsulinType{
         NOT_SET, BASAL,BOLUS
     }
 
@@ -17,19 +19,11 @@ public interface TakeInsulinReadModel extends BaseReadModel {
 
     Double getAmountTaken();
 
-    int getDayTaken();
+    Calendar getTimeTaken();
 
-    int getMonthTaken();
+    boolean isTimeToChange();
 
-    int getYearTaken();
-
-    int getHourTaken();
-
-    int getMinuteTaken();
-
-    boolean getTimeToChange();
-
-    boolean getDateToChange();
+    boolean isDateToChange();
 
     InsulinType getTypeTaken();
 

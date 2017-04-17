@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import com.example.kbb12.dms.R;
 import com.example.kbb12.dms.individualScreens.mainMenu.model.MainMenuModel;
 import com.example.kbb12.dms.individualScreens.mainMenu.model.MainMenuReadWriteModel;
-import com.example.kbb12.dms.individualScreens.mainMenu.model.bluetooth.BluetoothService;
+import com.example.kbb12.dms.model.bluetooth.BluetoothService;
 import com.example.kbb12.dms.individualScreens.mainMenu.controller.AddActivityLauncher;
 import com.example.kbb12.dms.individualScreens.mainMenu.controller.MealPlannerLauncher;
 import com.example.kbb12.dms.individualScreens.mainMenu.controller.TakeInsulinLauncher;

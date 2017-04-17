@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.kbb12.dms.R;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.controller.DefaultErrorController;
 import com.example.kbb12.dms.reusableFunctionality.customListView.CustomAdapter;
 import com.example.kbb12.dms.reusableFunctionality.customListView.CustomListViewControllerFactory;
 import com.example.kbb12.dms.individualScreens.mealList.controller.MealListController;
@@ -15,7 +16,7 @@ import com.example.kbb12.dms.individualScreens.mealList.model.MealListModel;
 import com.example.kbb12.dms.individualScreens.mealList.model.MealListReadWriteModel;
 import com.example.kbb12.dms.individualScreens.mealList.view.MealListView;
 import com.example.kbb12.dms.model.ModelHolder;
-import com.example.kbb12.dms.individualScreens.startUp.ModelObserver;
+import com.example.kbb12.dms.reusableFunctionality.baseScreen.view.ModelObserver;
 
 public class MealListActivity extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class MealListActivity extends AppCompatActivity {
         mealList.setOnItemClickListener(controller);
 
 
-        view = new MealListView(emptyMealList,cAdapter,model);
+        view = new MealListView(emptyMealList,cAdapter,model,getFragmentManager(),new DefaultErrorController(model));
         model.registerObserver(view);
 
     }
