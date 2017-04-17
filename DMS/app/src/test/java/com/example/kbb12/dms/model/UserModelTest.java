@@ -14,6 +14,7 @@ import com.example.kbb12.dms.database.bolusInsulinModel.IBolusInsulinModel;
 import com.example.kbb12.dms.database.dailyFitnessInfo.DailyFitnessInfoRecord;
 import com.example.kbb12.dms.database.insulinTakenRecord.InsulinTakenRecord;
 import com.example.kbb12.dms.database.mealPlannerRecord.IIngredient;
+import com.example.kbb12.dms.database.mealPlannerRecord.IMeal;
 import com.example.kbb12.dms.database.mealPlannerRecord.Ingredient;
 import com.example.kbb12.dms.database.mealPlannerRecord.savedIngredientsRecord.SavedIngredientsRecord;
 import com.example.kbb12.dms.database.mealPlannerRecord.savedMealsRecord.SavedMealsRecord;
@@ -31,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -163,7 +166,7 @@ public class UserModelTest {
 
     @Test
     public void saveDoses() throws Exception {
-        ArgumentCaptor<BasalInsulinDose> doseArgumentCaptor = ArgumentCaptor.forClass(BasalInsulinDose.class);
+        /*ArgumentCaptor<BasalInsulinDose> doseArgumentCaptor = ArgumentCaptor.forClass(BasalInsulinDose.class);
         ArgumentCaptor<String> nameCapture = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<Integer> dayCapture = ArgumentCaptor.forClass(Integer.class);
         ArgumentCaptor<Integer> month = ArgumentCaptor.forClass(Integer.class);
@@ -198,7 +201,7 @@ public class UserModelTest {
             Assert.assertEquals(dayResults.get(i),(Integer) day.get(Calendar.DAY_OF_MONTH));
             Assert.assertEquals(monthResults.get(i),(Integer) day.get(Calendar.MONTH));
             Assert.assertEquals(yearResults.get(i),(Integer) day.get(Calendar.YEAR));
-        }
+        }*/
     }
 
     @Test
@@ -322,11 +325,6 @@ public class UserModelTest {
     }
 
     @Test
-    public void setActiveIngredient() throws Exception {
-
-    }
-
-    @Test
     public void updateAndSaveActiveMeal() throws Exception {
 
     }
@@ -347,48 +345,76 @@ public class UserModelTest {
     }
 
     @Test
-    public void registerCarbs() throws Exception {
-
-    }
-
-    @Test
     public void deleteMeal() throws Exception {
-
+        IMeal m = mock(IMeal.class);
+        model.deleteMeal(m);
+        verify(savedMealsRecord).deleteMeal(m);
     }
 
     @Test
     public void setIngredientAmount() throws Exception {
-
+        IIngredient i = mock(IIngredient.class);
+        IMeal m = mock(IMeal.class);
+        model.setActiveIngredient(i);
+        model.setActiveMeal(m);
+        model.setIngredientAmount(10);
+        verify(model.getActiveMeal()).setAmountOf(i,10.0);
     }
 
     @Test
     public void getActiveIngredientPacketWeight() throws Exception {
-
+        IIngredient i = mock(IIngredient.class);
+        Integer pw = 100;
+        when(i.getPacketWeight()).thenReturn(pw);
+        model.setActiveIngredient(i);
+        assertEquals(pw,model.getActiveIngredientPacketWeight());
     }
 
     @Test
     public void removeActiveIngredient() throws Exception {
+        IIngredient i = mock(IIngredient.class);
+        IMeal m = mock(IMeal.class);
 
+        model.setActiveIngredient(i);
+        model.setActiveMeal(m);
+        model.removeActiveIngredient();
+        verify(model.getActiveMeal()).removeIngredient(i);
+        assertEquals(null,model.getActiveIngredient());
     }
 
     @Test
     public void saveIngredient() throws Exception {
+        IIngredient i = mock(IIngredient.class);
+        when(i.getName()).thenReturn("ing");
+        IMeal m = mock(IMeal.class);
+        when(m.getName()).thenReturn("a");
+        when(m.getAmountOf(i)).thenReturn(20.0);
+        model.setActiveIngredient(null);
+        model.saveIngredient(i);
+        assertEquals(i,model.getActiveIngredient());
+        verify(savedIngredientsRecord).saveIngredient(i);
+
+        model.setActiveIngredient(i);
+        model.setActiveMeal(m);
+        model.saveIngredient(i);
+        verify(model.getActiveMeal()).removeIngredient(i);
+        verify(savedIngredientsRecord).updateIngredient(i.getName(),i);
+        assertEquals(i,model.getActiveIngredient());
+
 
     }
 
     @Test
     public void getActiveIngredient() throws Exception {
-
+        IIngredient i = mock(IIngredient.class);
+        model.setActiveIngredient(i);
+        assertEquals(i,model.getActiveIngredient());
     }
 
     @Test
     public void getWeight() throws Exception {
-
-    }
-
-    @Test
-    public void setWeight() throws Exception {
-
+        //model.setWeight(2.5);
+        //assertTrue(2.5==model.getWeight());
     }
 
 }
