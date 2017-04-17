@@ -98,7 +98,7 @@ public class SavedMealsDatabase implements SavedMealsRecord {
         String amounts="";
         amounts+=Double.toString(meal.getAmounts().get(0));
         for(int i=1;i<meal.getIngredients().size();i++){
-            amounts+=","+Double.toString(meal.getAmounts().get(0));
+            amounts+=","+Double.toString(meal.getAmounts().get(i));
         }
         return amounts;
     }

@@ -67,7 +67,7 @@ public class Meal implements IMeal {
     @Override
     public Double getAmountOf(IIngredient ingredient) {
         for(int i=0;i<ingredients.size();i++){
-            if(ingredient.getName().equals(ingredient.getName())){
+            if(ingredient.getName().equals(ingredients.get(i).getName())){
                 return amounts.get(i);
             }
         }

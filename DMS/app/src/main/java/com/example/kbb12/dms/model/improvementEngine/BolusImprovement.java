@@ -54,6 +54,7 @@ public class BolusImprovement extends BroadcastReceiver {
         Calendar temp;
         Calendar endTest;
         double percentageOff;
+        double correctionPercentage;
         for(IInsulinTakenEntry entry:insulinTaken){
             if(entry.getType().equals(TakeInsulinReadModel.InsulinType.BASAL)){
                 continue;
@@ -103,7 +104,8 @@ public class BolusImprovement extends BroadcastReceiver {
                 continue;
             }
             if(bgAfterTest.getReading()>7.0||bgAfterTest.getReading()<5.0){
-                percentageOff=bgAfterTest.getReading()/6.0-1;
+                //Calculates the percentage difference between the actual change and the targeted change
+                percentageOff=1-(bgAtTime.getReading()-bgAfterTest.getReading())/(bgAtTime.getReading()-6.0);
                 //Improve individual models on same ratio as they contributed to the recommendation
                 bolusInsulinModel.improveISFValue(entry.getTime(),percentageOff*(Math.abs(corRec)/(Math.abs(corRec)+carbRec)));
                 bolusInsulinModel.improveICRValue(entry.getTime(),percentageOff*(carbRec/(Math.abs(corRec)+carbRec)));

@@ -63,6 +63,7 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     private TimeCarbEatenRecord timeCarbEatenRecord;
 
     private IMeal activeMeal;
+    private String activeMealOrigName;
     private IIngredient activeIngredient;
 
     public UserModel(Context context,SharedPreferences sharPref){
@@ -100,6 +101,18 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
         }
         if(getIngredientByBarcode("4002359640469")==null){
             example=new Ingredient("Dolmio Tomato and Basil Sauce", 8.4, 100,"4002359640469");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("5012035936648")==null){
+            example=new Ingredient("Haribo Tangfastics", 50.0, 215, "5012035936648");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("21043123")==null){
+            example=new Ingredient("ASDA Conchigle Pasta", 31.0, 500, "21043123");
+            savedIngredientsRecord.saveIngredient(example);
+        }
+        if(getIngredientByBarcode("25215342")==null){
+            example=new Ingredient("Conchigle Pasta", 30.0, 300, "21043123");
             savedIngredientsRecord.saveIngredient(example);
         }
     }
@@ -334,6 +347,11 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
     @Override
     public void setActiveMeal(IMeal activeMeal) {
         this.activeMeal=activeMeal;
+        if(activeMeal==null){
+            this.activeMealOrigName="";
+        }else {
+            this.activeMealOrigName = activeMeal.getName();
+        }
     }
 
     @Override
@@ -361,12 +379,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void updateAndSaveActiveMeal(IMeal meal) {
-        if(activeMeal.getName()==""){
+        if(activeMealOrigName.equals("")){
             savedMealsRecord.saveMeal(meal);
         }else {
-            savedMealsRecord.editMeal(activeMeal.getName(), meal);
+            savedMealsRecord.editMeal(activeMealOrigName, meal);
         }
-        activeMeal=meal;
+        setActiveMeal(meal);
     }
 
     @Override
@@ -381,11 +399,12 @@ public class UserModel implements BasalInsulinModelBuilderMainModel,
 
     @Override
     public void saveMeal(IMeal meal) {
-        if(activeMeal.getName().equals("")) {
+        if(activeMealOrigName.equals("")) {
             savedMealsRecord.saveMeal(meal);
         }else{
-            savedMealsRecord.editMeal(activeMeal.getName(),meal);
+            savedMealsRecord.editMeal(activeMealOrigName,meal);
         }
+        setActiveMeal(meal);
     }
 
     @Override
