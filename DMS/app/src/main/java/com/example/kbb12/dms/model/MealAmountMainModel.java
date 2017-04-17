@@ -7,6 +7,7 @@ import com.example.kbb12.dms.database.mealPlannerRecord.IMeal;
  */
 
 public interface MealAmountMainModel {
+    IMeal getActiveMeal();
     void eatCurrentMeal(double percentEaten);
     void setActiveMeal(IMeal meal);
 }

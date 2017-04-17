@@ -35,7 +35,7 @@ public class IngredientsAmountModel extends BaseModel implements IngredientsAmou
         if(units.equals("g")) {
             model.setIngredientAmount(amount);
         }else{
-            model.setIngredientAmount((int)(((double)model.getActiveIngredientPacketWeight()/100)*amount));
+            model.setIngredientAmount((int)(((double)model.getActiveIngredientPacketWeight()*(double)amount/100.0)));
         }
     }
 

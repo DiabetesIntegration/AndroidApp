@@ -35,11 +35,13 @@ public class MealAmountController implements View.OnClickListener, TextWatcher {
                 }
                 else {
                     model.eatCurrentMeal(a);
+                    return;/*
                     currentActivity.finish();
                     Intent templateIntent = new Intent(currentActivity, TakeInsulin.class);
                     //Launches the next activity.
                     currentActivity.startActivity(templateIntent);
                     currentActivity.finish();
+                    */
                 }
             }
             catch(NumberFormatException e) {
